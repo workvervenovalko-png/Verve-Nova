@@ -46,7 +46,7 @@ export function Footer() {
             className="flex gap-10 md:gap-20"
           >
             {[...Array(4)].map((_, i) => (
-              <span key={i} className="text-[15vh] md:text-[30vh] font-black text-white opacity-[0.01] tracking-tighter uppercase leading-none select-none">
+              <span key={i} className="text-[12vh] md:text-[30vh] font-black text-white opacity-[0.01] tracking-tighter uppercase leading-none select-none">
                 VERVE NOVA TECHNOLOGIES //
               </span>
             ))}
@@ -60,18 +60,18 @@ export function Footer() {
 
           {/* High-Impact Identity */}
           <div className="lg:col-span-3 flex flex-col items-center text-center md:items-start md:text-left gap-10">
-            <div className="flex flex-col items-center md:items-start gap-5">
-              <Link href="/" className="flex items-center gap-5 group">
-                <div className="w-12 h-12 flex items-center justify-center bg-white/[0.03] border border-white/[0.1] rounded-2xl group-hover:border-indigo-500/50 transition-all duration-500 glass-card overflow-hidden">
-                  <img src="/icon.svg" alt="Verve Nova Logo" className="w-8 h-8 object-contain brightness-0 invert" />
+            <div className="flex flex-col items-center md:items-start gap-4 md:gap-5 px-4 md:px-0">
+              <Link href="/" className="flex items-center gap-4 md:gap-5 group">
+                <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-white/[0.03] border border-white/[0.1] rounded-2xl group-hover:border-indigo-500/50 transition-all duration-500 glass-card overflow-hidden">
+                  <img src="/icon.svg" alt="Verve Nova Logo" className="w-7 h-7 md:w-8 md:h-8 object-contain brightness-0 invert" />
                 </div>
                 <div className="flex flex-col items-start text-left">
-                  <span className="text-lg font-black tracking-widest text-white uppercase leading-none group-hover:text-indigo-400 transition-colors">Verve Nova</span>
+                  <span className="text-base md:text-lg font-black tracking-widest text-white uppercase leading-none group-hover:text-indigo-400 transition-colors">Verve Nova</span>
                   <span className="text-[7px] font-black text-white/20 uppercase tracking-[0.5em] mt-1.5 leading-none">Technologies</span>
                 </div>
               </Link>
-              <div className="h-px w-full max-w-[140px] bg-gradient-to-r from-indigo-500/30 to-transparent my-1" />
-              <p className="text-[10px] text-white/30 font-bold leading-relaxed max-w-xs uppercase tracking-widest">
+              <div className="h-px w-full max-w-[120px] bg-gradient-to-r from-indigo-500/30 to-transparent my-1 hidden md:block" />
+              <p className="text-[9px] md:text-[10px] text-white/30 font-bold leading-relaxed max-w-xs uppercase tracking-widest">
                 Global engineering / Specialized software systems / Mission-Critical Excellence.
               </p>
             </div>
@@ -114,12 +114,12 @@ export function Footer() {
           </div>
 
           {/* Studio Links */}
-          <div className="lg:col-span-2 flex flex-col items-center md:items-start text-center md:text-left">
-            <h5 className="text-[10px] font-black text-white/20 uppercase tracking-[0.5em] mb-6 md:mb-12 border-l-2 md:border-l-2 border-indigo-500 md:pl-4 pl-0">The Studio</h5>
-            <ul className="flex flex-col items-center md:items-start gap-6">
+          <div className="lg:col-span-2 flex flex-col items-center md:items-start text-center md:text-left col-span-1">
+            <h5 className="text-[9px] md:text-[10px] font-black text-white/20 uppercase tracking-[0.5em] mb-6 md:mb-12 border-l-2 md:border-l-2 border-indigo-500 md:pl-4 pl-0">The Studio</h5>
+            <ul className="flex flex-col items-center md:items-start gap-4 md:gap-6">
               {footerLinks.studio.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-xs font-black text-white/40 hover:text-indigo-400 uppercase tracking-widest transition-colors flex items-center gap-2 group">
+                  <Link href={link.href} className="text-[11px] md:text-xs font-black text-white/40 hover:text-indigo-400 uppercase tracking-widest transition-colors flex items-center gap-2 group">
                     {link.name} <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all" />
                   </Link>
                 </li>
@@ -128,12 +128,12 @@ export function Footer() {
           </div>
 
           {/* Expertise Links */}
-          <div className="lg:col-span-2 flex flex-col items-center md:items-start text-center md:text-left">
-            <h5 className="text-[10px] font-black text-white/20 uppercase tracking-[0.5em] mb-6 md:mb-12 border-l-2 md:border-l-2 border-white/10 md:pl-4 pl-0">Expertise</h5>
-            <ul className="flex flex-col items-center md:items-start gap-6">
+          <div className="lg:col-span-2 flex flex-col items-center md:items-start text-center md:text-left col-span-1">
+            <h5 className="text-[9px] md:text-[10px] font-black text-white/20 uppercase tracking-[0.5em] mb-6 md:mb-12 border-l-2 md:border-l-2 border-white/10 md:pl-4 pl-0">Expertise</h5>
+            <ul className="flex flex-col items-center md:items-start gap-4 md:gap-6">
               {footerLinks.expertise.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-xs font-black text-white/40 hover:text-indigo-400 uppercase tracking-widest transition-colors">
+                  <Link href={link.href} className="text-[11px] md:text-xs font-black text-white/40 hover:text-indigo-400 uppercase tracking-widest transition-colors">
                     {link.name}
                   </Link>
                 </li>
@@ -142,12 +142,12 @@ export function Footer() {
           </div>
 
           {/* Governance Links */}
-          <div className="lg:col-span-2 flex flex-col items-center md:items-start text-center md:text-left">
-            <h5 className="text-[10px] font-black text-white/20 uppercase tracking-[0.5em] mb-6 md:mb-12 border-l-2 md:border-l-2 border-white/10 md:pl-4 pl-0">Governance</h5>
-            <ul className="flex flex-col items-center md:items-start gap-6">
+          <div className="lg:col-span-2 flex flex-col items-center md:items-start text-center md:text-left col-span-1">
+            <h5 className="text-[9px] md:text-[10px] font-black text-white/20 uppercase tracking-[0.5em] mb-6 md:mb-12 border-l-2 md:border-l-2 border-white/10 md:pl-4 pl-0">Governance</h5>
+            <ul className="flex flex-col items-center md:items-start gap-4 md:gap-6">
               {footerLinks.registry.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-xs font-black text-white/40 hover:text-indigo-400 uppercase tracking-widest transition-colors">
+                  <Link href={link.href} className="text-[11px] md:text-xs font-black text-white/40 hover:text-indigo-400 uppercase tracking-widest transition-colors">
                     {link.name}
                   </Link>
                 </li>
@@ -156,27 +156,27 @@ export function Footer() {
           </div>
 
           {/* Trust Registry */}
-          <div className="lg:col-span-3 flex flex-col gap-8">
-            <h5 className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.5em] mb-6">Trust Registry</h5>
+          <div className="lg:col-span-3 flex flex-col items-center md:items-start gap-8">
+            <h5 className="text-[9px] md:text-[10px] font-black text-indigo-400 uppercase tracking-[0.5em] mb-4 md:mb-6">Trust Registry</h5>
 
-            <div className="flex flex-col gap-8">
-              <div className="flex items-center gap-6 group">
-                <div className="w-16 h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+            <div className="flex flex-col items-center md:items-start gap-6 md:gap-8">
+              <div className="flex items-center gap-5 md:gap-6 group">
+                <div className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
                   <img src="/msme-udyam-registration.jpeg" alt="MSME Logo" className="max-w-full max-h-full object-contain brightness-75 hover:brightness-100 transition-all" />
                 </div>
-                <div className="flex flex-col">
-                  <span className="text-xs font-black text-white/60 uppercase tracking-widest">MSME REGISTERED</span>
-                  <span className="text-[8px] font-bold text-white/20 uppercase tracking-widest mt-1">CERTIFIED MINISTRY UNIT</span>
+                <div className="flex flex-col items-start">
+                  <span className="text-[11px] md:text-xs font-black text-white/60 uppercase tracking-widest leading-none">MSME REGISTERED</span>
+                  <span className="text-[8px] font-bold text-white/20 uppercase tracking-widest mt-1.5 leading-none">CERTIFIED MINISTRY UNIT</span>
                 </div>
               </div>
 
-              <div className="flex items-center gap-6 group">
-                <div className="w-16 h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+              <div className="flex items-center gap-5 md:gap-6 group">
+                <div className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
                   <img src="/udyam.png" alt="Udyam Logo" className="max-w-full max-h-full object-contain brightness-75 hover:brightness-100 transition-all" />
                 </div>
-                <div className="flex flex-col">
-                  <span className="text-xs font-black text-white/60 uppercase tracking-widest">UDYAM COMPLIANT</span>
-                  <span className="text-[8px] font-bold text-white/20 uppercase tracking-widest mt-1">GOVERNMENT APPROVED</span>
+                <div className="flex flex-col items-start">
+                  <span className="text-[11px] md:text-xs font-black text-white/60 uppercase tracking-widest leading-none">UDYAM COMPLIANT</span>
+                  <span className="text-[8px] font-bold text-white/20 uppercase tracking-widest mt-1.5 leading-none">GOVERNMENT APPROVED</span>
                 </div>
               </div>
             </div>

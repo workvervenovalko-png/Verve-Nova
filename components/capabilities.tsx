@@ -57,15 +57,15 @@ export function Capabilities() {
       <div className="absolute top-[20%] right-0 w-[400px] h-[400px] bg-indigo-500/[0.04] blur-[120px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-10 mb-20 md:mb-32 text-center md:text-left">
-          <div className="max-w-2xl flex flex-col items-center md:items-start">
-            <p className="text-[10px] font-bold text-indigo-400 uppercase tracking-[0.6em] mb-6">Execution Pillars</p>
-            <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-[7vw] font-black text-white tracking-tighter uppercase leading-[0.85]">
+        <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-8 md:gap-10 mb-16 md:mb-32 text-center md:text-left">
+          <div className="max-w-2xl flex flex-col items-center md:items-start px-4">
+            <p className="text-[10px] font-bold text-indigo-400 uppercase tracking-[0.6em] mb-4 md:mb-6">Execution Pillars</p>
+            <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-[7vw] font-black text-white tracking-tighter uppercase leading-[0.85]">
               Specialized <br className="hidden md:block" />
               <span className="text-white/10">Capabilities.</span>
             </h2>
           </div>
-          <p className="max-w-[280px] text-[10px] font-bold text-white/25 uppercase tracking-widest leading-relaxed">
+          <p className="max-w-[240px] md:max-w-[280px] text-[9px] md:text-[10px] font-bold text-white/25 uppercase tracking-widest leading-relaxed">
             The technological architecture we deploy to solve complex enterprise problems at scale.
           </p>
         </div>
@@ -81,33 +81,33 @@ export function Capabilities() {
             >
               <Link
                 href={item.href}
-                className="group relative flex flex-col md:flex-row items-center justify-between py-12 md:py-12 border-b border-white/[0.04] transition-all duration-700 hover:px-8 first:border-t text-center md:text-left"
+                className="group relative flex flex-col md:flex-row items-center justify-between py-10 md:py-12 border-b border-white/[0.04] transition-all duration-700 hover:px-8 first:border-t text-center md:text-left"
               >
                 {/* Hover Background */}
                 <div className="absolute inset-0 bg-white/[0.02] opacity-0 group-hover:opacity-100 transition-all duration-700 -z-10 rounded-2xl" />
                 {/* Hover glow */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700 -z-20 rounded-2xl" style={{ boxShadow: "inset 0 0 80px rgba(99, 102, 241, 0.03)" }} />
 
-                <div className="flex flex-col md:flex-row items-center gap-6 md:gap-12 mb-6 md:mb-0">
-                  <span className="text-xs font-black text-white/10 group-hover:text-indigo-400 transition-colors font-mono tracking-tighter">
+                <div className="flex flex-col md:flex-row items-center gap-4 md:gap-12 mb-6 md:mb-0">
+                  <span className="text-[10px] md:text-xs font-black text-white/10 group-hover:text-indigo-400 transition-colors font-mono tracking-tighter">
                     {item.id}
                   </span>
                   <div className="flex flex-col items-center md:items-start">
-                    <span className="text-[9px] font-black text-indigo-500/60 uppercase tracking-[0.3em] mb-2 scale-x-90 origin-left opacity-0 group-hover:opacity-100 transition-all duration-500">
+                    <span className="text-[8px] md:text-[9px] font-black text-indigo-500/60 uppercase tracking-[0.3em] mb-2 scale-x-90 origin-left opacity-0 md:group-hover:opacity-100 transition-all duration-500">
                       {item.tag}
                     </span>
-                    <h3 className="text-2xl sm:text-3xl md:text-5xl font-black text-white/90 uppercase tracking-tighter group-hover:text-indigo-400 transition-all duration-500">
+                    <h3 className="text-xl sm:text-2xl md:text-5xl font-black text-white/90 uppercase tracking-tighter group-hover:text-indigo-400 transition-all duration-500">
                       {item.title}
                     </h3>
                   </div>
                 </div>
 
-                <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 w-full md:w-auto max-w-xl">
-                  <p className="text-sm md:text-base text-white/25 font-light leading-relaxed group-hover:text-white/50 transition-colors duration-500">
+                <div className="flex flex-col md:flex-row items-center gap-6 md:gap-16 w-full md:w-auto max-w-xl">
+                  <p className="text-xs md:text-base text-white/25 font-light leading-relaxed group-hover:text-white/50 transition-colors duration-500 px-6 md:px-0">
                     {item.description}
                   </p>
-                  <div className="w-12 h-12 rounded-full border border-white/[0.06] flex items-center justify-center text-white/15 group-hover:bg-gradient-to-br group-hover:from-indigo-600 group-hover:to-violet-600 group-hover:text-white group-hover:border-transparent group-hover:rotate-45 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.3)] transition-all duration-700">
-                    <ArrowUpRight className="w-5 h-5" />
+                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/[0.06] flex items-center justify-center text-white/15 group-hover:bg-gradient-to-br group-hover:from-indigo-600 group-hover:to-violet-600 group-hover:text-white group-hover:border-transparent group-hover:rotate-45 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.3)] transition-all duration-700">
+                    <ArrowUpRight className="w-4 h-4 md:w-5 md:h-5" />
                   </div>
                 </div>
               </Link>

@@ -104,6 +104,11 @@
     @apply bg-white/[0.03] backdrop-blur-2xl border border-white/[0.06];
   }
 
+  /* Dedicated Mobile Section Utility */
+  .section-mobile-padding {
+    @apply py-20 px-6 md:py-40 md:px-12;
+  }
+
   .glass-card {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
     backdrop-filter: blur(40px) saturate(150%);

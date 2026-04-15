@@ -106,15 +106,15 @@ export function Services() {
       <div className="absolute inset-0 mesh-gradient-2 pointer-events-none" />
       
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="flex flex-col items-center text-center mb-24">
+        <div className="flex flex-col items-center text-center mb-16 md:mb-24 px-4">
           <motion.h2
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-xs font-bold text-indigo-400 uppercase tracking-[0.5em] mb-6"
+            className="text-[10px] md:text-xs font-bold text-indigo-400 uppercase tracking-[0.5em] mb-4 md:mb-6"
           >
             Digital Services
           </motion.h2>
-          <h3 className="text-4xl md:text-7xl font-black text-white tracking-tighter uppercase leading-[0.9]">
+          <h3 className="text-3xl sm:text-4xl md:text-7xl font-black text-white tracking-tighter uppercase leading-[0.9]">
             Solutions for <br /> <span className="text-gradient">Your Business</span>
           </h3>
         </div>
@@ -129,15 +129,15 @@ export function Services() {
               transition={{ delay: i * 0.06 }}
             >
               <MagneticCard
-                className="glass-card p-8 rounded-[2rem] group hover:glass-card-hover transition-all duration-500 flex flex-col items-center text-center md:items-start md:text-left h-full"
+                className="glass-card p-8 md:p-8 rounded-[1.5rem] md:rounded-[2rem] group hover:glass-card-hover transition-all duration-500 flex flex-col items-center text-center md:items-start md:text-left h-full"
               >
-                <div className="flex justify-center md:justify-between items-start mb-8 w-full">
-                  <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${category.gradient} flex items-center justify-center shadow-lg`}>
-                    <category.icon className="w-5 h-5 text-white" />
+                <div className="flex justify-center md:justify-between items-start mb-6 md:mb-8 w-full">
+                  <div className={`w-10 h-10 md:w-11 md:h-11 rounded-xl bg-gradient-to-br ${category.gradient} flex items-center justify-center shadow-lg`}>
+                    <category.icon className="w-4 h-4 md:w-5 md:h-5 text-white" />
                   </div>
                 </div>
 
-                <h4 className="text-lg font-black text-white/90 uppercase tracking-tight mb-6">
+                <h4 className="text-base md:text-lg font-black text-white/90 uppercase tracking-tight mb-4 md:mb-6">
                   {category.title}
                 </h4>
 

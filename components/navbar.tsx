@@ -39,7 +39,7 @@ export function Navbar() {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="pointer-events-auto backdrop-blur-2xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-between px-8 py-3 w-full max-w-[1200px] rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.4)] specular-glow"
+        className="pointer-events-auto backdrop-blur-2xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-between px-6 md:px-8 py-3 w-full max-w-[1200px] rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.4)] specular-glow"
       >
         {/* Logo Section - VNT BRANDING */}
         <Link href="/" className="flex items-center gap-5 shrink-0 group pointer-events-auto">
@@ -160,7 +160,7 @@ export function Navbar() {
               initial={{ opacity: 0, y: -10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
-              className="absolute top-full left-1/2 -translate-x-1/2 w-[calc(100vw-2rem)] max-w-[400px] bg-[#111113]/98 backdrop-blur-3xl mt-4 p-10 flex flex-col items-center gap-8 rounded-[2.5rem] border border-white/[0.08] shadow-[0_32px_64px_rgba(0,0,0,0.6)] z-[200]"
+              className="absolute top-full left-1/2 -translate-x-1/2 w-[calc(100vw-2rem)] max-w-[400px] bg-[#111113]/98 backdrop-blur-3xl mt-4 p-8 md:p-10 flex flex-col items-center gap-6 md:gap-8 rounded-[2rem] md:rounded-[2.5rem] border border-white/[0.08] shadow-[0_32px_64px_rgba(0,0,0,0.6)] z-[200]"
             >
               {navLinks.map((link) => (
                 <Link

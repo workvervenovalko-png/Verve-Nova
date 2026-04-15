@@ -92,15 +92,15 @@ export function TrustMatrix() {
       <div className="absolute inset-0 mesh-gradient-1 pointer-events-none" />
 
       <div className="max-w-[1600px] mx-auto px-6 relative z-10">
-        <div className="text-center mb-20 px-4">
+        <div className="text-center mb-16 md:mb-20 px-4">
           <p className="text-[10px] font-bold text-indigo-400 uppercase tracking-[0.5em] mb-5">Why Clients Trust Us</p>
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-white tracking-tighter uppercase leading-[0.9]">
+          <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black text-white tracking-tighter uppercase leading-[0.9]">
             Proven Results & <br className="hidden md:block" />
             <span className="text-white/10">High Ratings</span>
           </h2>
         </div>
 
-        <div className="flex lg:flex-nowrap flex-wrap justify-center gap-4 lg:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-nowrap justify-center gap-4 lg:gap-8">
           {stats.map((stat, i) => (
             <motion.div
               key={stat.label}
@@ -108,7 +108,7 @@ export function TrustMatrix() {
               whileInView={{ opacity: 1, scale: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08, type: "spring", stiffness: 120 }}
-              className="glass-card p-8 rounded-[2rem] hover:glass-card-hover transition-all duration-500 group flex flex-col items-center text-center cursor-default w-full sm:w-[240px]"
+              className="glass-card p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] hover:glass-card-hover transition-all duration-500 group flex flex-col items-center text-center cursor-default w-full lg:w-[240px]"
               style={{ "--glow": stat.glow } as React.CSSProperties}
             >
               <div className="flex items-center justify-center w-full mb-8">

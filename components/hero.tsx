@@ -85,13 +85,13 @@ export function Hero() {
           {/* Top Cluster: VERVE + Description */}
           <motion.div
             style={{ x: x1, y: y1 }}
-            className="relative z-20 flex flex-col items-start lg:ml-[5%] xl:ml-[10%]"
+            className="relative z-20 flex flex-col items-center lg:items-start lg:ml-[5%] xl:ml-[10%] text-center lg:text-left"
           >
 
             <h1 className="sr-only">
               Verve Nova Tech (VNT) - Top Website Company and Software Company in Lucknow. VNT Global offers enterprise technology, AI solutions, and software development.
             </h1>
-            <div role="heading" aria-level={2} className="text-[15vw] lg:text-[11vw] font-black text-white leading-[0.8] tracking-tighter uppercase select-none flex mb-8">
+            <div role="heading" aria-level={2} className="text-[14vw] sm:text-[12vw] lg:text-[11vw] font-black text-white leading-[0.8] tracking-tighter uppercase select-none flex mb-6 md:mb-8">
               {"VERVE".split("").map((c, i) => (
                 <InteractiveLetter key={i} char={c} index={i} className="text-white hover:text-indigo-400" />
               ))}
@@ -101,10 +101,10 @@ export function Hero() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8 }}
-              className="max-w-md lg:pl-4"
+              className="max-w-md lg:pl-4 flex flex-col items-center lg:items-start"
             >
-              <div className="h-px w-20 bg-gradient-to-r from-indigo-500/30 to-transparent mb-6" />
-              <p className="text-[10px] md:text-xs text-white/30 font-bold tracking-[0.3em] uppercase leading-relaxed max-w-[400px]">
+              <div className="h-px w-20 bg-gradient-to-r from-indigo-500/30 to-transparent mb-6 hidden lg:block" />
+              <p className="text-[10px] md:text-xs text-white/30 font-bold tracking-[0.3em] uppercase leading-relaxed max-w-[320px] md:max-w-[400px]">
                 Engineering <span className="text-white">scalable digital solutions</span> that power modern businesses worldwide.
               </p>
             </motion.div>
@@ -113,9 +113,9 @@ export function Hero() {
           {/* Bottom Cluster: NOVA + Buttons */}
           <motion.div
             style={{ x: x2, y: y2 }}
-            className="relative z-20 flex flex-col items-start lg:items-end lg:mr-[5%] xl:mr-[10%] lg:-mt-10"
+            className="relative z-20 flex flex-col items-center lg:items-end lg:mr-[5%] xl:mr-[10%] lg:-mt-10 mt-6 lg:mt-0"
           >
-            <div role="heading" aria-level={2} className="text-[15vw] lg:text-[11vw] font-black text-white leading-[0.8] tracking-tighter uppercase select-none flex mb-10 drop-shadow-[0_0_30px_rgba(99,102,241,0.2)]">
+            <div role="heading" aria-level={2} className="text-[14vw] sm:text-[12vw] lg:text-[11vw] font-black text-white leading-[0.8] tracking-tighter uppercase select-none flex mb-8 md:mb-10 drop-shadow-[0_0_30px_rgba(99,102,241,0.2)]">
               {"NOVA".split("").map((c, i) => (
                 <InteractiveLetter
                   key={i}
@@ -130,12 +130,12 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1 }}
-              className="flex flex-col sm:flex-row items-center gap-8 lg:pr-4"
+              className="flex flex-col sm:flex-row items-center gap-6 md:gap-8 lg:pr-4"
             >
               <Link href="/#projects">
                 <Button
                   variant="secondary"
-                  className="h-12 px-10 text-[10px] font-black tracking-[0.3em] rounded-lg !bg-white !text-black hover:!bg-white/90 transition-all uppercase border-0 active:scale-95 shadow-[0_0_40px_rgba(255,255,255,0.15)] opacity-100 group"
+                  className="h-12 px-8 md:px-10 text-[9px] md:text-[10px] font-black tracking-[0.3em] rounded-lg !bg-white !text-black hover:!bg-white/90 transition-all uppercase border-0 active:scale-95 shadow-[0_0_40px_rgba(255,255,255,0.15)] opacity-100 group"
                 >
                   View Projects
                   <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform ml-2" />
@@ -143,7 +143,7 @@ export function Hero() {
               </Link>
 
               <Link href="/#contact" className="group flex items-center gap-4 text-[9px] font-black tracking-[0.4em] uppercase text-white transition-all py-2">
-                <Fingerprint className="w-5 h-5 text-indigo-300 drop-shadow-[0_0_8px_rgba(129,140,248,0.5)] transition-colors" />
+                <Fingerprint className="w-4 h-4 md:w-5 md:h-5 text-indigo-300 drop-shadow-[0_0_8px_rgba(129,140,248,0.5)] transition-colors" />
                 Contact Us
                 <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
               </Link>

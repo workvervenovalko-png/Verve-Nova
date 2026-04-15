@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { motion } from "framer-motion";
 import {
   BarChart4,
@@ -64,14 +65,14 @@ export function Industries() {
       <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-violet-500/[0.03] blur-[120px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-8 mb-20 text-center md:text-left">
+        <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-6 md:gap-8 mb-16 md:mb-20 text-center md:text-left px-4">
           <div className="max-w-2xl flex flex-col items-center md:items-start">
-            <p className="text-xs font-bold text-indigo-400 uppercase tracking-[0.5em] mb-4">Market Verticals</p>
-            <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter uppercase leading-none">
+            <p className="text-[10px] md:text-xs font-bold text-indigo-400 uppercase tracking-[0.5em] mb-4">Market Verticals</p>
+            <h2 className="text-3xl sm:text-4xl md:text-6xl font-black text-white tracking-tighter uppercase leading-none">
               Sector <span className="text-white/10">Expertise.</span>
             </h2>
           </div>
-          <p className="max-w-xs text-[10px] text-white/20 font-bold uppercase tracking-widest leading-relaxed">
+          <p className="max-w-xs text-[9px] md:text-[10px] text-white/20 font-bold uppercase tracking-widest leading-relaxed">
             We provide specialized engineering for complex business environments.
           </p>
         </div>
@@ -84,15 +85,15 @@ export function Industries() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
-                className="group glass-card p-10 rounded-[2.5rem] hover:glass-card-hover transition-all duration-500 h-full cursor-pointer flex flex-col items-center text-center md:items-start md:text-left"
+                className="group glass-card p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] hover:glass-card-hover transition-all duration-500 h-full cursor-pointer flex flex-col items-center text-center md:items-start md:text-left"
               >
-                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${sector.gradient} flex items-center justify-center mb-10 group-hover:scale-110 group-hover:shadow-[0_0_24px_rgba(99,102,241,0.2)] transition-all duration-500 text-white`}>
-                  {sector.icon}
+                <div className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-gradient-to-br ${sector.gradient} flex items-center justify-center mb-8 md:mb-10 group-hover:scale-110 group-hover:shadow-[0_0_24px_rgba(99,102,241,0.2)] transition-all duration-500 text-white`}>
+                  {sector.icon && React.cloneElement(sector.icon as React.ReactElement<{ className?: string }>, { className: "w-5 h-5 md:w-6 md:h-6" })}
                 </div>
-                <h3 className="text-xl font-black text-white/90 uppercase tracking-tight mb-4 group-hover:text-indigo-400 transition-colors">
+                <h3 className="text-lg md:text-xl font-black text-white/90 uppercase tracking-tight mb-4 group-hover:text-indigo-400 transition-colors">
                   {sector.name}
                 </h3>
-                <p className="text-[13px] md:text-sm text-white/25 font-light leading-relaxed mb-8">
+                <p className="text-xs md:text-sm text-white/25 font-light leading-relaxed mb-6 md:mb-8">
                   {sector.description}
                 </p>
                 <div className="flex items-center gap-2 text-[10px] font-black text-white/20 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all">

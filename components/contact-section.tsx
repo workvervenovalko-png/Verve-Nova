@@ -59,23 +59,23 @@ export function ContactSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 items-center">
           
           {/* Left Content */}
-          <div className="lg:col-span-6 flex flex-col items-center text-center md:items-start md:text-left">
+          <div className="lg:col-span-6 flex flex-col items-center text-center md:items-start md:text-left px-4">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="flex flex-col items-center md:items-start"
+              className="flex flex-col items-center md:items-start w-full"
             >
-              <div className="flex items-center justify-center md:justify-start gap-4 mb-8 w-full">
-                <div className="w-12 h-[1px] bg-gradient-to-r from-transparent to-indigo-500/30" />
+              <div className="flex items-center justify-center md:justify-start gap-4 mb-6 md:mb-8 w-full">
+                <div className="w-12 h-[1px] bg-gradient-to-r from-transparent to-indigo-500/30 hidden md:block" />
                 <span className="text-[10px] font-mono font-bold text-indigo-400 uppercase tracking-[0.4em]">Get in Touch</span>
               </div>
 
-              <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-white tracking-tighter uppercase leading-[0.9] mb-8 text-center md:text-left">
+              <h2 className="text-3xl sm:text-5xl md:text-7xl font-black text-white tracking-tighter uppercase leading-[0.9] mb-6 md:mb-8 text-center md:text-left">
                 Talk to Our <br /> <span className="text-gradient">Specialists.</span>
               </h2>
 
-              <p className="text-[13px] md:text-lg text-white/25 font-light leading-relaxed mb-12 max-w-lg mx-auto md:mx-0">
+              <p className="text-xs sm:text-[13px] md:text-lg text-white/25 font-light leading-relaxed mb-10 md:mb-12 max-w-lg mx-auto md:mx-0">
                 Ready to start your project? Connect with our expert team to discuss your goals and get a clear project plan. We respond quickly to all inquiries.
               </p>
 
@@ -123,7 +123,7 @@ export function ContactSection() {
                          </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                          <div className="space-y-3">
                               <label className="text-[10px] font-bold text-white/25 uppercase tracking-widest ml-1">Email Address</label>
                               <div className="relative">
@@ -132,7 +132,7 @@ export function ContactSection() {
                                         required
                                         type="email"
                                         placeholder="enterprise@client.com"
-                                        className="h-16 pl-14 bg-white/[0.03] border-white/[0.06] rounded-2xl focus:bg-white/[0.05] focus:border-indigo-500/30 transition-all text-sm text-white placeholder:text-white/15"
+                                        className="h-14 md:h-16 pl-14 bg-white/[0.03] border-white/[0.06] rounded-2xl focus:bg-white/[0.05] focus:border-indigo-500/30 transition-all text-sm text-white placeholder:text-white/15"
                                         value={formData.email}
                                         onChange={(e) => setFormData({...formData, email: e.target.value})}
                                    />
@@ -147,7 +147,7 @@ export function ContactSection() {
                                         required
                                         type="tel"
                                         placeholder="+91 00000 00000"
-                                        className="h-16 pl-14 bg-white/[0.03] border-white/[0.06] rounded-2xl focus:bg-white/[0.05] focus:border-indigo-500/30 transition-all text-sm text-white placeholder:text-white/15"
+                                        className="h-14 md:h-16 pl-14 bg-white/[0.03] border-white/[0.06] rounded-2xl focus:bg-white/[0.05] focus:border-indigo-500/30 transition-all text-sm text-white placeholder:text-white/15"
                                         value={formData.phone}
                                         onChange={(e) => setFormData({...formData, phone: e.target.value})}
                                    />
@@ -163,7 +163,7 @@ export function ContactSection() {
                                    value={formData.service} 
                                    onValueChange={(value) => setFormData({...formData, service: value})}
                               >
-                                   <SelectTrigger className="h-16 pl-14 bg-white/[0.03] border-white/[0.06] rounded-2xl focus:bg-white/[0.05] focus:border-indigo-500/30 transition-all text-sm w-full text-white">
+                                   <SelectTrigger className="h-14 md:h-16 pl-14 bg-white/[0.03] border-white/[0.06] rounded-2xl focus:bg-white/[0.05] focus:border-indigo-500/30 transition-all text-sm w-full text-white">
                                         <SelectValue placeholder="Which service do you need?" />
                                    </SelectTrigger>
                                    <SelectContent side="bottom" sideOffset={4} className="rounded-2xl bg-[#111113] border-white/[0.06] shadow-2xl">
@@ -203,16 +203,16 @@ export function ContactSection() {
                     <Button 
                          disabled={isLoading}
                          type="submit"
-                         className="w-full h-16 bg-gradient-to-r from-indigo-600 to-violet-600 hover:shadow-[0_0_32px_rgba(99,102,241,0.3)] text-white font-black rounded-2xl transition-all uppercase text-[10px] tracking-[0.5em] group overflow-hidden relative border-0"
+                         className="w-full h-14 md:h-16 bg-gradient-to-r from-indigo-600 to-violet-600 hover:shadow-[0_0_32px_rgba(99,102,241,0.3)] text-white font-black rounded-2xl transition-all uppercase text-[9px] md:text-[10px] tracking-[0.5em] group overflow-hidden relative border-0"
                     >
                          {isLoading ? (
-                              <Loader2 className="w-4 h-4 animate-spin" />
-                         ) : (
-                              <>
-                                   <span className="relative z-10">Send Message</span>
-                                   <Send className="ml-3 w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform relative z-10" />
-                              </>
-                         )}
+                               <Loader2 className="w-4 h-4 animate-spin" />
+                          ) : (
+                               <>
+                                    <span className="relative z-10">Send Message</span>
+                                    <Send className="ml-3 w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform relative z-10" />
+                               </>
+                          )}
                     </Button>
 
                     <p className="text-[8px] text-center text-white/15 uppercase tracking-widest leading-loose">
