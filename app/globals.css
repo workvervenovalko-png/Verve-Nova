@@ -520,6 +520,16 @@ input.border-slate-100 {
   color: #FAFAFA !important;
 }
 
+/* Force dark background on autofill */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+  -webkit-box-shadow: 0 0 0 1000px #09090B inset !important;
+  -webkit-text-fill-color: #FAFAFA !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 /* ---- Specific Component Fix: country dropdown ---- */
 .bg-white\/95 {
   background-color: rgba(17, 17, 19, 0.95) !important;

@@ -8,7 +8,9 @@ import {
      updateApplicationStatus,
      scheduleInterview,
      createBlog,
-     deleteBlog
+     deleteBlog,
+     searchCandidateByVnId,
+     issueDocument
 } from "@/app/actions/admin";
 import { useRouter } from "next/navigation";
 import { Navbar } from "@/components/navbar";
@@ -33,7 +35,9 @@ import {
      Calendar as CalendarIcon,
      Plus,
      Trash2,
-     BookOpen
+     BookOpen,
+     UploadCloud,
+     FileText
 } from "lucide-react";
 
 import { toast } from "sonner";
@@ -56,23 +60,60 @@ import { cn } from "@/lib/utils";
 
 
 export default function AdminDashboardPage() {
-     const [activeTab, setActiveTab] = useState<"applications" | "leads" | "blogs">("applications");
+     const [activeTab, setActiveTab] = useState<"applications" | "leads" | "blogs" | "issuance">("applications");
      const [applications, setApplications] = useState<any[]>([]);
      const [leads, setLeads] = useState<any[]>([]);
      const [blogs, setBlogs] = useState<any[]>([]);
+
+     // Issuance State
+     const [searchVnId, setSearchVnId] = useState("");
+     const [searchResult, setSearchResult] = useState<any>(null);
+     const [docType, setDocType] = useState<"offer_letter" | "certificate">("offer_letter");
+     const [selectedFile, setSelectedFile] = useState<File | null>(null);
+     const [isSearching, setIsSearching] = useState(false);
+
+     const handleSearchCandidate = async () => {
+          if (!searchVnId) return;
+          setIsSearching(true);
+          setSearchResult(null);
+          const res = await searchCandidateByVnId(searchVnId);
+          if (res.success) {
+               setSearchResult(res.data);
+               toast.success("Candidate located.");
+          } else {
+               toast.error(res.error || "Candidate not found.");
+          }
+          setIsSearching(false);
+     };
+
+     const handleDispatchDocument = async () => {
+          if (!searchResult || !selectedFile) {
+               toast.error("Candidate and document are required.");
+               return;
+          }
+          setIsSubmitting(true);
+          const formData = new FormData();
+          formData.append("email", searchResult.email);
+          formData.append("name", searchResult.name);
+          formData.append("docType", docType);
+          formData.append("file", selectedFile);
+          
+          const res = await issueDocument(formData);
+          if (res.success) {
+               toast.success("Official document dispatched.");
+               setSelectedFile(null);
+               setSearchVnId("");
+               setSearchResult(null);
+          } else {
+               toast.error(res.error || "Dispatch failed.");
+          }
+          setIsSubmitting(false);
+     };
+
      const [isLoading, setIsLoading] = useState(true);
      const [isSubmitting, setIsSubmitting] = useState(false);
      const [isAdmin, setIsAdmin] = useState(false);
      const { data: session, status: authStatus } = useSession();
-
-     // Blog Form State
-     const [blogForm, setBlogForm] = useState({
-          title: "",
-          excerpt: "",
-          content: "",
-          coverImage: ""
-     });
-
 
      const router = useRouter();
 
@@ -103,25 +144,6 @@ export default function AdminDashboardPage() {
           setIsLoading(false);
      };
 
-     const handleCreateBlog = async () => {
-          if (!blogForm.title || !blogForm.content) {
-               toast.error("Title and Content are required.");
-               return;
-          }
-
-          setIsSubmitting(true);
-          const result = await createBlog(blogForm);
-          setIsSubmitting(false);
-
-          if (result.success) {
-               toast.success("Blog published successfully.");
-               setBlogForm({ title: "", excerpt: "", content: "", coverImage: "" });
-               fetchData();
-          } else {
-               toast.error(result.error || "Failed to publish blog.");
-          }
-     };
-
      const handleDeleteBlog = async (id: string) => {
           if (!confirm("Are you sure you want to annihilate this record?")) return;
 
@@ -144,14 +166,19 @@ export default function AdminDashboardPage() {
           }
      };
 
-     const setInterview = async (id: string, date?: any, link?: string) => {
+     const setInterview = async (id: string, date?: any, link?: string, triggerEmail: boolean = false) => {
           if (!date && !link) return;
-          const result = await scheduleInterview(id, date, link);
-
-
-          if (!result.success) toast.error("Failed to set interview.");
-          else {
-               toast.success("Interview scheduled.");
+          if (triggerEmail) setIsSubmitting(true);
+          const result = await scheduleInterview(id, date, link, triggerEmail);
+          
+          if (triggerEmail) {
+               setIsSubmitting(false);
+               if (result.success) toast.success("Interview Invitation Dispatched.");
+               else toast.error("Failed to send invitation.");
+               fetchData();
+          } else {
+               if (result.success) toast.success("Details updated.");
+               else toast.error("Update failed.");
                fetchData();
           }
      };
@@ -206,70 +233,24 @@ export default function AdminDashboardPage() {
                                    >
                                         Blogs
                                    </button>
+                                   <button
+                                        onClick={() => setActiveTab("issuance")}
+                                        className={`px-6 py-3 rounded-xl text-[9px] font-bold uppercase tracking-widest transition-all ${activeTab === 'issuance' ? 'bg-indigo-600 text-white shadow-lg' : 'text-white/30 hover:bg-white/[0.05]'}`}
+                                   >
+                                        Issuance
+                                   </button>
+
                               </div>
                          </div>
 
                          {activeTab === "blogs" && (
                               <div className="flex justify-end mb-8">
-                                   <Dialog>
-                                        <DialogTrigger asChild>
-                                             <Button className="bg-gradient-to-r from-indigo-600 to-violet-600 hover:shadow-[0_0_24px_rgba(99,102,241,0.3)] text-white rounded-xl px-8 h-14 text-[10px] font-bold uppercase tracking-widest flex items-center gap-3 border-0">
-                                                  <Plus className="w-4 h-4" /> New Publication
-                                             </Button>
-                                        </DialogTrigger>
-                                        <DialogContent className="max-w-2xl bg-[#09090B] border-white/[0.08] p-10 rounded-[2.5rem] shadow-2xl">
-                                             <DialogHeader>
-                                                  <DialogTitle className="text-2xl font-black text-white uppercase tracking-tighter leading-none mb-6">Draft New <span className="text-gradient">Insight</span></DialogTitle>
-                                             </DialogHeader>
-                                             <div className="grid gap-8 py-4">
-                                                  <div className="grid gap-2">
-                                                       <label className="text-[10px] font-bold uppercase tracking-widest text-white/20 ml-1">Headline</label>
-                                                       <Input
-                                                            placeholder="ENTER BLOG TITLE"
-                                                            className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] text-[10px] font-bold uppercase text-white placeholder:text-white/10"
-                                                            value={blogForm.title}
-                                                            onChange={(e) => setBlogForm({ ...blogForm, title: e.target.value })}
-                                                       />
-                                                  </div>
-                                                  <div className="grid gap-2">
-                                                       <label className="text-[10px] font-bold uppercase tracking-widest text-white/20 ml-1">Excerpt (Short Summary)</label>
-                                                       <Input
-                                                            placeholder="BRIEF OVERVIEW FOR PREVIEW CARDS"
-                                                            className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] text-xs text-white placeholder:text-white/10"
-                                                            value={blogForm.excerpt}
-                                                            onChange={(e) => setBlogForm({ ...blogForm, excerpt: e.target.value })}
-                                                       />
-                                                  </div>
-                                                  <div className="grid gap-2">
-                                                       <label className="text-[10px] font-bold uppercase tracking-widest text-white/20 ml-1">Intel Content (Full Article)</label>
-                                                       <Textarea
-                                                            placeholder="WRITE YOUR BLOG CONTENT HERE..."
-                                                            className="min-h-[220px] bg-white/[0.03] border-white/[0.06] rounded-[1.5rem] focus:bg-white/[0.05] text-sm leading-relaxed text-white placeholder:text-white/10"
-                                                            value={blogForm.content}
-                                                            onChange={(e) => setBlogForm({ ...blogForm, content: e.target.value })}
-                                                       />
-                                                  </div>
-                                                  <div className="grid gap-2">
-                                                       <label className="text-[10px] font-bold uppercase tracking-widest text-white/20 ml-1">Cover Image URL</label>
-                                                       <Input
-                                                            placeholder="https://..."
-                                                            className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] text-[10px] font-mono text-indigo-400 placeholder:text-white/10"
-                                                            value={blogForm.coverImage}
-                                                            onChange={(e) => setBlogForm({ ...blogForm, coverImage: e.target.value })}
-                                                       />
-                                                  </div>
-                                             </div>
-                                             <DialogFooter className="mt-8">
-                                                  <Button
-                                                       onClick={handleCreateBlog}
-                                                       disabled={isSubmitting}
-                                                       className="w-full h-16 bg-gradient-to-r from-indigo-600 to-violet-600 hover:shadow-[0_0_32px_rgba(99,102,241,0.3)] text-white rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all border-0"
-                                                  >
-                                                       {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : "Authorize Publication"}
-                                                  </Button>
-                                             </DialogFooter>
-                                        </DialogContent>
-                                   </Dialog>
+                                   <Button 
+                                             onClick={() => router.push('/admin/new-blog')}
+                                             className="bg-gradient-to-r from-indigo-600 to-violet-600 hover:shadow-[0_0_24px_rgba(99,102,241,0.3)] text-white rounded-xl px-8 h-14 text-[10px] font-bold uppercase tracking-widest flex items-center gap-3 border-0"
+                                        >
+                                             <Plus className="w-4 h-4" /> Draft Publication
+                                        </Button>
                               </div>
                          )}
 
@@ -333,7 +314,7 @@ export default function AdminDashboardPage() {
                                                                                       mode="single"
                                                                                       selected={app.interviewDate ? new Date(app.interviewDate) : undefined}
                                                                                       onSelect={(date) => {
-                                                                                           if (date) setInterview(app._id, date.toISOString(), app.interviewLink);
+                                                                                           if (date) setInterview(app._id, date.toISOString(), app.interviewLink, false);
                                                                                       }}
                                                                                       initialFocus
                                                                                       className="p-4"
@@ -346,10 +327,20 @@ export default function AdminDashboardPage() {
                                                                                  placeholder="MEET LINK / URL"
                                                                                  className="h-10 text-[9px] font-bold border-white/[0.06] bg-white/[0.02] uppercase rounded-lg pr-10 focus:border-indigo-600 transition-all text-white placeholder:text-white/10"
                                                                                  defaultValue={app.interviewLink || ''}
-                                                                                 onBlur={(e) => setInterview(app._id, app.interviewDate, e.target.value)}
+                                                                                 onBlur={(e) => setInterview(app._id, app.interviewDate, e.target.value, false)}
                                                                             />
                                                                             <Globe className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/10 group-focus-within:text-indigo-600 transition-colors" />
                                                                        </div>
+                                                                        {app.status === 'Interviewing' && (
+                                                                             <Button
+                                                                                  disabled={!app.interviewDate || !app.interviewLink || isSubmitting}
+                                                                                  onClick={() => setInterview(app._id, app.interviewDate, app.interviewLink, true)}
+                                                                                  className="h-10 bg-indigo-600/20 hover:bg-indigo-600 text-indigo-400 hover:text-white border border-indigo-500/30 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all w-full mt-2"
+                                                                             >
+                                                                                  {isSubmitting ? <Loader2 className="w-3 h-3 animate-spin mr-2" /> : <Mail className="w-3 h-3 mr-2" />}
+                                                                                  Send Invite
+                                                                             </Button>
+                                                                        )}
                                                                   </div>
                                                             </td>
                                                             <td className="px-8 py-8 text-right">
@@ -396,6 +387,106 @@ export default function AdminDashboardPage() {
                                              </tbody>
                                         </table>
                                    </div>
+                              
+                              ) : activeTab === "issuance" ? (
+                                   <div className="p-8 md:p-12">
+                                        <div className="max-w-3xl mx-auto space-y-12">
+                                             <div className="space-y-4">
+                                                  <h3 className="text-xl font-black text-white uppercase tracking-tighter">Document Dispatch Control</h3>
+                                                  <p className="text-xs text-white/40 uppercase tracking-widest font-bold">Search and issue verified Offer Letters and Internship Certificates.</p>
+                                             </div>
+
+                                             <div className="space-y-6">
+                                                  <div className="space-y-2">
+                                                       <label className="text-[10px] font-bold text-white/30 uppercase tracking-[0.3em] pl-2">Locate Candidate</label>
+                                                       <div className="flex gap-4">
+                                                            <div className="relative group flex-1">
+                                                                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-focus-within:text-indigo-400 transition-colors" />
+                                                                 <Input 
+                                                                      placeholder="ENTER VN-ID (e.g. VN-2026-ABCD)"
+                                                                      className="h-14 pl-12 bg-white/[0.02] border-white/10 rounded-xl text-white placeholder:text-white/10 text-[11px] font-black tracking-widest uppercase focus:bg-white/[0.05] focus:border-indigo-500/50 transition-all"
+                                                                      value={searchVnId}
+                                                                      onChange={(e) => setSearchVnId(e.target.value)}
+                                                                      onKeyDown={(e) => e.key === 'Enter' && handleSearchCandidate()}
+                                                                 />
+                                                            </div>
+                                                            <Button 
+                                                                 onClick={handleSearchCandidate}
+                                                                 disabled={isSearching || !searchVnId}
+                                                                 className="h-14 px-8 bg-white/5 hover:bg-indigo-600 text-white font-bold rounded-xl tracking-widest uppercase text-[10px] transition-all"
+                                                            >
+                                                                 {isSearching ? <Loader2 className="w-4 h-4 animate-spin" /> : "Verify"}
+                                                            </Button>
+                                                       </div>
+                                                  </div>
+
+                                                  {searchResult && (
+                                                       <motion.div 
+                                                            initial={{ opacity: 0, y: 10 }}
+                                                            animate={{ opacity: 1, y: 0 }}
+                                                            className="p-6 rounded-2xl bg-indigo-500/5 border border-indigo-500/20"
+                                                       >
+                                                            <div className="flex justify-between items-start mb-6">
+                                                                 <div>
+                                                                      <p className="text-[9px] font-black uppercase text-indigo-400 tracking-[0.3em] mb-1">Target Acquired</p>
+                                                                      <h4 className="text-lg font-black text-white uppercase">{searchResult.name}</h4>
+                                                                      <p className="text-xs text-white/50 font-bold tracking-widest">{searchResult.email}</p>
+                                                                 </div>
+                                                                 <span className="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[9px] font-black uppercase tracking-widest text-white/50">{searchResult.role}</span>
+                                                            </div>
+
+                                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-white/5">
+                                                                 <div className="space-y-2">
+                                                                      <label className="text-[9px] font-bold text-white/30 uppercase tracking-[0.3em]">Document Type</label>
+                                                                      <select 
+                                                                           className="w-full h-12 bg-white/[0.02] border border-white/10 rounded-xl text-white px-4 text-[10px] font-bold tracking-widest uppercase focus:outline-none focus:border-indigo-500/50"
+                                                                           value={docType}
+                                                                           onChange={(e: any) => setDocType(e.target.value)}
+                                                                      >
+                                                                           <option value="offer_letter" className="bg-[#09090B]">Offer Letter</option>
+                                                                           <option value="certificate" className="bg-[#09090B]">Internship Certificate</option>
+                                                                      </select>
+                                                                 </div>
+
+                                                                 <div className="space-y-2">
+                                                                      <label className="text-[9px] font-bold text-white/30 uppercase tracking-[0.3em]">Attachment (PDF/Image)</label>
+                                                                      <div className="relative">
+                                                                           <input 
+                                                                                type="file"
+                                                                                accept="application/pdf,image/*"
+                                                                                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                                                                                onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
+                                                                           />
+                                                                           <div className="w-full h-12 bg-white/[0.02] border border-white/10 border-dashed rounded-xl flex items-center justify-center gap-2 group-hover:border-indigo-500/50 transition-colors">
+                                                                                {selectedFile ? (
+                                                                                     <span className="text-[10px] font-bold text-indigo-400 tracking-widest uppercase truncate px-4">{selectedFile.name}</span>
+                                                                                ) : (
+                                                                                     <>
+                                                                                          <UploadCloud className="w-4 h-4 text-white/30 group-hover:text-indigo-400" />
+                                                                                          <span className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Select File</span>
+                                                                                     </>
+                                                                                )}
+                                                                           </div>
+                                                                      </div>
+                                                                 </div>
+                                                            </div>
+
+                                                            <div className="mt-8 flex justify-end">
+                                                                 <Button 
+                                                                      onClick={handleDispatchDocument}
+                                                                      disabled={isSubmitting || !selectedFile}
+                                                                      className="h-14 px-8 bg-gradient-to-r from-indigo-600 to-violet-600 hover:shadow-[0_0_24px_rgba(99,102,241,0.3)] text-white font-bold rounded-xl tracking-[0.2em] uppercase text-[10px] transition-all border-0"
+                                                                 >
+                                                                      {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <FileText className="w-4 h-4 mr-2" />}
+                                                                      Dispatch to Target
+                                                                 </Button>
+                                                            </div>
+                                                       </motion.div>
+                                                  )}
+                                             </div>
+                                        </div>
+                                   </div>
+
                               ) : (
                                    /* Blogs Table */
                                    <div className="overflow-x-auto">

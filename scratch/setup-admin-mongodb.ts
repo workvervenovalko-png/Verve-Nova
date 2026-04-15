@@ -27,7 +27,7 @@ const User = mongoose.models.User || mongoose.model("User", UserSchema);
 async function runSetup() {
   try {
     console.log("Connecting to Verve Nova Database...");
-    await mongoose.connect(MONGODB_URI);
+    await mongoose.connect(MONGODB_URI!);
     
     const adminEmail = "work.vervenova.lko@gmail.com";
     const adminPass = "Puneet@28";

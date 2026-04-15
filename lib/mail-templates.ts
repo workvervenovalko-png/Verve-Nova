@@ -1,85 +1,97 @@
 /**
- * Verve Nova - Official 'Surgical Studio' Email Templates
- * Designed for Obsidian Aurora Aesthetic
+ * Verve Nova - Official Premium Email Templates
+ * Designed for Clarity & High-End Aesthetic
  */
-
-const VERVE_LOGO_SVG = `https://vervenova.tech/icon.svg`; // Fallback to verified image if available
 
 const BRAND_COLORS = {
   indigo: '#6366f1',
   violet: '#8b5cf6',
-  black: '#0A0A0C',
-  gray: '#111113',
-  textMuted: '#666666',
+  black: '#09090b',
+  card: '#121215',
+  border: 'rgba(255, 255, 255, 0.08)',
+  textMain: '#ffffff',
+  textDim: 'rgba(255, 255, 255, 0.5)',
 };
 
 const baseStyle = `
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', -apple-system, sans-serif;
   background-color: ${BRAND_COLORS.black};
-  color: #ffffff;
-  padding: 40px 20px;
+  color: ${BRAND_COLORS.textMain};
+  padding: 40px 10px;
+  margin: 0;
   line-height: 1.6;
 `;
 
 const containerStyle = `
-  max-width: 600px;
+  max-width: 540px;
   margin: 0 auto;
-  background-color: ${BRAND_COLORS.gray};
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background-color: ${BRAND_COLORS.card};
+  border: 1px solid ${BRAND_COLORS.border};
   border-radius: 24px;
-  padding: 48px;
-  text-align: left;
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 `;
 
-const headerStyle = `
-  margin-bottom: 40px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  padding-bottom: 24px;
+const logoArea = `
+  text-align: center;
+  margin-bottom: 32px;
 `;
 
 const titleStyle = `
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: -0.02em;
-  margin: 0 0 10px 0;
+  letter-spacing: -0.01em;
+  margin: 0 0 12px 0;
   color: #ffffff;
 `;
 
-const accentTitleStyle = `
-  font-size: 10px;
+const accentLabel = `
+  font-size: 9px;
   font-weight: 900;
-  letter-spacing: 0.5em;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
   color: ${BRAND_COLORS.indigo};
   display: block;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 `;
 
 const footerStyle = `
-  margin-top: 48px;
+  margin-top: 40px;
   padding-top: 24px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  font-size: 10px;
+  border-top: 1px solid ${BRAND_COLORS.border};
+  font-size: 9px;
   font-weight: 700;
-  color: #333333;
+  color: ${BRAND_COLORS.textDim};
   text-transform: uppercase;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.15em;
   text-align: center;
+`;
+
+const buttonStyle = `
+  display: inline-block;
+  background-color: ${BRAND_COLORS.indigo};
+  color: #ffffff;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 10px;
 `;
 
 export const getContactTemplate = (name: string) => `
 <div style="${baseStyle}">
   <div style="${containerStyle}">
-    <div style="${headerStyle}">
-      <span style="${accentTitleStyle}">Communication // Received</span>
-      <h1 style="${titleStyle}">Query Initialized.</h1>
+    <div style="${logoArea}">
+       <span style="${accentLabel}">Message Received</span>
+       <h1 style="${titleStyle}">Hello ${name},</h1>
     </div>
-    <p>Greetings ${name.toUpperCase()},</p>
-    <p>Your transmission has been successfully received by the Verve Nova digital studio. Our engineering team is currently reviewing your brief with surgical precision.</p>
-    <p>Expect a detailed response within 24 standard business hours.</p>
+    <p style="color: ${BRAND_COLORS.textDim}; font-size: 14px;">Thank you for reaching out to Verve Nova. We've received your inquiry and our team is currently looking into it.</p>
+    <p style="color: ${BRAND_COLORS.textDim}; font-size: 14px;">We usually respond within 24 hours. Hang tight, we'll be in touch very soon.</p>
     <div style="${footerStyle}">
-      © 2026 VERVE NOVA TECHNOLOGIES // MISSION-CRITICAL EXCELLENCE
+      VERVE NOVA TECHNOLOGIES // GLOBAL OPERATIONS
     </div>
   </div>
 </div>
@@ -88,18 +100,18 @@ export const getContactTemplate = (name: string) => `
 export const getWelcomeTemplate = (name: string, vnId: string) => `
 <div style="${baseStyle}">
   <div style="${containerStyle}">
-    <div style="${headerStyle}">
-      <span style="${accentTitleStyle}">Onboarding // Initialized</span>
-      <h1 style="${titleStyle}">Welcome to the Nexus.</h1>
+    <div style="${logoArea}">
+       <span style="${accentLabel}">Onboarding Success</span>
+       <h1 style="${titleStyle}">Welcome to Verve Nova.</h1>
     </div>
-    <p>Greetings ${name.toUpperCase()},</p>
-    <p>You have been successfully integrated into the Verve Nova Candidate Registry. Your unique identification has been generated:</p>
-    <div style="background: rgba(99, 102, 241, 0.1); border: 1px solid ${BRAND_COLORS.indigo}; padding: 20px; border-radius: 12px; text-align: center; margin: 30px 0;">
-      <span style="font-size: 24px; font-weight: 900; color: ${BRAND_COLORS.indigo}; letter-spacing: 0.1em;">${vnId}</span>
+    <p style="color: ${BRAND_COLORS.textDim}; font-size: 14px;">Hi ${name}, your registration is complete. You are now part of our candidate network.</p>
+    <p style="color: ${BRAND_COLORS.textDim}; font-weight: 600; margin-bottom: 8px;">Your Unique Identification ID:</p>
+    <div style="background: rgba(99, 102, 241, 0.05); border: 1px dashed ${BRAND_COLORS.indigo}; padding: 24px; border-radius: 16px; text-align: center; margin: 20px 0;">
+      <span style="font-size: 26px; font-weight: 900; color: #ffffff; letter-spacing: 0.1em;">${vnId}</span>
     </div>
-    <p>Use this ID for all future intelligence audits and mission applications within our studio.</p>
+    <p style="color: ${BRAND_COLORS.textDim}; font-size: 14px;">Please keep this ID handy for future reference and application tracking.</p>
     <div style="${footerStyle}">
-      © 2026 VERVE NOVA TECHNOLOGIES // MISSION-CRITICAL EXCELLENCE
+      VERVE NOVA TECHNOLOGIES // GLOBAL OPERATIONS
     </div>
   </div>
 </div>
@@ -108,15 +120,14 @@ export const getWelcomeTemplate = (name: string, vnId: string) => `
 export const getApplicationTemplate = (name: string, role: string) => `
 <div style="${baseStyle}">
   <div style="${containerStyle}">
-    <div style="${headerStyle}">
-      <span style="${accentTitleStyle}">Application // Staged</span>
-      <h1 style="${titleStyle}">Mission Submission Received.</h1>
+    <div style="${logoArea}">
+       <span style="${accentLabel}">Application Received</span>
+       <h1 style="${titleStyle}">Application Submitted.</h1>
     </div>
-    <p>Greetings ${name.toUpperCase()},</p>
-    <p>Your application for the <strong>${role.toUpperCase()}</strong> position has been successfully staged for review.</p>
-    <p>Our talent architects are currently analyzing your profile against our surgical standards. We will notify you of the next protocol phase shortly.</p>
+    <p style="color: ${BRAND_COLORS.textDim}; font-size: 14px;">Hi ${name}, we've received your application for the <strong>${role}</strong> role.</p>
+    <p style="color: ${BRAND_COLORS.textDim}; font-size: 14px;">Our hiring team is reviewing your profile. If your skills match our requirements, we'll contact you for the next steps.</p>
     <div style="${footerStyle}">
-      © 2026 VERVE NOVA TECHNOLOGIES // MISSION-CRITICAL EXCELLENCE
+      VERVE NOVA TECHNOLOGIES // GLOBAL OPERATIONS
     </div>
   </div>
 </div>
@@ -125,27 +136,32 @@ export const getApplicationTemplate = (name: string, role: string) => `
 export const getInterviewTemplate = (name: string, date: string, link?: string) => `
 <div style="${baseStyle}">
   <div style="${containerStyle}">
-    <div style="${headerStyle}">
-      <span style="${accentTitleStyle}">Interview // Protocol</span>
-      <h1 style="${titleStyle}">Selection Phase Initialized.</h1>
+    <div style="${logoArea}">
+       <span style="${accentLabel}">Next Step</span>
+       <h1 style="${titleStyle}">Interview Invitation.</h1>
     </div>
-    <p>Greetings ${name.toUpperCase()},</p>
-    <p>We have escalated your application to the technical interview phase.</p>
-    <div style="border: 1px solid rgba(255, 255, 255, 0.05); padding: 24px; border-radius: 16px; margin: 24px 0;">
-      <p style="margin: 0 0 10px 0; font-size: 10px; color: #444;">SCHEDULED DATE</p>
-      <p style="margin: 0; font-weight: 800; color: #fff; font-size: 16px;">${date}</p>
+    <p style="color: ${BRAND_COLORS.textDim}; font-size: 14px;">Hello ${name}, we were impressed with your profile and would like to schedule a session to get to know you better.</p>
+    
+    <div style="background: rgba(255,255,255,0.03); border: 1px solid ${BRAND_COLORS.border}; padding: 24px; border-radius: 20px; margin: 24px 0;">
+      <div style="margin-bottom: 20px;">
+        <p style="margin: 0 0 4px 0; font-size: 10px; font-weight: 800; color: ${BRAND_COLORS.indigo}; text-transform: uppercase;">Scheduled Time</p>
+        <p style="margin: 0; font-weight: 700; color: #fff; font-size: 16px;">${date}</p>
+      </div>
       
-      <p style="margin: 20px 0 10px 0; font-size: 10px; color: #444;">G-MEET ACCESS</p>
-      ${link ? `
-        <a href="${link}" style="display: block; background: ${BRAND_COLORS.indigo}; color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 800; text-align: center; font-size: 12px; text-transform: uppercase;">Join Intelligence Brief</a>
-      ` : `
-        <div style="color: #6366f1; font-weight: 800; font-size: 12px; line-height: 1.4;">
-          For G-Meet link, contact: +91 7380663685
-        </div>
-      `}
+      <div>
+        <p style="margin: 0 0 8px 0; font-size: 10px; font-weight: 800; color: ${BRAND_COLORS.indigo}; text-transform: uppercase;">Interview Link</p>
+        ${link ? `
+          <a href="${link}" style="${buttonStyle}">Join Session</a>
+        ` : `
+          <p style="color: #fff; font-size: 13px; font-weight: 600; margin: 0;">Link will be provided shortly. <br/> <span style="font-size: 11px; opacity: 0.5;">Contact +91 7380663685 for help.</span></p>
+        `}
+      </div>
     </div>
+
+    <p style="color: ${BRAND_COLORS.textDim}; font-size: 13px;">Please ensure you have a stable internet connection and are in a quiet environment.</p>
+
     <div style="${footerStyle}">
-      © 2026 VERVE NOVA TECHNOLOGIES // MISSION-CRITICAL EXCELLENCE
+      VERVE NOVA TECHNOLOGIES // GLOBAL OPERATIONS
     </div>
   </div>
 </div>
@@ -153,25 +169,68 @@ export const getInterviewTemplate = (name: string, date: string, link?: string) 
 
 export const getStatusTemplate = (name: string, status: string) => {
   const isAccepted = status.toLowerCase() === 'accepted';
-  const color = isAccepted ? '#10b981' : '#ef4444';
-  const title = isAccepted ? 'Mission Approved.' : 'Mission Concluded.';
+  const color = isAccepted ? '#10b981' : '#f87171';
+  const title = isAccepted ? 'Congratulations!' : 'Update on your Application';
   const message = isAccepted 
-    ? 'Your application has been successfully accepted into the Verve Nova studio. Welcome to the elite core.'
-    : 'We have concluded our review phase for your current application. Although we are not moving forward at this time, your credentials remain in our high-priority registry.';
+    ? `We are happy to inform you that you have been selected. Welcome to the Verve Nova team!`
+    : `Thank you for your interest in Verve Nova. After careful review, we've decided to move forward with other candidates. We'll keep your profile in our database for future openings.`;
 
   return `
 <div style="${baseStyle}">
   <div style="${containerStyle}">
-    <div style="${headerStyle}">
-      <span style="${accentTitleStyle}">Application // Result</span>
-      <h1 style="${titleStyle}; color: ${color};">${title}</h1>
+    <div style="${logoArea}">
+       <span style="${accentLabel}">Application Status</span>
+       <h1 style="${titleStyle}; color: ${color};">${title}</h1>
     </div>
-    <p>Greetings ${name.toUpperCase()},</p>
-    <p>${message}</p>
+    <p style="color: #fff; font-size: 15px; font-weight: 600;">Hi ${name},</p>
+    <p style="color: ${BRAND_COLORS.textDim}; font-size: 14px; line-height: 1.6;">${message}</p>
     <div style="${footerStyle}">
-      © 2026 VERVE NOVA TECHNOLOGIES // MISSION-CRITICAL EXCELLENCE
+      VERVE NOVA TECHNOLOGIES // GLOBAL OPERATIONS
     </div>
   </div>
 </div>
   `;
 };
+
+export const getOfferLetterTemplate = (name: string) => `
+<div style="${baseStyle}">
+  <div style="${containerStyle}">
+    <div style="${logoArea}">
+       <span style="${accentLabel}">Official Document</span>
+       <h1 style="${titleStyle}">Offer of Employment.</h1>
+    </div>
+    <p style="color: #fff; font-size: 15px; font-weight: 600;">Congratulations ${name},</p>
+    <p style="color: ${BRAND_COLORS.textDim}; font-size: 14px; line-height: 1.6;">We are thrilled to officially offer you a position at Verve Nova Technologies. Your exceptional skills and alignment with our vision have distinguished your profile.</p>
+    <p style="color: ${BRAND_COLORS.textDim}; font-size: 14px; line-height: 1.6;">Please find your official Offer Letter attached to this secure transmission. It contains all the details regarding your role, compensation, and onboarding process.</p>
+    
+    <div style="background: rgba(99, 102, 241, 0.05); border: 1px dashed ${BRAND_COLORS.indigo}; padding: 24px; border-radius: 16px; text-align: center; margin: 24px 0;">
+      <p style="margin: 0 0 8px 0; font-size: 10px; font-weight: 800; color: ${BRAND_COLORS.indigo}; text-transform: uppercase;">Action Required</p>
+      <p style="margin: 0; color: #fff; font-size: 13px;">Please review the attached document, sign it, and revert back to finalize your onboarding.</p>
+    </div>
+
+    <div style="${footerStyle}">
+      VERVE NOVA TECHNOLOGIES // GLOBAL OPERATIONS
+    </div>
+  </div>
+</div>
+`;
+
+export const getCertificateTemplate = (name: string) => `
+<div style="${baseStyle}">
+  <div style="${containerStyle}">
+    <div style="${logoArea}">
+       <span style="${accentLabel}">Official Document</span>
+       <h1 style="${titleStyle}">Certificate of Completion.</h1>
+    </div>
+    <p style="color: #fff; font-size: 15px; font-weight: 600;">Congratulations ${name},</p>
+    <p style="color: ${BRAND_COLORS.textDim}; font-size: 14px; line-height: 1.6;">You have successfully completed your tenure with Verve Nova Technologies. Your dedication, technical prowess, and contribution to our projects have been exemplary.</p>
+    <p style="color: ${BRAND_COLORS.textDim}; font-size: 14px; line-height: 1.6;">Please find your official Internship Certificate attached to this email. This document serves as a verified record of your valuable time at our studio.</p>
+    
+    <p style="color: ${BRAND_COLORS.textDim}; font-size: 14px; line-height: 1.6; margin-top: 24px;">We wish you the very best in your future endeavors. Your credentials will permanently remain in our high-priority alumni registry.</p>
+
+    <div style="${footerStyle}">
+      VERVE NOVA TECHNOLOGIES // GLOBAL OPERATIONS
+    </div>
+  </div>
+</div>
+`;

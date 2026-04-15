@@ -19,6 +19,7 @@ export default function CareersAuthPage() {
   const [activeTab, setActiveTab] = useState<"login" | "register">("register");
   const [authStep, setAuthStep] = useState<"input" | "review">("input");
   const [isLoading, setIsLoading] = useState(false);
+  const [authError, setAuthError] = useState<string | null>(null);
   const [isCountryListOpen, setIsCountryListOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
@@ -33,6 +34,7 @@ export default function CareersAuthPage() {
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
+    setAuthError(null);
     if (activeTab === "register" && authStep === "input") {
       setAuthStep("review");
       return;
@@ -73,7 +75,14 @@ export default function CareersAuthPage() {
           redirect: false,
         });
 
-        if (result?.error) throw new Error(result.error);
+        if (result?.error) {
+          let errorMessage = "Studio access denied. Unauthorized identity.";
+          if (result.error === "CredentialsSignin") {
+            errorMessage = "Invalid coordinates or security key. Please verify your identity.";
+          }
+          throw new Error(errorMessage);
+        }
+
         if (result?.ok) {
           toast.success("Welcome back to the Arena.");
           const session = await getSession();
@@ -85,6 +94,8 @@ export default function CareersAuthPage() {
         }
       }
     } catch (error: any) {
+      console.error("AUTH_ERROR_LOG:", error.message);
+      setAuthError(error.message);
       toast.error(error.message || "An authentication error occurred.");
     } finally {
       setIsLoading(false);
@@ -241,10 +252,11 @@ export default function CareersAuthPage() {
                                     <button 
                                       type="button"
                                       onClick={() => setIsCountryListOpen(!isCountryListOpen)}
-                                      className="absolute left-10 top-1/2 -translate-y-1/2 z-20 flex items-center gap-2 px-2 py-1.5 bg-white/5 border border-white/10 rounded-lg h-8 transition-colors hover:bg-white/10"
+                                      className="absolute left-10 top-1/2 -translate-y-1/2 z-20 flex items-center gap-2 px-2 py-1.5 bg-white/10 border border-white/20 rounded-lg h-8 transition-colors hover:bg-white/20 shadow-sm"
                                     >
-                                      <span className="text-sm">{formData.countryCode.flag}</span>
-                                      <ChevronDown className={`w-2.5 h-2.5 text-white/30 transition-transform ${isCountryListOpen ? 'rotate-180' : ''}`} />
+                                      <span className="text-sm brightness-125">{formData.countryCode.flag}</span>
+                                      <span className="text-[11px] font-black text-indigo-400 transition-colors">{formData.countryCode.code}</span>
+                                      <ChevronDown className={`w-3 h-3 text-white/40 transition-transform ${isCountryListOpen ? 'rotate-180' : ''}`} />
                                     </button>
 
                                     <Input 
@@ -327,6 +339,21 @@ export default function CareersAuthPage() {
                             </div>
                           </div>
                         )}
+
+                        
+                        <AnimatePresence>
+                          {authError && (
+                            <motion.div 
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: 'auto' }}
+                              exit={{ opacity: 0, height: 0 }}
+                              className="px-4 py-3 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center gap-3 overflow-hidden mt-4"
+                            >
+                              <XCircle className="w-4 h-4 text-red-500 shrink-0" />
+                              <span className="text-[10px] font-black uppercase tracking-widest text-red-200 leading-none">{authError}</span>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
 
                         <Button 
                           disabled={isLoading}

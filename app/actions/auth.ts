@@ -43,7 +43,7 @@ export async function registerUser(formData: {
       const { getWelcomeTemplate } = await import("@/lib/mail-templates");
       
       await resend.emails.send({
-        from: 'Verve Nova <onboarding@vervenovatech.com>',
+        from: 'Verve Nova Tech <onboarding@vervenovatech.com>',
         to: formData.email,
         subject: 'ONBOARDING INITIALIZED // VERVE NOVA',
         html: getWelcomeTemplate(formData.fullName, vnID),

@@ -6,6 +6,8 @@ import clientPromise from "./mongodb-client";
 import User from "@/models/User";
 import bcrypt from "bcryptjs";
 
+console.log(">>> [AUTH_SYSTEM] lib/auth.ts LOADED");
+
 export const authOptions: any = {
   adapter: MongoDBAdapter(clientPromise),
   providers: [
@@ -20,30 +22,52 @@ export const authOptions: any = {
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
+        console.log("**************************************************");
+        console.log(">>> [AUTH_SYSTEM] AUTHORIZE TRIGGERED");
+        console.log("**************************************************");
+        
         if (!credentials?.email || !credentials?.password) {
+          console.log(">>> [AUTH_SYSTEM] Missing Credentials");
           throw new Error("Invalid credentials");
         }
 
-        await dbConnect();
-        const user = await User.findOne({ email: credentials.email });
+        const email = credentials.email.trim().toLowerCase();
+        const password = credentials.password;
 
-        if (!user || !user.password) {
-          throw new Error("User not found");
+        console.log(`>>> [AUTH_SYSTEM] Attempting for: ${email}`);
+
+        try {
+          await dbConnect();
+          console.log(">>> [AUTH_SYSTEM] DB Connected");
+
+          const user = await User.findOne({ email });
+
+          if (!user || !user.password) {
+            console.log(`>>> [AUTH_SYSTEM] User not found: ${email}`);
+            throw new Error("User not found");
+          }
+
+          console.log(`>>> [AUTH_SYSTEM] User found, comparing password...`);
+          const isValid = await bcrypt.compare(password, user.password);
+
+          if (!isValid) {
+            console.log(`>>> [AUTH_SYSTEM] Password mismatch for: ${email}`);
+            throw new Error("Invalid password");
+          }
+
+          console.log(`>>> [AUTH_SYSTEM] SUCCESS: ${email}`);
+
+          return {
+            id: user._id.toString(),
+            email: user.email,
+            name: user.name,
+            role: user.role,
+            vn_id: user.vn_id
+          };
+        } catch (err: any) {
+          console.log(`>>> [AUTH_SYSTEM] CRITICAL ERROR:`, err.message);
+          throw err;
         }
-
-        const isValid = await bcrypt.compare(credentials.password, user.password);
-
-        if (!isValid) {
-          throw new Error("Invalid password");
-        }
-
-        return {
-          id: user._id.toString(),
-          email: user.email,
-          name: user.name,
-          role: user.role,
-          vn_id: user.vn_id
-        };
       }
     })
   ],
