@@ -88,11 +88,14 @@ export function Hero() {
             className="relative z-20 flex flex-col items-start lg:ml-[5%] xl:ml-[10%]"
           >
 
-            <h1 className="text-[15vw] lg:text-[11vw] font-black text-white leading-[0.8] tracking-tighter uppercase select-none flex mb-8">
+            <h1 className="sr-only">
+              Verve Nova Tech (VNT) - Top Website Company and Software Company in Lucknow. VNT Global offers enterprise technology, AI solutions, and software development.
+            </h1>
+            <div role="heading" aria-level={2} className="text-[15vw] lg:text-[11vw] font-black text-white leading-[0.8] tracking-tighter uppercase select-none flex mb-8">
               {"VERVE".split("").map((c, i) => (
                 <InteractiveLetter key={i} char={c} index={i} className="text-white hover:text-indigo-400" />
               ))}
-            </h1>
+            </div>
 
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -112,7 +115,7 @@ export function Hero() {
             style={{ x: x2, y: y2 }}
             className="relative z-20 flex flex-col items-start lg:items-end lg:mr-[5%] xl:mr-[10%] lg:-mt-10"
           >
-            <h1 className="text-[15vw] lg:text-[11vw] font-black text-white leading-[0.8] tracking-tighter uppercase select-none flex mb-10 drop-shadow-[0_0_30px_rgba(99,102,241,0.2)]">
+            <div role="heading" aria-level={2} className="text-[15vw] lg:text-[11vw] font-black text-white leading-[0.8] tracking-tighter uppercase select-none flex mb-10 drop-shadow-[0_0_30px_rgba(99,102,241,0.2)]">
               {"NOVA".split("").map((c, i) => (
                 <InteractiveLetter
                   key={i}
@@ -121,7 +124,7 @@ export function Hero() {
                   className="text-gradient-aurora"
                 />
               ))}
-            </h1>
+            </div>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
