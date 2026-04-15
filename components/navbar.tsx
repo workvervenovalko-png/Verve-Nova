@@ -153,57 +153,134 @@ export function Navbar() {
           {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
 
-        {/* Mobile menu - refined for robustness */}
+        {/* Full-Screen Mobile Menu Overhaul */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              initial={{ opacity: 0, y: -10, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -10, scale: 0.95 }}
-              className="absolute top-full left-1/2 -translate-x-1/2 w-[calc(100vw-2rem)] max-w-[400px] bg-[#111113]/98 backdrop-blur-3xl mt-4 p-8 md:p-10 flex flex-col items-center gap-6 md:gap-8 rounded-[2rem] md:rounded-[2.5rem] border border-white/[0.08] shadow-[0_32px_64px_rgba(0,0,0,0.6)] z-[200]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 w-screen h-screen bg-[#09090B]/95 backdrop-blur-3xl z-[200] md:hidden flex flex-col items-center justify-between p-12 overflow-hidden"
             >
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className="text-[11px] font-black text-white/80 uppercase tracking-[0.4em] hover:text-indigo-400 transition-colors"
-                >
-                  {link.name}
-                </Link>
-              ))}
-              {status === 'authenticated' ? (
-                <>
-                  <Link
-                    href={session?.user?.role === 'ADMIN' ? '/admin' : '/profile'}
+              {/* Background Accents for depth */}
+              <div className="absolute inset-0 mesh-gradient-1 opacity-20 pointer-events-none" />
+              <div className="absolute inset-0 dot-grid opacity-10 pointer-events-none" />
+              
+              {/* Close Button - positioned to align with nav logo */}
+              <div className="w-full flex justify-end">
+                  <button 
                     onClick={() => setIsOpen(false)}
-                    className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.5em]"
+                    className="w-12 h-12 rounded-full bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-white"
                   >
-                    {session?.user?.role === 'ADMIN' ? "Admin Portal" : "My Profile"}
-                  </Link>
-
-                  <button
-                    onClick={() => {
-                      setIsOpen(false);
-                      signOut();
-                    }}
-                    className="text-[10px] font-black text-red-400 uppercase tracking-[0.5em]"
-                  >
-                    Logout
+                    <X className="w-6 h-6" />
                   </button>
-                </>
-              ) : (
-                isCareersPage && (
-                  <Link
-                    href="/careers/auth"
-                    onClick={() => setIsOpen(false)}
-                    className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.5em]"
-                  >
-                    Login
-                  </Link>
-                )
-              )}
+              </div>
 
+              {/* Staggered Links */}
+              <motion.div 
+                className="flex flex-col items-center gap-8 w-full"
+                initial="closed"
+                animate="open"
+                variants={{
+                  open: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
+                  closed: { transition: { staggerChildren: 0.05, staggerDirection: -1 } }
+                }}
+              >
+                {navLinks.map((link) => (
+                  <motion.div
+                    key={link.name}
+                    variants={{
+                      open: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
+                      closed: { opacity: 0, y: 20 }
+                    }}
+                  >
+                    <Link
+                      href={link.href}
+                      onClick={() => setIsOpen(false)}
+                      className="text-2xl sm:text-3xl font-black text-white/90 uppercase tracking-[0.4em] hover:text-indigo-400 transition-colors relative group"
+                    >
+                      {link.name}
+                      <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-1 bg-indigo-500 rounded-full group-hover:w-full transition-all duration-500" />
+                    </Link>
+                  </motion.div>
+                ))}
+
+                {status === 'authenticated' ? (
+                  <motion.div
+                    variants={{
+                      open: { opacity: 1, y: 0 },
+                      closed: { opacity: 0, y: 20 }
+                    }}
+                    className="flex flex-col items-center gap-6 mt-4"
+                  >
+                     <Link
+                      href={session?.user?.role === 'ADMIN' ? '/admin' : '/profile'}
+                      onClick={() => setIsOpen(false)}
+                      className="text-sm font-black text-indigo-400 uppercase tracking-[0.5em]"
+                    >
+                      {session?.user?.role === 'ADMIN' ? "Admin Portal" : "My Profile"}
+                    </Link>
+                    <button
+                      onClick={() => {
+                        setIsOpen(false);
+                        signOut();
+                      }}
+                      className="text-sm font-black text-red-500/60 uppercase tracking-[0.5em]"
+                    >
+                      Logout Session
+                    </button>
+                  </motion.div>
+                ) : (
+                  isCareersPage && (
+                    <motion.div
+                      variants={{
+                        open: { opacity: 1, y: 0 },
+                        closed: { opacity: 0, y: 20 }
+                      }}
+                    >
+                      <Link
+                        href="/careers/auth"
+                        onClick={() => setIsOpen(false)}
+                        className="text-sm font-black text-indigo-400 uppercase tracking-[0.5em]"
+                      >
+                        Portal Login
+                      </Link>
+                    </motion.div>
+                  )
+                )}
+              </motion.div>
+
+              {/* Menu Footer */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 }}
+                className="w-full flex flex-col items-center gap-10"
+              >
+                <div className="h-px w-20 bg-white/10" />
+                
+                <div className="flex flex-col items-center gap-3">
+                  <span className="text-[8px] font-black text-white/20 uppercase tracking-[0.6em]">Reach Out</span>
+                  <a href="mailto:work.vervenova.lko@gmail.com" className="text-[10px] font-bold text-white/40 tracking-wider">work.vervenova.lko@gmail.com</a>
+                </div>
+
+                <div className="flex items-center gap-6">
+                  {/* Social placeholders for now - matching Footer style */}
+                  <div className="w-10 h-10 rounded-xl border border-white/[0.06] flex items-center justify-center text-white/20">
+                    <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                  </div>
+                  <div className="w-10 h-10 rounded-xl border border-white/[0.06] flex items-center justify-center text-white/20">
+                    <div className="w-1.5 h-1.5 rounded-full bg-violet-500" />
+                  </div>
+                  <div className="w-10 h-10 rounded-xl border border-white/[0.06] flex items-center justify-center text-white/20">
+                    <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+                  </div>
+                </div>
+
+                <p className="text-[7px] font-black text-white/10 uppercase tracking-[0.8em] select-none">
+                  Verve Nova Tech Studio
+                </p>
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
