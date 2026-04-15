@@ -23,7 +23,7 @@ export function Testimonials() {
     <section className="py-28 bg-[#0C0C0F] relative overflow-hidden section-glow">
       {/* Ambient glow */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/[0.04] rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
-      
+
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16">
           <div className="max-w-xl">
@@ -32,9 +32,9 @@ export function Testimonials() {
               Trusted by <span className="text-white/10">People Globally</span>
             </h2>
           </div>
-          
-          <Link 
-            href="/testimonials" 
+
+          <Link
+            href="/testimonials"
             className="group flex items-center gap-3 text-[10px] font-bold text-white/40 uppercase tracking-widest hover:text-indigo-400 transition-colors"
           >
             View All 30+ Reviews <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

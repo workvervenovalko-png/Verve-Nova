@@ -14,23 +14,23 @@ export function Footer() {
     studio: [
       { name: "The Brief", href: "/about" },
       { name: "Careers", href: "/careers" },
-      { name: "Succcess", href: "/success" },
+      { name: "Success", href: "/testimonials" },
       { name: "Newsroom", href: "/blog" },
-      { name: "Partners", href: "/partners" },
+      { name: "Partners", href: "/registry" },
     ],
     expertise: [
-      { name: "Software Eng.", href: "/#services" },
-      { name: "AI Automation", href: "/#services" },
-      { name: "Cloud Ops", href: "/#services" },
-      { name: "Cybersecurity", href: "/#services" },
-      { name: "Blockchain", href: "/#services" },
+      { name: "Software Eng.", href: "/software-engineering" },
+      { name: "AI Automation", href: "/ai-automation" },
+      { name: "Cloud Ops", href: "/cloud-infrastructure" },
+      { name: "Cybersecurity", href: "/cybersecurity" },
+      { name: "Enterprise Solutions", href: "/enterprise-solutions" },
     ],
     registry: [
       { name: "Privacy Protocol", href: "/privacy" },
       { name: "Service Terms", href: "/terms" },
       { name: "Cookie Policy", href: "/cookies" },
-      { name: "NDA Compliance", href: "#" },
-      { name: "Govt. Udyam", href: "#" },
+      { name: "NDA Compliance", href: "/nda" },
+      { name: "Govt. Udyam", href: "/registry" },
     ]
   };
 

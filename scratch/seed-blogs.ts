@@ -21,7 +21,7 @@ As we look toward the future, the integration of Large Action Models (LAMs) will
 Our approach at Verve Nova involves 'Zero Trust' architecture combined with edge computing. By moving security to the network's periphery, we reduce latency while maintaining bank-level encryption for every packet of data transferred.
 
 Modern infrastructure must be resilient to both traditional penetration attempts and emerging quantum-level threats. We are exploring lattice-based cryptography to future-proof our clients' data against the next decade of cryptographic advancements. Our global node distribution ensures that even in the event of regional outages, your critical systems remain operational with sub-50ms failover times.`,
-    coverImage: "https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&q=80&w=1000",
+    coverImage: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1000",
     author: "Infrastructure Ops",
   },
   {
