@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter, Poppins } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
@@ -13,6 +13,13 @@ const poppins = Poppins({
   subsets: ["latin"],
   variable: '--font-poppins',
 });
+
+export const viewport: Viewport = {
+  themeColor: '#000000',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://vervenovatech.com'), // Replace with your actual domain
@@ -44,6 +51,15 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
+  icons: {
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/icon-dark-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    shortcut: '/icon-dark-32x32.png',
+    apple: '/apple-icon.png',
+  },
+  manifest: '/manifest.json',
   openGraph: {
     title: 'Verve Nova Tech | Top Website & Software Company in Lucknow',
     description: 'Verve Nova Tech (VNT) is a leading software and website company in Lucknow, delivering cutting-edge digital solutions globally.',
@@ -79,6 +95,9 @@ export const metadata: Metadata = {
   },
   verification: {
     google: 'GfKcs2U6i040Xdk3gc6yBf27eDH2FyIyiqlP4GxQgYE',
+  },
+  alternates: {
+    canonical: 'https://vervenovatech.com',
   },
   generator: 'v0.app',
 }
