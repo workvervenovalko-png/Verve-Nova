@@ -54,7 +54,25 @@ export async function updateApplicationStatus(appId: string, status: string) {
     }
 
     await dbConnect();
-    await VerveApplication.findByIdAndUpdate(appId, { status });
+    const app = await VerveApplication.findByIdAndUpdate(appId, { status }, { new: true }).populate('userId', 'name email');
+    
+    // Send Status Update Email (Accepted/Rejected)
+    if (app && (status === 'Accepted' || status === 'Rejected')) {
+      try {
+        const { resend } = await import("@/lib/resend");
+        const { getStatusTemplate } = await import("@/lib/mail-templates");
+        
+        await resend.emails.send({
+          from: 'Verve Nova <careers@vervenova.tech>',
+          to: (app.userId as any).email,
+          subject: `APPLICATION ${status.toUpperCase()} // VERVE NOVA`,
+          html: getStatusTemplate((app.userId as any).name, status),
+        });
+      } catch (mailError) {
+        console.error("Mail Error (Non-blocking):", mailError);
+      }
+    }
+
     return { success: true };
   } catch (error: any) {
     return { success: false, error: error.message };
@@ -74,9 +92,26 @@ export async function scheduleInterview(appId: string, interviewDate?: string, i
     if (interviewLink !== undefined) update.interviewLink = interviewLink;
 
     console.log("Scheduling Interview Update (VerveApplication):", { appId, update });
-    const result = await VerveApplication.findByIdAndUpdate(appId, update, { new: true });
-    console.log("Update Result:", result);
+    const app = await VerveApplication.findByIdAndUpdate(appId, update, { new: true }).populate('userId', 'name email');
+    console.log("Update Result:", app);
     
+    // Send Interview Email
+    if (app && interviewDate) {
+      try {
+        const { resend } = await import("@/lib/resend");
+        const { getInterviewTemplate } = await import("@/lib/mail-templates");
+        
+        await resend.emails.send({
+          from: 'Verve Nova <careers@vervenova.tech>',
+          to: (app.userId as any).email,
+          subject: 'INTERVIEW PROTOCOL INITIALIZED // VERVE NOVA',
+          html: getInterviewTemplate((app.userId as any).name, new Date(interviewDate).toLocaleString(), interviewLink),
+        });
+      } catch (mailError) {
+        console.error("Mail Error (Non-blocking):", mailError);
+      }
+    }
+
     return { success: true };
   } catch (error: any) {
     return { success: false, error: error.message };

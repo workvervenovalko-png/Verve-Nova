@@ -37,6 +37,21 @@ export async function registerUser(formData: {
       role: "CANDIDATE"
     });
 
+    // Send Welcome Email
+    try {
+      const { resend } = await import("@/lib/resend");
+      const { getWelcomeTemplate } = await import("@/lib/mail-templates");
+      
+      await resend.emails.send({
+        from: 'Verve Nova <onboarding@vervenova.tech>',
+        to: formData.email,
+        subject: 'ONBOARDING INITIALIZED // VERVE NOVA',
+        html: getWelcomeTemplate(formData.fullName, vnID),
+      });
+    } catch (mailError) {
+      console.error("Mail Error (Non-blocking):", mailError);
+    }
+
     return { success: true, vn_id: vnID };
   } catch (error: any) {
     console.error("Registration Error:", error);

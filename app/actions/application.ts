@@ -27,6 +27,24 @@ export async function submitApplication(data: any) {
       links: data.links,
     });
 
+    // Send Application Received Email
+    try {
+      const { resend } = await import("@/lib/resend");
+      const { getApplicationTemplate } = await import("@/lib/mail-templates");
+      
+      const user = await User.findById(session.user.id).select('name email');
+      if (user) {
+        await resend.emails.send({
+          from: 'Verve Nova <careers@vervenova.tech>',
+          to: user.email,
+          subject: 'APPLICATION STAGED // VERVE NOVA',
+          html: getApplicationTemplate(user.name, data.roleSlug),
+        });
+      }
+    } catch (mailError) {
+      console.error("Mail Error (Non-blocking):", mailError);
+    }
+
     return { success: true, data: JSON.parse(JSON.stringify(application)) };
   } catch (error: any) {
     console.error("Application Error:", error);
