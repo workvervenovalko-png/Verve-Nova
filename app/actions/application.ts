@@ -8,7 +8,7 @@ import { authOptions } from "@/lib/auth";
 
 export async function submitApplication(data: any) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await getServerSession(authOptions) as any;
     if (!session || !session.user) {
       return { success: false, error: "Authentication Required" };
     }
@@ -54,8 +54,8 @@ export async function submitApplication(data: any) {
 
 export async function getApplications() {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session || session.user.role !== 'ADMIN') {
+    const session = await getServerSession(authOptions) as any;
+    if (!session || session.user?.role !== 'ADMIN') {
       return { success: false, error: "Unauthorized" };
     }
 
@@ -72,7 +72,7 @@ export async function getApplications() {
 
 export async function getCandidateData() {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await getServerSession(authOptions) as any;
     if (!session || !session.user) {
       return { success: false, error: "Authentication Required" };
     }
@@ -96,4 +96,3 @@ export async function getCandidateData() {
     return { success: false, error: error.message };
   }
 }
-

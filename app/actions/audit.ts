@@ -8,7 +8,7 @@ import { authOptions } from "@/lib/auth";
 
 export async function getDetailedAudit(applicationId: string) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await getServerSession(authOptions) as any;
     if (!session) {
       return { success: false, error: "Authentication required." };
     }

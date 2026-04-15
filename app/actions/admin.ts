@@ -10,8 +10,8 @@ import { authOptions } from "@/lib/auth";
 
 export async function getAdminData() {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session || session.user.role !== 'ADMIN') {
+    const session = await getServerSession(authOptions) as any;
+    if (!session || session.user?.role !== 'ADMIN') {
       return { success: false, error: "Unauthorized access detected." };
     }
 
@@ -48,8 +48,8 @@ export async function getAdminData() {
 
 export async function updateApplicationStatus(appId: string, status: string) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session || session.user.role !== 'ADMIN') {
+    const session = await getServerSession(authOptions) as any;
+    if (!session || session.user?.role !== 'ADMIN') {
       return { success: false, error: "Unauthorized" };
     }
 
@@ -81,8 +81,8 @@ export async function updateApplicationStatus(appId: string, status: string) {
 
 export async function scheduleInterview(appId: string, interviewDate?: string, interviewLink?: string) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session || session.user.role !== 'ADMIN') {
+    const session = await getServerSession(authOptions) as any;
+    if (!session || session.user?.role !== 'ADMIN') {
       return { success: false, error: "Unauthorized" };
     }
 
@@ -120,8 +120,8 @@ export async function scheduleInterview(appId: string, interviewDate?: string, i
 
 export async function createBlog(data: { title: string; excerpt: string; content: string; coverImage?: string }) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session || session.user.role !== 'ADMIN') {
+    const session = await getServerSession(authOptions) as any;
+    if (!session || session.user?.role !== 'ADMIN') {
       return { success: false, error: "Unauthorized" };
     }
 
@@ -148,8 +148,8 @@ export async function createBlog(data: { title: string; excerpt: string; content
 
 export async function deleteBlog(blogId: string) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session || session.user.role !== 'ADMIN') {
+    const session = await getServerSession(authOptions) as any;
+    if (!session || session.user?.role !== 'ADMIN') {
       return { success: false, error: "Unauthorized" };
     }
 

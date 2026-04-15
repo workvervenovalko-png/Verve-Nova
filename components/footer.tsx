@@ -84,11 +84,11 @@ export function Footer() {
                 </div>
                 <span className="text-sm font-black text-white/60 group-hover:text-indigo-400 transition-colors tracking-wider">+91 7380663685</span>
               </a>
-              <a href="mailto:hello@vervenova.tech" className="flex items-center gap-4 group md:translate-x-[-4px]">
+              <a href="mailto:work.vervenova.lko@gmail.com" className="flex items-center gap-4 group md:translate-x-[-4px]">
                 <div className="w-10 h-10 rounded-xl bg-white/[0.04] flex items-center justify-center text-white/20 group-hover:bg-indigo-600 group-hover:text-white transition-all shadow-sm border border-white/[0.06]">
                   <Mail className="w-4 h-4" />
                 </div>
-                <span className="text-sm font-black text-white/60 group-hover:text-indigo-400 transition-colors tracking-wider">hello@vervenova.tech</span>
+                <span className="text-sm font-black text-white/60 group-hover:text-indigo-400 transition-colors tracking-wider">work.vervenova.lko@gmail.com</span>
               </a>
             </div>
 
