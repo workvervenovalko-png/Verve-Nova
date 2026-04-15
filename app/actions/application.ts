@@ -35,7 +35,7 @@ export async function submitApplication(data: any) {
       const user = await User.findById(session.user.id).select('name email');
       if (user) {
         await resend.emails.send({
-          from: 'Verve Nova <careers@vervenova.tech>',
+          from: 'Verve Nova <careers@vervenovatech.com>',
           to: user.email,
           subject: 'APPLICATION STAGED // VERVE NOVA',
           html: getApplicationTemplate(user.name, data.roleSlug),

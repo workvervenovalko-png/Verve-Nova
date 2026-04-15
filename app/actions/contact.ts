@@ -20,7 +20,7 @@ export async function submitContact(formData: {
       const { getContactTemplate } = await import("@/lib/mail-templates");
       
       await resend.emails.send({
-        from: 'Verve Nova <hello@vervenova.tech>',
+        from: 'Verve Nova <hello@vervenovatech.com>',
         to: formData.email,
         subject: 'TRANSMISSION RECEIVED // VERVE NOVA',
         html: getContactTemplate(formData.name),

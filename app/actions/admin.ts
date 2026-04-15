@@ -63,7 +63,7 @@ export async function updateApplicationStatus(appId: string, status: string) {
         const { getStatusTemplate } = await import("@/lib/mail-templates");
         
         await resend.emails.send({
-          from: 'Verve Nova <careers@vervenova.tech>',
+          from: 'Verve Nova <careers@vervenovatech.com>',
           to: (app.userId as any).email,
           subject: `APPLICATION ${status.toUpperCase()} // VERVE NOVA`,
           html: getStatusTemplate((app.userId as any).name, status),
@@ -102,7 +102,7 @@ export async function scheduleInterview(appId: string, interviewDate?: string, i
         const { getInterviewTemplate } = await import("@/lib/mail-templates");
         
         await resend.emails.send({
-          from: 'Verve Nova <careers@vervenova.tech>',
+          from: 'Verve Nova <careers@vervenovatech.com>',
           to: (app.userId as any).email,
           subject: 'INTERVIEW PROTOCOL INITIALIZED // VERVE NOVA',
           html: getInterviewTemplate((app.userId as any).name, new Date(interviewDate).toLocaleString(), interviewLink),

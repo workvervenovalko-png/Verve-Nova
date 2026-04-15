@@ -43,7 +43,7 @@ export async function registerUser(formData: {
       const { getWelcomeTemplate } = await import("@/lib/mail-templates");
       
       await resend.emails.send({
-        from: 'Verve Nova <onboarding@vervenova.tech>',
+        from: 'Verve Nova <onboarding@vervenovatech.com>',
         to: formData.email,
         subject: 'ONBOARDING INITIALIZED // VERVE NOVA',
         html: getWelcomeTemplate(formData.fullName, vnID),
@@ -62,8 +62,8 @@ export async function registerUser(formData: {
 export async function setupAdmin() {
   try {
     await dbConnect();
-    const adminEmail = "puneet@gmail.com";
-    const adminPass = "123123";
+    const adminEmail = "work.vervenova.lko@gmail.com";
+    const adminPass = "Puneet@28";
 
     const existingAdmin = await User.findOne({ email: adminEmail });
     if (existingAdmin) {
