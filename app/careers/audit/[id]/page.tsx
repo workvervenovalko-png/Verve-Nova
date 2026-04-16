@@ -37,8 +37,8 @@ export default function DetailedAuditPage({ params }: { params: Promise<{ id: st
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-stone-50 flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-indigo-500" />
       </div>
     );
   }
@@ -46,56 +46,62 @@ export default function DetailedAuditPage({ params }: { params: Promise<{ id: st
   if (!auditData) return null;
 
   return (
-    <main className="min-h-screen bg-stone-50 selection:bg-indigo-500/30">
+    <main className="min-h-screen bg-background selection:bg-indigo-500/30 text-white">
       <Navbar />
 
       <section className="relative pt-48 pb-32 px-6">
-        <div className="max-w-5xl mx-auto">
+        {/* Ambient background glow */}
+        <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-indigo-500/[0.02] blur-[120px] rounded-full pointer-events-none" />
+
+        <div className="max-w-6xl mx-auto relative z-10">
           
           {/* Audit Header */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-16"
+            className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-16"
           >
             <div>
               <Button 
                 variant="ghost" 
                 onClick={() => router.back()}
-                className="mb-8 p-0 hover:bg-transparent text-slate-400 hover:text-indigo-600 transition-colors uppercase text-[10px] font-bold tracking-widest"
+                className="mb-8 p-0 hover:bg-transparent text-white/40 hover:text-indigo-400 transition-colors uppercase text-[10px] font-black tracking-[0.4em]"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" /> Back to Dashboard
               </Button>
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center shadow-2xl">
-                  <FileSearch className="w-6 h-6 text-indigo-500" />
+              <div className="flex items-center gap-6 mb-6">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center shadow-2xl shadow-indigo-500/20">
+                  <FileSearch className="w-7 h-7 text-white" />
                 </div>
-                <h1 className="text-4xl font-black text-slate-900 tracking-tighter uppercase italic">
-                  Candidate <span className="text-indigo-600">Audit.</span>
-                </h1>
+                <div>
+                  <h1 className="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-none">
+                    Candidate <span className="text-gradient">Audit.</span>
+                  </h1>
+                  <p className="text-[10px] font-bold text-white/20 uppercase tracking-[0.5em] mt-3">Advanced Verification Protocol // VNT-SEC-01</p>
+                </div>
               </div>
               <div className="flex items-center gap-4">
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.4em]">Audit Trail ID: {auditData._id}</p>
-                <span className="w-1 h-1 rounded-full bg-slate-200" />
-                <span className={`px-3 py-1 rounded-full border text-[9px] font-bold uppercase tracking-widest ${
-                    auditData.status === 'Accepted' ? 'text-emerald-500 border-emerald-500/20 bg-emerald-500/5' :
-                    auditData.status === 'Rejected' ? 'text-rose-500 border-rose-500/20 bg-rose-500/5' :
-                    'text-indigo-500 border-indigo-500/20 bg-indigo-500/5'
+                <p className="text-[9px] font-bold text-white/20 uppercase tracking-widest font-mono">TR-ID: {auditData._id}</p>
+                <div className="w-1.5 h-1.5 rounded-full bg-white/10" />
+                <span className={`px-4 py-1.5 rounded-full border text-[9px] font-black uppercase tracking-[0.2em] ${
+                    auditData.status === 'Accepted' ? 'text-emerald-400 border-emerald-500/20 bg-emerald-500/5' :
+                    auditData.status === 'Rejected' ? 'text-rose-400 border-rose-500/20 bg-rose-500/5' :
+                    'text-indigo-400 border-indigo-500/20 bg-indigo-500/5'
                 }`}>
                     {auditData.status}
                 </span>
               </div>
             </div>
 
-            <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-xl flex items-center gap-6">
+            <div className="glass-card p-8 rounded-3xl border-white/[0.08] flex items-center gap-8">
                  <div className="text-right">
-                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">Assigned Track</p>
-                    <p className="text-sm font-black text-slate-900 uppercase italic">{auditData.roleSlug?.replace('-', ' ')}</p>
+                    <p className="text-[9px] font-bold text-white/20 uppercase tracking-[0.3em] mb-2">Track Assigned</p>
+                    <p className="text-lg font-black text-white uppercase italic tracking-tighter">{auditData.roleSlug?.replace('-', ' ')}</p>
                  </div>
-                 <div className="w-px h-10 bg-slate-100" />
+                 <div className="w-px h-12 bg-white/5" />
                  <div className="text-right">
-                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">Transmission Date</p>
-                    <p className="text-sm font-black text-slate-900 uppercase italic">{new Date(auditData.createdAt).toLocaleDateString()}</p>
+                    <p className="text-[9px] font-bold text-white/20 uppercase tracking-[0.3em] mb-2">Transmission Date</p>
+                    <p className="text-lg font-black text-white uppercase italic tracking-tighter">{new Date(auditData.createdAt).toLocaleDateString()}</p>
                  </div>
             </div>
           </motion.div>
@@ -111,35 +117,39 @@ export default function DetailedAuditPage({ params }: { params: Promise<{ id: st
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.1 }}
-                className="bg-white p-10 rounded-[2.5rem] border border-slate-200 shadow-xl"
+                className="glass-card p-10 rounded-[2.5rem] border-white/[0.08] shadow-2xl relative overflow-hidden"
               >
-                <div className="flex items-center gap-4 mb-10">
-                    <GradIcon className="w-5 h-5 text-indigo-600" />
-                    <h2 className="text-xl font-black text-slate-900 uppercase italic">Academic Transcript</h2>
+                <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/[0.02] blur-[100px] rounded-full pointer-events-none" />
+                
+                <div className="flex items-center gap-4 mb-12">
+                    <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                      <GradIcon className="w-5 h-5 text-indigo-400" />
+                    </div>
+                    <h2 className="text-xl font-black text-white uppercase italic tracking-wider">Academic Transcript</h2>
                 </div>
                 
-                <div className="space-y-8">
+                <div className="space-y-10 relative z-10">
                     <div>
-                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Institution / Academy</p>
-                        <p className="text-lg font-black text-slate-900 uppercase italic">{auditData.education?.college || "N/A"}</p>
+                        <p className="text-[10px] font-bold text-white/20 uppercase tracking-[0.4em] mb-4">Institution / Academy</p>
+                        <p className="text-2xl font-black text-white uppercase italic leading-none">{auditData.education?.college || "N/A"}</p>
                     </div>
                     
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-8 border-t border-slate-50">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-10 border-t border-white/[0.04]">
                         <div>
-                            <p className="text-[9px] font-bold text-slate-400 uppercase mb-2">Degree</p>
-                            <p className="text-sm font-black text-slate-900">{auditData.education?.degree}</p>
+                            <p className="text-[9px] font-bold text-white/20 uppercase tracking-[0.2em] mb-3">Degree</p>
+                            <p className="text-sm font-black text-white/80 uppercase">{auditData.education?.degree || "N/A"}</p>
                         </div>
                         <div>
-                            <p className="text-[9px] font-bold text-slate-400 uppercase mb-2">CGPA</p>
-                            <p className="text-sm font-black text-indigo-600">{auditData.education?.cgpa}</p>
+                            <p className="text-[9px] font-bold text-white/20 uppercase tracking-[0.2em] mb-3">CGPA / Score</p>
+                            <p className="text-sm font-black text-indigo-400">{auditData.education?.cgpa || "N/A"}</p>
                         </div>
                         <div>
-                            <p className="text-[9px] font-bold text-slate-400 uppercase mb-2">10th %</p>
-                            <p className="text-sm font-bold text-slate-600">{auditData.education?.tenthPercentage}%</p>
+                            <p className="text-[9px] font-bold text-white/20 uppercase tracking-[0.2em] mb-3">10th Grade</p>
+                            <p className="text-sm font-bold text-white/60">{auditData.education?.tenthPercentage ? `${auditData.education?.tenthPercentage}%` : "N/A"}</p>
                         </div>
                         <div>
-                            <p className="text-[9px] font-bold text-slate-400 uppercase mb-2">12th %</p>
-                            <p className="text-sm font-bold text-slate-600">{auditData.education?.twelfthPercentage}%</p>
+                            <p className="text-[9px] font-bold text-white/20 uppercase tracking-[0.2em] mb-3">12th Grade</p>
+                            <p className="text-sm font-bold text-white/60">{auditData.education?.twelfthPercentage ? `${auditData.education?.twelfthPercentage}%` : "N/A"}</p>
                         </div>
                     </div>
                 </div>
@@ -150,32 +160,36 @@ export default function DetailedAuditPage({ params }: { params: Promise<{ id: st
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 }}
-                className="bg-white p-10 rounded-[2.5rem] border border-slate-200 shadow-xl"
+                className="glass-card p-10 rounded-[2.5rem] border-white/[0.08] shadow-2xl"
               >
-                <div className="flex items-center gap-4 mb-10">
-                    <Briefcase className="w-5 h-5 text-indigo-600" />
-                    <h2 className="text-xl font-black text-slate-900 uppercase italic">Professional Trajectory</h2>
+                <div className="flex items-center gap-4 mb-12">
+                    <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                      <Briefcase className="w-5 h-5 text-indigo-400" />
+                    </div>
+                    <h2 className="text-xl font-black text-white uppercase italic tracking-wider">Professional Trajectory</h2>
                 </div>
 
                 <div className="space-y-6">
                     {auditData.experience?.length > 0 && auditData.experience[0]?.company ? (
                         auditData.experience.map((exp: any, i: number) => (
-                            <div key={i} className="p-6 bg-slate-50 border border-slate-100 rounded-2xl flex items-center justify-between group hover:bg-white hover:shadow-lg transition-all">
-                                <div className="flex gap-4 items-center">
-                                    <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-sm">
-                                        <BuildingIcon className="w-5 h-5 text-slate-400" />
+                            <div key={i} className="p-8 bg-white/[0.02] border border-white/[0.06] rounded-3xl flex items-center justify-between group hover:bg-white/[0.05] transition-all">
+                                <div className="flex gap-6 items-center">
+                                    <div className="w-14 h-14 rounded-2xl bg-white/[0.05] flex items-center justify-center border border-white/[0.1]">
+                                        <BuildingIcon className="w-6 h-6 text-white/20 group-hover:text-indigo-400 transition-colors" />
                                     </div>
                                     <div>
-                                        <p className="text-sm font-black text-slate-900 uppercase">{exp.role}</p>
-                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{exp.company}</p>
+                                        <p className="text-lg font-black text-white uppercase tracking-tight mb-1">{exp.role}</p>
+                                        <p className="text-[10px] font-bold text-white/20 uppercase tracking-[0.4em]">{exp.company}</p>
                                     </div>
                                 </div>
-                                <span className="text-[10px] font-bold text-indigo-600 uppercase bg-white px-3 py-1 rounded-full shadow-sm">{exp.duration}</span>
+                                <div className="text-right">
+                                  <span className="text-[10px] font-black text-indigo-400 uppercase bg-indigo-500/10 border border-indigo-500/20 px-4 py-2 rounded-xl">{exp.duration}</span>
+                                </div>
                             </div>
                         ))
                     ) : (
-                        <div className="py-10 text-center border-2 border-dashed border-slate-100 rounded-3xl">
-                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.4em]">No Professional Cache Detected</p>
+                        <div className="py-16 text-center border-2 border-dashed border-white/[0.04] rounded-[2rem] bg-white/[0.01]">
+                            <p className="text-[10px] font-bold text-white/10 uppercase tracking-[0.6em]">No Professional Cache Detected</p>
                         </div>
                     )}
                 </div>
@@ -186,34 +200,36 @@ export default function DetailedAuditPage({ params }: { params: Promise<{ id: st
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.3 }}
-                className="bg-slate-900 p-10 rounded-[2.5rem] text-white shadow-2xl relative overflow-hidden"
+                className="bg-[#111113] p-10 rounded-[3rem] border border-white/[0.06] text-white shadow-2xl relative overflow-hidden"
               >
-                <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
+                <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-500/[0.05] blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2" />
                 
-                <div className="flex items-center gap-4 mb-10">
-                    <Code2 className="w-5 h-5 text-indigo-400" />
-                    <h2 className="text-xl font-black text-white uppercase italic">Project Sandbox</h2>
+                <div className="flex items-center gap-4 mb-12">
+                    <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                      <Code2 className="w-5 h-5 text-indigo-400" />
+                    </div>
+                    <h2 className="text-xl font-black text-white uppercase italic tracking-wider">Project Sandbox</h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
                     {auditData.projects?.length > 0 && auditData.projects[0]?.name ? (
                         auditData.projects.map((proj: any, i: number) => (
-                            <div key={i} className="p-8 bg-white/5 border border-white/10 rounded-3xl hover:bg-white/10 transition-all">
-                                <h3 className="text-lg font-black uppercase italic mb-2 text-indigo-400 tracking-wider font-mono">{proj.name}</h3>
-                                <p className="text-xs font-light text-slate-400 mb-6 leading-relaxed">{proj.description}</p>
-                                <div className="flex items-center justify-between">
-                                    <span className="px-3 py-1 bg-indigo-500/20 rounded-full text-[9px] font-bold text-indigo-300 uppercase">{proj.techStack}</span>
+                            <div key={i} className="p-8 bg-white/[0.03] border border-white/[0.08] rounded-[2.5rem] hover:bg-white/[0.06] transition-all group">
+                                <h3 className="text-lg font-black uppercase italic mb-3 text-indigo-400 tracking-wider font-mono transform transition-transform group-hover:translate-x-1">{proj.name}</h3>
+                                <p className="text-xs font-light text-white/40 mb-8 leading-relaxed line-clamp-3">{proj.description}</p>
+                                <div className="flex items-center justify-between pt-6 border-t border-white/[0.06]">
+                                    <span className="px-3 py-1.5 bg-indigo-500/10 border border-indigo-500/20 rounded-lg text-[8px] font-black text-indigo-300 uppercase tracking-widest">{proj.techStack}</span>
                                     {proj.link && (
-                                        <a href={proj.link} target="_blank" className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-white hover:text-slate-900 transition-all">
-                                            <ExternalLink className="w-3 h-3" />
+                                        <a href={proj.link} target="_blank" className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white hover:text-slate-900 transition-all">
+                                            <ExternalLink className="w-4 h-4" />
                                         </a>
                                     )}
                                 </div>
                             </div>
                         ))
                     ) : (
-                        <div className="col-span-2 py-10 text-center border border-dashed border-white/10 rounded-3xl">
-                            <p className="text-[10px] font-bold text-white/20 uppercase tracking-[0.4em]">No Architectural Logs Detected</p>
+                        <div className="col-span-2 py-16 text-center border-2 border-dashed border-white/[0.04] rounded-[2rem] bg-white/[0.01]">
+                            <p className="text-[10px] font-bold text-white/10 uppercase tracking-[0.6em]">No Architectural Logs Detected</p>
                         </div>
                     )}
                 </div>
@@ -227,31 +243,31 @@ export default function DetailedAuditPage({ params }: { params: Promise<{ id: st
                 <motion.div 
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    className="p-8 rounded-[2.5rem] bg-white border border-slate-200 shadow-xl"
+                    className="p-10 rounded-[3rem] glass-card border-white/[0.08] shadow-2xl"
                 >
-                    <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.6em] mb-10">Candidate Identity</h3>
+                    <h3 className="text-[10px] font-black text-white/20 uppercase tracking-[0.5em] mb-12">Candidate Identity</h3>
                     
-                    <div className="space-y-8">
+                    <div className="space-y-10">
                         <div>
-                            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-3">Full Name</p>
-                            <p className="text-2xl font-black text-slate-900 uppercase italic leading-none">{auditData.userId?.name}</p>
+                            <p className="text-[9px] font-bold text-white/20 uppercase tracking-[0.3em] mb-4">Master Identity</p>
+                            <p className="text-3xl font-black text-white uppercase italic leading-none">{auditData.userId?.name}</p>
                         </div>
                         <div>
-                            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-3">Clearance ID</p>
-                            <p className="text-xl font-bold text-slate-900 font-mono tracking-tighter leading-none">{auditData.userId?.vn_id}</p>
+                            <p className="text-[9px] font-bold text-white/20 uppercase tracking-[0.3em] mb-4">Clearance ID</p>
+                            <p className="text-xl font-black text-indigo-400 font-mono tracking-tighter leading-none">{auditData.userId?.vn_id}</p>
                         </div>
-                        <div className="grid grid-cols-1 gap-6 pt-8 border-t border-slate-50">
-                            <div>
-                                <p className="text-[8px] font-bold text-slate-400 uppercase mb-1">Email Matrix</p>
-                                <p className="text-xs font-bold text-slate-900 truncate">{auditData.userId?.email}</p>
+                        <div className="grid grid-cols-1 gap-8 pt-10 border-t border-white/[0.04]">
+                            <div className="group">
+                                <p className="text-[8px] font-bold text-white/20 uppercase tracking-widest mb-2">Digital Coord</p>
+                                <p className="text-xs font-black text-white/80 truncate group-hover:text-indigo-400 transition-colors">{auditData.userId?.email}</p>
                             </div>
-                            <div>
-                                <p className="text-[8px] font-bold text-slate-400 uppercase mb-1">Phone Terminal</p>
-                                <p className="text-xs font-bold text-slate-900">{auditData.personal?.phone}</p>
+                            <div className="group">
+                                <p className="text-[8px] font-bold text-white/20 uppercase tracking-widest mb-2">Comms Terminal</p>
+                                <p className="text-xs font-black text-white/80 group-hover:text-indigo-400 transition-colors">{auditData.personal?.phone || "N/A"}</p>
                             </div>
-                            <div>
-                                <p className="text-[8px] font-bold text-slate-400 uppercase mb-1">Current Cell</p>
-                                <p className="text-xs font-bold text-slate-900">{auditData.personal?.currentCity}</p>
+                            <div className="group">
+                                <p className="text-[8px] font-bold text-white/20 uppercase tracking-widest mb-2">Geo Location</p>
+                                <p className="text-xs font-black text-white/80 group-hover:text-indigo-400 transition-colors">{auditData.personal?.currentCity || "N/A"}</p>
                             </div>
                         </div>
                     </div>
@@ -262,45 +278,57 @@ export default function DetailedAuditPage({ params }: { params: Promise<{ id: st
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.1 }}
-                    className="p-8 rounded-[2.5rem] bg-indigo-600 text-white shadow-xl relative overflow-hidden"
+                    className="p-10 rounded-[3rem] bg-indigo-600 text-white shadow-2xl relative overflow-hidden group"
                 >
-                    <Monitor className="absolute -bottom-6 -right-6 w-32 h-32 text-white/10" />
-                    <h3 className="text-[10px] font-bold uppercase tracking-[0.6em] mb-10 text-white/60">Terminal Assets</h3>
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.05] blur-[100px] rounded-full pointer-events-none" />
+                    <Monitor className="absolute -bottom-6 -right-6 w-32 h-32 text-white/10 group-hover:scale-110 transition-transform duration-700" />
                     
-                    <div className="grid grid-cols-1 gap-4 relative z-10">
-                        {auditData.links?.resumeUrl && (
+                    <h3 className="text-[10px] font-black uppercase tracking-[0.5em] mb-12 text-white/60">Terminal Assets</h3>
+                    
+                    <div className="grid grid-cols-1 gap-5 relative z-10">
+                        {auditData.links?.resumeUrl ? (
                             <Button 
                                 onClick={() => window.open(auditData.links.resumeUrl, '_blank')}
-                                className="h-14 bg-white/10 hover:bg-white text-white hover:text-indigo-600 border border-white/20 rounded-2xl transition-all flex justify-between px-6"
+                                className="h-16 bg-white/10 hover:bg-white text-white hover:text-indigo-600 border border-white/20 hover:border-white rounded-2xl transition-all flex justify-between px-8"
                             >
-                                <span className="text-[10px] font-black uppercase tracking-widest">Master Resume</span>
+                                <span className="text-[10px] font-black uppercase tracking-[0.4em]">Master Resume</span>
                                 <ExternalLink className="w-4 h-4" />
                             </Button>
+                        ) : (
+                          <div className="h-16 flex items-center justify-center border border-white/10 rounded-2xl bg-white/[0.03]">
+                            <span className="text-[9px] font-black uppercase tracking-widest text-white/20">No Resume Found</span>
+                          </div>
                         )}
-                        <div className="grid grid-cols-2 gap-4">
-                            {auditData.links?.linkedIn && (
+
+                        <div className="grid grid-cols-2 gap-5">
+                            {auditData.links?.linkedIn ? (
                                 <Button 
                                     onClick={() => window.open(auditData.links.linkedIn, '_blank')}
-                                    className="h-14 bg-white/10 hover:bg-white text-white hover:text-indigo-600 border border-white/20 rounded-2xl flex items-center justify-center p-0"
+                                    className="h-16 bg-white/10 hover:bg-white text-white hover:text-indigo-600 border border-white/20 hover:border-white rounded-2xl flex items-center justify-center transition-all p-0"
                                 >
-                                    <Linkedin className="w-5 h-5" />
+                                    <Linkedin className="w-6 h-6" />
                                 </Button>
+                            ) : (
+                              <div className="h-16 flex items-center justify-center border border-white/10 rounded-2xl opacity-20"><Linkedin className="w-5 h-5" /></div>
                             )}
-                            {auditData.links?.github && (
+                            {auditData.links?.github ? (
                                 <Button 
                                     onClick={() => window.open(auditData.links.github, '_blank')}
-                                    className="h-14 bg-white/10 hover:bg-white text-white hover:text-indigo-600 border border-white/20 rounded-2xl flex items-center justify-center p-0"
+                                    className="h-16 bg-white/10 hover:bg-white text-white hover:text-indigo-600 border border-white/20 hover:border-white rounded-2xl flex items-center justify-center transition-all p-0"
                                 >
-                                    <Github className="w-5 h-5" />
+                                    <Github className="w-6 h-6" />
                                 </Button>
+                            ) : (
+                              <div className="h-16 flex items-center justify-center border border-white/10 rounded-2xl opacity-20"><Github className="w-5 h-5" /></div>
                             )}
                         </div>
+
                         {auditData.links?.portfolio && (
                             <Button 
                                 onClick={() => window.open(auditData.links.portfolio, '_blank')}
-                                className="h-14 bg-white/10 hover:bg-white text-white hover:text-indigo-600 border border-white/20 rounded-2xl transition-all flex justify-between px-6"
+                                className="h-16 bg-white/10 hover:bg-white text-white hover:text-indigo-600 border border-white/20 hover:border-white rounded-2xl transition-all flex justify-between px-8"
                             >
-                                <span className="text-[10px] font-black uppercase tracking-widest">Portfolio</span>
+                                <span className="text-[10px] font-black uppercase tracking-[0.4em]">Portfolio</span>
                                 <Globe className="w-4 h-4" />
                             </Button>
                         )}
@@ -308,10 +336,10 @@ export default function DetailedAuditPage({ params }: { params: Promise<{ id: st
                 </motion.div>
 
                 {/* Audit Seal */}
-                <div className="pt-10 flex flex-col items-center justify-center text-center opacity-30">
-                    <ShieldCheck className="w-12 h-12 mb-4" />
-                    <p className="text-[8px] font-black uppercase tracking-[0.3em]">Verve Nova Candidate Validation System</p>
-                    <p className="text-[7px] font-bold uppercase mt-1 tracking-widest">Official Audit Record // 2026</p>
+                <div className="pt-10 flex flex-col items-center justify-center text-center opacity-20">
+                    <ShieldCheck className="w-14 h-14 mb-4 text-white" />
+                    <p className="text-[9px] font-black uppercase tracking-[0.5em] text-white">Verve Nova Tech Certification System</p>
+                    <p className="text-[7px] font-bold uppercase mt-2 tracking-[0.3em] text-white/60">Official Secure Audit Trail // 2026-VNT</p>
                 </div>
             </div>
           </div>
