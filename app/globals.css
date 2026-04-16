@@ -131,11 +131,13 @@
 
   .text-gradient {
     @apply bg-clip-text text-transparent;
+    background-clip: text;
     background-image: linear-gradient(135deg, #818CF8, #6366F1, #A78BFA);
   }
 
   .text-gradient-aurora {
     @apply bg-clip-text text-transparent;
+    background-clip: text;
     background-image: linear-gradient(135deg, #06B6D4, #818CF8, #A78BFA, #F472B6);
     background-size: 300% 300%;
     animation: aurora-shift 8s ease-in-out infinite;
@@ -272,6 +274,15 @@
   }
 }
 
+@keyframes shimmer-slide {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
 @keyframes gradient-x {
 
   0%,
@@ -332,6 +343,7 @@
 
 .text-prismatic {
   @apply text-transparent bg-clip-text;
+  background-clip: text;
   background-image: linear-gradient(135deg, #06B6D4, #818CF8, #A78BFA);
   animation: prismatic-shift 12s linear infinite;
 }
@@ -660,6 +672,7 @@ a[class*="h-16"] {
   @apply font-black tracking-tighter;
   background: linear-gradient(135deg, #FAFAFA 0%, #818CF8 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.3));
 }

@@ -5,6 +5,8 @@ import { ArrowRight, Calendar, Clock } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getPublicBlogs } from "@/app/actions/admin";
+import { BlogSkeleton } from "./skeletons/blog-skeleton";
+import { Skeleton } from "./ui/skeleton";
 
 export function BlogPreview() {
   const [blogs, setBlogs] = useState<any[]>([]);
@@ -21,7 +23,19 @@ export function BlogPreview() {
     fetchBlogs();
   }, []);
 
-  if (isLoading) return null;
+  if (isLoading) {
+    return (
+      <section className="py-32 bg-background relative overflow-hidden section-glow">
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+           <div className="max-w-lg mb-12">
+             <Skeleton className="h-4 w-32 mb-4" />
+             <Skeleton className="h-12 w-64" />
+           </div>
+           <BlogSkeleton />
+        </div>
+      </section>
+    );
+  }
   if (blogs.length === 0) return null;
 
   return (

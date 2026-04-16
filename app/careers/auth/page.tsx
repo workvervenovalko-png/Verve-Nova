@@ -153,16 +153,7 @@ export default function CareersAuthPage() {
                   within the <span className="text-white">Verve Nova Ecosystem.</span>
                 </p>
 
-                <div className="flex flex-wrap justify-center lg:justify-end gap-4 mt-8">
-                   <div className="flex flex-col items-center lg:items-start p-4 border-l-2 border-indigo-500 bg-white/5 rounded-r-2xl">
-                      <span className="text-[7px] font-black text-white/20 uppercase tracking-[0.4em] mb-1">Service.Status</span>
-                      <span className="text-xs font-black text-white tracking-widest uppercase">Operational</span>
-                   </div>
-                   <div className="flex flex-col items-center lg:items-start p-4 border-l-2 border-violet-500 bg-white/5 rounded-r-2xl">
-                      <span className="text-[7px] font-black text-white/20 uppercase tracking-[0.4em] mb-1">Encryption</span>
-                      <span className="text-xs font-black text-white tracking-widest uppercase">AES-256 Bit</span>
-                   </div>
-                </div>
+                <div className="flex flex-wrap justify-center lg:justify-end gap-4 mt-8" />
               </div>
             </motion.div>
 
