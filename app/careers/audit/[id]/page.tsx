@@ -21,6 +21,17 @@ export default function DetailedAuditPage({ params }: { params: Promise<{ id: st
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
+  const ensureAbsoluteUrl = (url: string) => {
+    if (!url || typeof url !== 'string') return undefined;
+    const trimmed = url.trim();
+    if (trimmed.startsWith('http')) return trimmed;
+    if (trimmed.includes('@')) return `mailto:${trimmed}`;
+    if (trimmed.includes('.') && !trimmed.includes(' ')) return `https://${trimmed}`;
+    // If it looks like a hex/mongo ID, it's probably not a valid external link
+    if (/^[0-9a-fA-F]{24}$/.test(trimmed)) return undefined;
+    return trimmed;
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const result = await getDetailedAudit(id);
@@ -219,8 +230,13 @@ export default function DetailedAuditPage({ params }: { params: Promise<{ id: st
                                 <p className="text-xs font-light text-white/40 mb-8 leading-relaxed line-clamp-3">{proj.description}</p>
                                 <div className="flex items-center justify-between pt-6 border-t border-white/[0.06]">
                                     <span className="px-3 py-1.5 bg-indigo-500/10 border border-indigo-500/20 rounded-lg text-[8px] font-black text-indigo-300 uppercase tracking-widest">{proj.techStack}</span>
-                                    {proj.link && (
-                                        <a href={proj.link} target="_blank" className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white hover:text-slate-900 transition-all">
+                                    {proj.link && ensureAbsoluteUrl(proj.link) && (
+                                        <a 
+                                            href={ensureAbsoluteUrl(proj.link)} 
+                                            target="_blank" 
+                                            rel="noopener noreferrer"
+                                            className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white hover:text-slate-900 transition-all"
+                                        >
                                             <ExternalLink className="w-4 h-4" />
                                         </a>
                                     )}
@@ -286,14 +302,16 @@ export default function DetailedAuditPage({ params }: { params: Promise<{ id: st
                     <h3 className="text-[10px] font-black uppercase tracking-[0.5em] mb-12 text-white/60">Terminal Assets</h3>
                     
                     <div className="grid grid-cols-1 gap-5 relative z-10">
-                        {auditData.links?.resumeUrl ? (
-                            <Button 
-                                onClick={() => window.open(auditData.links.resumeUrl, '_blank')}
-                                className="h-16 bg-white/10 hover:bg-white text-white hover:text-indigo-600 border border-white/20 hover:border-white rounded-2xl transition-all flex justify-between px-8"
+                        {auditData.links?.resumeUrl && ensureAbsoluteUrl(auditData.links.resumeUrl) ? (
+                            <a 
+                                href={ensureAbsoluteUrl(auditData.links.resumeUrl)}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="h-16 bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-2xl transition-all flex items-center justify-between px-8"
                             >
                                 <span className="text-[10px] font-black uppercase tracking-[0.4em]">Master Resume</span>
                                 <ExternalLink className="w-4 h-4" />
-                            </Button>
+                            </a>
                         ) : (
                           <div className="h-16 flex items-center justify-center border border-white/10 rounded-2xl bg-white/[0.03]">
                             <span className="text-[9px] font-black uppercase tracking-widest text-white/20">No Resume Found</span>
@@ -301,36 +319,42 @@ export default function DetailedAuditPage({ params }: { params: Promise<{ id: st
                         )}
 
                         <div className="grid grid-cols-2 gap-5">
-                            {auditData.links?.linkedIn ? (
-                                <Button 
-                                    onClick={() => window.open(auditData.links.linkedIn, '_blank')}
-                                    className="h-16 bg-white/10 hover:bg-white text-white hover:text-indigo-600 border border-white/20 hover:border-white rounded-2xl flex items-center justify-center transition-all p-0"
+                            {auditData.links?.linkedIn && ensureAbsoluteUrl(auditData.links.linkedIn) ? (
+                                <a 
+                                    href={ensureAbsoluteUrl(auditData.links.linkedIn)}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="h-16 bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-2xl flex items-center justify-center transition-all"
                                 >
                                     <Linkedin className="w-6 h-6" />
-                                </Button>
+                                </a>
                             ) : (
                               <div className="h-16 flex items-center justify-center border border-white/10 rounded-2xl opacity-20"><Linkedin className="w-5 h-5" /></div>
                             )}
-                            {auditData.links?.github ? (
-                                <Button 
-                                    onClick={() => window.open(auditData.links.github, '_blank')}
-                                    className="h-16 bg-white/10 hover:bg-white text-white hover:text-indigo-600 border border-white/20 hover:border-white rounded-2xl flex items-center justify-center transition-all p-0"
+                            {auditData.links?.github && ensureAbsoluteUrl(auditData.links.github) ? (
+                                <a 
+                                    href={ensureAbsoluteUrl(auditData.links.github)}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="h-16 bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-2xl flex items-center justify-center transition-all"
                                 >
                                     <Github className="w-6 h-6" />
-                                </Button>
+                                </a>
                             ) : (
                               <div className="h-16 flex items-center justify-center border border-white/10 rounded-2xl opacity-20"><Github className="w-5 h-5" /></div>
                             )}
                         </div>
 
-                        {auditData.links?.portfolio && (
-                            <Button 
-                                onClick={() => window.open(auditData.links.portfolio, '_blank')}
-                                className="h-16 bg-white/10 hover:bg-white text-white hover:text-indigo-600 border border-white/20 hover:border-white rounded-2xl transition-all flex justify-between px-8"
+                        {auditData.links?.portfolio && ensureAbsoluteUrl(auditData.links.portfolio) && (
+                            <a 
+                                href={ensureAbsoluteUrl(auditData.links.portfolio)}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="h-16 bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-2xl transition-all flex items-center justify-between px-8"
                             >
                                 <span className="text-[10px] font-black uppercase tracking-[0.4em]">Portfolio</span>
                                 <Globe className="w-4 h-4" />
-                            </Button>
+                            </a>
                         )}
                     </div>
                 </motion.div>
