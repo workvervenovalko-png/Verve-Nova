@@ -45,7 +45,7 @@ export function Navbar() {
         <Link href="/" className="flex items-center gap-5 shrink-0 group pointer-events-auto">
           <div className="relative">
             <div className="w-10 h-10 flex items-center justify-center rounded-xl transition-all duration-500 overflow-hidden">
-              <img src="/icon.svg" alt="Verve Nova Logo" className="w-8 h-8 object-contain brightness-0 invert" />
+              <img src="/vnt-logo.png" alt="Verve Nova Logo" className="w-8 h-8 object-contain" />
             </div>
           </div>
 
