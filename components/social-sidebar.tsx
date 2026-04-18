@@ -16,7 +16,7 @@ const socialLinks = [
   {
     icon: <Linkedin className="w-4 h-4" />,
     label: "LinkedIn",
-    href: "https://linkedin.com/company/vervenova",
+    href: "https://www.linkedin.com/company/verve-nova/",
     color: "hover:bg-blue-600 hover:border-blue-600/30 hover:shadow-[0_0_16px_rgba(59,130,246,0.2)]"
   },
   {
@@ -44,13 +44,17 @@ const socialLinks = [
   {
     icon: <Instagram className="w-4 h-4" />,
     label: "Instagram",
-    href: "https://instagram.com/vervenova",
-    color: "hover:bg-pink-600 hover:border-pink-600/30 hover:shadow-[0_0_16px_rgba(219,39,119,0.2)]"
+    color: "hover:bg-pink-600 hover:border-pink-600/30 hover:shadow-[0_0_16px_rgba(219,39,119,0.2)]",
+    handles: [
+      { label: "Global", href: "https://www.instagram.com/vntech_global" },
+      { label: "India", href: "https://www.instagram.com/vntech_india" },
+      { label: "Lucknow", href: "https://www.instagram.com/vntech_lucknow" }
+    ]
   },
   {
     icon: <Facebook className="w-4 h-4" />,
     label: "Facebook",
-    href: "https://facebook.com/vervenova",
+    href: "https://www.facebook.com/share/1CboBbz1bF/",
     color: "hover:bg-blue-800 hover:border-blue-800/30 hover:shadow-[0_0_16px_rgba(30,64,175,0.2)]"
   }
 ];
@@ -66,17 +70,41 @@ export function SocialSidebar() {
           transition={{ delay: 1 + i * 0.1 }}
           className="relative group"
         >
-          <Link
-            href={link.href}
-            target="_blank"
-            className={`w-12 h-12 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center text-white/25 group-hover:text-white ${link.color} transition-all duration-300`}
-          >
-            {link.icon}
-          </Link>
-          
-          <div className="absolute right-16 top-1/2 -translate-y-1/2 px-4 py-2 bg-white/[0.05] backdrop-blur-xl border border-white/[0.08] text-white text-[9px] font-black uppercase tracking-[0.2em] rounded-xl opacity-0 translate-x-4 pointer-events-none group-hover:opacity-100 group-hover:translate-x-0 transition-all">
-            {link.label}
-          </div>
+          {link.handles ? (
+            <div className="relative flex items-center justify-end">
+              <div className="absolute right-full pr-4 flex flex-col gap-2 opacity-0 translate-x-4 pointer-events-none group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                {link.handles.map((h) => (
+                  <Link
+                    key={h.label}
+                    href={h.href}
+                    target="_blank"
+                    className="px-4 py-2 bg-white/[0.05] backdrop-blur-xl border border-white/[0.08] text-white text-[9px] font-black uppercase tracking-[0.2em] rounded-xl hover:bg-pink-600 hover:border-pink-600/30 transition-all whitespace-nowrap"
+                  >
+                    {h.label}
+                  </Link>
+                ))}
+              </div>
+              <button
+                className={`w-12 h-12 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center text-white/25 group-hover:text-white ${link.color} transition-all duration-300`}
+              >
+                {link.icon}
+              </button>
+            </div>
+          ) : (
+            <>
+              <Link
+                href={link.href || "#"}
+                target="_blank"
+                className={`w-12 h-12 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center text-white/25 group-hover:text-white ${link.color} transition-all duration-300`}
+              >
+                {link.icon}
+              </Link>
+              
+              <div className="absolute right-16 top-1/2 -translate-y-1/2 px-4 py-2 bg-white/[0.05] backdrop-blur-xl border border-white/[0.08] text-white text-[9px] font-black uppercase tracking-[0.2em] rounded-xl opacity-0 translate-x-4 pointer-events-none group-hover:opacity-100 group-hover:translate-x-0 transition-all">
+                {link.label}
+              </div>
+            </>
+          )}
         </motion.div>
       ))}
       <div className="w-[1px] h-20 bg-gradient-to-b from-white/[0.06] to-transparent mx-auto mt-4" />

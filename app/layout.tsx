@@ -3,12 +3,12 @@ import { Inter, Poppins } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ["latin"],
   variable: '--font-inter',
 });
 
-const poppins = Poppins({ 
+const poppins = Poppins({
   weight: ['400', '500', '600', '700', '800', '900'],
   subsets: ["latin"],
   variable: '--font-poppins',
@@ -29,14 +29,14 @@ export const metadata: Metadata = {
   },
   description: 'Verve Nova Tech (VNT) is a premium website company and software development agency in Lucknow. We specialize in custom software, enterprise systems, AI solutions, web applications, and digital transformation natively in Lucknow and globally (VNT Global).',
   keywords: [
-    'Verve Nova Tech', 
-    'Verve Nova', 
-    'VNT', 
-    'VNT Lucknow', 
-    'VNT Global', 
-    'Website company', 
-    'Website company in Lucknow', 
-    'Software company', 
+    'Verve Nova Tech',
+    'Verve Nova',
+    'VNT',
+    'VNT Lucknow',
+    'VNT Global',
+    'Website company',
+    'Website company in Lucknow',
+    'Software company',
     'Software company in Lucknow',
     'Best website company in Lucknow',
     'Top IT company',
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
     siteName: 'Verve Nova Tech',
     images: [
       {
-        url: '/og-image.jpg', 
+        url: '/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'Verve Nova Tech - Enterprise IT Solutions',
@@ -116,7 +116,7 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-             __html: JSON.stringify({
+            __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
               "name": "Verve Nova Tech",

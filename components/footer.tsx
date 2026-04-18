@@ -94,21 +94,65 @@ export function Footer() {
 
             <div className="flex justify-center md:justify-start gap-3">
               {[
-                { icon: <Linkedin className="w-4 h-4" />, href: "#", hover: "hover:text-blue-400 hover:bg-blue-500/10 hover:border-blue-500/20" },
+                { 
+                  icon: <Linkedin className="w-4 h-4" />, 
+                  href: "https://www.linkedin.com/company/verve-nova/", 
+                  hover: "hover:text-blue-400 hover:bg-blue-500/10 hover:border-blue-500/20" 
+                },
                 {
                   icon: (
                     <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
                       <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932 6.064-6.932zm-1.292 19.49h2.039L6.486 3.24H4.298l13.311 17.403z" />
                     </svg>
-                  ), href: "https://x.com/vervenova", hover: "hover:text-white hover:bg-white/10 hover:border-white/20"
+                  ), 
+                  href: "https://x.com/vervenova", 
+                  hover: "hover:text-white hover:bg-white/10 hover:border-white/20"
                 },
-                { icon: <MessageCircle className="w-4 h-4" />, href: "https://wa.me/917380663685", hover: "hover:text-emerald-400 hover:bg-emerald-500/10 hover:border-emerald-500/20" },
-                { icon: <Facebook className="w-4 h-4" />, href: "#", hover: "hover:text-blue-400 hover:bg-blue-500/10 hover:border-blue-500/20" },
-                { icon: <Instagram className="w-4 h-4" />, href: "#", hover: "hover:text-pink-400 hover:bg-pink-500/10 hover:border-pink-500/20" }
+                { 
+                  icon: <MessageCircle className="w-4 h-4" />, 
+                  href: "https://wa.me/917380663685", 
+                  hover: "hover:text-emerald-400 hover:bg-emerald-500/10 hover:border-emerald-500/20" 
+                },
+                { 
+                  icon: <Facebook className="w-4 h-4" />, 
+                  href: "https://www.facebook.com/share/1CboBbz1bF/", 
+                  hover: "hover:text-blue-400 hover:bg-blue-500/10 hover:border-blue-500/20" 
+                },
+                { 
+                  icon: <Instagram className="w-4 h-4" />, 
+                  hover: "hover:text-pink-400 hover:bg-pink-500/10 hover:border-pink-500/20",
+                  handles: [
+                    { label: "Global", href: "https://www.instagram.com/vntech_global" },
+                    { label: "India", href: "https://www.instagram.com/vntech_india" },
+                    { label: "Lucknow", href: "https://www.instagram.com/vntech_lucknow" }
+                  ]
+                }
               ].map((item, i) => (
-                <Link key={i} href={item.href} className={`w-10 h-10 rounded-xl border border-white/[0.06] flex items-center justify-center text-white/20 transition-all ${item.hover}`}>
-                  {item.icon}
-                </Link>
+                item.handles ? (
+                  <div key={i} className="relative group/insta">
+                    <button className={`w-10 h-10 rounded-xl border border-white/[0.06] flex items-center justify-center text-white/20 transition-all ${item.hover}`}>
+                      {item.icon}
+                    </button>
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 pb-3 opacity-0 pointer-events-none group-hover/insta:opacity-100 group-hover/insta:pointer-events-auto transition-all duration-300">
+                      <div className="bg-[#121214] border border-white/[0.08] rounded-xl overflow-hidden shadow-2xl backdrop-blur-xl">
+                        {item.handles.map((h) => (
+                          <Link 
+                            key={h.label} 
+                            href={h.href}
+                            target="_blank"
+                            className="block px-4 py-2 text-[9px] font-black text-white/40 hover:text-pink-400 hover:bg-white/[0.02] uppercase tracking-widest transition-colors whitespace-nowrap"
+                          >
+                            {h.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <Link key={i} href={item.href || "#"} className={`w-10 h-10 rounded-xl border border-white/[0.06] flex items-center justify-center text-white/20 transition-all ${item.hover}`}>
+                    {item.icon}
+                  </Link>
+                )
               ))}
             </div>
           </div>

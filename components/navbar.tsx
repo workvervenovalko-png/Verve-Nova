@@ -45,10 +45,10 @@ export function Navbar() {
         <Link href="/" className="flex items-center gap-5 shrink-0 group pointer-events-auto">
           <div className="relative">
             <div className="w-10 h-10 flex items-center justify-center rounded-xl transition-all duration-500 overflow-hidden">
-                <img src="/icon.svg" alt="Verve Nova Logo" className="w-8 h-8 object-contain brightness-0 invert" />
+              <img src="/icon.svg" alt="Verve Nova Logo" className="w-8 h-8 object-contain brightness-0 invert" />
             </div>
           </div>
-          
+
           <div className="flex flex-col" key={typeKey}>
             <div className="flex overflow-hidden">
               {"VERVE NOVA".split("").map((char, i) => (
@@ -67,7 +67,7 @@ export function Navbar() {
                 </motion.span>
               ))}
             </div>
-            <motion.span 
+            <motion.span
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
@@ -77,7 +77,7 @@ export function Navbar() {
             </motion.span>
           </div>
         </Link>
-        
+
 
         {/* Links Section */}
         <div className="hidden md:flex items-center gap-10">
@@ -92,12 +92,12 @@ export function Navbar() {
             </Link>
           ))}
           {status === 'authenticated' ? (
-            <div 
+            <div
               className="relative flex items-center"
               onMouseEnter={() => setShowLogout(true)}
               onMouseLeave={() => setShowLogout(false)}
             >
-              <Link 
+              <Link
                 href={session?.user?.role === 'ADMIN' ? '/admin' : '/profile'}
                 className="relative w-10 h-10 rounded-full bg-white/[0.03] border border-white/[0.08] flex items-center justify-center hover:border-indigo-500/50 transition-all overflow-hidden"
               >
@@ -165,19 +165,19 @@ export function Navbar() {
               {/* Background Accents for depth */}
               <div className="absolute inset-0 mesh-gradient-1 opacity-20 pointer-events-none" />
               <div className="absolute inset-0 dot-grid opacity-10 pointer-events-none" />
-              
+
               {/* Close Button - positioned to align with nav logo */}
               <div className="w-full flex justify-end">
-                  <button 
-                    onClick={() => setIsOpen(false)}
-                    className="w-12 h-12 rounded-full bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-white"
-                  >
-                    <X className="w-6 h-6" />
-                  </button>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="w-12 h-12 rounded-full bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-white"
+                >
+                  <X className="w-6 h-6" />
+                </button>
               </div>
 
               {/* Staggered Links */}
-              <motion.div 
+              <motion.div
                 className="flex flex-col items-center gap-8 w-full"
                 initial="closed"
                 animate="open"
@@ -213,7 +213,7 @@ export function Navbar() {
                     }}
                     className="flex flex-col items-center gap-6 mt-4"
                   >
-                     <Link
+                    <Link
                       href={session?.user?.role === 'ADMIN' ? '/admin' : '/profile'}
                       onClick={() => setIsOpen(false)}
                       className="text-sm font-black text-indigo-400 uppercase tracking-[0.5em]"
@@ -251,14 +251,14 @@ export function Navbar() {
               </motion.div>
 
               {/* Menu Footer */}
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 }}
                 className="w-full flex flex-col items-center gap-10"
               >
                 <div className="h-px w-20 bg-white/10" />
-                
+
                 <div className="flex flex-col items-center gap-3">
                   <span className="text-[8px] font-black text-white/20 uppercase tracking-[0.6em]">Reach Out</span>
                   <a href="mailto:work.vervenova.lko@gmail.com" className="text-[10px] font-bold text-white/40 tracking-wider">work.vervenova.lko@gmail.com</a>
