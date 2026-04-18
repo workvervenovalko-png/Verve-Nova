@@ -61,9 +61,9 @@ export function Footer() {
           {/* High-Impact Identity */}
           <div className="lg:col-span-3 flex flex-col items-center text-center md:items-start md:text-left gap-10">
             <div className="flex flex-col items-center md:items-start gap-4 md:gap-5 px-4 md:px-0">
-              <Link href="/" className="flex items-center gap-4 md:gap-5 group">
-                <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-white/[0.03] border border-white/[0.1] rounded-2xl group-hover:border-indigo-500/50 transition-all duration-500 glass-card overflow-hidden">
-                  <img src="/vnt-logo.png" alt="Verve Nova Logo" className="w-7 h-7 md:w-8 md:h-8 object-contain" />
+              <Link href="/" className="flex items-center gap-3 group">
+                <div className="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center transition-all duration-500 overflow-hidden">
+                  <img src="/vnt-logo.png" alt="Verve Nova Logo" className="w-10 h-10 md:w-14 md:h-14 object-contain" />
                 </div>
                 <div className="flex flex-col items-start text-left">
                   <span className="text-base md:text-lg font-black tracking-widest text-white uppercase leading-none group-hover:text-indigo-400 transition-colors">Verve Nova</span>

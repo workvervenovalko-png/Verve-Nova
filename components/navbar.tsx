@@ -42,10 +42,10 @@ export function Navbar() {
         className="pointer-events-auto backdrop-blur-2xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-between px-6 md:px-8 py-3 w-full max-w-[1200px] rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.4)] specular-glow"
       >
         {/* Logo Section - VNT BRANDING */}
-        <Link href="/" className="flex items-center gap-5 shrink-0 group pointer-events-auto">
+        <Link href="/" className="flex items-center gap-3 shrink-0 group pointer-events-auto">
           <div className="relative">
-            <div className="w-10 h-10 flex items-center justify-center rounded-xl transition-all duration-500 overflow-hidden">
-              <img src="/vnt-logo.png" alt="Verve Nova Logo" className="w-8 h-8 object-contain" />
+            <div className="w-14 h-14 flex items-center justify-center transition-all duration-500 overflow-hidden">
+              <img src="/vnt-logo.png" alt="Verve Nova Logo" className="w-12 h-12 object-contain" />
             </div>
           </div>
 
