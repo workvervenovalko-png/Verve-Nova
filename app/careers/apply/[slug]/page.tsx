@@ -102,6 +102,17 @@ export default function DetailedApplicationPage() {
 
   const handlePersonalChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
+    
+    // Strict numeric validation for phone
+    if (name === 'phone') {
+      const numericValue = value.replace(/[^\d+ ]/g, ''); // Allow digits, plus, and space
+      setFormData(prev => ({
+        ...prev,
+        personal: { ...prev.personal, [name]: numericValue }
+      }));
+      return;
+    }
+
     setFormData(prev => ({
       ...prev,
       personal: { ...prev.personal, [name]: value }
@@ -110,6 +121,19 @@ export default function DetailedApplicationPage() {
 
   const handleEducationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    
+    // Strict validation for numeric fields
+    if (name === 'cgpa' || name.endsWith('Percentage') || name === 'graduationYear') {
+      // Only allow digits and a single decimal point (except for year which is just digits)
+      const regex = name === 'graduationYear' ? /^\d*$/ : /^\d*\.?\d*$/;
+      if (value !== "" && !regex.test(value)) return;
+      
+      // Basic length limits to prevent overflow but allow typing
+      if (name === 'graduationYear' && value.length > 4) return;
+      if (name === 'cgpa' && value.length > 4) return; // Allows 9.99, 10.0
+      if (name.endsWith('Percentage') && value.length > 5) return; // Allows 100.00
+    }
+
     setFormData(prev => ({
       ...prev,
       education: { ...prev.education, [name]: value }

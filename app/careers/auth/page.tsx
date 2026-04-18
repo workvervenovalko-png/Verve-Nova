@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { ShieldCheck, User2, Mail, Lock, Sparkles, ArrowRight, Loader2, Phone, Search, Edit2, ChevronDown } from "lucide-react";
+import { ShieldCheck, User2, Mail, Lock, Sparkles, ArrowRight, Loader2, Phone, Search, Edit2, ChevronDown, XCircle } from "lucide-react";
 import { toast } from "sonner";
 import { countries } from "@/lib/countries";
 
@@ -79,6 +79,10 @@ export default function CareersAuthPage() {
           let errorMessage = "Studio access denied. Unauthorized identity.";
           if (result.error === "CredentialsSignin") {
             errorMessage = "Invalid coordinates or security key. Please verify your identity.";
+          } else if (result.error === "Configuration") {
+            errorMessage = "Server configuration error. Please contact the architect.";
+          } else if (result.error) {
+            errorMessage = result.error;
           }
           throw new Error(errorMessage);
         }
@@ -256,7 +260,10 @@ export default function CareersAuthPage() {
                                       placeholder="PHONE LINE"
                                       className="h-12 pl-24 bg-white/[0.03] border-white/10 rounded-xl text-white placeholder:text-white/10 text-[10px] font-black tracking-[0.2em] uppercase focus:bg-white/[0.05] focus:border-indigo-500/50 transition-all"
                                       value={formData.phone}
-                                      onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                                      onChange={(e) => {
+                                        const val = e.target.value.replace(/\D/g, ''); // Remove non-digits
+                                        if (val.length <= 10) setFormData({...formData, phone: val});
+                                      }}
                                     />
 
                                     <AnimatePresence>
