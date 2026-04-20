@@ -176,6 +176,16 @@ export function Navbar() {
                 </button>
               </div>
 
+              {/* Mobile Menu Logo */}
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8 }}
+                className="flex flex-col items-center gap-4"
+              >
+                <img src="/vnt-logo.png" alt="VNT Logo" className="w-20 h-20 object-contain" />
+              </motion.div>
+
               {/* Staggered Links */}
               <motion.div
                 className="flex flex-col items-center gap-8 w-full"

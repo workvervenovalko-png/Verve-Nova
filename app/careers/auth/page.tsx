@@ -139,6 +139,15 @@ export default function CareersAuthPage() {
               className="lg:col-span-7 space-y-8 text-center lg:text-left"
             >
               <div className="flex flex-col items-center lg:items-start gap-6">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                  className="w-24 h-24 mb-4"
+                >
+                  <img src="/vnt-logo.png" alt="VNT Logo" className="w-full h-full object-contain" />
+                </motion.div>
+                
                 <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-indigo-500/5 border border-white/10 text-[8px] font-black text-indigo-400 uppercase tracking-[0.5em]">
                   <ShieldCheck className="w-3.5 h-3.5" />
                   Studio Protocol

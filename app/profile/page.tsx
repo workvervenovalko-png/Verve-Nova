@@ -90,8 +90,8 @@ export default function CandidateProfilePage() {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-16">
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-                  <User2 className="w-5 h-5 text-white" />
+                <div className="w-14 h-14 rounded-xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-center shadow-lg shadow-indigo-500/20 overflow-hidden shrink-0">
+                  <img src="/vnt-logo.png" alt="VNT Logo" className="w-10 h-10 object-contain" />
                 </div>
                 <h1 className="text-3xl font-black text-white tracking-tighter uppercase">
                   Candidate <span className="text-gradient">Dashboard.</span>

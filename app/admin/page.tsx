@@ -204,8 +204,8 @@ export default function AdminDashboardPage() {
                          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-16">
                               <div>
                                    <div className="flex items-center gap-3 mb-4">
-                                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-                                             <ShieldCheck className="w-6 h-6 text-white" />
+                                        <div className="w-16 h-16 rounded-2xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-center shadow-lg shadow-indigo-500/10 overflow-hidden shrink-0">
+                                             <img src="/vnt-logo.png" alt="VNT Logo" className="w-12 h-12 object-contain" />
                                         </div>
                                         <h1 className="text-4xl font-black text-white tracking-tighter uppercase leading-none">
                                              Master <span className="text-gradient">Console.</span>

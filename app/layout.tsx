@@ -96,9 +96,6 @@ export const metadata: Metadata = {
   verification: {
     google: 'GfKcs2U6i040Xdk3gc6yBf27eDH2FyIyiqlP4GxQgYE',
   },
-  alternates: {
-    canonical: 'https://vervenovatech.com',
-  },
   generator: 'v0.app',
 }
 
