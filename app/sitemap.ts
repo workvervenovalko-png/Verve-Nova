@@ -2,30 +2,31 @@ import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Use your actual standard routing here
-  return [
-    {
-      url: 'https://vervenovatech.com',
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 1,
-    },
-    {
-      url: 'https://vervenovatech.com/about',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://vervenovatech.com/services',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.9,
-    },
-    {
-      url: 'https://vervenovatech.com/contact',
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.7,
-    },
+  const routes = [
+    '',
+    '/about',
+    '/services',
+    '/projects',
+    '/careers',
+    '/blog',
+    '/contact',
+    '/products',
+    '/industries',
+    '/ai-automation',
+    '/cybersecurity',
+    '/cloud-infrastructure',
+    '/digital-experience',
+    '/enterprise-solutions',
+    '/software-engineering',
+    '/testimonials',
+    '/privacy',
+    '/terms',
   ]
+
+  return routes.map((route) => ({
+    url: `https://vervenovatech.com${route}`,
+    lastModified: new Date(),
+    changeFrequency: route === '' ? 'daily' : 'monthly',
+    priority: route === '' ? 1 : 0.8,
+  })) as MetadataRoute.Sitemap
 }

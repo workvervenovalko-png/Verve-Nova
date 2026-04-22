@@ -111,22 +111,54 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "LocalBusiness",
-              "name": "VNT - Verve Nova Tech",
-              "alternateName": ["VNT", "VNT Global", "VNT Lucknow", "Verve Nova Technologies"],
-              "url": "https://vervenovatech.com",
-              "description": "VNT (Verve Nova Tech) is a leading website company and software company in Lucknow. We specialize in software development, web apps, AI, and enterprise tech globally.",
-              "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Lucknow",
-                "addressRegion": "Uttar Pradesh",
-                "addressCountry": "IN"
+            __html: JSON.stringify([
+              {
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                "name": "VNT - Verve Nova Tech",
+                "url": "https://vervenovatech.com",
+                "logo": "https://vervenovatech.com/vnt-logo.png",
+                "sameAs": [
+                  "https://www.linkedin.com/company/vervenovatech",
+                  "https://x.com/vervenovatech",
+                  "https://www.instagram.com/vervenovatech"
+                ],
+                "contactPoint": {
+                  "@type": "ContactPoint",
+                  "telephone": "+91-XXXXXXXXXX", // Replace with actual number if known
+                  "contactType": "customer service",
+                  "areaServed": "IN",
+                  "availableLanguage": ["en", "Hindi"]
+                }
               },
-              "areaServed": ["Lucknow", "India", "Global"],
-              "knowsAbout": ["Website Development", "Software Development", "IT Solutions", "AI Solutions", "Digital Transformation"]
-            })
+              {
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                "name": "VNT - Verve Nova Tech",
+                "url": "https://vervenovatech.com",
+                "potentialAction": {
+                  "@type": "SearchAction",
+                  "target": "https://vervenovatech.com/search?q={search_term_string}",
+                  "query-input": "required name=search_term_string"
+                }
+              },
+              {
+                "@context": "https://schema.org",
+                "@type": "LocalBusiness",
+                "name": "VNT - Verve Nova Tech",
+                "alternateName": ["VNT", "VNT Global", "VNT Lucknow", "Verve Nova Technologies"],
+                "url": "https://vervenovatech.com",
+                "description": "VNT (Verve Nova Tech) is a leading website company and software company in Lucknow. We specialize in software development, web apps, AI, and enterprise tech globally.",
+                "address": {
+                  "@type": "PostalAddress",
+                  "addressLocality": "Lucknow",
+                  "addressRegion": "Uttar Pradesh",
+                  "addressCountry": "IN"
+                },
+                "areaServed": ["Lucknow", "India", "Global"],
+                "knowsAbout": ["Website Development", "Software Development", "IT Solutions", "AI Solutions", "Digital Transformation"]
+              }
+            ])
           }}
         />
       </head>
