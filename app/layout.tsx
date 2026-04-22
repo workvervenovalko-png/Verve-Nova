@@ -24,16 +24,15 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL('https://vervenovatech.com'), // Replace with your actual domain
   title: {
-    default: 'Verve Nova Tech | Top Website & Software Company in Lucknow',
-    template: '%s | Verve Nova Tech'
+    default: 'VNT - Verve Nova Tech | Top Website & Software Company in Lucknow',
+    template: '%s | VNT - Verve Nova Tech'
   },
-  description: 'Verve Nova Tech (VNT) is a premium website company and software development agency in Lucknow. We specialize in custom software, enterprise systems, AI solutions, web applications, and digital transformation natively in Lucknow and globally (VNT Global).',
+  description: 'VNT (Verve Nova Tech) is a premium website and software development company in Lucknow. Specializing in custom software, AI solutions, and digital transformation, VNT delivers elite tech globally.',
   keywords: [
-    'Verve Nova Tech',
-    'Verve Nova',
     'VNT',
-    'VNT Lucknow',
     'VNT Global',
+    'Verve Nova Tech',
+    'VNT Lucknow',
     'Website company',
     'Website company in Lucknow',
     'Software company',
@@ -43,9 +42,9 @@ export const metadata: Metadata = {
     'Web development agency',
     'IT Solutions'
   ],
-  authors: [{ name: 'Verve Nova Tech' }],
-  creator: 'Verve Nova Tech',
-  publisher: 'Verve Nova Tech',
+  authors: [{ name: 'VNT - Verve Nova Tech' }],
+  creator: 'VNT - Verve Nova Tech',
+  publisher: 'VNT - Verve Nova Tech',
   formatDetection: {
     email: false,
     address: false,
@@ -54,23 +53,22 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: '/vnt-logo.png', type: 'image/png' },
-      { url: '/icon-dark-32x32.png', sizes: '32x32', type: 'image/png' },
     ],
-    shortcut: '/icon-dark-32x32.png',
-    apple: '/apple-icon.png',
+    shortcut: '/vnt-logo.png',
+    apple: '/vnt-logo.png',
   },
   manifest: '/manifest.json',
   openGraph: {
-    title: 'Verve Nova Tech | Top Website & Software Company in Lucknow',
-    description: 'Verve Nova Tech (VNT) is a leading software and website company in Lucknow, delivering cutting-edge digital solutions globally.',
+    title: 'VNT - Verve Nova Tech | Top Website & Software Company',
+    description: 'VNT (Verve Nova Tech) is a leading software and website company in Lucknow, delivering cutting-edge digital solutions globally.',
     url: 'https://vervenovatech.com',
-    siteName: 'Verve Nova Tech',
+    siteName: 'VNT - Verve Nova Tech',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Verve Nova Tech - Enterprise IT Solutions',
+        alt: 'VNT - Verve Nova Tech - Enterprise IT Solutions',
       },
     ],
     locale: 'en_US',
@@ -78,8 +76,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Verve Nova Tech | Top Website & Software Company',
-    description: 'Verve Nova Tech (VNT) is a leading software and website company in Lucknow.',
+    title: 'VNT - Verve Nova Tech | Top Website & Software Company',
+    description: 'VNT (Verve Nova Tech) is a leading software and website company in Lucknow.',
     creator: '@vervenovatech',
   },
   robots: {
@@ -116,10 +114,10 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
-              "name": "Verve Nova Tech",
-              "alternateName": ["VNT", "VNT Lucknow", "VNT Global", "Verve Nova"],
+              "name": "VNT - Verve Nova Tech",
+              "alternateName": ["VNT", "VNT Global", "VNT Lucknow", "Verve Nova Technologies"],
               "url": "https://vervenovatech.com",
-              "description": "Verve Nova Tech (VNT) is a leading website company and software company in Lucknow. We specialize in software development, web apps, AI, and enterprise tech globally.",
+              "description": "VNT (Verve Nova Tech) is a leading website company and software company in Lucknow. We specialize in software development, web apps, AI, and enterprise tech globally.",
               "address": {
                 "@type": "PostalAddress",
                 "addressLocality": "Lucknow",

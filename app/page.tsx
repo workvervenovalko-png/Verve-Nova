@@ -13,6 +13,7 @@ import { Industries } from "@/components/industries";
 import { Process } from "@/components/process";
 import { ContactSection } from "@/components/contact-section";
 import { Footer } from "@/components/footer";
+import { ProductEcosystem } from "@/components/product-ecosystem";
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
       <Hero />
       <TrustMatrix />
       <TrustStrip />
+      <ProductEcosystem />
       <ReadyProjects />
       <Capabilities />
       <Services />

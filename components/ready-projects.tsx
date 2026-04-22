@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight, CheckCircle2, Headphones, Building2 } from "lucide-react";
+import { ArrowUpRight, CheckCircle2, Headphones, Building2, ChevronRight } from "lucide-react";
 import Link from "next/link";
 
 export function ReadyProjects() {
@@ -34,21 +34,21 @@ export function ReadyProjects() {
           <div className="max-w-lg flex flex-col items-center md:items-start">
             <p className="text-xs font-bold text-indigo-400 uppercase tracking-[0.5em] mb-4">Pre-Built Software</p>
             <h2 className="text-3xl md:text-5xl font-black text-white tracking-tighter uppercase leading-none mb-4">
-              Ready <span className="text-gradient">Solutions</span>
+              Our <span className="text-gradient">Projects</span>
             </h2>
             <p className="text-sm text-white/30 font-light leading-relaxed">
-              Specialized tools you can start using for your business right away.
+              Specialized tools and custom platforms we've built for high-growth businesses.
             </p>
           </div>
           <Link 
-            href="/contact" 
-            className="group flex items-center gap-2 text-[10px] font-bold text-white/50 uppercase tracking-widest hover:text-indigo-400 transition-colors"
+            href="/projects" 
+            className="group flex items-center gap-2 text-[10px] font-bold text-indigo-400 uppercase tracking-widest hover:text-white transition-colors bg-white/5 px-6 py-3 rounded-full border border-white/10"
           >
-            Request Demo <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+            Explore All Projects <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
           {projects.map((project, i) => (
             <motion.div
               key={project.title}
@@ -56,30 +56,31 @@ export function ReadyProjects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.15 }}
-              className="group glass-card rounded-[2rem] overflow-hidden hover:glass-card-hover transition-all duration-500"
+              className="group glass-card rounded-[2.5rem] overflow-hidden hover:glass-card-hover transition-all duration-500 flex flex-col h-full border border-white/5 bg-white/[0.02] shadow-2xl"
             >
-              <div className="aspect-[21/9] relative overflow-hidden">
+              <div className="aspect-[16/10] relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-violet-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                 <img 
                   src={project.image} 
                   alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100"
+                  className="w-full h-full object-cover transition-all duration-1000 scale-110 group-hover:scale-100"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#111113] via-transparent to-transparent" />
-                <div className="absolute top-4 left-4">
-                  <div className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md flex items-center justify-center shadow-lg border border-white/10">
-                    <project.icon className="w-5 h-5 text-indigo-400" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0C0C0F] via-transparent to-transparent" />
+                <div className="absolute top-6 left-6 z-20">
+                  <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-xl flex items-center justify-center shadow-2xl border border-white/10 group-hover:border-indigo-500/50 transition-colors">
+                    <project.icon className="w-6 h-6 text-indigo-400" />
                   </div>
                 </div>
               </div>
 
-              <div className="p-8 flex flex-col items-center text-center md:items-start md:text-left">
-                <h3 className="text-xl font-black text-white uppercase mb-3">{project.title}</h3>
-                <p className="text-xs text-white/40 font-light leading-relaxed mb-6 line-clamp-2">{project.desc}</p>
+              <div className="p-8 md:p-10 flex flex-col flex-grow">
+                <h3 className="text-2xl font-black text-white uppercase tracking-tight mb-3 group-hover:text-indigo-400 transition-colors">{project.title}</h3>
+                <p className="text-sm text-white/40 font-medium leading-relaxed mb-8 line-clamp-2">{project.desc}</p>
                 
-                <div className="flex flex-wrap justify-center md:justify-start gap-4 mb-8">
+                <div className="flex flex-wrap gap-3 mb-8 mt-auto">
                   {project.features.map(feat => (
-                    <div key={feat} className="flex items-center gap-2 text-[9px] font-bold text-white/30 uppercase tracking-widest">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                    <div key={feat} className="flex items-center gap-2 text-[10px] font-bold text-white/30 uppercase tracking-widest bg-white/[0.03] px-3 py-1.5 rounded-lg border border-white/5">
+                      <CheckCircle2 className="w-4 h-4 text-indigo-500" />
                       {feat}
                     </div>
                   ))}
@@ -89,9 +90,9 @@ export function ReadyProjects() {
                   href={project.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex h-12 px-6 items-center bg-gradient-to-r from-indigo-600 to-violet-600 text-white text-[9px] font-bold uppercase tracking-[0.3em] hover:shadow-[0_0_24px_rgba(99,102,241,0.3)] transition-all rounded-xl"
+                  className="inline-flex h-14 px-8 items-center bg-gradient-to-r from-indigo-600 to-violet-600 text-white text-[10px] font-black uppercase tracking-[0.3em] hover:shadow-[0_0_30px_rgba(99,102,241,0.4)] transition-all rounded-2xl w-full justify-center"
                 >
-                  Visit Website <ArrowUpRight className="ml-2 w-3.5 h-3.5" />
+                  Visit Website <ArrowUpRight className="ml-2 w-4 h-4" />
                 </a>
               </div>
             </motion.div>
