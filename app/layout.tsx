@@ -24,8 +24,8 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL('https://vervenovatech.com'), // Replace with your actual domain
   title: {
-    default: 'VNT - Verve Nova Tech | Top Website & Software Company in Lucknow',
-    template: '%s | VNT - Verve Nova Tech'
+    default: 'VNT Billzer - Enterprise Business Solutions',
+    template: '%s | VNT Billzer'
   },
   description: 'VNT (Verve Nova Tech) is a premium website and software development company in Lucknow. Specializing in custom software, AI solutions, and digital transformation, VNT delivers elite tech globally.',
   keywords: [

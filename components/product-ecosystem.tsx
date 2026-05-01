@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 export function ProductEcosystem() {
   const products = [
     {
-      name: "Verve Ledger",
+      name: "VNT Billzer",
       slug: "verve-ledger",
       type: "Billing & Inventory",
       desc: "Institutional-grade SaaS platform for retail leaders. High-performance POS with neural analytics.",
@@ -18,7 +18,7 @@ export function ProductEcosystem() {
       status: "Live Now"
     },
     {
-      name: "Verve CRM",
+      name: "VNT Billzer CRM",
       slug: "verve-crm",
       type: "Client Relations",
       desc: "Intelligent sales automation and lead management system built to maximize business growth.",
@@ -28,7 +28,7 @@ export function ProductEcosystem() {
       status: "Live Now"
     },
     {
-      name: "Verve ERP",
+      name: "VNT Billzer ERP",
       slug: "verve-erp",
       type: "Resource Planning",
       desc: "Comprehensive orchestration for complex workflows, logistics, and large-scale operations.",
