@@ -24,11 +24,15 @@ export default function DetailedAuditPage({ params }: { params: Promise<{ id: st
   const ensureAbsoluteUrl = (url: string) => {
     if (!url || typeof url !== 'string') return undefined;
     const trimmed = url.trim();
-    if (trimmed.startsWith('http')) return trimmed;
-    if (trimmed.includes('@')) return `mailto:${trimmed}`;
+    if (trimmed.startsWith('http') || trimmed.startsWith('data:') || trimmed.startsWith('mailto:')) return trimmed;
+    
+    // If it has a dot and no spaces, it's likely a domain (e.g., google.com)
     if (trimmed.includes('.') && !trimmed.includes(' ')) return `https://${trimmed}`;
-    // If it looks like a hex/mongo ID, it's probably not a valid external link
-    if (/^[0-9a-fA-F]{24}$/.test(trimmed)) return undefined;
+    
+    // If it's a relative path starting with /
+    if (trimmed.startsWith('/')) return trimmed;
+    
+    // Default to the original string if it doesn't match above but still exists
     return trimmed;
   };
 
@@ -302,9 +306,9 @@ export default function DetailedAuditPage({ params }: { params: Promise<{ id: st
                     <h3 className="text-[10px] font-black uppercase tracking-[0.5em] mb-12 text-white/60">Terminal Assets</h3>
                     
                     <div className="grid grid-cols-1 gap-5 relative z-10">
-                        {auditData.links?.resumeUrl && ensureAbsoluteUrl(auditData.links.resumeUrl) ? (
+                        {auditData.links?.resumeUrl || auditData.links?.resumeContent ? (
                             <a 
-                                href={ensureAbsoluteUrl(auditData.links.resumeUrl)}
+                                href={auditData.links?.resumeContent ? `/api/resume/${auditData._id}` : ensureAbsoluteUrl(auditData.links.resumeUrl)}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="h-16 bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-2xl transition-all flex items-center justify-between px-8"

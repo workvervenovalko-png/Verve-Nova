@@ -45,6 +45,8 @@ const ApplicationSchema = new Schema({
   // Terminal Assets
   links: {
     resumeUrl: String,
+    resumeContent: String, // Store Base64 content for self-hosting
+    resumeType: String,    // Store MIME type (e.g. application/pdf)
     portfolio: String,
     linkedIn: String,
     github: String

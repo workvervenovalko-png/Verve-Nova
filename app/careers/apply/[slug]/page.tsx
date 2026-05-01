@@ -17,6 +17,13 @@ import {
   PopoverContent, 
   PopoverTrigger 
 } from "@/components/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Calendar as CalendarUI } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -42,7 +49,7 @@ import {
   ArrowRight,
   UploadCloud,
   FileText,
-  GlobeIcon
+  Globe
 } from "lucide-react";
 import { submitApplication } from "@/app/actions/application";
 import { toast } from "sonner";
@@ -51,12 +58,11 @@ import { useSession } from "next-auth/react";
 export default function DetailedApplicationPage() {
   const { slug } = useParams();
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
-
 
   const [formData, setFormData] = useState({
     personal: {
@@ -119,6 +125,32 @@ export default function DetailedApplicationPage() {
     }));
   };
 
+  const handleDobPartChange = (part: 'year' | 'month' | 'day', value: string) => {
+    const currentDob = formData.personal.dob || "--";
+    const parts = currentDob.split('-');
+    if (parts.length !== 3) {
+      parts[0] = ""; parts[1] = ""; parts[2] = "";
+    }
+    
+    if (part === 'year') parts[0] = value;
+    if (part === 'month') parts[1] = value;
+    if (part === 'day') parts[2] = value;
+    
+    setFormData(prev => ({
+      ...prev,
+      personal: { ...prev.personal, dob: `${parts[0]}-${parts[1]}-${parts[2]}` }
+    }));
+  };
+
+  const years = Array.from({ length: 100 }, (_, i) => (new Date().getFullYear() - i).toString());
+  const months = [
+    { name: "January", value: "01" }, { name: "February", value: "02" }, { name: "March", value: "03" },
+    { name: "April", value: "04" }, { name: "May", value: "05" }, { name: "June", value: "06" },
+    { name: "July", value: "07" }, { name: "August", value: "08" }, { name: "September", value: "09" },
+    { name: "October", value: "10" }, { name: "November", value: "11" }, { name: "December", value: "12" }
+  ];
+  const days = Array.from({ length: 31 }, (_, i) => (i + 1).toString().padStart(2, '0'));
+
   const handleEducationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     
@@ -173,11 +205,34 @@ export default function DetailedApplicationPage() {
         toast.error("Resume Transmission Required.");
         return;
     }
+
+    if (resumeFile.size > 8 * 1024 * 1024) {
+        toast.error("File is too large (Max 8MB allowed).");
+        return;
+    }
+
     setIsSubmitting(true);
     try {
+      // 1. Convert Resume to Base64 for Self-Hosted MongoDB Storage
+      const reader = new FileReader();
+      const base64Promise = new Promise<string>((resolve, reject) => {
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = reject;
+        reader.readAsDataURL(resumeFile);
+      });
+
+      const base64Resume = await base64Promise;
+
+      // 2. Submit Application with embedded resume data
       const result = await submitApplication({
         roleSlug: slug as string,
-        ...formData
+        ...formData,
+        links: {
+            ...formData.links,
+            resumeUrl: resumeFile.name,
+            resumeContent: base64Resume,
+            resumeType: resumeFile.type
+        }
       });
 
       if (result.success) {
@@ -187,6 +242,7 @@ export default function DetailedApplicationPage() {
         throw new Error(result.error);
       }
     } catch (error: any) {
+      console.error("SUBMISSION_ERROR:", error);
       toast.error(error.message || "Submission failed.");
     } finally {
       setIsSubmitting(false);
@@ -208,6 +264,50 @@ export default function DetailedApplicationPage() {
     }
     return true;
   };
+
+  if (status === "loading") {
+    return (
+      <main className="min-h-screen bg-[#09090B] flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
+      </main>
+    );
+  }
+
+  if (status === "unauthenticated") {
+    return (
+      <main className="min-h-screen bg-background selection:bg-indigo-500/30 text-white">
+        <Navbar />
+        <section className="relative pt-64 pb-32 px-6 flex flex-col items-center justify-center">
+            {/* Soft Ambient Orbs */}
+            <div className="absolute top-[10%] left-1/4 w-[600px] h-[600px] bg-indigo-500/[0.03] blur-[150px] rounded-full pointer-events-none" />
+            
+            <div className="max-w-2xl w-full text-center space-y-12 relative z-10">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] text-[9px] font-bold text-white/40 uppercase tracking-[0.4em] mb-4">
+                    <ShieldCheck className="w-3 h-3 text-red-400" />
+                    Authentication Protocol Required
+                </div>
+                <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter uppercase leading-none">
+                    Access <span className="text-gradient">Denied.</span>
+                </h1>
+                <p className="text-[10px] text-white/20 font-bold tracking-[0.4em] uppercase leading-relaxed">
+                    Identity verification is mandatory to initiate a candidate audit. <br />
+                    Please authenticate your account to proceed.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-6 justify-center pt-8">
+                    <Button 
+                        onClick={() => router.push(`/careers/auth`)}
+                        className="h-16 px-12 bg-white hover:bg-slate-200 text-background font-black rounded-xl transition-all shadow-xl uppercase text-[10px] tracking-widest group border-0"
+                    >
+                        Sign In Now
+                        <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                </div>
+            </div>
+        </section>
+        <Footer />
+      </main>
+    );
+  }
 
   const renderStepIndicator = () => (
     <div className="flex items-center justify-between mb-20 max-w-2xl mx-auto px-4">
@@ -263,7 +363,7 @@ export default function DetailedApplicationPage() {
                 >
                   <div className="flex items-center gap-4 mb-4">
                     <User className="w-5 h-5 text-indigo-400" />
-                    <h2 className="text-xl font-bold text-white uppercase tracking-tight">Identity Profile</h2>
+                    <h2 className="text-xl font-bold text-white uppercase tracking-tight">Personal Details</h2>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -289,36 +389,49 @@ export default function DetailedApplicationPage() {
                     </div>
                     <div className="space-y-3">
                       <Label className="text-[10px] uppercase tracking-[0.3em] text-white/20 font-bold ml-1">Date of Birth *</Label>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <Button
-                            variant="outline"
-                            className={cn(
-                              "h-14 w-full bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] transition-all text-sm px-4 justify-start text-left font-normal hover:bg-white/[0.05] hover:text-white border-white/[0.06]",
-                              !formData.personal.dob && "text-white/10"
-                            )}
-                          >
-                            <CalendarIcon className="mr-2 h-4 w-4 text-indigo-400/50" />
-                            {formData.personal.dob ? format(new Date(formData.personal.dob), "PPP") : <span>Select Date of Birth</span>}
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0 rounded-3xl border-white/[0.06] shadow-2xl bg-[#09090B]" align="start">
-                          <CalendarUI
-                            mode="single"
-                            selected={formData.personal.dob ? new Date(formData.personal.dob) : undefined}
-                            onSelect={(date) => {
-                              if (date) {
-                                setFormData(prev => ({
-                                  ...prev,
-                                  personal: { ...prev.personal, dob: date.toISOString().split('T')[0] }
-                                }));
-                              }
-                            }}
-                            initialFocus
-                            className="p-4"
-                          />
-                        </PopoverContent>
-                      </Popover>
+                      <div className="grid grid-cols-3 gap-3">
+                        <Select
+                          value={formData.personal.dob?.split('-')[0] || ""}
+                          onValueChange={(v) => handleDobPartChange('year', v)}
+                        >
+                          <SelectTrigger className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] transition-all text-xs text-white border-white/[0.06]">
+                            <SelectValue placeholder="Year" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-[#09090B] border-white/[0.06] max-h-60 overflow-y-auto">
+                            {years.map(y => (
+                              <SelectItem key={y} value={y}>{y}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+
+                        <Select
+                          value={formData.personal.dob?.split('-')[1] || ""}
+                          onValueChange={(v) => handleDobPartChange('month', v)}
+                        >
+                          <SelectTrigger className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] transition-all text-xs text-white border-white/[0.06]">
+                            <SelectValue placeholder="Month" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-[#09090B] border-white/[0.06]">
+                            {months.map(m => (
+                              <SelectItem key={m.value} value={m.value}>{m.name}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+
+                        <Select
+                          value={formData.personal.dob?.split('-')[2] || ""}
+                          onValueChange={(v) => handleDobPartChange('day', v)}
+                        >
+                          <SelectTrigger className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] transition-all text-xs text-white border-white/[0.06]">
+                            <SelectValue placeholder="Day" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-[#09090B] border-white/[0.06] max-h-60 overflow-y-auto">
+                            {days.map(d => (
+                              <SelectItem key={d} value={d}>{d}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
                     </div>
                     <div className="space-y-3">
                       <Label className="text-[10px] uppercase tracking-[0.3em] text-white/20 font-bold ml-1">City of Residence *</Label>
@@ -344,7 +457,7 @@ export default function DetailedApplicationPage() {
                 >
                   <div className="flex items-center gap-4 mb-4">
                     <GraduationCap className="w-5 h-5 text-indigo-400" />
-                    <h2 className="text-xl font-bold text-white uppercase tracking-tight">Academic Matrix</h2>
+                    <h2 className="text-xl font-bold text-white uppercase tracking-tight">Education Details</h2>
                   </div>
 
                   <div className="grid grid-cols-1 gap-8">
@@ -436,7 +549,7 @@ export default function DetailedApplicationPage() {
                 >
                   <div className="flex items-center gap-4 mb-4">
                     <Briefcase className="w-5 h-5 text-indigo-400" />
-                    <h2 className="text-xl font-bold text-white uppercase tracking-tight">Professional Log</h2>
+                    <h2 className="text-xl font-bold text-white uppercase tracking-tight">Work & Projects</h2>
                   </div>
 
                   {/* Experience Section */}
@@ -551,12 +664,12 @@ export default function DetailedApplicationPage() {
                 >
                   <div className="flex items-center gap-4 mb-4">
                     <LinkIcon className="w-5 h-5 text-indigo-400" />
-                    <h2 className="text-xl font-bold text-white uppercase tracking-tight">Digital Assets</h2>
+                    <h2 className="text-xl font-bold text-white uppercase tracking-tight">Resume & Links</h2>
                   </div>
 
                   <div className="grid grid-cols-1 gap-12">
                     <div className="space-y-4">
-                      <Label className="text-[10px] uppercase tracking-[0.3em] text-white/20 font-bold ml-1">Academic & Technical Resume (PDF/DOC)</Label>
+                      <Label className="text-[10px] uppercase tracking-[0.3em] text-white/20 font-bold ml-1">Your Resume *</Label>
                       <div 
                         className={`relative h-48 border-2 border-dashed rounded-[2.5rem] transition-all duration-500 flex flex-col items-center justify-center gap-4 group ${
                             resumeFile ? 'border-emerald-500/50 bg-emerald-500/[0.02]' : 'border-white/[0.06] hover:border-indigo-500/30 bg-white/[0.02]'
@@ -573,7 +686,7 @@ export default function DetailedApplicationPage() {
                       >
                         <Input 
                             type="file" 
-                            className="absolute inset-0 opacity-0 cursor-pointer z-10" 
+                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" 
                             accept=".pdf,.doc,.docx"
                             onChange={(e) => {
                                 const file = e.target.files?.[0];
@@ -592,7 +705,7 @@ export default function DetailedApplicationPage() {
                                 </div>
                                 <div className="text-center">
                                     <p className="text-sm font-bold text-white">{resumeFile.name}</p>
-                                    <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mt-1">Ready for Transmission</p>
+                                    <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mt-1">File Attached Successfully</p>
                                 </div>
                             </>
                         ) : (
@@ -601,8 +714,8 @@ export default function DetailedApplicationPage() {
                                     <UploadCloud className="w-8 h-8" />
                                 </div>
                                 <div className="text-center">
-                                    <p className="text-sm font-bold text-white/60">Drag your resume here or click to browse</p>
-                                    <p className="text-[10px] font-bold text-white/15 uppercase tracking-widest mt-1">Support: PDF, DOC (max 10MB)</p>
+                                    <p className="text-sm font-bold text-white/60">Drop your resume here or click to upload</p>
+                                    <p className="text-[10px] font-bold text-white/15 uppercase tracking-widest mt-1">PDF or DOC only (Max 10MB)</p>
                                 </div>
                             </>
                         )}
@@ -634,7 +747,7 @@ export default function DetailedApplicationPage() {
                         </div>
                         <div className="space-y-3">
                             <Label className="text-[10px] uppercase tracking-[0.3em] text-white/20 font-bold ml-1 flex items-center gap-2">
-                                <GlobeIcon className="w-3 h-3 text-indigo-400/50" /> Portfolio
+                                <Globe className="w-3 h-3 text-indigo-400/50" /> Portfolio
                             </Label>
                             <Input 
                                 value={formData.links.portfolio}
@@ -686,7 +799,7 @@ export default function DetailedApplicationPage() {
                   onClick={handleFinalSubmit}
                   className="h-14 px-12 bg-gradient-to-r from-indigo-600 to-violet-600 hover:shadow-[0_0_32px_rgba(99,102,241,0.3)] disabled:opacity-5 text-white font-black rounded-xl transition-all shadow-xl uppercase text-[10px] tracking-widest group border-0"
                 >
-                  {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : "Confirm Trajectory & Lock"}
+                  {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : "Submit Application"}
                   <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
               )}

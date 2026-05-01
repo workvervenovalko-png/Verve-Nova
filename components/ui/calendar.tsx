@@ -10,6 +10,13 @@ import { DayButton, DayPicker, getDefaultClassNames } from 'react-day-picker'
 
 import { cn } from '@/lib/utils'
 import { Button, buttonVariants } from '@/components/ui/button'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 function Calendar({
   className,
@@ -70,7 +77,7 @@ function Calendar({
           defaultClassNames.dropdowns,
         ),
         dropdown_root: cn(
-          'relative has-focus:border-ring border border-input shadow-xs has-focus:ring-ring/50 has-focus:ring-[3px] rounded-md',
+          'relative flex items-center',
           defaultClassNames.dropdown_root,
         ),
         dropdown: cn(
@@ -78,10 +85,10 @@ function Calendar({
           defaultClassNames.dropdown,
         ),
         caption_label: cn(
-          'select-none font-medium',
+          'select-none font-medium flex items-center gap-1',
           captionLayout === 'label'
             ? 'text-sm'
-            : 'rounded-md pl-2 pr-1 flex items-center gap-1 text-sm h-8 [&>svg]:text-muted-foreground [&>svg]:size-3.5',
+            : 'rounded-md px-2 flex items-center gap-1 text-sm h-8 [&>svg]:text-muted-foreground [&>svg]:size-3.5',
           defaultClassNames.caption_label,
         ),
         table: 'w-full border-collapse',
@@ -163,6 +170,34 @@ function Calendar({
                 {children}
               </div>
             </td>
+          )
+        },
+        Dropdown: ({ value, onChange, options, 'aria-label': ariaLabel }) => {
+          const selected = options?.find((option) => option.value === value)
+          const handleChange = (value: string) => {
+            const changeEvent = {
+              target: { value },
+            } as React.ChangeEvent<HTMLSelectElement>
+            onChange?.(changeEvent)
+          }
+          return (
+            <Select
+              value={value?.toString()}
+              onValueChange={handleChange}
+            >
+              <SelectTrigger className="h-8 w-fit px-2 text-xs border-0 bg-transparent hover:bg-accent hover:text-accent-foreground focus:ring-0">
+                <SelectValue placeholder={selected?.label}>
+                  {selected?.label}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent position="popper" className="max-h-80 overflow-y-auto">
+                {options?.map((option) => (
+                  <SelectItem key={option.value} value={option.value.toString()}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           )
         },
         ...components,

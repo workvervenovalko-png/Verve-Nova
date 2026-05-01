@@ -262,6 +262,7 @@ export default function AdminDashboardPage() {
                                                   <tr className="bg-white/[0.02] border-b border-white/[0.04]">
                                                        <th className="px-8 py-6 text-[10px] font-bold text-white/20 uppercase tracking-[0.3em]">Candidate</th>
                                                        <th className="px-8 py-6 text-[10px] font-bold text-white/20 uppercase tracking-[0.3em]">Role Track</th>
+                                                        <th className="px-8 py-6 text-[10px] font-bold text-white/20 uppercase tracking-[0.3em]">Assets</th>
                                                        <th className="px-8 py-6 text-[10px] font-bold text-white/20 uppercase tracking-[0.3em]">Status</th>
                                                        <th className="px-8 py-6 text-[10px] font-bold text-white/20 uppercase tracking-[0.3em]">Interview Module</th>
                                                        <th className="px-8 py-6 text-[10px] font-bold text-white/20 uppercase tracking-[0.3em] text-right">Actions</th>
@@ -280,6 +281,26 @@ export default function AdminDashboardPage() {
                                                                   <div className="flex items-center gap-3">
                                                                        <Briefcase className="w-4 h-4 text-white/10" />
                                                                        <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest leading-none">{app.roleSlug?.replace('-', ' ')}</span>
+                                                                  </div>
+                                                            </td>
+                                                            <td className="px-8 py-8">
+                                                                  <div className="flex items-center gap-3">
+                                                                       {app.links?.linkedIn && (
+                                                                            <a href={app.links.linkedIn.startsWith('http') ? app.links.linkedIn : `https://${app.links.linkedIn}`} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-white/5 hover:bg-indigo-600/20 text-white/20 hover:text-indigo-400 transition-all">
+                                                                                 <Linkedin className="w-3.5 h-3.5" />
+                                                                            </a>
+                                                                       )}
+                                                                       {app.links?.github && (
+                                                                            <a href={app.links.github.startsWith('http') ? app.links.github : `https://${app.links.github}`} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-white/5 hover:bg-indigo-600/20 text-white/20 hover:text-indigo-400 transition-all">
+                                                                                 <Github className="w-3.5 h-3.5" />
+                                                                            </a>
+                                                                       )}
+                                                                       {app.links?.portfolio && (
+                                                                            <a href={app.links.portfolio.startsWith('http') ? app.links.portfolio : `https://${app.links.portfolio}`} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-white/5 hover:bg-indigo-600/20 text-white/20 hover:text-indigo-400 transition-all">
+                                                                                 <Globe className="w-3.5 h-3.5" />
+                                                                            </a>
+                                                                       )}
+                                                                       {!app.links?.linkedIn && !app.links?.github && !app.links?.portfolio && <span className="text-[8px] font-bold text-white/5 uppercase tracking-widest">No Links</span>}
                                                                   </div>
                                                             </td>
                                                             <td className="px-8 py-8">
