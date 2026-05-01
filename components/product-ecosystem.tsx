@@ -18,20 +18,20 @@ export function ProductEcosystem() {
       status: "Live Now"
     },
     {
-      name: "VNT Billzer CRM",
+      name: "Verve CRM",
       slug: "verve-crm",
       type: "Client Relations",
-      desc: "Intelligent sales automation and lead management system built to maximize business growth.",
+      desc: "Verve CRM is an intelligent client relationship management system built to transform leads into lifelong customers. It automates the 'boring' parts of sales so your team can focus on closing deals.",
       link: "https://www.vervenovatechcrm.online/login",
       icon: Users,
       color: "from-violet-500 to-indigo-600",
       status: "Live Now"
     },
     {
-      name: "VNT Billzer ERP",
+      name: "Verve ERP",
       slug: "verve-erp",
       type: "Resource Planning",
-      desc: "Comprehensive orchestration for complex workflows, logistics, and large-scale operations.",
+      desc: "Verve ERP is a comprehensive orchestration platform for large-scale operations. It integrates every department—from logistics and HR to finance and production—into a single source of truth.",
       link: "#",
       icon: Cpu,
       color: "from-cyan-500 to-blue-600",

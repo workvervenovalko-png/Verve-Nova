@@ -51,13 +51,13 @@ const productData: Record<string, any> = {
     ]
   },
   "verve-crm": {
-    name: "VNT Billzer CRM",
+    name: "Verve CRM",
     tagline: "Accelerate Your Sales Velocity",
-    desc: "VNT Billzer CRM is an intelligent client relationship management system built to transform leads into lifelong customers. It automates the 'boring' parts of sales so your team can focus on closing deals.",
+    desc: "Verve CRM is an intelligent client relationship management system built to transform leads into lifelong customers. It automates the 'boring' parts of sales so your team can focus on closing deals.",
     color: "from-violet-500 to-indigo-600",
     icon: Users,
     liveLink: "https://www.vervenovatechcrm.online/login",
-    why: "Losing leads due to poor follow-ups is the #1 killer of business growth. VNT Billzer CRM ensures no lead is left behind with automated pipelines and smart reminders.",
+    why: "Losing leads due to poor follow-ups is the #1 killer of business growth. Verve CRM ensures no lead is left behind with automated pipelines and smart reminders.",
     for: "Sales teams, marketing agencies, real estate firms, and service-based businesses looking to scale their client acquisition.",
     usefulness: "Increases lead conversion rates by 60% and reduces manual data entry by automating the sales lifecycle.",
     features: [
@@ -69,18 +69,18 @@ const productData: Record<string, any> = {
     sections: [
       {
         title: "Relationship Management 2.0",
-        content: "VNT Billzer CRM doesn't just store contacts; it manages relationships. Every interaction is logged, analyzed, and optimized to ensure maximum customer satisfaction."
+        content: "Verve CRM doesn't just store contacts; it manages relationships. Every interaction is logged, analyzed, and optimized to ensure maximum customer satisfaction."
       }
     ]
   },
   "verve-erp": {
-    name: "VNT Billzer ERP",
+    name: "Verve ERP",
     tagline: "The Unified Enterprise OS",
-    desc: "VNT Billzer ERP is a comprehensive orchestration platform for large-scale operations. It integrates every department—from logistics and HR to finance and production—into a single source of truth.",
+    desc: "Verve ERP is a comprehensive orchestration platform for large-scale operations. It integrates every department—from logistics and HR to finance and production—into a single source of truth.",
     color: "from-cyan-500 to-blue-600",
     icon: Cpu,
     liveLink: "#",
-    why: "Large organizations often struggle with fragmented data. VNT Billzer ERP breaks down silos, ensuring every department works in harmony with real-time data flow.",
+    why: "Large organizations often struggle with fragmented data. Verve ERP breaks down silos, ensuring every department works in harmony with real-time data flow.",
     for: "Manufacturing plants, logistics companies, educational institutions, and large-scale enterprises with complex workflows.",
     usefulness: "Unifies disparate operations, reduces data redundancy, and provides board-level transparency for strategic decision making.",
     features: [
