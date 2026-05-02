@@ -34,11 +34,29 @@ export async function submitApplication(data: any) {
       
       const user = await User.findById(session.user.id).select('name email');
       if (user) {
+        // Mail to Candidate
         await resend.emails.send({
           from: 'Verve Nova Tech <careers@vervenovatech.com>',
           to: user.email,
           subject: 'APPLICATION STAGED // VERVE NOVA',
           html: getApplicationTemplate(user.name, data.roleSlug),
+        });
+
+        // Notification to Admin
+        await resend.emails.send({
+          from: 'Verve Nova Tech <system@vervenovatech.com>',
+          to: 'work.vervenova.lko@gmail.com',
+          subject: `NEW APPLICATION: ${user.name} // ${data.roleSlug.toUpperCase()}`,
+          html: `
+            <div style="font-family: sans-serif; padding: 20px; background: #09090b; color: white;">
+              <h1 style="color: #6366f1;">New Candidate Application</h1>
+              <p><strong>Candidate:</strong> ${user.name}</p>
+              <p><strong>Email:</strong> ${user.email}</p>
+              <p><strong>Role Track:</strong> ${data.roleSlug}</p>
+              <hr style="border-color: #ffffff10;" />
+              <p><a href="https://vervenovatech.com/admin" style="color: #6366f1;">View in Master Console</a></p>
+            </div>
+          `,
         });
       }
     } catch (mailError) {

@@ -20,7 +20,8 @@ export function Navbar() {
     { name: "Services", href: "/#services" },
     { name: "Expertise", href: "/#capabilities" },
     { name: "Industries", href: "/#industries" },
-    { name: "Registry", href: "/registry" },
+    { name: "Interns", href: "/registry" },
+    { name: "Verify", href: "/verify" },
     { name: "Careers", href: "/careers" },
   ];
 
@@ -228,7 +229,7 @@ export function Navbar() {
                       onClick={() => setIsOpen(false)}
                       className="text-sm font-black text-indigo-400 uppercase tracking-[0.5em]"
                     >
-                      {session?.user?.role === 'ADMIN' ? "Admin Portal" : "My Profile"}
+                      {session?.user?.role === 'ADMIN' ? "Admin" : "My Profile"}
                     </Link>
                     <button
                       onClick={() => {
@@ -237,7 +238,7 @@ export function Navbar() {
                       }}
                       className="text-sm font-black text-red-500/60 uppercase tracking-[0.5em]"
                     >
-                      Logout Session
+                      Logout
                     </button>
                   </motion.div>
                 ) : (
@@ -253,7 +254,7 @@ export function Navbar() {
                         onClick={() => setIsOpen(false)}
                         className="text-sm font-black text-indigo-400 uppercase tracking-[0.5em]"
                       >
-                        Portal Login
+                        Login
                       </Link>
                     </motion.div>
                   )

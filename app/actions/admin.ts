@@ -277,3 +277,90 @@ export async function issueDocument(formData: FormData) {
     return { success: false, error: error.message || "Failed to process document issuance." };
   }
 }
+
+export async function generateDocument(appId: string, docType: string, metadata: any) {
+  try {
+    const session = await getServerSession(authOptions) as any;
+    if (!session || session.user?.role !== 'ADMIN') {
+      return { success: false, error: "Unauthorized" };
+    }
+
+    await dbConnect();
+    const app = await VerveApplication.findById(appId).populate('userId', 'name email vn_id');
+    if (!app) return { success: false, error: "Application not found." };
+
+    // Generate Verification ID: VN-[DOMAIN]-[YEAR]-[SEQ]
+    const domain = metadata.domain || "WD";
+    const year = new Date().getFullYear();
+    const count = (app.documents?.length || 0) + 1;
+    const seq = String(count).padStart(3, '0');
+    const verificationId = `VN-${domain.toUpperCase()}-${year}-${seq}-${Math.random().toString(36).substring(2, 5).toUpperCase()}`;
+
+    const newDoc = {
+      type: docType === 'offer_letter' ? 'Offer Letter' : docType === 'certificate' ? 'Certificate' : 'Joining Letter',
+      verificationId,
+      issuedAt: new Date(),
+      metadata: {
+        ...metadata,
+        domain: metadata.domainName || "Web Development"
+      }
+    };
+
+    await VerveApplication.findByIdAndUpdate(appId, {
+      $push: { documents: newDoc }
+    });
+
+    // Send Notification Email
+    try {
+      const { resend } = await import("@/lib/resend");
+      const targetEmail = (app.userId as any).email;
+      const targetName = (app.userId as any).name;
+      
+      const docName = newDoc.type.toUpperCase();
+      
+      await resend.emails.send({
+        from: 'Verve Nova Tech <onboarding@vervenovatech.com>',
+        to: targetEmail,
+        subject: `OFFICIAL ${docName} ISSUED // VERVE NOVA`,
+        html: `
+          <div style="font-family: sans-serif; padding: 20px; background: #09090b; color: white;">
+            <h1 style="color: #6366f1;">Digital Document Issued</h1>
+            <p>Dear ${targetName},</p>
+            <p>We are pleased to inform you that your official <strong>${newDoc.type}</strong> has been digitally issued and authorized.</p>
+            <p>You can view and download your document through your candidate dashboard or by using the verification ID below:</p>
+            <div style="background: #1e1e2e; padding: 15px; border-radius: 10px; margin: 20px 0; border: 1px solid #6366f130;">
+              <p style="margin: 0; color: #6366f1; font-size: 10px; text-transform: uppercase;">Verification ID</p>
+              <p style="margin: 5px 0 0 0; font-family: monospace; font-size: 18px; font-weight: bold;">${verificationId}</p>
+            </div>
+            <p><a href="https://vervenovatech.com/verify/${verificationId}" style="display: inline-block; background: #6366f1; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 12px; text-transform: uppercase;">View Document</a></p>
+            <hr style="border-color: #ffffff10; margin: 30px 0;" />
+            <p style="font-size: 10px; color: #ffffff40;">This is an automated transmission from the Verve Nova Certification Authority.</p>
+          </div>
+        `,
+      });
+
+      // Admin CC Notification
+      await resend.emails.send({
+        from: 'Verve Nova Tech <system@vervenovatech.com>',
+        to: 'work.vervenova.lko@gmail.com',
+        subject: `DOC ISSUED: ${docName} // ${targetName}`,
+        html: `
+          <div style="font-family: sans-serif; padding: 20px; color: #333;">
+            <h2>Document Issuance Log</h2>
+            <p><strong>Candidate:</strong> ${targetName}</p>
+            <p><strong>Document:</strong> ${newDoc.type}</p>
+            <p><strong>ID:</strong> ${verificationId}</p>
+            <p><a href="https://vervenovatech.com/verify/${verificationId}">View Record</a></p>
+          </div>
+        `,
+      });
+    } catch (mailError) {
+      console.error("Mail Dispatch Error:", mailError);
+    }
+
+    return { success: true, verificationId };
+  } catch (error: any) {
+    console.error("Generate Document Error:", error);
+    return { success: false, error: error.message };
+  }
+}

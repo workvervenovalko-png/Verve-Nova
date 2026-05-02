@@ -59,6 +59,19 @@ const ApplicationSchema = new Schema({
   },
   interviewDate: { type: Date },
   interviewLink: { type: String },
+  documents: [{
+    type: { type: String, enum: ['Offer Letter', 'Joining Letter', 'Certificate'] },
+    verificationId: { type: String, unique: true, sparse: true },
+    url: String, // Optional if we render dynamically, but good to have
+    issuedAt: { type: Date, default: Date.now },
+    metadata: {
+      startDate: String,
+      endDate: String,
+      stipend: String,
+      performance: String,
+      domain: String
+    }
+  }],
   createdAt: { type: Date, default: Date.now }
 });
 

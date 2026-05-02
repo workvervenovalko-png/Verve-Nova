@@ -10,7 +10,8 @@ import {
      createBlog,
      deleteBlog,
      searchCandidateByVnId,
-     issueDocument
+     issueDocument,
+     generateDocument
 } from "@/app/actions/admin";
 import { useRouter } from "next/navigation";
 import { Navbar } from "@/components/navbar";
@@ -68,9 +69,18 @@ export default function AdminDashboardPage() {
      // Issuance State
      const [searchVnId, setSearchVnId] = useState("");
      const [searchResult, setSearchResult] = useState<any>(null);
-     const [docType, setDocType] = useState<"offer_letter" | "certificate">("offer_letter");
+     const [docType, setDocType] = useState<"offer_letter" | "certificate" | "joining_letter">("offer_letter");
      const [selectedFile, setSelectedFile] = useState<File | null>(null);
      const [isSearching, setIsSearching] = useState(false);
+     const [issuanceMode, setIssuanceMode] = useState<"upload" | "generate">("upload");
+     const [genData, setGenData] = useState({
+          startDate: "",
+          endDate: "",
+          stipend: "",
+          performance: "",
+          domainName: "",
+          domain: "WD"
+     });
 
      const handleSearchCandidate = async () => {
           if (!searchVnId) return;
@@ -79,11 +89,54 @@ export default function AdminDashboardPage() {
           const res = await searchCandidateByVnId(searchVnId);
           if (res.success) {
                setSearchResult(res.data);
-               toast.success("Candidate located.");
+               
+               // Auto-fetch application details for pre-filling
+               const app = applications.find(a => a.userId?._id === res.data._id || a.userId === res.data._id);
+               if (app) {
+                    const today = new Date().toISOString().split('T')[0];
+                    const threeMonthsLater = new Date();
+                    threeMonthsLater.setMonth(threeMonthsLater.getMonth() + 3);
+                    
+                    setGenData({
+                         startDate: today,
+                         endDate: threeMonthsLater.toISOString().split('T')[0],
+                         stipend: "Performance Based",
+                         performance: `During this tenure, ${res.data.name} demonstrated exceptional technical growth and contributed significantly to our ${app.roleSlug?.replace('-', ' ')} projects.`,
+                         domainName: app.roleSlug?.replace('-', ' ').toUpperCase() || "WEB DEVELOPMENT",
+                         domain: app.roleSlug?.split('-').map((word: string) => word[0]).join('').toUpperCase() || "WD"
+                    });
+               }
+               
+               toast.success("Candidate located and details pre-filled.");
           } else {
                toast.error(res.error || "Candidate not found.");
           }
           setIsSearching(false);
+     };
+
+     const handleGenerateDocument = async () => {
+          if (!searchResult) return;
+          setIsSubmitting(true);
+          
+          // Find the candidate's application to link the document to
+          const app = applications.find(a => a.userId?._id === searchResult._id || a.userId === searchResult._id);
+          if (!app) {
+               toast.error("Active application not found for this candidate.");
+               setIsSubmitting(false);
+               return;
+          }
+
+          const res = await generateDocument(app._id, docType, genData);
+          if (res.success) {
+               toast.success(`Verification ID Generated: ${res.verificationId}`);
+               setIssuanceMode('upload');
+               setSearchVnId("");
+               setSearchResult(null);
+               fetchData();
+          } else {
+               toast.error(res.error || "Generation failed.");
+          }
+          setIsSubmitting(false);
      };
 
      const handleDispatchDocument = async () => {
@@ -208,10 +261,10 @@ export default function AdminDashboardPage() {
                                              <img src="/vnt-logo.png" alt="VNT Logo" className="w-12 h-12 object-contain" />
                                         </div>
                                         <h1 className="text-4xl font-black text-white tracking-tighter uppercase leading-none">
-                                             Master <span className="text-gradient">Console.</span>
+                                             Admin <span className="text-gradient">Dashboard.</span>
                                         </h1>
                                    </div>
-                                   <p className="text-[10px] font-bold text-white/20 uppercase tracking-[0.4em]">Administrative Clearance Level 05 // System Controller</p>
+                                   <p className="text-[10px] font-bold text-white/20 uppercase tracking-[0.4em]">Manage your company operations & documents</p>
                               </div>
 
                               <div className="flex flex-wrap gap-2 p-1.5 bg-white/[0.03] border border-white/[0.08] rounded-[1.5rem] backdrop-blur-xl">
@@ -237,7 +290,7 @@ export default function AdminDashboardPage() {
                                         onClick={() => setActiveTab("issuance")}
                                         className={`px-6 py-3 rounded-xl text-[9px] font-bold uppercase tracking-widest transition-all ${activeTab === 'issuance' ? 'bg-indigo-600 text-white shadow-lg' : 'text-white/30 hover:bg-white/[0.05]'}`}
                                    >
-                                        Issuance
+                                        Documents
                                    </button>
 
                               </div>
@@ -249,7 +302,7 @@ export default function AdminDashboardPage() {
                                              onClick={() => router.push('/admin/new-blog')}
                                              className="bg-gradient-to-r from-indigo-600 to-violet-600 hover:shadow-[0_0_24px_rgba(99,102,241,0.3)] text-white rounded-xl px-8 h-14 text-[10px] font-bold uppercase tracking-widest flex items-center gap-3 border-0"
                                         >
-                                             <Plus className="w-4 h-4" /> Draft Publication
+                                             <Plus className="w-4 h-4" /> New Blog
                                         </Button>
                               </div>
                          )}
@@ -366,6 +419,67 @@ export default function AdminDashboardPage() {
                                                             </td>
                                                             <td className="px-8 py-8 text-right">
                                                                   <div className="flex justify-end gap-2">
+                                                                       <Dialog>
+                                                                            <DialogTrigger asChild>
+                                                                                 <Button
+                                                                                      variant="ghost"
+                                                                                      size="icon"
+                                                                                      className="rounded-xl hover:bg-white/[0.05] text-white/20 hover:text-emerald-400"
+                                                                                      onClick={() => {
+                                                                                           setSearchResult(app.userId);
+                                                                                           const today = new Date().toISOString().split('T')[0];
+                                                                                           const threeMonthsLater = new Date();
+                                                                                           threeMonthsLater.setMonth(threeMonthsLater.getMonth() + 3);
+                                                                                           setGenData({
+                                                                                                startDate: today,
+                                                                                                endDate: threeMonthsLater.toISOString().split('T')[0],
+                                                                                                stipend: "Performance Based",
+                                                                                                performance: `Exceptional technical growth during the ${app.roleSlug?.replace('-', ' ')} internship.`,
+                                                                                                domainName: app.roleSlug?.replace('-', ' ').toUpperCase() || "WEB DEVELOPMENT",
+                                                                                                domain: app.roleSlug?.split('-').map((word: string) => word[0]).join('').toUpperCase() || "WD"
+                                                                                           });
+                                                                                      }}
+                                                                                 >
+                                                                                      <FileText className="w-5 h-5" />
+                                                                                 </Button>
+                                                                            </DialogTrigger>
+                                                                            <DialogContent className="bg-[#09090B] border-white/10 rounded-3xl p-8 max-w-md">
+                                                                                 <DialogHeader>
+                                                                                      <DialogTitle className="text-xl font-black uppercase tracking-tighter text-white">Issue Document</DialogTitle>
+                                                                                 </DialogHeader>
+                                                                                 <div className="space-y-6 mt-6">
+                                                                                      <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10">
+                                                                                           <p className="text-[10px] font-black uppercase text-indigo-400 tracking-widest mb-1">Intern Name</p>
+                                                                                           <p className="text-sm font-bold text-white uppercase">{app.userId?.name}</p>
+                                                                                           <p className="text-[9px] font-mono text-white/40">{app.userId?.vn_id}</p>
+                                                                                      </div>
+                                                                                      <div className="space-y-2">
+                                                                                           <label className="text-[9px] font-black uppercase text-white/20 tracking-widest">Document Type</label>
+                                                                                           <select 
+                                                                                                className="w-full h-12 bg-white/[0.05] border border-white/10 rounded-xl text-white px-4 text-[10px] font-bold tracking-widest uppercase outline-none focus:border-indigo-600"
+                                                                                                value={docType}
+                                                                                                onChange={(e: any) => setDocType(e.target.value as any)}
+                                                                                           >
+                                                                                                <option value="offer_letter" className="bg-[#09090B]">Offer Letter</option>
+                                                                                                <option value="joining_letter" className="bg-[#09090B]">Joining Letter</option>
+                                                                                                <option value="certificate" className="bg-[#09090B]">Certificate</option>
+                                                                                           </select>
+                                                                                      </div>
+                                                                                      <Button 
+                                                                                           onClick={handleGenerateDocument}
+                                                                                           disabled={isSubmitting}
+                                                                                           className="w-full h-14 bg-indigo-600 hover:bg-indigo-500 text-white font-black uppercase text-[10px] tracking-[0.2em] rounded-xl"
+                                                                                      >
+                                                                                           {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <ShieldCheck className="w-4 h-4 mr-2" />}
+                                                                                           Send Document
+                                                                                      </Button>
+                                                                                      <p className="text-[8px] text-center text-white/20 uppercase tracking-widest leading-relaxed">
+                                                                                           Auto-fills Domain: {app.roleSlug?.toUpperCase()} <br/>
+                                                                                           Verification ID will be generated & sent via mail.
+                                                                                      </p>
+                                                                                 </div>
+                                                                            </DialogContent>
+                                                                       </Dialog>
                                                                        <Button
                                                                             variant="ghost"
                                                                             size="icon"
@@ -387,8 +501,8 @@ export default function AdminDashboardPage() {
                                              <thead>
                                                   <tr className="bg-white/[0.02] border-b border-white/[0.04]">
                                                        <th className="px-8 py-6 text-[10px] font-bold text-white/20 uppercase tracking-[0.3em]">Client</th>
-                                                       <th className="px-8 py-6 text-[10px] font-bold text-white/20 uppercase tracking-[0.3em]">Digital Coord</th>
-                                                       <th className="px-8 py-6 text-[10px] font-bold text-white/20 uppercase tracking-[0.3em]">Transmission</th>
+                                                       <th className="px-8 py-6 text-[10px] font-bold text-white/20 uppercase tracking-[0.3em]">Email</th>
+                                                       <th className="px-8 py-6 text-[10px] font-bold text-white/20 uppercase tracking-[0.3em]">Message</th>
                                                        <th className="px-8 py-6 text-[10px] font-bold text-white/20 uppercase tracking-[0.3em] text-right">Date</th>
                                                   </tr>
                                              </thead>
@@ -413,13 +527,13 @@ export default function AdminDashboardPage() {
                                    <div className="p-8 md:p-12">
                                         <div className="max-w-3xl mx-auto space-y-12">
                                              <div className="space-y-4">
-                                                  <h3 className="text-xl font-black text-white uppercase tracking-tighter">Document Dispatch Control</h3>
+                                                  <h3 className="text-xl font-black text-white uppercase tracking-tighter">Issue New Document</h3>
                                                   <p className="text-xs text-white/40 uppercase tracking-widest font-bold">Search and issue verified Offer Letters and Internship Certificates.</p>
                                              </div>
 
                                              <div className="space-y-6">
                                                   <div className="space-y-2">
-                                                       <label className="text-[10px] font-bold text-white/30 uppercase tracking-[0.3em] pl-2">Locate Candidate</label>
+                                                       <label className="text-[10px] font-bold text-white/30 uppercase tracking-[0.3em] pl-2">Search Candidate</label>
                                                        <div className="flex gap-4">
                                                             <div className="relative group flex-1">
                                                                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-focus-within:text-indigo-400 transition-colors" />
@@ -449,7 +563,7 @@ export default function AdminDashboardPage() {
                                                        >
                                                             <div className="flex justify-between items-start mb-6">
                                                                  <div>
-                                                                      <p className="text-[9px] font-black uppercase text-indigo-400 tracking-[0.3em] mb-1">Target Acquired</p>
+                                                                      <p className="text-[9px] font-black uppercase text-indigo-400 tracking-[0.3em] mb-1">Candidate Found</p>
                                                                       <h4 className="text-lg font-black text-white uppercase">{searchResult.name}</h4>
                                                                       <p className="text-xs text-white/50 font-bold tracking-widest">{searchResult.email}</p>
                                                                  </div>
@@ -465,11 +579,32 @@ export default function AdminDashboardPage() {
                                                                            onChange={(e: any) => setDocType(e.target.value)}
                                                                       >
                                                                            <option value="offer_letter" className="bg-[#09090B]">Offer Letter</option>
+                                                                           <option value="joining_letter" className="bg-[#09090B]">Joining Letter</option>
                                                                            <option value="certificate" className="bg-[#09090B]">Internship Certificate</option>
                                                                       </select>
                                                                  </div>
 
                                                                  <div className="space-y-2">
+                                                                      <label className="text-[9px] font-bold text-white/30 uppercase tracking-[0.3em]">Issuance Mode</label>
+                                                                      <div className="flex gap-2 p-1 bg-white/[0.02] border border-white/10 rounded-xl">
+                                                                           <button 
+                                                                                onClick={() => setIssuanceMode('upload')}
+                                                                                className={cn("flex-1 h-10 text-[9px] font-bold uppercase rounded-lg transition-all", issuanceMode === 'upload' ? "bg-indigo-600 text-white" : "text-white/30 hover:bg-white/5")}
+                                                                           >
+                                                                                Manual Upload
+                                                                           </button>
+                                                                           <button 
+                                                                                onClick={() => setIssuanceMode('generate')}
+                                                                                className={cn("flex-1 h-10 text-[9px] font-bold uppercase rounded-lg transition-all", issuanceMode === 'generate' ? "bg-indigo-600 text-white" : "text-white/30 hover:bg-white/5")}
+                                                                           >
+                                                                                Auto-Generate
+                                                                           </button>
+                                                                      </div>
+                                                                 </div>
+                                                            </div>
+
+                                                            {issuanceMode === 'upload' ? (
+                                                                 <div className="mt-6 space-y-2">
                                                                       <label className="text-[9px] font-bold text-white/30 uppercase tracking-[0.3em]">Attachment (PDF/Image)</label>
                                                                       <div className="relative">
                                                                            <input 
@@ -478,28 +613,76 @@ export default function AdminDashboardPage() {
                                                                                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                                                                                 onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
                                                                            />
-                                                                           <div className="w-full h-12 bg-white/[0.02] border border-white/10 border-dashed rounded-xl flex items-center justify-center gap-2 group-hover:border-indigo-500/50 transition-colors">
+                                                                           <div className="w-full h-14 bg-white/[0.02] border border-white/10 border-dashed rounded-xl flex items-center justify-center gap-2 hover:border-indigo-500/50 transition-colors">
                                                                                 {selectedFile ? (
                                                                                      <span className="text-[10px] font-bold text-indigo-400 tracking-widest uppercase truncate px-4">{selectedFile.name}</span>
                                                                                 ) : (
                                                                                      <>
-                                                                                          <UploadCloud className="w-4 h-4 text-white/30 group-hover:text-indigo-400" />
-                                                                                          <span className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Select File</span>
+                                                                                          <UploadCloud className="w-4 h-4 text-white/30" />
+                                                                                          <span className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Select File for Manual Dispatch</span>
                                                                                      </>
                                                                                 )}
                                                                            </div>
                                                                       </div>
                                                                  </div>
-                                                            </div>
+                                                            ) : (
+                                                                 <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 p-6 rounded-xl bg-white/[0.02] border border-white/5">
+                                                                      <div className="space-y-2">
+                                                                           <label className="text-[9px] font-bold text-white/30 uppercase tracking-[0.3em]">Start Date</label>
+                                                                           <Input 
+                                                                                type="date"
+                                                                                className="bg-white/[0.03] border-white/10 text-white h-12 rounded-lg"
+                                                                                value={genData.startDate}
+                                                                                onChange={(e) => setGenData({...genData, startDate: e.target.value})}
+                                                                           />
+                                                                      </div>
+                                                                      <div className="space-y-2">
+                                                                           <label className="text-[9px] font-bold text-white/30 uppercase tracking-[0.3em]">End Date (For Cert)</label>
+                                                                           <Input 
+                                                                                type="date"
+                                                                                className="bg-white/[0.03] border-white/10 text-white h-12 rounded-lg"
+                                                                                value={genData.endDate}
+                                                                                onChange={(e) => setGenData({...genData, endDate: e.target.value})}
+                                                                           />
+                                                                      </div>
+                                                                      <div className="space-y-2">
+                                                                           <label className="text-[9px] font-bold text-white/30 uppercase tracking-[0.3em]">Domain (e.g. Web Development)</label>
+                                                                           <Input 
+                                                                                placeholder="WEB DEVELOPMENT"
+                                                                                className="bg-white/[0.03] border-white/10 text-white h-12 rounded-lg uppercase text-[10px] font-bold"
+                                                                                value={genData.domainName}
+                                                                                onChange={(e) => setGenData({...genData, domainName: e.target.value})}
+                                                                           />
+                                                                      </div>
+                                                                      <div className="space-y-2">
+                                                                           <label className="text-[9px] font-bold text-white/30 uppercase tracking-[0.3em]">Stipend (For Offer)</label>
+                                                                           <Input 
+                                                                                placeholder="RS. 5000 / MONTH"
+                                                                                className="bg-white/[0.03] border-white/10 text-white h-12 rounded-lg uppercase text-[10px] font-bold"
+                                                                                value={genData.stipend}
+                                                                                onChange={(e) => setGenData({...genData, stipend: e.target.value})}
+                                                                           />
+                                                                      </div>
+                                                                      <div className="md:col-span-2 space-y-2">
+                                                                           <label className="text-[9px] font-bold text-white/30 uppercase tracking-[0.3em]">Performance Review (Optional)</label>
+                                                                           <Textarea 
+                                                                                placeholder="DESCRIBE CANDIDATE'S PERFORMANCE..."
+                                                                                className="bg-white/[0.03] border-white/10 text-white min-h-[100px] rounded-xl text-[10px] font-medium"
+                                                                                value={genData.performance}
+                                                                                onChange={(e) => setGenData({...genData, performance: e.target.value})}
+                                                                           />
+                                                                      </div>
+                                                                 </div>
+                                                            )}
 
                                                             <div className="mt-8 flex justify-end">
                                                                  <Button 
-                                                                      onClick={handleDispatchDocument}
-                                                                      disabled={isSubmitting || !selectedFile}
+                                                                      onClick={issuanceMode === 'upload' ? handleDispatchDocument : handleGenerateDocument}
+                                                                      disabled={isSubmitting || (issuanceMode === 'upload' && !selectedFile)}
                                                                       className="h-14 px-8 bg-gradient-to-r from-indigo-600 to-violet-600 hover:shadow-[0_0_24px_rgba(99,102,241,0.3)] text-white font-bold rounded-xl tracking-[0.2em] uppercase text-[10px] transition-all border-0"
                                                                  >
                                                                       {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <FileText className="w-4 h-4 mr-2" />}
-                                                                      Dispatch to Target
+                                                                      {issuanceMode === 'upload' ? "Upload & Send" : "Generate"}
                                                                  </Button>
                                                             </div>
                                                        </motion.div>
@@ -567,7 +750,7 @@ export default function AdminDashboardPage() {
                                                             <td colSpan={3} className="px-8 py-20 text-center">
                                                                  <div className="flex flex-col items-center gap-6">
                                                                       <BookOpen className="w-12 h-12 text-white/5" />
-                                                                      <p className="text-[10px] font-bold text-white/10 uppercase tracking-widest leading-none">No intelligence reports published yet.</p>
+                                                                      <p className="text-[10px] font-bold text-white/10 uppercase tracking-widest leading-none">No blogs published yet.</p>
                                                                  </div>
                                                             </td>
                                                        </tr>

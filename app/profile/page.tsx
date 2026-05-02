@@ -48,7 +48,7 @@ export default function CandidateProfilePage() {
         setProfile(result.data.profile);
         setApplications(result.data.applications);
       } else {
-        toast.error("Failed to synchronize candidate matrix.");
+        toast.error("Failed to load data.");
       }
       setIsLoading(false);
     };
@@ -94,10 +94,10 @@ export default function CandidateProfilePage() {
                   <img src="/vnt-logo.png" alt="VNT Logo" className="w-10 h-10 object-contain" />
                 </div>
                 <h1 className="text-3xl font-black text-white tracking-tighter uppercase">
-                  Candidate <span className="text-gradient">Dashboard.</span>
+                  Intern <span className="text-gradient">Dashboard.</span>
                 </h1>
               </div>
-              <p className="text-[10px] text-white/20 font-bold tracking-[0.4em] uppercase">Managing your digital journey at Verve Nova.</p>
+              <p className="text-[10px] text-white/20 font-bold tracking-[0.4em] uppercase">Manage your internship profile & documents.</p>
             </div>
 
             <Button 
@@ -106,7 +106,7 @@ export default function CandidateProfilePage() {
                 className="rounded-xl border-white/10 text-white/40 text-[10px] font-bold uppercase tracking-widest hover:bg-white/[0.05] hover:text-white transition-all bg-transparent"
             >
               <LogOut className="w-3 h-3 mr-2" />
-              Terminate Session
+              Logout
             </Button>
           </div>
 
@@ -120,7 +120,7 @@ export default function CandidateProfilePage() {
               >
                 <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 blur-3xl rounded-full -translate-y-1/2 translate-x-1/2" />
                 
-                <h3 className="text-[10px] font-bold text-white/20 uppercase tracking-[0.6em] mb-10 leading-none">Candidate Identity</h3>
+                <h3 className="text-[10px] font-bold text-white/20 uppercase tracking-[0.6em] mb-10 leading-none">Intern Details</h3>
                 
                 <div className="space-y-8">
                   <div>
@@ -129,7 +129,7 @@ export default function CandidateProfilePage() {
                   </div>
 
                   <div>
-                    <Label className="text-[9px] font-bold text-white/15 uppercase tracking-widest leading-none mb-3 block">Digital ID (VN-ID)</Label>
+                    <Label className="text-[9px] font-bold text-white/15 uppercase tracking-widest leading-none mb-3 block">ID (VN-ID)</Label>
                     <div className="flex items-center gap-3">
                          <Hash className="w-5 h-5 text-indigo-400/50" />
                          <p className="text-2xl font-black text-white uppercase tracking-tighter leading-none">{profile?.vn_id}</p>
@@ -154,7 +154,7 @@ export default function CandidateProfilePage() {
 
               <div className="p-10 rounded-[2.5rem] bg-gradient-to-br from-indigo-600 to-violet-600 text-white relative overflow-hidden shadow-2xl shadow-indigo-600/20">
                    <BrainCircuit className="absolute -bottom-8 -right-8 w-40 h-40 text-black/10" />
-                   <h4 className="text-[10px] font-bold uppercase tracking-[0.4em] mb-6">Architect Mode</h4>
+                   <h4 className="text-[10px] font-bold uppercase tracking-[0.4em] mb-6">Learning Resources</h4>
                    <p className="text-sm font-light leading-relaxed text-white/80 mb-8">
                         "Your talent is the core engine. Verve Nova architects provide the chassis. Together, we deploy the future."
                    </p>
@@ -187,7 +187,7 @@ export default function CandidateProfilePage() {
                          onClick={() => router.push("/careers")}
                          className="h-14 px-10 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-xl uppercase text-[9px] font-bold tracking-[0.5em] border-0"
                     >
-                         View Open Tracks
+                         View Openings
                     </Button>
                   </div>
                 ) : (
@@ -222,7 +222,7 @@ export default function CandidateProfilePage() {
                                                      onClick={() => window.open(app.interviewLink, '_blank')}
                                                      className="h-8 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-[9px] font-black uppercase tracking-widest transition-all border-0"
                                                  >
-                                                     Join Virtual Audit <ExternalLink className="w-3 h-3 ml-2" />
+                                                     Join Interview <ExternalLink className="w-3 h-3 ml-2" />
                                                  </Button>
                                              )}
                                         </div>
@@ -232,15 +232,31 @@ export default function CandidateProfilePage() {
                          <div className={`px-4 py-2 rounded-full border text-[9px] font-bold uppercase tracking-widest ${getStatusColor(app.status)}`}>
                               {app.status}
                          </div>
+
+                         {app.documents && app.documents.length > 0 && (
+                            <div className="flex flex-wrap gap-2 pt-4 border-t border-white/5 mt-4 w-full">
+                               {app.documents.map((doc: any, j: number) => (
+                                 <Button 
+                                   key={j}
+                                   variant="outline" 
+                                   size="sm"
+                                   onClick={() => window.open(`/verify/${doc.verificationId}`, '_blank')}
+                                   className="h-8 rounded-lg bg-white/5 hover:bg-indigo-600 border-white/10 text-white text-[8px] font-black uppercase tracking-widest transition-all"
+                                 >
+                                   <FileText className="w-3 h-3 mr-2" />
+                                   {doc.type} <ExternalLink className="w-2.5 h-2.5 ml-2 opacity-50" />
+                                 </Button>
+                               ))}
+                            </div>
+                         )}
+
                          <Button 
                              variant="ghost" 
-                             className="rounded-full w-10 h-10 p-0 text-white/20 hover:bg-indigo-600 hover:text-white transition-colors"
+                             className="rounded-full w-10 h-10 p-0 text-white/20 hover:bg-indigo-600 hover:text-white transition-colors ml-auto"
                              onClick={() => router.push(`/careers/audit/${app._id}`)}
                          >
                               <FileSearch className="w-4 h-4" />
                          </Button>
-
-
                       </motion.div>
                     ))}
                   </div>
