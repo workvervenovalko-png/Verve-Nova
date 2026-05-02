@@ -7,12 +7,13 @@ import { getCandidateData } from "@/app/actions/application";
 import { useRouter } from "next/navigation";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { VNTLoader } from "@/components/vnt-loader";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { 
   User2, Mail, Hash, Activity, Calendar, Clock, 
   ArrowRight, LogOut, CheckCircle2, ShieldEllipsis, 
-  FileText, Briefcase, Zap, Loader2, BrainCircuit, 
+  FileText, Briefcase, Zap, BrainCircuit, 
   Search, Github, Linkedin, Globe, Monitor, 
   GraduationCap as GradIcon, Building as BuildingIcon, Code2, X, FileSearch, ExternalLink
 } from "lucide-react";
@@ -63,7 +64,7 @@ export default function CandidateProfilePage() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-indigo-500" />
+        <VNTLoader size="lg" />
       </div>
     );
   }

@@ -16,13 +16,14 @@ import {
 import { useRouter } from "next/navigation";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { VNTLoader } from "@/components/vnt-loader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
      Users, Mail, ShieldCheck, Briefcase, Calendar,
      Search, Filter, ExternalLink, CheckCircle2,
-     XCircle, Clock, Save, Loader2, Database,
+     XCircle, Clock, Save, Database,
      Github,
      Linkedin,
      Globe,
@@ -239,7 +240,7 @@ export default function AdminDashboardPage() {
      if (isLoading) {
           return (
                <div className="min-h-screen bg-background flex items-center justify-center">
-                    <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
+                    <VNTLoader size="lg" />
                </div>
           );
      }
@@ -411,7 +412,7 @@ export default function AdminDashboardPage() {
                                                                                   onClick={() => setInterview(app._id, app.interviewDate, app.interviewLink, true)}
                                                                                   className="h-10 bg-indigo-600/20 hover:bg-indigo-600 text-indigo-400 hover:text-white border border-indigo-500/30 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all w-full mt-2"
                                                                              >
-                                                                                  {isSubmitting ? <Loader2 className="w-3 h-3 animate-spin mr-2" /> : <Mail className="w-3 h-3 mr-2" />}
+                                                                                  {isSubmitting ? <VNTLoader size="sm" /> : <Mail className="w-3 h-3 mr-2" />}
                                                                                   Send Invite
                                                                              </Button>
                                                                         )}
@@ -470,7 +471,7 @@ export default function AdminDashboardPage() {
                                                                                            disabled={isSubmitting}
                                                                                            className="w-full h-14 bg-indigo-600 hover:bg-indigo-500 text-white font-black uppercase text-[10px] tracking-[0.2em] rounded-xl"
                                                                                       >
-                                                                                           {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <ShieldCheck className="w-4 h-4 mr-2" />}
+                                                                                           {isSubmitting ? <VNTLoader size="sm" /> : <ShieldCheck className="w-4 h-4 mr-2" />}
                                                                                            Send Document
                                                                                       </Button>
                                                                                       <p className="text-[8px] text-center text-white/20 uppercase tracking-widest leading-relaxed">
@@ -550,7 +551,7 @@ export default function AdminDashboardPage() {
                                                                  disabled={isSearching || !searchVnId}
                                                                  className="h-14 px-8 bg-white/5 hover:bg-indigo-600 text-white font-bold rounded-xl tracking-widest uppercase text-[10px] transition-all"
                                                             >
-                                                                 {isSearching ? <Loader2 className="w-4 h-4 animate-spin" /> : "Verify"}
+                                                                 {isSearching ? <VNTLoader size="sm" /> : "Verify"}
                                                             </Button>
                                                        </div>
                                                   </div>
@@ -681,7 +682,7 @@ export default function AdminDashboardPage() {
                                                                       disabled={isSubmitting || (issuanceMode === 'upload' && !selectedFile)}
                                                                       className="h-14 px-8 bg-gradient-to-r from-indigo-600 to-violet-600 hover:shadow-[0_0_24px_rgba(99,102,241,0.3)] text-white font-bold rounded-xl tracking-[0.2em] uppercase text-[10px] transition-all border-0"
                                                                  >
-                                                                      {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <FileText className="w-4 h-4 mr-2" />}
+                                                                      {isSubmitting ? <VNTLoader size="sm" /> : <FileText className="w-4 h-4 mr-2" />}
                                                                       {issuanceMode === 'upload' ? "Upload & Send" : "Generate"}
                                                                  </Button>
                                                             </div>

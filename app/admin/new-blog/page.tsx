@@ -8,9 +8,10 @@ import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Loader2, ArrowLeft, PenTool } from "lucide-react";
+import { ArrowLeft, PenTool } from "lucide-react";
 import { toast } from "sonner";
 import { createBlog } from "@/app/actions/admin";
+import { VNTLoader } from "@/components/vnt-loader";
 
 export default function NewBlogPage() {
     const router = useRouter();
@@ -111,7 +112,7 @@ export default function NewBlogPage() {
                                     disabled={isSubmitting || !blogForm.title || !blogForm.content}
                                     className="h-14 px-10 bg-gradient-to-r from-indigo-600 to-violet-600 hover:shadow-[0_0_32px_rgba(99,102,241,0.3)] text-white rounded-xl text-[10px] font-bold uppercase tracking-[0.2em] transition-all border-0"
                                 >
-                                    {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin mr-2" /> : null}
+                                    {isSubmitting ? <VNTLoader size="sm" /> : null}
                                     Authorize Publication
                                 </Button>
                             </div>

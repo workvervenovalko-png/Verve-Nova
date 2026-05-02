@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { DocumentTemplates } from "@/components/documents/DocumentTemplates";
-import { Loader2, ArrowLeft, Download } from "lucide-react";
+import { ArrowLeft, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { VNTLoader } from "@/components/vnt-loader";
 
 export default function DocumentPreviewPage() {
   const { id } = useParams();
@@ -29,7 +30,7 @@ export default function DocumentPreviewPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#09090B] flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-indigo-500" />
+        <VNTLoader size="lg" />
       </div>
     );
   }

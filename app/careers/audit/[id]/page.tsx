@@ -11,9 +11,10 @@ import {
   User2, Briefcase, Calendar, Clock, ArrowLeft, 
   CheckCircle2, ShieldCheck, FileSearch, GraduationCap as GradIcon,
   Building as BuildingIcon, Code2, Monitor, Github, Linkedin, Globe, 
-  ExternalLink, Loader2
+  ExternalLink
 } from "lucide-react";
 import { toast } from "sonner";
+import { VNTLoader } from "@/components/vnt-loader";
 
 export default function DetailedAuditPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -53,7 +54,7 @@ export default function DetailedAuditPage({ params }: { params: Promise<{ id: st
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-indigo-500" />
+        <VNTLoader size="lg" />
       </div>
     );
   }

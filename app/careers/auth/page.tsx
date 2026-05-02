@@ -10,8 +10,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { ShieldCheck, User2, Mail, Lock, Sparkles, ArrowRight, Loader2, Phone, Search, Edit2, ChevronDown, XCircle } from "lucide-react";
+import { ShieldCheck, User2, Mail, Lock, Sparkles, ArrowRight, Phone, Search, Edit2, ChevronDown, XCircle } from "lucide-react";
 import { toast } from "sonner";
+import { VNTLoader } from "@/components/vnt-loader";
 import { countries } from "@/lib/countries";
 
 
@@ -367,7 +368,7 @@ export default function CareersAuthPage() {
                           className="w-full h-14 bg-indigo-600 hover:bg-indigo-500 text-white font-black rounded-xl transition-all shadow-lg uppercase text-[9px] tracking-[0.3em] group relative overflow-hidden active:scale-[0.98] border-0 mt-4"
                         >
                           {isLoading ? (
-                            <Loader2 className="w-4 h-4 animate-spin" />
+                            <VNTLoader size="sm" />
                           ) : (
                             <div className="flex items-center">
                               <span className="relative z-10">

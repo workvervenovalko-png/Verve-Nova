@@ -40,7 +40,6 @@ import {
   Link as LinkIcon, 
   Plus, 
   Trash2, 
-  Loader2, 
   CheckCircle2,
   ShieldCheck,
   Building2,
@@ -54,6 +53,7 @@ import {
 import { submitApplication } from "@/app/actions/application";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
+import { VNTLoader } from "@/components/vnt-loader";
 
 export default function DetailedApplicationPage() {
   const { slug } = useParams();
@@ -268,7 +268,7 @@ export default function DetailedApplicationPage() {
   if (status === "loading") {
     return (
       <main className="min-h-screen bg-[#09090B] flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
+        <VNTLoader size="lg" />
       </main>
     );
   }
@@ -799,7 +799,7 @@ export default function DetailedApplicationPage() {
                   onClick={handleFinalSubmit}
                   className="h-14 px-12 bg-gradient-to-r from-indigo-600 to-violet-600 hover:shadow-[0_0_32px_rgba(99,102,241,0.3)] disabled:opacity-5 text-white font-black rounded-xl transition-all shadow-xl uppercase text-[10px] tracking-widest group border-0"
                 >
-                  {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : "Submit Application"}
+                  {isSubmitting ? <VNTLoader size="sm" /> : "Submit Application"}
                   <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
               )}

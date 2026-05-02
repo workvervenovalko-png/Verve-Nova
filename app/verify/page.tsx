@@ -6,9 +6,10 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, ShieldCheck, User, Briefcase, Calendar, CheckCircle2, Loader2, ExternalLink } from "lucide-react";
+import { Search, ShieldCheck, User, Briefcase, Calendar, CheckCircle2, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { VNTLoader } from "@/components/vnt-loader";
 
 export default function VerificationPage() {
   const [verifyId, setVerifyId] = useState("");
@@ -73,7 +74,7 @@ export default function VerificationPage() {
               disabled={isVerifying || !verifyId}
               className="h-14 px-10 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl tracking-[0.2em] uppercase text-[10px] transition-all"
             >
-              {isVerifying ? <Loader2 className="w-4 h-4 animate-spin" /> : "Authenticate"}
+              {isVerifying ? <VNTLoader size="sm" /> : "Authenticate"}
             </Button>
           </div>
 
