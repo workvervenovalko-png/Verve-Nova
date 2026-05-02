@@ -40,13 +40,13 @@ export function Navbar() {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="pointer-events-auto backdrop-blur-2xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-between px-6 md:px-8 py-3 w-full max-w-[1200px] rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.4)] specular-glow"
+        className="pointer-events-auto backdrop-blur-2xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-between px-6 md:px-8 py-2 w-full max-w-[1100px] rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.4)] specular-glow"
       >
         {/* Logo Section - VNT BRANDING */}
         <Link href="/" className="flex items-center gap-3 shrink-0 group pointer-events-auto">
           <div className="relative">
-            <div className="w-14 h-14 flex items-center justify-center transition-all duration-500 overflow-hidden">
-              <img src="/vnt-logo.png" alt="Verve Nova Logo" className="w-12 h-12 object-contain" />
+            <div className="w-11 h-11 flex items-center justify-center transition-all duration-500 overflow-hidden">
+              <img src="/vnt-logo.png" alt="Verve Nova Logo" className="w-9 h-9 object-contain" />
             </div>
           </div>
 
@@ -62,7 +62,7 @@ export function Navbar() {
                     duration: 0.1,
                     ease: "easeOut"
                   }}
-                  className="text-sm font-black text-white tracking-widest uppercase leading-none group-hover:text-indigo-400 transition-colors"
+                  className="text-[11px] font-black text-white tracking-widest uppercase leading-none group-hover:text-indigo-400 transition-colors"
                 >
                   {char === " " ? "\u00A0" : char}
                 </motion.span>
@@ -72,7 +72,7 @@ export function Navbar() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
-              className="text-[7px] font-bold text-white/30 uppercase tracking-[0.5em] mt-1.5 leading-none group-hover:text-white/50 transition-colors"
+              className="text-[6px] font-bold text-white/30 uppercase tracking-[0.5em] mt-1 leading-none group-hover:text-white/50 transition-colors"
             >
               Technologies
             </motion.span>
@@ -81,7 +81,7 @@ export function Navbar() {
 
 
         {/* Links Section */}
-        <div className="hidden md:flex items-center gap-10">
+        <div className="hidden md:flex items-center gap-7">
           {navLinks.map((link) => (
             <Link
               key={link.name}
@@ -139,7 +139,7 @@ export function Navbar() {
             </Link>
           )}
 
-          <Link href="/#contact" className="h-10 px-10 bg-gradient-to-r from-indigo-600 to-violet-600 text-white text-[10px] font-bold uppercase tracking-[0.2em] rounded-full hover:shadow-[0_0_24px_rgba(99,102,241,0.4)] transition-all active:scale-95 flex items-center justify-center">
+          <Link href="/#contact" className="h-8 px-8 bg-gradient-to-r from-indigo-600 to-violet-600 text-white text-[9px] font-bold uppercase tracking-[0.2em] rounded-full hover:shadow-[0_0_24px_rgba(99,102,241,0.4)] transition-all active:scale-95 flex items-center justify-center">
             Contact Us
           </Link>
         </div>
