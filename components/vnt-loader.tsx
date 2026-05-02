@@ -63,18 +63,6 @@ export function VNTLoader({ className = "", size = "md" }: VNTLoaderProps) {
           className="w-full h-full object-contain"
         />
         
-        {/* Shimmer Overlay */}
-        <motion.div
-          animate={{
-            x: ["-100%", "100%"],
-          }}
-          transition={{
-            duration: 1.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
-        />
       </motion.div>
     </div>
   );

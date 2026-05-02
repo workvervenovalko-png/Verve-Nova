@@ -82,9 +82,9 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
             </div>
             
             <div className="flex flex-col items-center">
-              <img src="/signatures/admin-sign.png" alt="Signature" className="h-16 object-contain mb-[-10px]" />
+              <img src="/signatures/sign.png" alt="Signature" className="h-16 object-contain mb-[-10px]" />
               <div className="w-40 h-[1px] bg-gray-300" />
-              <p className="text-[10px] font-bold uppercase tracking-widest mt-2">Authorized Signatory</p>
+              <p className="text-[10px] font-bold uppercase tracking-widest mt-2">Founder & CEO</p>
               <p className="text-[8px] font-bold text-gray-400 uppercase">Verve Nova Technologies</p>
             </div>
           </div>
@@ -128,7 +128,7 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
           {type === 'Offer Letter' ? (
             <>
               <p>We are pleased to offer you an internship at Verve Nova Technologies in the <span className="font-bold text-[#1e1e2e]">{domain}</span> track. Your talent and potential align perfectly with our mission to architect the future of digital solutions.</p>
-              <p>Your internship is scheduled to commence on <span className="font-bold text-[#1e1e2e]">{metadata?.startDate || 'TBD'}</span> for a duration of 3 months. During this period, you will receive a monthly stipend of <span className="font-bold text-[#6366f1]">{metadata?.stipend || 'Performance Based'}</span>.</p>
+              <p>Your internship is scheduled to commence on <span className="font-bold text-[#1e1e2e]">{metadata?.startDate || 'TBD'}</span> for a duration of 3 months. During this period, you will receive a monthly stipend of <span className="font-bold text-[#6366f1]">{metadata?.stipend || 'As we discussed'}</span>.</p>
             </>
           ) : (
             <>
@@ -145,10 +145,10 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
         <div className="pt-12">
           <p className="font-bold text-gray-400 uppercase text-[10px] tracking-widest mb-4">Best Regards,</p>
           <div className="flex flex-col items-start">
-            <img src="/signatures/admin-sign.png" alt="Signature" className="h-16 object-contain mb-[-10px]" />
+            <img src="/signatures/sign.png" alt="Signature" className="h-16 object-contain mb-[-10px]" />
             <div className="w-40 h-[1px] bg-gray-300" />
-            <p className="text-sm font-black uppercase text-[#1e1e2e] mt-2">Team Verve Nova</p>
-            <p className="text-[10px] font-bold text-gray-400 uppercase">Authorized Operations</p>
+            <p className="text-sm font-black uppercase text-[#1e1e2e] mt-2">Founder & CEO</p>
+            <p className="text-[10px] font-bold text-gray-400 uppercase">Verve Nova Technologies</p>
           </div>
         </div>
       </div>

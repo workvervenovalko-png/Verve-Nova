@@ -101,7 +101,7 @@ export default function AdminDashboardPage() {
                     setGenData({
                          startDate: today,
                          endDate: threeMonthsLater.toISOString().split('T')[0],
-                         stipend: "Performance Based",
+                         stipend: "As we discussed",
                          performance: `During this tenure, ${res.data.name} demonstrated exceptional technical growth and contributed significantly to our ${app.roleSlug?.replace('-', ' ')} projects.`,
                          domainName: app.roleSlug?.replace('-', ' ').toUpperCase() || "WEB DEVELOPMENT",
                          domain: app.roleSlug?.split('-').map((word: string) => word[0]).join('').toUpperCase() || "WD"
