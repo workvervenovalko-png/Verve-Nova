@@ -247,7 +247,7 @@ export const getHumanDocumentTemplate = (name: string, domain: string, startDate
     <li><strong>Department:</strong> ${domain}</li>
     <li><strong>Duration:</strong> 3 Months</li>
     <li><strong>Mode:</strong> Remote</li>
-    <li><strong>Start Date:</strong> ${startDate}</li>
+    <li><strong>Joining Date:</strong> To be shared in the Official Joining Letter</li>
   </ul>
 
   <p>Attached to this email, you will find your official <strong>Internship ${type}</strong>, which includes details regarding your role, duration of the internship, reporting structure, and other relevant terms and conditions.</p>
@@ -259,9 +259,10 @@ export const getHumanDocumentTemplate = (name: string, domain: string, startDate
 
   <div style="margin-top: 40px; border-top: 1px solid #eee; pt: 20px;">
     <p style="margin: 0; font-weight: bold;">Warm regards,</p>
-    <p style="margin: 5px 0;"><strong>Founder & CEO</strong><br/>
-    Verve Nova Technologies<br/>
-    📧 <a href="mailto:work.vervenova.lko@gmail.com" style="color: #333; text-decoration: none;">work.vervenova.lko@gmail.com</a></p>
+    <p style="margin: 5px 0;"><strong>Puneet Kushwaha</strong><br/>
+    Founder & CEO – Verve Nova Technologies<br/>
+    📧 <a href="mailto:work.vervenova.lko@gmail.com" style="color: #333; text-decoration: none;">work.vervenova.lko@gmail.com</a><br/>
+    📞 +91 7380663685</p>
   </div>
   
   <p style="font-size: 10px; color: #999; margin-top: 30px;">Ref: ${verificationId} // Authorized Digital Transmission</p>
@@ -284,9 +285,10 @@ export const getHumanCertificateTemplate = (name: string, domain: string, verifi
 
   <div style="margin-top: 40px; border-top: 1px solid #eee; pt: 20px;">
     <p style="margin: 0; font-weight: bold;">Warm regards,</p>
-    <p style="margin: 5px 0;"><strong>Founder & CEO</strong><br/>
-    Verve Nova Technologies<br/>
-    📧 <a href="mailto:work.vervenova.lko@gmail.com" style="color: #333; text-decoration: none;">work.vervenova.lko@gmail.com</a></p>
+    <p style="margin: 5px 0;"><strong>Puneet Kushwaha</strong><br/>
+    Founder & CEO – Verve Nova Technologies<br/>
+    📧 <a href="mailto:work.vervenova.lko@gmail.com" style="color: #333; text-decoration: none;">work.vervenova.lko@gmail.com</a><br/>
+    📞 +91 7380663685</p>
   </div>
   
   <p style="font-size: 10px; color: #999; margin-top: 30px;">Ref: ${verificationId} // Verifiable Internship Credential</p>
