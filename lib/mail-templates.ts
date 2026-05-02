@@ -234,3 +234,61 @@ export const getCertificateTemplate = (name: string) => `
   </div>
 </div>
 `;
+export const getHumanDocumentTemplate = (name: string, domain: string, startDate: string, verificationId: string, type: string) => `
+<div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 600px;">
+  <p>Dear ${name.split(' ')[0]},</p>
+  <p>I hope you are doing well.</p>
+
+  <p>We are pleased to inform you that you have been selected for the position of <strong>${domain}</strong> at <strong>Verve Nova Technologies</strong>. Based on your qualifications and experience, we believe you will be a valuable addition to our team.</p>
+
+  <p><strong>Internship Details:</strong></p>
+  <ul style="list-style: none; padding-left: 0;">
+    <li><strong>Position:</strong> Intern</li>
+    <li><strong>Department:</strong> ${domain}</li>
+    <li><strong>Duration:</strong> 3 Months</li>
+    <li><strong>Mode:</strong> Remote</li>
+    <li><strong>Start Date:</strong> ${startDate}</li>
+  </ul>
+
+  <p>Attached to this email, you will find your official <strong>Internship ${type}</strong>, which includes details regarding your role, duration of the internship, reporting structure, and other relevant terms and conditions.</p>
+ 
+  <p>Please review the ${type.toLowerCase()} carefully. If you agree to the terms outlined, kindly reply with "I accept the offer". Should you have any questions or require further clarification, feel free to reach out to us directly.</p>
+
+  <p>Alternatively, you can view and download your document directly from our secure portal:<br/>
+  <a href="https://vervenovatech.com/verify/${verificationId}" style="color: #6366f1; text-decoration: underline; font-weight: bold;">View & Download Official Document</a></p>
+
+  <div style="margin-top: 40px; border-top: 1px solid #eee; pt: 20px;">
+    <p style="margin: 0; font-weight: bold;">Warm regards,</p>
+    <p style="margin: 5px 0;"><strong>Founder & CEO</strong><br/>
+    Verve Nova Technologies<br/>
+    📧 <a href="mailto:work.vervenova.lko@gmail.com" style="color: #333; text-decoration: none;">work.vervenova.lko@gmail.com</a></p>
+  </div>
+  
+  <p style="font-size: 10px; color: #999; margin-top: 30px;">Ref: ${verificationId} // Authorized Digital Transmission</p>
+</div>
+`;
+
+export const getHumanCertificateTemplate = (name: string, domain: string, verificationId: string) => `
+<div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 600px;">
+  <p>Dear ${name.split(' ')[0]},</p>
+  <p>I hope you are doing well.</p>
+
+  <p>We are pleased to share your official <strong>Certificate of Internship Completion</strong> for the ${domain} program at <strong>Verve Nova Technologies</strong>.</p>
+
+  <p>Your dedication and technical contributions during your 3-month tenure have been exemplary. We are confident that the skills you've acquired will serve as a strong foundation for your future career.</p>
+ 
+  <p>You can view and download your verified certificate using the link below:<br/>
+  <a href="https://vervenovatech.com/verify/${verificationId}" style="color: #6366f1; text-decoration: underline; font-weight: bold;">Download Digital Certificate</a></p>
+
+  <p>We wish you all the best for your upcoming endeavors.</p>
+
+  <div style="margin-top: 40px; border-top: 1px solid #eee; pt: 20px;">
+    <p style="margin: 0; font-weight: bold;">Warm regards,</p>
+    <p style="margin: 5px 0;"><strong>Founder & CEO</strong><br/>
+    Verve Nova Technologies<br/>
+    📧 <a href="mailto:work.vervenova.lko@gmail.com" style="color: #333; text-decoration: none;">work.vervenova.lko@gmail.com</a></p>
+  </div>
+  
+  <p style="font-size: 10px; color: #999; margin-top: 30px;">Ref: ${verificationId} // Verifiable Internship Credential</p>
+</div>
+`;

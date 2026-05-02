@@ -239,25 +239,26 @@ export async function issueDocument(formData: FormData) {
     const buffer = Buffer.from(arrayBuffer);
 
     const { resend } = await import("@/lib/resend");
-    const { getOfferLetterTemplate, getCertificateTemplate } = await import("@/lib/mail-templates");
+    const { getHumanDocumentTemplate, getHumanCertificateTemplate } = await import("@/lib/mail-templates");
 
     console.log(`>>> [MAIL_SYSTEM] Attempting to dispatch ${docType} to ${email}`);
 
     let htmlContent = "";
     let subject = "";
+    const startDate = new Date().toLocaleDateString(); // Default to today for manual issuance
 
     if (docType === "offer_letter") {
-      htmlContent = getOfferLetterTemplate(name);
-      subject = "OFFICIAL OFFER OF EMPLOYMENT // VERVE NOVA";
+      htmlContent = getHumanDocumentTemplate(name, "Web Development", startDate, "MANUAL-DOC", "Offer Letter");
+      subject = "Internship Offer Letter // Verve Nova";
     } else if (docType === "certificate") {
-      htmlContent = getCertificateTemplate(name);
-      subject = "CERTIFICATE OF COMPLETION // VERVE NOVA";
+      htmlContent = getHumanCertificateTemplate(name, "Web Development", "MANUAL-DOC");
+      subject = "Internship Certificate // Verve Nova";
     } else {
       return { success: false, error: "Invalid document type." };
     }
 
     const mailRes = await resend.emails.send({
-      from: 'Verve Nova Tech <onboarding@vervenovatech.com>', // Using onboarding identity
+      from: 'Verve Nova Technologies <onboarding@vervenovatech.com>',
       to: email,
       subject: subject,
       html: htmlContent,
@@ -313,30 +314,26 @@ export async function generateDocument(appId: string, docType: string, metadata:
     // Send Notification Email
     try {
       const { resend } = await import("@/lib/resend");
+      const { getHumanDocumentTemplate, getHumanCertificateTemplate } = await import("@/lib/mail-templates");
       const targetEmail = (app.userId as any).email;
       const targetName = (app.userId as any).name;
+      const domainName = newDoc.metadata.domain;
+      const startDate = newDoc.metadata.startDate || new Date().toLocaleDateString();
       
       const docName = newDoc.type.toUpperCase();
       
+      let emailHtml = "";
+      if (newDoc.type === 'Certificate') {
+        emailHtml = getHumanCertificateTemplate(targetName, domainName, verificationId);
+      } else {
+        emailHtml = getHumanDocumentTemplate(targetName, domainName, startDate, verificationId, newDoc.type);
+      }
+      
       await resend.emails.send({
-        from: 'Verve Nova Tech <onboarding@vervenovatech.com>',
+        from: 'Verve Nova Technologies <onboarding@vervenovatech.com>',
         to: targetEmail,
-        subject: `OFFICIAL ${docName} ISSUED // VERVE NOVA`,
-        html: `
-          <div style="font-family: sans-serif; padding: 20px; background: #09090b; color: white;">
-            <h1 style="color: #6366f1;">Digital Document Issued</h1>
-            <p>Dear ${targetName},</p>
-            <p>We are pleased to inform you that your official <strong>${newDoc.type}</strong> has been digitally issued and authorized.</p>
-            <p>You can view and download your document through your candidate dashboard or by using the verification ID below:</p>
-            <div style="background: #1e1e2e; padding: 15px; border-radius: 10px; margin: 20px 0; border: 1px solid #6366f130;">
-              <p style="margin: 0; color: #6366f1; font-size: 10px; text-transform: uppercase;">Verification ID</p>
-              <p style="margin: 5px 0 0 0; font-family: monospace; font-size: 18px; font-weight: bold;">${verificationId}</p>
-            </div>
-            <p><a href="https://vervenovatech.com/verify/${verificationId}" style="display: inline-block; background: #6366f1; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 12px; text-transform: uppercase;">View Document</a></p>
-            <hr style="border-color: #ffffff10; margin: 30px 0;" />
-            <p style="font-size: 10px; color: #ffffff40;">This is an automated transmission from the Verve Nova Certification Authority.</p>
-          </div>
-        `,
+        subject: `Internship ${newDoc.type} // Verve Nova`,
+        html: emailHtml,
       });
 
       // Admin CC Notification
