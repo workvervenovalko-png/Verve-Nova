@@ -40,7 +40,7 @@ export function Navbar() {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="pointer-events-auto backdrop-blur-2xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-between px-8 md:px-12 py-2 w-full max-w-[1300px] rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.4)] specular-glow"
+        className="pointer-events-auto backdrop-blur-2xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-between px-8 md:px-12 py-3 w-full max-w-[1300px] rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.4)] specular-glow"
       >
         {/* Logo Section - VNT BRANDING */}
         <Link href="/" className="flex items-center gap-3 shrink-0 group pointer-events-auto mr-8">
@@ -86,7 +86,7 @@ export function Navbar() {
             <Link
               key={link.name}
               href={link.href}
-              className="text-[10px] font-bold text-white/40 hover:text-white uppercase tracking-[0.3em] transition-colors relative group/link"
+              className="text-[11px] font-bold text-white/40 hover:text-white uppercase tracking-[0.3em] transition-colors relative group/link"
             >
               {link.name}
               <span className="absolute -bottom-1 left-0 w-0 h-px bg-indigo-500 group-hover/link:w-full transition-all duration-300" />
@@ -139,7 +139,7 @@ export function Navbar() {
             </Link>
           )}
 
-          <Link href="/#contact" className="h-9 px-10 bg-gradient-to-r from-indigo-600 to-violet-600 text-white text-[9px] font-bold uppercase tracking-[0.2em] rounded-full hover:shadow-[0_0_24px_rgba(99,102,241,0.4)] transition-all active:scale-95 flex items-center justify-center ml-4">
+          <Link href="/#contact" className="h-10 px-10 bg-gradient-to-r from-indigo-600 to-violet-600 text-white text-[10px] font-bold uppercase tracking-[0.2em] rounded-full hover:shadow-[0_0_24px_rgba(99,102,241,0.4)] transition-all active:scale-95 flex items-center justify-center ml-4">
             Contact Us
           </Link>
         </div>
