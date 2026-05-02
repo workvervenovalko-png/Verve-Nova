@@ -139,7 +139,7 @@ export function Navbar() {
             </Link>
           )}
 
-          <Link href="/#contact" className="h-10 px-10 bg-gradient-to-r from-indigo-600 to-violet-600 text-white text-[10px] font-bold uppercase tracking-[0.2em] rounded-full hover:shadow-[0_0_24px_rgba(99,102,241,0.4)] transition-all active:scale-95 flex items-center justify-center ml-4">
+          <Link href="/#contact" className="h-10 px-8 bg-gradient-to-r from-indigo-600 to-violet-600 text-white text-[10px] font-bold uppercase tracking-[0.2em] rounded-full hover:shadow-[0_0_24px_rgba(99,102,241,0.4)] transition-all active:scale-95 flex items-center justify-center ml-4 whitespace-nowrap">
             Contact Us
           </Link>
         </div>
