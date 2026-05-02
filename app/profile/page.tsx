@@ -61,7 +61,8 @@ export default function CandidateProfilePage() {
     await signOut({ callbackUrl: "/careers" });
   };
 
-  if (isLoading) {
+  // Only show full-page loader if we don't have profile data yet
+  if ((status === "loading" || isLoading) && !profile) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <VNTLoader size="lg" />

@@ -237,7 +237,7 @@ export default function AdminDashboardPage() {
           }
      };
 
-     if (isLoading) {
+     if ((authStatus === "loading" || isLoading) && applications.length === 0) {
           return (
                <div className="min-h-screen bg-background flex items-center justify-center">
                     <VNTLoader size="lg" />

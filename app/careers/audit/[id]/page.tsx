@@ -51,7 +51,7 @@ export default function DetailedAuditPage({ params }: { params: Promise<{ id: st
     fetchData();
   }, [id, router]);
 
-  if (isLoading) {
+  if (isLoading && !auditData) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <VNTLoader size="lg" />
