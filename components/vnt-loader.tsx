@@ -17,38 +17,25 @@ export function VNTLoader({ className = "", size = "md" }: VNTLoaderProps) {
 
   return (
     <div className={`relative flex items-center justify-center ${className}`}>
-      {/* Ambient Glow Background */}
-      <motion.div
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.6, 0.3],
-        }}
-        transition={{
-          duration: 2,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className={`absolute rounded-full bg-indigo-500/20 blur-xl ${sizes[size]}`}
-      />
-
-      {/* Rotating Ring (Sophisticated) */}
+      {/* Delicate Rotating Arc */}
       <motion.div
         animate={{
           rotate: 360,
         }}
         transition={{
-          duration: 3,
+          duration: 1.5,
           repeat: Infinity,
           ease: "linear",
         }}
-        className={`absolute rounded-full border-t-2 border-r-2 border-indigo-500/30 ${sizes[size]}`}
-        style={{ width: "120%", height: "120%" }}
+        className={`absolute rounded-full border-t border-indigo-500/20 ${sizes[size]}`}
+        style={{ width: "140%", height: "140%" }}
       />
 
-      {/* Main Logo with Pulse & Shimmer */}
+      {/* Subtle Logo Pulse */}
       <motion.div
         animate={{
-          scale: [0.95, 1.05, 0.95],
+          scale: [0.98, 1, 0.98],
+          opacity: [0.8, 1, 0.8],
         }}
         transition={{
           duration: 2,
@@ -60,9 +47,8 @@ export function VNTLoader({ className = "", size = "md" }: VNTLoaderProps) {
         <img
           src="/vnt-logo.png"
           alt="VNT Loader"
-          className="w-full h-full object-contain"
+          className="w-full h-full object-contain grayscale-[0.2] opacity-90"
         />
-        
       </motion.div>
     </div>
   );
