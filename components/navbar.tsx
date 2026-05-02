@@ -18,10 +18,10 @@ export function Navbar() {
 
   const navLinks = [
     { name: "Services", href: "/#services" },
-    { name: "Expertise", href: "/#capabilities" },
+    { name: "Capabilities", href: "/#capabilities" },
     { name: "Industries", href: "/#industries" },
-    { name: "Interns", href: "/registry" },
-    { name: "Verify", href: "/verify" },
+    { name: "Registry", href: "/registry" },
+    { name: "Verification", href: "/verify" },
     { name: "Careers", href: "/careers" },
   ];
 
@@ -134,11 +134,9 @@ export function Navbar() {
               </AnimatePresence>
             </div>
           ) : (
-            isCareersPage && (
-              <Link href="/careers/auth" className="text-[9px] font-black text-white/40 hover:text-indigo-400 uppercase tracking-[0.3em] transition-colors">
-                Login
-              </Link>
-            )
+            <Link href="/careers/auth" className="text-[9px] font-black text-white/40 hover:text-indigo-400 uppercase tracking-[0.3em] transition-colors">
+              Login
+            </Link>
           )}
 
           <Link href="/#contact" className="h-10 px-10 bg-gradient-to-r from-indigo-600 to-violet-600 text-white text-[10px] font-bold uppercase tracking-[0.2em] rounded-full hover:shadow-[0_0_24px_rgba(99,102,241,0.4)] transition-all active:scale-95 flex items-center justify-center">
@@ -242,22 +240,20 @@ export function Navbar() {
                     </button>
                   </motion.div>
                 ) : (
-                  isCareersPage && (
-                    <motion.div
-                      variants={{
-                        open: { opacity: 1, y: 0 },
-                        closed: { opacity: 0, y: 20 }
-                      }}
+                  <motion.div
+                    variants={{
+                      open: { opacity: 1, y: 0 },
+                      closed: { opacity: 0, y: 20 }
+                    }}
+                  >
+                    <Link
+                      href="/careers/auth"
+                      onClick={() => setIsOpen(false)}
+                      className="text-sm font-black text-indigo-400 uppercase tracking-[0.5em]"
                     >
-                      <Link
-                        href="/careers/auth"
-                        onClick={() => setIsOpen(false)}
-                        className="text-sm font-black text-indigo-400 uppercase tracking-[0.5em]"
-                      >
-                        Login
-                      </Link>
-                    </motion.div>
-                  )
+                      Login
+                    </Link>
+                  </motion.div>
                 )}
               </motion.div>
 
@@ -289,7 +285,7 @@ export function Navbar() {
                 </div>
 
                 <p className="text-[7px] font-black text-white/10 uppercase tracking-[0.8em] select-none">
-                  Verve Nova Tech Studio
+                  Verve Nova Technologies
                 </p>
               </motion.div>
             </motion.div>
