@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { ShieldCheck, User2, Mail, Lock, Sparkles, ArrowRight, Phone, Search, Edit2, ChevronDown, XCircle } from "lucide-react";
+import { ShieldCheck, User2, Mail, Lock, Sparkles, ArrowRight, Phone, Search, Edit2, ChevronDown, XCircle, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 import { VNTLoader } from "@/components/vnt-loader";
 import { countries } from "@/lib/countries";
@@ -23,6 +23,7 @@ export default function CareersAuthPage() {
   const [authError, setAuthError] = useState<string | null>(null);
   const [isCountryListOpen, setIsCountryListOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
   const [formData, setFormData] = useState({
@@ -337,12 +338,19 @@ export default function CareersAuthPage() {
                                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/20 group-focus-within:text-indigo-400 transition-colors" />
                                 <Input 
                                   required
-                                  type="password"
+                                  type={showPassword ? "text" : "password"}
                                   placeholder="PASSWORD"
-                                  className="h-12 pl-12 bg-white/[0.03] border-white/10 rounded-xl text-white placeholder:text-white/10 text-[10px] font-black tracking-widest uppercase focus:bg-white/[0.05] focus:border-indigo-500/50 transition-all"
+                                  className="h-12 pl-12 pr-12 bg-white/[0.03] border-white/10 rounded-xl text-white placeholder:text-white/10 text-[10px] font-black tracking-widest uppercase focus:bg-white/[0.05] focus:border-indigo-500/50 transition-all"
                                   value={formData.password}
                                   onChange={(e) => setFormData({...formData, password: e.target.value})}
                                 />
+                                <button
+                                  type="button"
+                                  onClick={() => setShowPassword(!showPassword)}
+                                  className="absolute right-4 top-1/2 -translate-y-1/2 text-white/20 hover:text-indigo-400 transition-colors"
+                                >
+                                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                                </button>
                               </div>
                             </div>
                           </div>
@@ -365,7 +373,7 @@ export default function CareersAuthPage() {
 
                         <Button 
                           disabled={isLoading}
-                          className="w-full h-14 bg-indigo-600 hover:bg-indigo-500 text-white font-black rounded-xl transition-all shadow-lg uppercase text-[9px] tracking-[0.3em] group relative overflow-hidden active:scale-[0.98] border-0 mt-4"
+                          className="w-full h-14 bg-indigo-600 hover:bg-indigo-500 text-white font-black rounded-xl transition-all shadow-lg uppercase text-[9px] tracking-[0.3em] group relative overflow-hidden active:scale-[0.98] border-0 mt-4 disabled:opacity-80 disabled:cursor-not-allowed"
                         >
                           {isLoading ? (
                             <VNTLoader size="sm" />
