@@ -66,8 +66,8 @@ export function Navbar() {
         {/* Logo Section - VNT BRANDING */}
         <Link href="/" className="flex items-center gap-3 shrink-0 group pointer-events-auto mr-8">
           <div className="relative">
-            <div className="w-11 h-11 flex items-center justify-center transition-all duration-500 overflow-hidden">
-              <img src="/vnt-logo.png" alt="Verve Nova Logo" className="w-9 h-9 object-contain" />
+            <div className="w-12 h-12 flex items-center justify-center transition-all duration-500 overflow-hidden">
+              <img src="/vnt-logo.png" alt="Verve Nova Logo" className="w-11 h-11 object-contain" />
             </div>
           </div>
 
@@ -83,7 +83,7 @@ export function Navbar() {
                     duration: 0.1,
                     ease: "easeOut"
                   }}
-                  className="text-[11px] font-black text-white tracking-widest uppercase leading-none group-hover:text-indigo-400 transition-colors"
+                  className="text-[14px] font-black text-white tracking-widest uppercase leading-none group-hover:text-indigo-400 transition-colors"
                 >
                   {char === " " ? "\u00A0" : char}
                 </motion.span>
@@ -93,7 +93,7 @@ export function Navbar() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
-              className="text-[6px] font-bold text-white/30 uppercase tracking-[0.5em] mt-1 leading-none group-hover:text-white/50 transition-colors"
+              className="text-[7px] font-bold text-white/30 uppercase tracking-[0.5em] mt-1 leading-none group-hover:text-white/50 transition-colors"
             >
               Technologies
             </motion.span>
