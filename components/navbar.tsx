@@ -88,7 +88,7 @@ export function Navbar() {
                     duration: 0.2,
                     ease: "easeOut"
                   }}
-                  className="text-[9px] font-bold text-white uppercase tracking-[0.5em] leading-none"
+                  className="text-[8px] font-bold text-white uppercase tracking-[0.5em] leading-none"
                 >
                   {char}
                 </motion.span>
