@@ -63,6 +63,7 @@ import { cn } from "@/lib/utils";
 
 export default function AdminDashboardPage() {
      const [activeTab, setActiveTab] = useState<"applications" | "leads" | "blogs" | "issuance">("applications");
+     const [subTab, setSubTab] = useState<"new" | "interviewing" | "accepted" | "offered" | "joined" | "completed" | "rejected">("new");
      const [applications, setApplications] = useState<any[]>([]);
      const [leads, setLeads] = useState<any[]>([]);
      const [blogs, setBlogs] = useState<any[]>([]);
@@ -237,6 +238,30 @@ export default function AdminDashboardPage() {
           }
      };
 
+     const getFilteredApplications = () => {
+          return applications.filter(app => {
+               const hasCert = app.documents?.some((d: any) => d.type === 'Certificate');
+               const hasJoining = app.documents?.some((d: any) => d.type === 'Joining Letter');
+               const hasOffer = app.documents?.some((d: any) => d.type === 'Offer Letter');
+
+               if (subTab === 'completed') return hasCert;
+               if (subTab === 'joined') return hasJoining && !hasCert;
+               if (subTab === 'offered') return hasOffer && !hasJoining && !hasCert;
+               
+               // For statuses, if they have a document, they should probably stay in the document category 
+               // unless the admin manually changes status back. 
+               // But usually, once Offered, they stay in Offered until Joined.
+               if (hasCert || hasJoining || hasOffer) return false;
+
+               if (subTab === 'accepted') return app.status === 'Accepted';
+               if (subTab === 'interviewing') return app.status === 'Interviewing';
+               if (subTab === 'rejected') return app.status === 'Rejected';
+               if (subTab === 'new') return app.status === 'Reviewing' || !app.status;
+               
+               return false;
+          });
+     };
+
      if ((authStatus === "loading" || isLoading) && applications.length === 0) {
           return (
                <div className="min-h-screen bg-background flex items-center justify-center">
@@ -308,9 +333,48 @@ export default function AdminDashboardPage() {
                               </div>
                          )}
 
-                         <div className="glass-card rounded-[2.5rem] border-white/[0.06] shadow-2xl overflow-hidden min-h-[400px]">
+                          <div className="glass-card rounded-[2.5rem] border-white/[0.06] shadow-2xl overflow-hidden min-h-[400px]">
                               {activeTab === "applications" ? (
-                                   <div className="overflow-x-auto">
+                                   <div className="flex flex-col">
+                                        {/* Sub-Tabs for Applications */}
+                                        <div className="flex flex-wrap gap-2 p-4 bg-white/[0.01] border-b border-white/[0.04]">
+                                             {[
+                                                  { id: 'new', label: 'Applied', icon: Clock },
+                                                  { id: 'interviewing', label: 'Interviewing', icon: Calendar },
+                                                  { id: 'accepted', label: 'Accepted', icon: CheckCircle2 },
+                                                  { id: 'offered', label: 'Offer Sent', icon: Mail },
+                                                  { id: 'joined', label: 'Joined', icon: Briefcase },
+                                                  { id: 'completed', label: 'Completed', icon: ShieldCheck },
+                                                  { id: 'rejected', label: 'Rejected', icon: XCircle }
+                                             ].map((tab) => (
+                                                  <button
+                                                       key={tab.id}
+                                                       onClick={() => setSubTab(tab.id as any)}
+                                                       className={`flex items-center gap-2 px-4 py-2 rounded-lg text-[9px] font-bold uppercase tracking-widest transition-all ${subTab === tab.id ? 'bg-white/10 text-white border border-white/10 shadow-lg' : 'text-white/20 hover:text-white/40 hover:bg-white/[0.02]'}`}
+                                                  >
+                                                       <tab.icon className="w-3 h-3" />
+                                                       {tab.label}
+                                                       <span className="ml-1 opacity-40">
+                                                            ({applications.filter(app => {
+                                                                 const hasCert = app.documents?.some((d: any) => d.type === 'Certificate');
+                                                                 const hasJoining = app.documents?.some((d: any) => d.type === 'Joining Letter');
+                                                                 const hasOffer = app.documents?.some((d: any) => d.type === 'Offer Letter');
+                                                                 if (tab.id === 'completed') return hasCert;
+                                                                 if (tab.id === 'joined') return hasJoining && !hasCert;
+                                                                 if (tab.id === 'offered') return hasOffer && !hasJoining && !hasCert;
+                                                                 if (hasCert || hasJoining || hasOffer) return false;
+                                                                 if (tab.id === 'accepted') return app.status === 'Accepted';
+                                                                 if (tab.id === 'interviewing') return app.status === 'Interviewing';
+                                                                 if (tab.id === 'rejected') return app.status === 'Rejected';
+                                                                 if (tab.id === 'new') return app.status === 'Reviewing' || !app.status;
+                                                                 return false;
+                                                            }).length})
+                                                       </span>
+                                                  </button>
+                                             ))}
+                                        </div>
+
+                                        <div className="overflow-x-auto">
                                         <table className="w-full text-left border-collapse">
                                              <thead>
                                                   <tr className="bg-white/[0.02] border-b border-white/[0.04]">
@@ -323,21 +387,21 @@ export default function AdminDashboardPage() {
                                                   </tr>
                                              </thead>
                                              <tbody className="divide-y divide-white/[0.02]">
-                                                  {applications.map((app) => (
-                                                       <tr key={app._id} className="hover:bg-white/[0.02] transition-colors group">
-                                                            <td className="px-8 py-8">
+                                                   {getFilteredApplications().map((app) => (
+                                                        <tr key={app._id} className="hover:bg-white/[0.02] transition-colors group">
+                                                             <td className="px-8 py-8">
                                                                   <div className="flex flex-col gap-1">
                                                                        <span className="text-sm font-black text-white uppercase leading-none">{app.userId?.name}</span>
                                                                        <span className="text-[10px] font-mono text-indigo-400 font-bold tracking-tighter leading-none">{app.userId?.vn_id}</span>
                                                                   </div>
-                                                            </td>
-                                                            <td className="px-8 py-8">
+                                                             </td>
+                                                             <td className="px-8 py-8">
                                                                   <div className="flex items-center gap-3">
                                                                        <Briefcase className="w-4 h-4 text-white/10" />
                                                                        <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest leading-none">{app.roleSlug?.replace('-', ' ')}</span>
                                                                   </div>
-                                                            </td>
-                                                            <td className="px-8 py-8">
+                                                             </td>
+                                                             <td className="px-8 py-8">
                                                                   <div className="flex items-center gap-3">
                                                                        {app.links?.linkedIn && (
                                                                             <a href={app.links.linkedIn.startsWith('http') ? app.links.linkedIn : `https://${app.links.linkedIn}`} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-white/5 hover:bg-indigo-600/20 text-white/20 hover:text-indigo-400 transition-all">
@@ -356,8 +420,8 @@ export default function AdminDashboardPage() {
                                                                        )}
                                                                        {!app.links?.linkedIn && !app.links?.github && !app.links?.portfolio && <span className="text-[8px] font-bold text-white/5 uppercase tracking-widest">No Links</span>}
                                                                   </div>
-                                                            </td>
-                                                            <td className="px-8 py-8">
+                                                             </td>
+                                                             <td className="px-8 py-8">
                                                                   <select
                                                                        className="bg-transparent border-none text-[10px] font-black uppercase tracking-widest text-indigo-400 outline-none cursor-pointer"
                                                                        value={app.status}
@@ -368,8 +432,8 @@ export default function AdminDashboardPage() {
                                                                        <option value="Accepted" className="bg-[#09090B]">Accepted</option>
                                                                        <option value="Rejected" className="bg-[#09090B]">Rejected</option>
                                                                   </select>
-                                                            </td>
-                                                            <td className="px-8 py-8">
+                                                             </td>
+                                                             <td className="px-8 py-8">
                                                                   <div className="flex flex-col gap-3 min-w-[220px]">
                                                                        <Popover>
                                                                             <PopoverTrigger asChild>
@@ -417,8 +481,8 @@ export default function AdminDashboardPage() {
                                                                              </Button>
                                                                         )}
                                                                   </div>
-                                                            </td>
-                                                            <td className="px-8 py-8 text-right">
+                                                             </td>
+                                                             <td className="px-8 py-8 text-right">
                                                                   <div className="flex justify-end gap-2">
                                                                        <Dialog>
                                                                             <DialogTrigger asChild>
@@ -490,12 +554,23 @@ export default function AdminDashboardPage() {
                                                                             <FileSearch className="w-5 h-5" />
                                                                        </Button>
                                                                   </div>
-                                                            </td>
-                                                       </tr>
-                                                  ))}
-                                             </tbody>
-                                        </table>
-                                   </div>
+                                                             </td>
+                                                        </tr>
+                                                   ))}
+                                                   {getFilteredApplications().length === 0 && (
+                                                        <tr>
+                                                             <td colSpan={6} className="px-8 py-20 text-center">
+                                                                  <div className="flex flex-col items-center gap-6">
+                                                                       <Clock className="w-12 h-12 text-white/5" />
+                                                                       <p className="text-[10px] font-bold text-white/10 uppercase tracking-widest leading-none">No applications in this stage.</p>
+                                                                  </div>
+                                                             </td>
+                                                        </tr>
+                                                   )}
+                                              </tbody>
+                                         </table>
+                                    </div>
+                               </div>
                               ) : activeTab === "leads" ? (
                                    <div className="overflow-x-auto">
                                         <table className="w-full text-left border-collapse">
