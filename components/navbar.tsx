@@ -93,7 +93,7 @@ export function Navbar() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
-              className="text-[7px] font-bold text-white/30 uppercase tracking-[0.5em] mt-1 leading-none group-hover:text-white/50 transition-colors"
+              className="text-[9px] font-bold text-white/30 uppercase tracking-[0.5em] mt-1 leading-none group-hover:text-white/50 transition-colors"
             >
               Technologies
             </motion.span>
