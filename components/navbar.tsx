@@ -71,32 +71,29 @@ export function Navbar() {
             </div>
           </div>
 
-          <div className="flex flex-col" key={typeKey}>
+          <div className="flex flex-col">
             <div className="flex overflow-hidden">
-              {"VERVE NOVA".split("").map((char, i) => (
+              <span className="text-[14px] font-black text-indigo-400 tracking-widest uppercase leading-none transition-colors">
+                VERVE NOVA
+              </span>
+            </div>
+            <div className="flex overflow-hidden mt-1.5" key={typeKey}>
+              {"TECHNOLOGIES".split("").map((char, i) => (
                 <motion.span
                   key={`${typeKey}-${i}`}
-                  initial={{ opacity: 0, x: -5 }}
-                  animate={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
                   transition={{
-                    delay: i * 0.05,
-                    duration: 0.1,
+                    delay: i * 0.04,
+                    duration: 0.2,
                     ease: "easeOut"
                   }}
-                  className="text-[14px] font-black text-white tracking-widest uppercase leading-none group-hover:text-indigo-400 transition-colors"
+                  className="text-[9px] font-bold text-white uppercase tracking-[0.5em] leading-none"
                 >
-                  {char === " " ? "\u00A0" : char}
+                  {char}
                 </motion.span>
               ))}
             </div>
-            <motion.span
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
-              className="text-[9px] font-bold text-white/30 uppercase tracking-[0.5em] mt-1 leading-none group-hover:text-white/50 transition-colors"
-            >
-              Technologies
-            </motion.span>
           </div>
         </Link>
 
