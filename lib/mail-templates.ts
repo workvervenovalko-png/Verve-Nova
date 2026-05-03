@@ -144,6 +144,4 @@ export const getHumanCertificateTemplate = (name: string, domain: string, verifi
   ${footerSection}
   <p style="font-size: 10px; color: #999; margin-top: 30px;">Ref: ${verificationId} // Verifiable Internship Credential</p>
 </div>
-`;al</p>
-</div>
 `;
