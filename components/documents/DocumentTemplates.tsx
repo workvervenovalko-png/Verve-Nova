@@ -33,7 +33,7 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
 
   if (type === 'Certificate') {
     return (
-      <div className="w-[1000px] h-[700px] bg-white text-[#0a0a0a] p-0 relative overflow-hidden font-serif border-[1px] border-gray-200 shadow-2xl flex flex-col items-center">
+      <div className="w-[1000px] h-[800px] bg-white text-[#0a0a0a] p-0 relative overflow-hidden font-serif border-[1px] border-gray-200 shadow-2xl flex flex-col items-center">
         {/* Corner Accents (Triangles) */}
         <div className="absolute top-0 left-0 w-32 h-32 bg-[#000830]" style={{ clipPath: 'polygon(0 0, 100% 0, 0 100%)' }} />
         <div className="absolute bottom-0 right-0 w-32 h-32 bg-[#000830]" style={{ clipPath: 'polygon(100% 100%, 0 100%, 100% 0)' }} />
@@ -62,23 +62,23 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
         </div>
 
         {/* Main Content Container */}
-        <div className="relative z-10 w-full flex flex-col items-center text-center px-32 pt-28">
+        <div className="relative z-10 w-full flex flex-col items-center text-center px-32 pt-20">
            {/* Header Accent */}
-           <div className="w-12 h-1 bg-indigo-600 mb-8 rounded-full" />
+           <div className="w-12 h-1 bg-indigo-600 mb-6 rounded-full" />
            
            {/* Title */}
-           <h1 className="text-5xl font-bold uppercase tracking-[0.15em] text-[#000830] mb-8">Certificate of Completion</h1>
+           <h1 className="text-5xl font-bold uppercase tracking-[0.15em] text-[#000830] mb-6">Certificate of Completion</h1>
            
-           <p className="text-lg italic text-gray-400 mb-6">This official document certifies that</p>
+           <p className="text-lg italic text-gray-400 mb-4">This official document certifies that</p>
            
            {/* Recipient Name */}
-           <div className="mb-10 relative">
+           <div className="mb-8 relative">
               <h2 className="text-5xl font-bold text-[#000830] uppercase tracking-tight px-16 pb-3 inline-block">{candidateName}</h2>
               <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#000830] to-transparent opacity-30" />
            </div>
 
            {/* Body Content */}
-           <div className="max-w-2xl space-y-6 text-[15px] font-medium text-gray-700 leading-relaxed uppercase tracking-wide">
+           <div className="max-w-2xl space-y-4 text-[15px] font-medium text-gray-700 leading-relaxed uppercase tracking-wide">
               <p>has successfully completed <span className="text-[#000830] font-black">3 Months Internship</span> and <span className="text-[#000830] font-black">3 Months Professional Experience</span><br/>
               in <span className="text-indigo-600 font-black underline decoration-indigo-200 underline-offset-4">{domain}</span></p>
               
@@ -90,7 +90,7 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
            </div>
 
            {/* Footer Section */}
-           <div className="w-full flex justify-between items-end mt-12 px-8">
+           <div className="w-full flex justify-between items-end mt-16 px-8">
               {/* Signature (Bottom Left) */}
               <div className="flex flex-col items-start text-left min-w-[240px]">
                  <img src="/signatures/sign.png" alt="Signature" className="h-14 object-contain mb-[-12px] ml-4 opacity-90" />
