@@ -19,9 +19,9 @@ export function Navbar() {
   const navLinks = [
     { name: "About", href: "/about" },
     { name: "Services", href: "/#services" },
+    { name: "Registry", href: "/registry" },
     { name: "Projects", href: "/projects" },
     { name: "Careers", href: "/careers" },
-    { name: "Blog", href: "/blog" },
     { name: "Verify", href: "/verify" },
   ];
 
@@ -33,6 +33,27 @@ export function Navbar() {
     }, 8000); // Repeat every 8 seconds
     return () => clearInterval(interval);
   }, []);
+
+  // Fix for anchor links when navigating from other pages
+  React.useEffect(() => {
+    const handleHashScroll = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        const targetId = hash.replace('#', '');
+        const element = document.getElementById(targetId);
+        if (element) {
+          // Small delay to ensure the page has rendered
+          setTimeout(() => {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }, 500);
+        }
+      }
+    };
+
+    handleHashScroll();
+    window.addEventListener('hashchange', handleHashScroll);
+    return () => window.removeEventListener('hashchange', handleHashScroll);
+  }, [pathname]);
 
   return (
     <div className="fixed top-6 left-0 w-full z-[100] flex justify-center pointer-events-none px-4">

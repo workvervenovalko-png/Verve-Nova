@@ -132,7 +132,7 @@ export function Hero() {
               transition={{ delay: 1 }}
               className="flex flex-col sm:flex-row items-center gap-6 md:gap-8 lg:pr-4"
             >
-              <Link href="/#projects">
+              <Link href="/projects">
                 <Button
                   variant="secondary"
                   className="h-12 px-8 md:px-10 text-[9px] md:text-[10px] font-black tracking-[0.3em] rounded-lg !bg-white !text-black hover:!bg-white/90 transition-all uppercase border-0 active:scale-95 shadow-[0_0_40px_rgba(255,255,255,0.15)] opacity-100 group"
@@ -141,8 +141,8 @@ export function Hero() {
                   <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform ml-2" />
                 </Button>
               </Link>
-
-              <Link href="/#contact" className="group flex items-center gap-4 text-[9px] font-black tracking-[0.4em] uppercase text-white transition-all py-2">
+ 
+              <Link href="/contact" className="group flex items-center gap-4 text-[9px] font-black tracking-[0.4em] uppercase text-white transition-all py-2">
                 <Fingerprint className="w-4 h-4 md:w-5 md:h-5 text-indigo-300 drop-shadow-[0_0_8px_rgba(129,140,248,0.5)] transition-colors" />
                 Contact Us
                 <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
