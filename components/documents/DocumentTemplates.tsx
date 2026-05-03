@@ -54,10 +54,10 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
 
         {/* Logo (Top Right) */}
         <div className="absolute top-8 right-8 flex flex-col items-end gap-1">
-           <img src="/vnt-logo.png" alt="VNT Logo" className="h-8 w-auto object-contain brightness-110" />
+           <img src="/vnt-logo.png" alt="VNT Logo" className="h-10 w-auto object-contain brightness-110" />
            <div className="flex flex-col text-right">
-              <span className="text-[8px] font-black text-[#000830] tracking-widest uppercase leading-none">Verve Nova Technologies</span>
-              <span className="text-[6px] font-bold text-gray-400 uppercase tracking-[0.2em] mt-1">Specialized Software Systems</span>
+              <span className="text-[10px] font-black text-[#000830] tracking-widest uppercase leading-none">Verve Nova Technologies</span>
+              <span className="text-[8px] font-bold text-gray-400 uppercase tracking-[0.2em] mt-1">Specialized Software Systems</span>
            </div>
         </div>
 
@@ -67,9 +67,9 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
            <div className="w-12 h-1 bg-indigo-600 mb-8 rounded-full" />
            
            {/* Title */}
-           <h1 className="text-4xl font-bold uppercase tracking-[0.15em] text-[#000830] mb-8">Certificate of Completion</h1>
+           <h1 className="text-5xl font-bold uppercase tracking-[0.15em] text-[#000830] mb-8">Certificate of Completion</h1>
            
-           <p className="text-sm italic text-gray-400 mb-4">This official document certifies that</p>
+           <p className="text-lg italic text-gray-400 mb-6">This official document certifies that</p>
            
            {/* Recipient Name */}
            <div className="mb-10 relative">
@@ -78,39 +78,39 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
            </div>
 
            {/* Body Content */}
-           <div className="max-w-2xl space-y-5 text-[12px] font-medium text-gray-700 leading-relaxed uppercase tracking-wide">
+           <div className="max-w-2xl space-y-6 text-[15px] font-medium text-gray-700 leading-relaxed uppercase tracking-wide">
               <p>has successfully completed <span className="text-[#000830] font-black">3 Months Internship</span> and <span className="text-[#000830] font-black">3 Months Professional Experience</span><br/>
               in <span className="text-indigo-600 font-black underline decoration-indigo-200 underline-offset-4">{domain}</span></p>
               
-              <p className="text-[10px] px-16 text-gray-500 italic lowercase normal-case tracking-normal">
+              <p className="text-[12px] px-16 text-gray-500 italic lowercase normal-case tracking-normal">
                 During this period, the candidate demonstrated exceptional technical proficiency, dedication, and professional ethics in executing mission-critical projects at Verve Nova Technologies.
               </p>
               
-              <p className="italic text-gray-400 pt-4 normal-case tracking-normal">We wish them success in their future career.</p>
+              <p className="text-lg italic text-gray-400 pt-4 normal-case tracking-normal">We wish them success in their future career.</p>
            </div>
 
            {/* Footer Section */}
            <div className="w-full flex justify-between items-end mt-12 px-8">
               {/* Signature (Bottom Left) */}
               <div className="flex flex-col items-start text-left min-w-[240px]">
-                 <img src="/signatures/sign.png" alt="Signature" className="h-12 object-contain mb-[-12px] ml-4 opacity-90" />
+                 <img src="/signatures/sign.png" alt="Signature" className="h-14 object-contain mb-[-12px] ml-4 opacity-90" />
                  <div className="w-full h-[1px] bg-gray-200 mb-2" />
-                 <p className="text-sm font-black text-[#000830] uppercase tracking-tighter">Puneet Kushwaha</p>
-                 <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mt-0.5">Founder & CEO</p>
-                 <p className="text-[8px] font-bold text-gray-300 uppercase mt-0.5">Verve Nova Technologies</p>
+                 <p className="text-base font-black text-[#000830] uppercase tracking-tighter">Puneet Kushwaha</p>
+                 <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mt-0.5">Founder & CEO</p>
+                 <p className="text-[10px] font-bold text-gray-300 uppercase mt-0.5">Verve Nova Technologies</p>
               </div>
 
               {/* Document Details (Bottom Right) */}
-              <div className="text-right space-y-2 pb-1">
+              <div className="text-right space-y-3 pb-1">
                  <div className="flex flex-col gap-0.5">
-                    <p className="text-[8px] font-black text-gray-300 uppercase tracking-widest">Verification ID</p>
-                    <p className="text-[10px] font-bold text-gray-800 font-mono tracking-tighter">
+                    <p className="text-[10px] font-black text-gray-300 uppercase tracking-widest">Verification ID</p>
+                    <p className="text-[12px] font-bold text-gray-800 font-mono tracking-tighter">
                        {verificationId.split('-').slice(0, 4).join('-').toUpperCase()}
                     </p>
                  </div>
                  <div className="flex flex-col gap-0.5">
-                    <p className="text-[8px] font-black text-gray-300 uppercase tracking-widest">Issue Date</p>
-                    <p className="text-[10px] font-bold text-gray-800 font-mono tracking-tighter">
+                    <p className="text-[10px] font-black text-gray-300 uppercase tracking-widest">Issue Date</p>
+                    <p className="text-[12px] font-bold text-gray-800 font-mono tracking-tighter">
                        {format(new Date(issuedAt), "dd.MM.yyyy").toUpperCase()}
                     </p>
                  </div>
@@ -127,25 +127,25 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
       {/* Letterhead Header */}
       <div className="flex justify-between items-start border-b-2 border-[#6366f1]/20 pb-8 mb-12 relative z-10">
         <div className="space-y-4">
-          <img src="/vnt-logo.png" alt="VNT Logo" className="h-16 object-contain" />
+          <img src="/vnt-logo.png" alt="VNT Logo" className="h-20 object-contain" />
           <div className="space-y-1">
-            <p className="text-[10px] font-black uppercase tracking-widest text-[#6366f1]">Verve Nova Technologies</p>
-            <p className="text-[8px] font-bold text-gray-400 uppercase">Innovation Hub // Digital Solutions</p>
+            <p className="text-[12px] font-black uppercase tracking-widest text-[#6366f1]">Verve Nova Technologies</p>
+            <p className="text-[10px] font-bold text-gray-400 uppercase">Innovation Hub // Digital Solutions</p>
           </div>
         </div>
-        <div className="text-right space-y-1">
-          <h2 className="text-2xl font-black uppercase tracking-tighter text-[#1e1e2e]">{type}</h2>
-          <p className="text-[9px] font-bold text-gray-400 uppercase">Reference: {verificationId}</p>
-          <p className="text-[9px] font-bold text-gray-400 uppercase">Date: {dateStr}</p>
+        <div className="text-right space-y-2">
+          <h2 className="text-3xl font-black uppercase tracking-tighter text-[#1e1e2e]">{type}</h2>
+          <p className="text-[11px] font-bold text-gray-400 uppercase">Reference: {verificationId}</p>
+          <p className="text-[11px] font-bold text-gray-400 uppercase">Date: {dateStr}</p>
         </div>
       </div>
 
       {/* Body */}
       <div className="space-y-8 text-sm leading-relaxed text-gray-700 relative z-10">
         <div>
-          <p className="font-bold text-[#1e1e2e]">To,</p>
-          <p className="text-lg font-black uppercase text-[#1e1e2e]">{candidateName}</p>
-          <p className="text-[10px] font-mono font-bold text-[#6366f1]">{vnId}</p>
+          <p className="font-bold text-[#1e1e2e] text-base">To,</p>
+          <p className="text-xl font-black uppercase text-[#1e1e2e]">{candidateName}</p>
+          <p className="text-[12px] font-mono font-bold text-[#6366f1]">{vnId}</p>
         </div>
 
         <div className="space-y-4">
@@ -172,13 +172,13 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
         </div>
 
         <div className="pt-12">
-          <p className="font-bold text-gray-400 uppercase text-[10px] tracking-widest mb-4">Best Regards,</p>
+          <p className="font-bold text-gray-400 uppercase text-[12px] tracking-widest mb-4">Best Regards,</p>
           <div className="flex flex-col items-start">
-            <img src="/signatures/sign.png" alt="Signature" className="h-16 object-contain mb-[-10px] opacity-90 ml-4" />
-            <div className="w-64 h-[1px] bg-gray-300 mb-2" />
-            <p className="text-base font-black uppercase text-[#1e1e2e] mt-2">Puneet Kushwaha</p>
-            <p className="text-[10px] font-black uppercase text-[#1e1e2e]/60 mt-1">Founder & CEO</p>
-            <p className="text-[9px] font-bold text-gray-400 uppercase">Verve Nova Technologies</p>
+            <img src="/signatures/sign.png" alt="Signature" className="h-20 object-contain mb-[-10px] opacity-90 ml-4" />
+            <div className="w-72 h-[1px] bg-gray-300 mb-2" />
+            <p className="text-lg font-black uppercase text-[#1e1e2e] mt-2">Puneet Kushwaha</p>
+            <p className="text-[12px] font-black uppercase text-[#1e1e2e]/60 mt-1">Founder & CEO</p>
+            <p className="text-[11px] font-bold text-gray-400 uppercase">Verve Nova Technologies</p>
           </div>
         </div>
       </div>

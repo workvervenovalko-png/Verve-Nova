@@ -3,15 +3,20 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { DocumentTemplates } from "@/components/documents/DocumentTemplates";
-import { ArrowLeft, Download } from "lucide-react";
+import { ArrowLeft, Download, Image as ImageIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { VNTLoader } from "@/components/vnt-loader";
+import { useRef } from "react";
+import { toPng } from "html-to-image";
+import { toast } from "sonner";
 
 export default function DocumentPreviewPage() {
   const { id } = useParams();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [downloading, setDownloading] = useState(false);
   const router = useRouter();
+  const documentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,6 +31,36 @@ export default function DocumentPreviewPage() {
     };
     fetchData();
   }, [id]);
+
+  const handleDownloadImage = async () => {
+    if (!documentRef.current) return;
+    
+    setDownloading(true);
+    const toastId = toast.loading("Generating high-quality image...");
+
+    try {
+      // Small delay to ensure everything is rendered
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      const dataUrl = await toPng(documentRef.current, {
+        quality: 1.0,
+        pixelRatio: 2, // Higher resolution
+        cacheBust: true,
+      });
+
+      const link = document.createElement('a');
+      link.download = `VNT-${data.type.replace(/\s+/g, '-')}-${data.candidateName.replace(/\s+/g, '-')}.png`;
+      link.href = dataUrl;
+      link.click();
+
+      toast.success("Downloaded successfully!", { id: toastId });
+    } catch (err) {
+      console.error("Failed to generate image:", err);
+      toast.error("Failed to download image. Try again.", { id: toastId });
+    } finally {
+      setDownloading(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -55,14 +90,20 @@ export default function DocumentPreviewPage() {
           <ArrowLeft className="w-4 h-4" /> Back to Verification
         </Button>
         <Button 
-          onClick={() => window.print()}
+          onClick={handleDownloadImage}
+          disabled={downloading}
           className="bg-indigo-600 hover:bg-indigo-500 text-white px-6 font-bold uppercase text-[10px] tracking-widest flex items-center gap-2"
         >
-          <Download className="w-4 h-4" /> Save as Record
+          {downloading ? (
+            <VNTLoader size="sm" />
+          ) : (
+            <Download className="w-4 h-4" />
+          )}
+          {downloading ? "Generating..." : "Save as Image"}
         </Button>
       </div>
 
-      <div className="shadow-2xl shadow-black/50 overflow-hidden rounded-sm bg-white">
+      <div ref={documentRef} className="shadow-2xl shadow-black/50 overflow-hidden rounded-sm bg-white">
         <DocumentTemplates 
           type={data.type}
           candidateName={data.candidateName}
