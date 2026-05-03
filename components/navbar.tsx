@@ -17,12 +17,12 @@ export function Navbar() {
   const isCareersPage = pathname.startsWith("/careers");
 
   const navLinks = [
+    { name: "About", href: "/about" },
     { name: "Services", href: "/#services" },
-    { name: "Capabilities", href: "/#capabilities" },
-    { name: "Industries", href: "/#industries" },
-    { name: "Registry", href: "/registry" },
-    { name: "Verification", href: "/verify" },
+    { name: "Projects", href: "/projects" },
     { name: "Careers", href: "/careers" },
+    { name: "Blog", href: "/blog" },
+    { name: "Verify", href: "/verify" },
   ];
 
   const [typeKey, setTypeKey] = React.useState(0);
