@@ -7,229 +7,219 @@ export type AssessmentQuestion = {
   correctOptionIndex: number;
 };
 
-// Generic Aptitude & Reasoning questions that appear in every test
+// 10 Generic Aptitude & Reasoning questions that appear in every test
 const genericQuestions: AssessmentQuestion[] = [
-  {
-    id: "gen_1",
-    type: "quant",
-    text: "If 5 machines take 5 minutes to make 5 widgets, how long would it take 100 machines to make 100 widgets?",
-    options: ["100 minutes", "5 minutes", "50 minutes", "10 minutes"],
-    correctOptionIndex: 1
-  },
-  {
-    id: "gen_2",
-    type: "reasoning",
-    text: "Find the next number in the series: 2, 6, 12, 20, 30, ...",
-    options: ["40", "42", "44", "48"],
-    correctOptionIndex: 1
-  },
-  {
-    id: "gen_3",
-    type: "aptitude",
-    text: "A train running at the speed of 60 km/hr crosses a pole in 9 seconds. What is the length of the train?",
-    options: ["120 metres", "180 metres", "324 metres", "150 metres"],
-    correctOptionIndex: 3
-  },
-  {
-    id: "gen_4",
-    type: "reasoning",
-    text: "If 'APPLE' is coded as 25563, and 'RUNG' is coded as 7148, then 'PURPLE' will be coded as:",
-    options: ["517563", "517536", "517653", "517365"],
-    correctOptionIndex: 0
-  },
-  {
-    id: "gen_5",
-    type: "quant",
-    text: "The sum of ages of 5 children born at the intervals of 3 years each is 50 years. What is the age of the youngest child?",
-    options: ["4 years", "8 years", "10 years", "None of these"],
-    correctOptionIndex: 0
-  }
+  { id: "gen_1", type: "quant", text: "If 5 machines take 5 minutes to make 5 widgets, how long would it take 100 machines to make 100 widgets?", options: ["100 minutes", "5 minutes", "50 minutes", "10 minutes"], correctOptionIndex: 1 },
+  { id: "gen_2", type: "reasoning", text: "Find the next number in the series: 2, 6, 12, 20, 30, ...", options: ["40", "42", "44", "48"], correctOptionIndex: 1 },
+  { id: "gen_3", type: "aptitude", text: "A train running at the speed of 60 km/hr crosses a pole in 9 seconds. What is the length of the train?", options: ["120 metres", "180 metres", "324 metres", "150 metres"], correctOptionIndex: 3 },
+  { id: "gen_4", type: "reasoning", text: "If 'APPLE' is coded as 25563, and 'RUNG' is coded as 7148, then 'PURPLE' will be coded as:", options: ["517563", "517536", "517653", "517365"], correctOptionIndex: 0 },
+  { id: "gen_5", type: "quant", text: "The sum of ages of 5 children born at intervals of 3 years each is 50 years. What is the age of the youngest child?", options: ["4 years", "8 years", "10 years", "None of these"], correctOptionIndex: 0 },
+  { id: "gen_6", type: "aptitude", text: "A can do a work in 15 days and B in 20 days. If they work on it together for 4 days, then the fraction of the work that is left is:", options: ["1/4", "1/10", "7/15", "8/15"], correctOptionIndex: 3 },
+  { id: "gen_7", type: "reasoning", text: "Look at this series: 7, 10, 8, 11, 9, 12, ... What number should come next?", options: ["7", "10", "12", "13"], correctOptionIndex: 1 },
+  { id: "gen_8", type: "quant", text: "Two numbers are respectively 20% and 50% more than a third number. The ratio of the two numbers is:", options: ["2:5", "3:5", "4:5", "6:7"], correctOptionIndex: 2 },
+  { id: "gen_9", type: "reasoning", text: "Pointing to a photograph of a boy Suresh said, 'He is the son of the only son of my mother.' How is Suresh related to that boy?", options: ["Brother", "Uncle", "Cousin", "Father"], correctOptionIndex: 3 },
+  { id: "gen_10", type: "aptitude", text: "The cost price of 20 articles is the same as the selling price of x articles. If the profit is 25%, then the value of x is:", options: ["15", "16", "18", "25"], correctOptionIndex: 1 }
 ];
 
 export const assessmentQuestions: Record<string, AssessmentQuestion[]> = {
   "web-development": [
     ...genericQuestions,
-    {
-      id: "wd_1",
-      type: "domain",
-      text: "Which of the following methods is used to access HTML elements using Javascript?",
-      options: ["getElementbyId()", "getElementsByClassName()", "Both A and B", "None of the above"],
-      correctOptionIndex: 2
-    },
-    {
-      id: "wd_2",
-      type: "coding",
-      text: "What will be the output of the following JavaScript code?",
-      codeSnippet: `console.log(typeof null);\nconsole.log(typeof undefined);`,
-      options: ["object, undefined", "null, undefined", "undefined, object", "object, object"],
-      correctOptionIndex: 0
-    },
-    {
-      id: "wd_3",
-      type: "coding",
-      text: "What will be the output?",
-      codeSnippet: `let x = 1;\nif (x === 1) {\n  let x = 2;\n  console.log(x);\n}\nconsole.log(x);`,
-      options: ["1, 2", "2, 1", "2, 2", "1, 1"],
-      correctOptionIndex: 1
-    },
-    {
-      id: "wd_4",
-      type: "domain",
-      text: "Which CSS property is used to control the spacing between flex items?",
-      options: ["margin", "padding", "gap", "space-between"],
-      correctOptionIndex: 2
-    },
-    {
-      id: "wd_5",
-      type: "domain",
-      text: "What does CORS stand for?",
-      options: ["Cross-Origin Resource Sharing", "Cross-Object Resource System", "Cross-Origin Routing System", "Control-Origin Resource Sharing"],
-      correctOptionIndex: 0
-    }
+    // 20 Web Dev Questions
+    { id: "wd_1", type: "domain", text: "Which HTML attribute specifies an alternate text for an image, if the image cannot be displayed?", options: ["title", "src", "alt", "longdesc"], correctOptionIndex: 2 },
+    { id: "wd_2", type: "domain", text: "Which property is used to change the background color in CSS?", options: ["bgcolor", "color", "background-color", "bgColor"], correctOptionIndex: 2 },
+    { id: "wd_3", type: "coding", text: "What is the correct JavaScript syntax to change the content of the HTML element below?", codeSnippet: `<p id="demo">This is a demonstration.</p>`, options: [`document.getElementByName("p").innerHTML = "Hello World!";`, `document.getElementById("demo").innerHTML = "Hello World!";`, `document.getElement("p").innerHTML = "Hello World!";`, `#demo.innerHTML = "Hello World!";`], correctOptionIndex: 1 },
+    { id: "wd_4", type: "domain", text: "How do you write 'Hello World' in an alert box?", options: ["msg('Hello World');", "alertBox('Hello World');", "msgBox('Hello World');", "alert('Hello World');"], correctOptionIndex: 3 },
+    { id: "wd_5", type: "coding", text: "What will the following code return: Boolean(10 > 9)", options: ["NaN", "false", "true", "undefined"], correctOptionIndex: 2 },
+    { id: "wd_6", type: "domain", text: "Which of these elements are all <table> elements?", options: ["<table><head><tfoot>", "<table><tr><td>", "<table><tr><tt>", "<thead><body><tr>"], correctOptionIndex: 1 },
+    { id: "wd_7", type: "domain", text: "How do you add a comment in a CSS file?", options: ["// this is a comment //", "/* this is a comment */", "' this is a comment", "<!-- this is a comment -->"], correctOptionIndex: 1 },
+    { id: "wd_8", type: "coding", text: "What will be the output?", codeSnippet: `console.log(typeof NaN);`, options: ["number", "NaN", "undefined", "string"], correctOptionIndex: 0 },
+    { id: "wd_9", type: "domain", text: "What does CSS stand for?", options: ["Cascading Style Sheets", "Computer Style Sheets", "Colorful Style Sheets", "Creative Style Sheets"], correctOptionIndex: 0 },
+    { id: "wd_10", type: "domain", text: "Where is the correct place to insert a JavaScript?", options: ["The <head> section", "The <body> section", "Both the <head> section and the <body> section are correct", "The <footer> section"], correctOptionIndex: 2 },
+    { id: "wd_11", type: "coding", text: "What will this output?", codeSnippet: `const a = [1, 2, 3];\nconst b = [...a, 4, 5];\nconsole.log(b.length);`, options: ["3", "4", "5", "6"], correctOptionIndex: 2 },
+    { id: "wd_12", type: "domain", text: "Which React hook is used to manage state?", options: ["useContext", "useEffect", "useState", "useReducer"], correctOptionIndex: 2 },
+    { id: "wd_13", type: "domain", text: "In React, what are props?", options: ["Internal state of a component", "Arguments passed into React components", "HTML attributes", "CSS properties"], correctOptionIndex: 1 },
+    { id: "wd_14", type: "coding", text: "What is the output?", codeSnippet: `console.log("5" + 3);`, options: ["8", "53", "NaN", "Error"], correctOptionIndex: 1 },
+    { id: "wd_15", type: "coding", text: "What is the output?", codeSnippet: `console.log("5" - 3);`, options: ["2", "53", "NaN", "Error"], correctOptionIndex: 0 },
+    { id: "wd_16", type: "domain", text: "What does the z-index property in CSS do?", options: ["Changes font size", "Specifies stack order of an element", "Changes element width", "Animates an element"], correctOptionIndex: 1 },
+    { id: "wd_17", type: "domain", text: "Which HTTP status code means 'Not Found'?", options: ["200", "500", "403", "404"], correctOptionIndex: 3 },
+    { id: "wd_18", type: "domain", text: "What does API stand for?", options: ["Application Programming Interface", "Advanced Programming Interface", "Application Process Integration", "Automated Program Interface"], correctOptionIndex: 0 },
+    { id: "wd_19", type: "coding", text: "What does `Array.isArray([])` return?", options: ["false", "true", "undefined", "object"], correctOptionIndex: 1 },
+    { id: "wd_20", type: "domain", text: "Which command is used to start a Next.js development server?", options: ["npm run build", "npm start", "npm run dev", "npm init"], correctOptionIndex: 2 },
   ],
   "data-science": [
     ...genericQuestions,
-    {
-      id: "ds_1",
-      type: "domain",
-      text: "Which of the following is a supervised learning algorithm?",
-      options: ["K-Means Clustering", "Principal Component Analysis", "Support Vector Machines", "Apriori Algorithm"],
-      correctOptionIndex: 2
-    },
-    {
-      id: "ds_2",
-      type: "coding",
-      text: "What is the output of the following Python code?",
-      codeSnippet: `import numpy as np\na = np.array([1, 2, 3])\nb = np.array([4, 5, 6])\nprint(a * b)`,
-      options: ["Error", "[4, 10, 18]", "32", "[1, 2, 3, 4, 5, 6]"],
-      correctOptionIndex: 1
-    },
-    {
-      id: "ds_3",
-      type: "domain",
-      text: "What is the purpose of the 'train_test_split' function in scikit-learn?",
-      options: ["To format the data", "To split data into training and validation sets", "To balance the dataset", "To train the model"],
-      correctOptionIndex: 1
-    }
-  ],
-  "qa-testing": [
-    ...genericQuestions,
-    {
-      id: "qa_1",
-      type: "domain",
-      text: "Which of the following is NOT a type of non-functional testing?",
-      options: ["Performance Testing", "Usability Testing", "Integration Testing", "Security Testing"],
-      correctOptionIndex: 2
-    },
-    {
-      id: "qa_2",
-      type: "domain",
-      text: "In Cypress, how do you select an element by its data-testid attribute?",
-      options: ["cy.get('.testid')", "cy.get('[data-testid=value]')", "cy.find('data-testid')", "cy.select('value')"],
-      correctOptionIndex: 1
-    }
+    // 20 Data Science Questions
+    { id: "ds_1", type: "domain", text: "Which Python library is primarily used for data manipulation and analysis?", options: ["NumPy", "Pandas", "Matplotlib", "Scikit-learn"], correctOptionIndex: 1 },
+    { id: "ds_2", type: "domain", text: "What is the main purpose of the 'train_test_split' function?", options: ["To shuffle data", "To divide data into training and testing sets", "To clean data", "To balance classes"], correctOptionIndex: 1 },
+    { id: "ds_3", type: "coding", text: "What will this pandas code output?", codeSnippet: `import pandas as pd\ns = pd.Series([1, 2, 3])\nprint(s.sum())`, options: ["123", "6", "Error", "NaN"], correctOptionIndex: 1 },
+    { id: "ds_4", type: "domain", text: "Which of the following is an unsupervised learning algorithm?", options: ["Linear Regression", "Decision Tree", "K-Means Clustering", "Logistic Regression"], correctOptionIndex: 2 },
+    { id: "ds_5", type: "domain", text: "What does 'NaN' stand for in pandas?", options: ["Not a Number", "Null and Negligible", "No absolute Number", "Negative absolute Number"], correctOptionIndex: 0 },
+    { id: "ds_6", type: "domain", text: "Which metric is commonly used for evaluating regression models?", options: ["Accuracy", "F1 Score", "Mean Squared Error (MSE)", "Precision"], correctOptionIndex: 2 },
+    { id: "ds_7", type: "domain", text: "What is overfitting?", options: ["Model learns the training data too well, including noise", "Model fails to learn underlying patterns", "Data is too small", "Training takes too long"], correctOptionIndex: 0 },
+    { id: "ds_8", type: "coding", text: "What is the output of this Python code?", codeSnippet: `x = [1, 2, 3]\nprint(x * 2)`, options: ["[2, 4, 6]", "[1, 2, 3, 1, 2, 3]", "Error", "6"], correctOptionIndex: 1 },
+    { id: "ds_9", type: "domain", text: "What does PCA stand for?", options: ["Principal Component Analysis", "Primary Core Analysis", "Predictive Component Algorithm", "Partial Correlation Analysis"], correctOptionIndex: 0 },
+    { id: "ds_10", type: "domain", text: "Which library is best suited for deep learning?", options: ["Seaborn", "PyTorch", "SciPy", "Statsmodels"], correctOptionIndex: 1 },
+    { id: "ds_11", type: "domain", text: "What is a 'DataFrame'?", options: ["A 1D array", "A 2D labeled data structure", "A machine learning model", "A database connection"], correctOptionIndex: 1 },
+    { id: "ds_12", type: "domain", text: "Which activation function outputs values between 0 and 1?", options: ["ReLU", "Tanh", "Sigmoid", "Linear"], correctOptionIndex: 2 },
+    { id: "ds_13", type: "coding", text: "What does this output?", codeSnippet: `import numpy as np\nprint(np.zeros(2))`, options: ["[0, 0]", "[0. 0.]", "0", "Error"], correctOptionIndex: 1 },
+    { id: "ds_14", type: "domain", text: "What is one-hot encoding used for?", options: ["Scaling numerical features", "Handling missing values", "Converting categorical variables into binary vectors", "Reducing dimensionality"], correctOptionIndex: 2 },
+    { id: "ds_15", type: "domain", text: "Which of these is a valid way to handle missing data?", options: ["Imputation with mean", "Dropping rows", "Both A and B", "None of the above"], correctOptionIndex: 2 },
+    { id: "ds_16", type: "domain", text: "What does SQL stand for?", options: ["Structured Query Language", "Standard Query Logic", "Simple Question Language", "Sequential Query List"], correctOptionIndex: 0 },
+    { id: "ds_17", type: "domain", text: "Which command in pandas is used to view the first 5 rows of a dataset?", options: ["head()", "first()", "top()", "show()"], correctOptionIndex: 0 },
+    { id: "ds_18", type: "domain", text: "What is cross-validation used for?", options: ["Cleaning data", "Evaluating model performance and robustness", "Speeding up training", "Visualizing data"], correctOptionIndex: 1 },
+    { id: "ds_19", type: "coding", text: "Output of?", codeSnippet: `len({'a':1, 'b':2, 'a':3})`, options: ["1", "2", "3", "Error"], correctOptionIndex: 1 },
+    { id: "ds_20", type: "domain", text: "What is the purpose of gradient descent?", options: ["To maximize loss", "To minimize the cost function", "To visualize clusters", "To clean data"], correctOptionIndex: 1 },
   ],
   "app-development": [
     ...genericQuestions,
-    {
-      id: "ad_1",
-      type: "domain",
-      text: "Which language is primarily used for Android App development?",
-      options: ["Swift", "Kotlin", "Ruby", "PHP"],
-      correctOptionIndex: 1
-    },
-    {
-      id: "ad_2",
-      type: "domain",
-      text: "In React Native, which component is used to create a scrollable list?",
-      options: ["ScrollView", "ListView", "FlatList", "Both A and C"],
-      correctOptionIndex: 3
-    }
+    // 20 App Dev Questions
+    { id: "ad_1", type: "domain", text: "Which language is primarily used for native Android development?", options: ["Swift", "Kotlin", "Ruby", "PHP"], correctOptionIndex: 1 },
+    { id: "ad_2", type: "domain", text: "Which framework is used by Flutter?", options: ["React", "Dart", "Angular", "Vue"], correctOptionIndex: 1 },
+    { id: "ad_3", type: "domain", text: "What is an APK?", options: ["Android Package Kit", "Apple Program Kit", "Application Process Key", "Automated Package Kit"], correctOptionIndex: 0 },
+    { id: "ad_4", type: "coding", text: "In React Native, which component replaces the HTML <div>?", options: ["<View>", "<Container>", "<Box>", "<Section>"], correctOptionIndex: 0 },
+    { id: "ad_5", type: "domain", text: "Which file defines the structure of an Android app's UI?", options: ["manifest.xml", "strings.xml", "layout.xml", "build.gradle"], correctOptionIndex: 2 },
+    { id: "ad_6", type: "domain", text: "What is the primary language for native iOS development?", options: ["Java", "Kotlin", "Swift", "C#"], correctOptionIndex: 2 },
+    { id: "ad_7", type: "domain", text: "In Android, what manages the lifecycle of an application screen?", options: ["Service", "BroadcastReceiver", "Activity", "ContentProvider"], correctOptionIndex: 2 },
+    { id: "ad_8", type: "coding", text: "In Flutter, what is the building block of the UI?", options: ["Component", "Widget", "Element", "Module"], correctOptionIndex: 1 },
+    { id: "ad_9", type: "domain", text: "What does the 'pubspec.yaml' file do in Flutter?", options: ["Defines UI", "Manages dependencies", "Handles routing", "Configures database"], correctOptionIndex: 1 },
+    { id: "ad_10", type: "domain", text: "Which tool is used to compile iOS apps?", options: ["Android Studio", "Xcode", "Visual Studio", "Eclipse"], correctOptionIndex: 1 },
+    { id: "ad_11", type: "domain", text: "What is the use of Intent in Android?", options: ["To store data", "To perform background tasks", "To switch between activities", "To design UI"], correctOptionIndex: 2 },
+    { id: "ad_12", type: "domain", text: "In React Native, how do you style components?", options: ["Using CSS files", "Using StyleSheet.create()", "Using HTML style tags", "Using SASS"], correctOptionIndex: 1 },
+    { id: "ad_13", type: "coding", text: "What component is best for a long scrolling list of data in React Native?", options: ["ScrollView", "FlatList", "ListView", "View"], correctOptionIndex: 1 },
+    { id: "ad_14", type: "domain", text: "What is 'State' in mobile development (React Native/Flutter)?", options: ["Data that changes over time affecting the UI", "The physical location of the device", "The app icon", "The backend server"], correctOptionIndex: 0 },
+    { id: "ad_15", type: "domain", text: "Which command runs a Flutter app on an emulator?", options: ["flutter run", "flutter start", "flutter build", "flutter test"], correctOptionIndex: 0 },
+    { id: "ad_16", type: "domain", text: "What is Firebase commonly used for in app development?", options: ["Designing icons", "Backend as a Service (BaaS)", "Writing Kotlin code", "Compiling iOS apps"], correctOptionIndex: 1 },
+    { id: "ad_17", type: "domain", text: "In Android, where are string constants stored?", options: ["colors.xml", "strings.xml", "styles.xml", "AndroidManifest.xml"], correctOptionIndex: 1 },
+    { id: "ad_18", type: "domain", text: "Which architecture pattern is popular in Android (recommended by Google)?", options: ["MVC", "MVVM", "MVP", "Flux"], correctOptionIndex: 1 },
+    { id: "ad_19", type: "domain", text: "What is the purpose of AndroidManifest.xml?", options: ["To write business logic", "To declare app components and permissions", "To define UI layouts", "To store images"], correctOptionIndex: 1 },
+    { id: "ad_20", type: "domain", text: "Which tool helps inspect React Native apps during development?", options: ["React DevTools", "Android Profiler", "Xcode Instruments", "Postman"], correctOptionIndex: 0 },
+  ],
+  "qa-testing": [
+    ...genericQuestions,
+    // 20 QA Questions
+    { id: "qa_1", type: "domain", text: "What is the main objective of software testing?", options: ["To write code", "To find defects and ensure quality", "To design UI", "To deploy applications"], correctOptionIndex: 1 },
+    { id: "qa_2", type: "domain", text: "Which of the following is NOT a level of testing?", options: ["Unit Testing", "Integration Testing", "Requirement Testing", "System Testing"], correctOptionIndex: 2 },
+    { id: "qa_3", type: "domain", text: "What is Black Box Testing?", options: ["Testing internal code structures", "Testing without knowledge of internal code", "Testing database only", "Testing performance only"], correctOptionIndex: 1 },
+    { id: "qa_4", type: "domain", text: "Which tool is commonly used for UI Automation?", options: ["Selenium", "Jenkins", "Docker", "Git"], correctOptionIndex: 0 },
+    { id: "qa_5", type: "domain", text: "What does API testing verify?", options: ["UI layout", "Backend logic and data exchange", "Database schema", "Server hardware"], correctOptionIndex: 1 },
+    { id: "qa_6", type: "domain", text: "What is a 'Bug'?", options: ["A feature request", "A mismatch between expected and actual behavior", "A testing tool", "A new update"], correctOptionIndex: 1 },
+    { id: "qa_7", type: "domain", text: "What is Regression Testing?", options: ["Testing new features", "Re-testing after code changes to ensure nothing broke", "Testing load capacity", "Testing security"], correctOptionIndex: 1 },
+    { id: "qa_8", type: "domain", text: "Which HTTP method is used to retrieve data?", options: ["POST", "PUT", "GET", "DELETE"], correctOptionIndex: 2 },
+    { id: "qa_9", type: "coding", text: "In Cypress, how do you visit a URL?", options: ["cy.go('url')", "cy.visit('url')", "cy.open('url')", "cy.navigate('url')"], correctOptionIndex: 1 },
+    { id: "qa_10", type: "domain", text: "What does 'Test Case' mean?", options: ["A set of conditions to determine if a feature works correctly", "A tool for testing", "A developer's log", "A server environment"], correctOptionIndex: 0 },
+    { id: "qa_11", type: "domain", text: "Which tool is widely used for API testing?", options: ["Selenium", "Postman", "Figma", "Jira"], correctOptionIndex: 1 },
+    { id: "qa_12", type: "domain", text: "What is Performance Testing?", options: ["Testing if the app works", "Testing the speed, scalability, and stability", "Testing the colors of the UI", "Testing the database schema"], correctOptionIndex: 1 },
+    { id: "qa_13", type: "domain", text: "What is SDLC?", options: ["Software Development Life Cycle", "System Design Logic Code", "Software Deployment Lifecycle", "Standard Development Logic Code"], correctOptionIndex: 0 },
+    { id: "qa_14", type: "domain", text: "What is the difference between Verification and Validation?", options: ["They are the same", "Verification checks 'Are we building the product right?', Validation checks 'Are we building the right product?'", "Verification is for UI, Validation is for backend", "Validation is done by developers, Verification by users"], correctOptionIndex: 1 },
+    { id: "qa_15", type: "domain", text: "What is Smoke Testing?", options: ["Testing under extreme load", "A quick test to verify core functionality works before deep testing", "Testing for security vulnerabilities", "Testing database connections"], correctOptionIndex: 1 },
+    { id: "qa_16", type: "domain", text: "In Jira, what is used to track work items and bugs?", options: ["Tickets / Issues", "Emails", "Spreadsheets", "Code commits"], correctOptionIndex: 0 },
+    { id: "qa_17", type: "coding", text: "In Selenium (Java), how do you find an element by ID?", options: ["driver.findElement(By.id('abc'))", "driver.get('abc')", "driver.select('abc')", "driver.id('abc')"], correctOptionIndex: 0 },
+    { id: "qa_18", type: "domain", text: "What is User Acceptance Testing (UAT)?", options: ["Testing done by developers", "Testing done by end-users to accept the software", "Testing unit functions", "Testing APIs"], correctOptionIndex: 1 },
+    { id: "qa_19", type: "domain", text: "What does 'Mocking' mean in testing?", options: ["Making fun of the code", "Creating simulated versions of complex dependencies", "Copying production data", "Deleting old tests"], correctOptionIndex: 1 },
+    { id: "qa_20", type: "domain", text: "What is a 'Test Plan'?", options: ["A tool", "A document describing scope, approach, and resources for testing", "A script that runs tests", "A database of bugs"], correctOptionIndex: 1 },
   ],
   "ui-ux-design": [
     ...genericQuestions,
-    {
-      id: "ux_1",
-      type: "domain",
-      text: "What does the 'F-pattern' refer to in UI design?",
-      options: ["A font style", "How users read content on the web", "A color palette rule", "A wireframing tool"],
-      correctOptionIndex: 1
-    },
-    {
-      id: "ux_2",
-      type: "domain",
-      text: "Which of the following is a prototyping tool?",
-      options: ["VS Code", "MongoDB", "Figma", "Docker"],
-      correctOptionIndex: 2
-    }
+    // 20 UI/UX Questions
+    { id: "ux_1", type: "domain", text: "What does UX stand for?", options: ["User Exchange", "User Experience", "Universal Experience", "User Execution"], correctOptionIndex: 1 },
+    { id: "ux_2", type: "domain", text: "Which tool is the industry standard for UI design and prototyping?", options: ["Microsoft Word", "Figma", "Visual Studio Code", "Excel"], correctOptionIndex: 1 },
+    { id: "ux_3", type: "domain", text: "What is a Wireframe?", options: ["A high-fidelity colorful mockup", "A basic visual guide of a web page structure", "A backend framework", "A database schema"], correctOptionIndex: 1 },
+    { id: "ux_4", type: "domain", text: "What is the primary goal of User Research?", options: ["To pick colors", "To understand user behaviors, needs, and motivations", "To write code", "To test server speed"], correctOptionIndex: 1 },
+    { id: "ux_5", type: "domain", text: "What does 'Whitespace' (Negative Space) do in design?", options: ["Wastes screen space", "Improves readability and reduces cognitive overload", "Makes the site load faster", "Hides broken code"], correctOptionIndex: 1 },
+    { id: "ux_6", type: "domain", text: "What is a 'Persona' in UX?", options: ["A fictional character representing a target user type", "A type of font", "A color palette", "A developer"], correctOptionIndex: 0 },
+    { id: "ux_7", type: "domain", text: "What is the 'Rule of Thirds' used for?", options: ["Coding structure", "Database indexing", "Visual composition and layout", "Network routing"], correctOptionIndex: 2 },
+    { id: "ux_8", type: "domain", text: "What is A/B Testing?", options: ["Testing two different code languages", "Comparing two versions of a webpage to see which performs better", "Testing alphabet fonts", "Testing frontend and backend"], correctOptionIndex: 1 },
+    { id: "ux_9", type: "domain", text: "What is 'Typography'?", options: ["The study of maps", "The art and technique of arranging type/fonts", "A type of photograph", "A layout grid"], correctOptionIndex: 1 },
+    { id: "ux_10", type: "domain", text: "What is an 'Affordance' in UI?", options: ["How much the app costs", "A visual cue that indicates how an element can be interacted with", "The loading speed", "The color contrast"], correctOptionIndex: 1 },
+    { id: "ux_11", type: "domain", text: "What does 'Accessibility' (a11y) mean in design?", options: ["Making sure the app is cheap", "Designing products usable by people with disabilities", "Making sure the app works offline", "Making the code public"], correctOptionIndex: 1 },
+    { id: "ux_12", type: "domain", text: "What is a 'Design System'?", options: ["A computer setup for designers", "A collection of reusable components and standards", "A software program", "A college degree"], correctOptionIndex: 1 },
+    { id: "ux_13", type: "domain", text: "Which of the following represents high contrast for readability?", options: ["Light gray text on white background", "Black text on white background", "Yellow text on white background", "Dark blue text on black background"], correctOptionIndex: 1 },
+    { id: "ux_14", type: "domain", text: "What is 'Card Sorting'?", options: ["A gambling game", "A UX research technique to organize information architecture", "A CSS layout method", "A data sorting algorithm"], correctOptionIndex: 1 },
+    { id: "ux_15", type: "domain", text: "What does 'Responsive Design' mean?", options: ["The app responds to voice commands", "The design adapts to different screen sizes and devices", "The app loads quickly", "The design is very colorful"], correctOptionIndex: 1 },
+    { id: "ux_16", type: "domain", text: "What is a 'Call to Action' (CTA)?", options: ["A legal warning", "An element prompting the user to take a specific action (e.g., a 'Buy Now' button)", "A phone number", "A loading spinner"], correctOptionIndex: 1 },
+    { id: "ux_17", type: "domain", text: "What is 'Heuristic Evaluation'?", options: ["Testing code for bugs", "Evaluating a UI against recognized usability principles", "Checking server logs", "Writing user stories"], correctOptionIndex: 1 },
+    { id: "ux_18", type: "domain", text: "In color theory, what are complementary colors?", options: ["Colors next to each other on the color wheel", "Colors opposite each other on the color wheel", "Different shades of one color", "Black and white"], correctOptionIndex: 1 },
+    { id: "ux_19", type: "domain", text: "What is 'Fidelity' in prototyping?", options: ["The loyalty of the user", "The level of detail and functionality in a prototype (low vs high)", "The audio quality of the app", "The resolution of images"], correctOptionIndex: 1 },
+    { id: "ux_20", type: "domain", text: "Which file format is best for vector-based UI icons?", options: ["JPG", "PNG", "GIF", "SVG"], correctOptionIndex: 3 },
   ],
   "digital-marketing": [
     ...genericQuestions,
-    {
-      id: "dm_1",
-      type: "domain",
-      text: "What does SEO stand for?",
-      options: ["System Engine Optimization", "Search Engine Optimization", "Search Engagement Optimization", "System Engagement Order"],
-      correctOptionIndex: 1
-    },
-    {
-      id: "dm_2",
-      type: "domain",
-      text: "Which tool is commonly used for tracking website traffic?",
-      options: ["Google Analytics", "Jenkins", "Postman", "Figma"],
-      correctOptionIndex: 0
-    }
+    // 20 Digital Marketing Questions
+    { id: "dm_1", type: "domain", text: "What does SEO stand for?", options: ["Search Engine Optimization", "Search Engagement Optimization", "Social Engine Organization", "System Engine Optimization"], correctOptionIndex: 0 },
+    { id: "dm_2", type: "domain", text: "What is the primary use of Google Analytics?", options: ["To design websites", "To track and report website traffic", "To send emails", "To host servers"], correctOptionIndex: 1 },
+    { id: "dm_3", type: "domain", text: "What does PPC stand for?", options: ["Pay Per Click", "Price Per Customer", "Post Per Channel", "Pay Per Cost"], correctOptionIndex: 0 },
+    { id: "dm_4", type: "domain", text: "Which metric calculates the percentage of visitors who leave after viewing only one page?", options: ["Conversion Rate", "Click-Through Rate", "Bounce Rate", "Retention Rate"], correctOptionIndex: 2 },
+    { id: "dm_5", type: "domain", text: "What is a 'Keyword' in SEO?", options: ["A password", "A word or phrase users type into search engines", "A programming variable", "A brand name"], correctOptionIndex: 1 },
+    { id: "dm_6", type: "domain", text: "What does CTR stand for?", options: ["Cost To Run", "Click-Through Rate", "Customer Tracking Record", "Call To Response"], correctOptionIndex: 1 },
+    { id: "dm_7", type: "domain", text: "Which social platform is primarily used for B2B marketing?", options: ["TikTok", "Instagram", "LinkedIn", "Snapchat"], correctOptionIndex: 2 },
+    { id: "dm_8", type: "domain", text: "What is 'Content Marketing'?", options: ["Selling ad space", "Creating and sharing valuable content to attract an audience", "Hiding content behind a paywall", "Sending spam emails"], correctOptionIndex: 1 },
+    { id: "dm_9", type: "domain", text: "What is the purpose of a 'Call to Action' (CTA)?", options: ["To provide contact info", "To encourage the user to take a desired action", "To display legal terms", "To show images"], correctOptionIndex: 1 },
+    { id: "dm_10", type: "domain", text: "What does ROI stand for?", options: ["Rate of Interest", "Return on Investment", "Reach of Individuals", "Revenue on Impressions"], correctOptionIndex: 1 },
+    { id: "dm_11", type: "domain", text: "What is an 'Impression' in digital ads?", options: ["When a user clicks the ad", "When the ad is displayed on a screen", "When a user buys a product", "When a user shares the ad"], correctOptionIndex: 1 },
+    { id: "dm_12", type: "domain", text: "Which Google tool helps manage ad campaigns?", options: ["Google Docs", "Google Ads", "Google Drive", "Google Search Console"], correctOptionIndex: 1 },
+    { id: "dm_13", type: "domain", text: "What is Email Marketing automation?", options: ["Manually typing emails", "Sending automated emails based on triggers/schedules", "Deleting old emails", "Blocking spam"], correctOptionIndex: 1 },
+    { id: "dm_14", type: "domain", text: "What are 'Backlinks' in SEO?", options: ["Links that go to a 404 page", "Links from other websites pointing to your website", "Links pointing to the bottom of the page", "Internal site links"], correctOptionIndex: 1 },
+    { id: "dm_15", type: "domain", text: "What is a 'Landing Page'?", options: ["The homepage of a site", "A standalone page designed specifically for a marketing campaign", "A 404 error page", "A contact us page"], correctOptionIndex: 1 },
+    { id: "dm_16", type: "domain", text: "What is A/B Testing in marketing?", options: ["Comparing two versions of an ad/page to see which performs better", "Testing alphabet keywords", "A billing method", "A software bug test"], correctOptionIndex: 0 },
+    { id: "dm_17", type: "domain", text: "What is 'Organic Traffic'?", options: ["Traffic from paid ads", "Traffic from unpaid search engine results", "Traffic from bots", "Traffic from internal employees"], correctOptionIndex: 1 },
+    { id: "dm_18", type: "domain", text: "What does 'Conversion Rate' measure?", options: ["The percentage of users who complete a desired action", "The number of visitors", "The cost of the ad", "The speed of the website"], correctOptionIndex: 0 },
+    { id: "dm_19", type: "domain", text: "What is 'Retargeting'?", options: ["Targeting a new audience", "Serving ads to users who have previously visited your site", "Changing the website's target market", "Blocking certain users"], correctOptionIndex: 1 },
+    { id: "dm_20", type: "domain", text: "What is the purpose of 'UTM parameters'?", options: ["To track the source, medium, and campaign of a link", "To encrypt data", "To block ads", "To compress images"], correctOptionIndex: 0 },
   ],
   "cloud-computing": [
     ...genericQuestions,
-    {
-      id: "cc_1",
-      type: "domain",
-      text: "Which of the following is an IaaS provider?",
-      options: ["Google Workspace", "AWS EC2", "Salesforce", "Wix"],
-      correctOptionIndex: 1
-    },
-    {
-      id: "cc_2",
-      type: "domain",
-      text: "What does 'S3' stand for in Amazon Web Services?",
-      options: ["Simple Storage Service", "System Storage Server", "Secure Server System", "Scalable System Service"],
-      correctOptionIndex: 0
-    }
+    // 20 Cloud Computing Questions
+    { id: "cc_1", type: "domain", text: "What does AWS stand for?", options: ["Amazon Web Services", "Automated Web Systems", "Advanced Web Storage", "American Web Solutions"], correctOptionIndex: 0 },
+    { id: "cc_2", type: "domain", text: "Which of these is a major Cloud Computing provider?", options: ["Microsoft Azure", "Adobe Photoshop", "Mozilla Firefox", "VLC"], correctOptionIndex: 0 },
+    { id: "cc_3", type: "domain", text: "What does SaaS stand for?", options: ["Storage as a Service", "Software as a Service", "System as a Service", "Security as a Service"], correctOptionIndex: 1 },
+    { id: "cc_4", type: "domain", text: "What is Amazon S3 used for?", options: ["Database processing", "Object storage", "Running virtual machines", "Machine Learning"], correctOptionIndex: 1 },
+    { id: "cc_5", type: "domain", text: "What does IaaS stand for?", options: ["Infrastructure as a Service", "Internet as a Service", "Information as a Service", "Integration as a Service"], correctOptionIndex: 0 },
+    { id: "cc_6", type: "domain", text: "Which service provides Virtual Machines in AWS?", options: ["S3", "EC2", "RDS", "Lambda"], correctOptionIndex: 1 },
+    { id: "cc_7", type: "domain", text: "What is 'Serverless Computing'?", options: ["Computing without servers", "Cloud provider dynamically manages the allocation of machine resources", "Using only local computers", "Offline computing"], correctOptionIndex: 1 },
+    { id: "cc_8", type: "domain", text: "Which of these is a containerization tool?", options: ["Docker", "Git", "Jenkins", "Ansible"], correctOptionIndex: 0 },
+    { id: "cc_9", type: "domain", text: "What is Kubernetes primarily used for?", options: ["Writing code", "Container orchestration", "Database management", "UI Design"], correctOptionIndex: 1 },
+    { id: "cc_10", type: "domain", text: "What does PaaS stand for?", options: ["Platform as a Service", "Programming as a Service", "Product as a Service", "Protocol as a Service"], correctOptionIndex: 0 },
+    { id: "cc_11", type: "domain", text: "What is a 'VPC' in AWS?", options: ["Virtual Private Cloud", "Virtual Public Computer", "Visual Processing Core", "Variable Power Control"], correctOptionIndex: 0 },
+    { id: "cc_12", type: "domain", text: "Which AWS service is a managed relational database?", options: ["DynamoDB", "S3", "RDS", "EC2"], correctOptionIndex: 2 },
+    { id: "cc_13", type: "domain", text: "What does 'Elasticity' mean in cloud computing?", options: ["The ability to stretch cables", "The ability to scale resources up or down dynamically", "The speed of the network", "The cost of the service"], correctOptionIndex: 1 },
+    { id: "cc_14", type: "domain", text: "What is a 'Load Balancer'?", options: ["A heavy weight", "A tool to distribute incoming network traffic across multiple servers", "A storage drive", "A database table"], correctOptionIndex: 1 },
+    { id: "cc_15", type: "domain", text: "What is AWS Lambda?", options: ["A storage bucket", "A serverless compute service", "A database engine", "A networking cable"], correctOptionIndex: 1 },
+    { id: "cc_16", type: "domain", text: "What does IAM stand for in AWS?", options: ["Internet Access Module", "Identity and Access Management", "Internal App Manager", "Information and Analytics Model"], correctOptionIndex: 1 },
+    { id: "cc_17", type: "domain", text: "What is a 'CDN'?", options: ["Central Data Network", "Content Delivery Network", "Computer Design Node", "Cloud Data Node"], correctOptionIndex: 1 },
+    { id: "cc_18", type: "domain", text: "Which type of cloud deployment is shared among multiple organizations?", options: ["Private Cloud", "Public Cloud", "Hybrid Cloud", "Local Cloud"], correctOptionIndex: 1 },
+    { id: "cc_19", type: "domain", text: "What is 'Auto Scaling'?", options: ["Automatically changing font sizes", "Automatically adjusting compute capacity based on demand", "Automatically paying bills", "Automatically writing code"], correctOptionIndex: 1 },
+    { id: "cc_20", type: "domain", text: "What is DevOps?", options: ["A programming language", "A set of practices combining software development and IT operations", "A hardware component", "A database model"], correctOptionIndex: 1 },
   ],
+  // Adding default generic questions for remaining domains just in case they are accessed.
+  // The system will fallback to web-development if the slug isn't found perfectly, but let's define them.
   "upwork-bidder": [
     ...genericQuestions,
-    {
-      id: "ub_1",
-      type: "domain",
-      text: "What is the most important element of a successful Upwork proposal?",
-      options: ["Length of the proposal", "Copy-pasted template", "Addressing the client's specific problem", "Asking for a high budget immediately"],
-      correctOptionIndex: 2
-    }
-  ],
-  "human-resources": [
-    ...genericQuestions,
-    {
-      id: "hr_1",
-      type: "domain",
-      text: "What is the primary purpose of an onboarding process?",
-      options: ["To fire employees", "To train and integrate new employees", "To calculate payroll", "To conduct exit interviews"],
-      correctOptionIndex: 1
-    }
-  ],
-  "blockchain-development": [
-    ...genericQuestions,
-    {
-      id: "bc_1",
-      type: "domain",
-      text: "What is a Smart Contract?",
-      options: ["A legally binding paper contract", "Self-executing code on a blockchain", "A physical token", "A consensus algorithm"],
-      correctOptionIndex: 1
-    }
+    // 20 Upwork Bidder Questions
+    { id: "ub_1", type: "domain", text: "What is the most important part of an Upwork proposal?", options: ["The length", "Addressing the client's specific problem", "The price", "The template used"], correctOptionIndex: 1 },
+    { id: "ub_2", type: "domain", text: "What are 'Connects' on Upwork?", options: ["Messages", "Virtual tokens used to submit proposals", "Friends list", "Reviews"], correctOptionIndex: 1 },
+    { id: "ub_3", type: "domain", text: "Why is a personalized cover letter important?", options: ["It isn't", "It shows the client you read their job description", "Upwork requires it", "It is cheaper"], correctOptionIndex: 1 },
+    { id: "ub_4", type: "domain", text: "What is a JSS score on Upwork?", options: ["Job Success Score", "Job Security System", "Just Sending Stuff", "Job Submission Score"], correctOptionIndex: 0 },
+    { id: "ub_5", type: "domain", text: "How should you start a proposal?", options: ["'Dear Hiring Manager'", "'To whom it may concern'", "With a hook addressing their specific need", "'I am an expert'"], correctOptionIndex: 2 },
+    { id: "ub_6", type: "domain", text: "What is the benefit of Upwork's Escrow protection?", options: ["It hides your profile", "It ensures funds are secured before work begins", "It does the work for you", "It blocks messages"], correctOptionIndex: 1 },
+    { id: "ub_7", type: "domain", text: "Which type of contract tracks hours automatically?", options: ["Fixed-Price", "Hourly", "Milestone", "Retainer"], correctOptionIndex: 1 },
+    { id: "ub_8", type: "domain", text: "What is a 'Milestone' on a Fixed-Price contract?", options: ["A stone", "A specific deliverable tied to a payment portion", "A time tracker", "A review"], correctOptionIndex: 1 },
+    { id: "ub_9", type: "domain", text: "What should you do if a client asks to pay outside of Upwork before a contract is formed?", options: ["Accept it", "Politely decline as it violates Upwork's Terms of Service", "Ask for a discount", "Report them immediately and do the work anyway"], correctOptionIndex: 1 },
+    { id: "ub_10", type: "domain", text: "How can you make your profile stand out?", options: ["Use a generic title", "Have a professional photo and a niche-focused portfolio", "Leave it blank", "Copy someone else's"], correctOptionIndex: 1 },
+    { id: "ub_11", type: "domain", text: "What is the ideal length for a proposal?", options: ["10 pages", "1 sentence", "Concise, usually 3-4 short paragraphs", "Exactly 500 words"], correctOptionIndex: 2 },
+    { id: "ub_12", type: "domain", text: "What is an 'Invitation to Interview'?", options: ["A guaranteed job", "A client reaching out directly to ask you to apply", "A spam message", "A ban notification"], correctOptionIndex: 1 },
+    { id: "ub_13", type: "domain", text: "Why should you ask a question at the end of a proposal?", options: ["To confuse the client", "To prompt a response and start a conversation", "Because Upwork requires it", "To fill space"], correctOptionIndex: 1 },
+    { id: "ub_14", type: "domain", text: "What is a 'Rising Talent' badge?", options: ["A badge for long-time users", "A badge for new freelancers showing strong early performance", "A badge for clients", "A purchased badge"], correctOptionIndex: 1 },
+    { id: "ub_15", type: "domain", text: "How do you handle a client with a history of bad reviews?", options: ["Apply anyway", "Proceed with caution or avoid", "Offer to work for free", "Insult them"], correctOptionIndex: 1 },
+    { id: "ub_16", type: "domain", text: "What is the Upwork Desktop App used for?", options: ["Playing games", "Tracking time on hourly contracts and taking screenshots", "Writing code", "Designing UI"], correctOptionIndex: 1 },
+    { id: "ub_17", type: "domain", text: "What is 'Top Rated' status?", options: ["A status for freelancers with consistent high-quality work", "A status for the most expensive freelancers", "A status for clients", "A status for new users"], correctOptionIndex: 0 },
+    { id: "ub_18", type: "domain", text: "How important are relevant portfolio items?", options: ["Not important", "Somewhat important", "Extremely important to prove capability", "Only important for designers"], correctOptionIndex: 2 },
+    { id: "ub_19", type: "domain", text: "What should you do if you realize you can't meet a deadline?", options: ["Ignore the client", "Communicate proactively with the client to find a solution", "Submit unfinished work", "Cancel the contract without telling them"], correctOptionIndex: 1 },
+    { id: "ub_20", type: "domain", text: "What is the best way to price your services initially?", options: ["Highest rate possible", "Lowest rate possible", "Competitive rate based on your skills and market average", "Free"], correctOptionIndex: 2 },
   ]
 };
 
 // Helper function to get questions for a role
 export function getQuestionsForRole(roleSlug: string): AssessmentQuestion[] {
+  // If the specific domain exists, return it, otherwise fallback to web-development
   return assessmentQuestions[roleSlug] || assessmentQuestions['web-development'];
 }
