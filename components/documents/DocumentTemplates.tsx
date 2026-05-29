@@ -186,26 +186,26 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
       <div className="space-y-6 text-[13px] leading-relaxed">
         {type === 'Offer Letter' ? (
           <>
-            <p>
+            <p className="break-inside-avoid">
               <strong>Dear {candidateName}, Congratulations!</strong>
             </p>
-            <p>
+            <p className="break-inside-avoid">
               We are pleased to offer you the position of <strong>{domain} Intern</strong> at <strong>Verve Nova Technologies</strong>. We were impressed with your skills, passion, and enthusiasm. This internship will provide hands-on experience and exposure to real-time projects.
             </p>
           </>
         ) : (
           <>
-            <p>
+            <p className="break-inside-avoid">
               <strong>Dear {candidateName}, Welcome Aboard!</strong>
             </p>
-            <p>
+            <p className="break-inside-avoid">
               This letter serves as formal confirmation of your joining as a <strong>{domain} Intern</strong> at <strong>Verve Nova Technologies</strong>. We are thrilled to officially welcome you to the team and look forward to working closely with you on real-time projects.
             </p>
           </>
         )}
 
         {/* INTERNSHIP DETAILS */}
-        <div>
+        <div className="break-inside-avoid">
           <h3 className="text-sm font-bold text-[#92400e] uppercase tracking-wide flex items-center gap-2 mb-3">
             <span>💼</span> INTERNSHIP DETAILS
           </h3>
@@ -231,23 +231,23 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
         </div>
 
         {/* ROLE & RESPONSIBILITIES */}
-        <div>
+        <div className="break-inside-avoid">
           <h3 className="text-sm font-bold text-[#1d4ed8] uppercase tracking-wide flex items-center gap-2 mb-3">
             <span>👤</span> ROLES & RESPONSIBILITIES
           </h3>
           <p className="mb-2 pl-2">Your responsibilities include (and are not limited to):</p>
           <ul className="list-disc list-inside pl-2 space-y-1 text-[#374151]">
-            <li>Work on company-assigned {domain.toLowerCase()} projects and tasks.</li>
-            <li>Collaborate with the technical team, web designers, and project coordinators to deliver high-quality results and match design intents.</li>
-            <li>Maintain project documentation, refine specifications, and perform basic testing.</li>
-            <li>Stay plugged into emerging technologies and industry trends and apply them to operations.</li>
-            <li>Be responsible for maintaining, expanding, and scaling assigned modules.</li>
+            <li className="break-inside-avoid">Work on company-assigned {domain.toLowerCase()} projects and tasks.</li>
+            <li className="break-inside-avoid">Collaborate with the technical team, web designers, and project coordinators to deliver high-quality results and match design intents.</li>
+            <li className="break-inside-avoid">Maintain project documentation, refine specifications, and perform basic testing.</li>
+            <li className="break-inside-avoid">Stay plugged into emerging technologies and industry trends and apply them to operations.</li>
+            <li className="break-inside-avoid">Be responsible for maintaining, expanding, and scaling assigned modules.</li>
           </ul>
         </div>
 
         {/* PROJECT-BASED WORK & BENEFITS */}
         <div className="grid grid-cols-2 gap-8">
-          <div>
+          <div className="break-inside-avoid">
             <h3 className="text-sm font-bold text-[#92400e] uppercase tracking-wide flex items-center gap-2 mb-3">
               <span>🚀</span> PROJECT-BASED WORK
             </h3>
@@ -255,35 +255,35 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
               You will work on live projects assigned by Verve Nova Technologies. You are expected to complete tasks with responsibility, discipline, and clear communication.
             </p>
           </div>
-          <div>
+          <div className="break-inside-avoid">
             <h3 className="text-sm font-bold text-[#1d4ed8] uppercase tracking-wide flex items-center gap-2 mb-3">
               <span>🎁</span> BENEFITS
             </h3>
             <ul className="list-disc list-inside pl-2 space-y-1 text-[#374151]">
-              <li>Real-time practical experience</li>
-              <li>Internship Certificate upon completion</li>
-              <li>Letter of Recommendation (performance-based)</li>
-              <li>Priority consideration for future paid roles</li>
+              <li className="break-inside-avoid">Real-time practical experience</li>
+              <li className="break-inside-avoid">Internship Certificate upon completion</li>
+              <li className="break-inside-avoid">Letter of Recommendation (performance-based)</li>
+              <li className="break-inside-avoid">Priority consideration for future paid roles</li>
             </ul>
           </div>
         </div>
 
         {/* TERMS & CONDITIONS */}
         <div>
-          <h3 className="text-sm font-bold text-[#92400e] uppercase tracking-wide flex items-center gap-2 mb-3">
+          <h3 className="text-sm font-bold text-[#92400e] uppercase tracking-wide flex items-center gap-2 mb-3 break-inside-avoid">
             <span>📄</span> TERMS & CONDITIONS
           </h3>
-          <p className="mb-2 pl-2">In performing your responsibilities and duties, you must serve the Company:</p>
+          <p className="mb-2 pl-2 break-inside-avoid">In performing your responsibilities and duties, you must serve the Company:</p>
           <ol className="list-[lower-alpha] list-inside pl-4 space-y-1 mb-3 text-[#374151]">
-            <li>faithfully and diligently, exercising all due care;</li>
-            <li>acting in the best interests of the Company at all times;</li>
-            <li>using best endeavors to protect and promote our good name and reputation;</li>
+            <li className="break-inside-avoid">faithfully and diligently, exercising all due care;</li>
+            <li className="break-inside-avoid">acting in the best interests of the Company at all times;</li>
+            <li className="break-inside-avoid">using best endeavors to protect and promote our good name and reputation;</li>
           </ol>
           <ul className="list-decimal list-inside pl-2 space-y-1 text-[#374151]">
-            <li>This internship is purely for educational and skill development purposes (Unpaid).</li>
-            <li>You are expected to maintain strict confidentiality of all company information and assets.</li>
-            <li>You agree to comply with all Company policies. Non-compliance or failure to complete assigned tasks may lead to the termination of your internship without notice.</li>
-            <li>Certificate will be awarded only after 3 months and successful project completion.</li>
+            <li className="break-inside-avoid">This internship is purely for educational and skill development purposes (Unpaid).</li>
+            <li className="break-inside-avoid">You are expected to maintain strict confidentiality of all company information and assets.</li>
+            <li className="break-inside-avoid">You agree to comply with all Company policies. Non-compliance or failure to complete assigned tasks may lead to the termination of your internship without notice.</li>
+            <li className="break-inside-avoid">Certificate will be awarded only after 3 months and successful project completion.</li>
           </ul>
         </div>
 
