@@ -2,13 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import Script from "next/script";
 import { DocumentTemplates } from "@/components/documents/DocumentTemplates";
 import { ArrowLeft, Download, Image as ImageIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { VNTLoader } from "@/components/vnt-loader";
 import { useRef } from "react";
-import { jsPDF } from "jspdf";
-import html2canvas from "html2canvas";
 import { toast } from "sonner";
 
 export default function DocumentPreviewPage() {
@@ -42,6 +41,15 @@ export default function DocumentPreviewPage() {
     try {
       // Small delay to ensure everything is rendered
       await new Promise(resolve => setTimeout(resolve, 500));
+
+      const html2canvas = (window as any).html2canvas;
+      const jsPDF = (window as any).jspdf.jsPDF;
+
+      if (!html2canvas || !jsPDF) {
+        toast.error("PDF engine is still loading. Please try again in a few seconds.", { id: toastId });
+        setDownloading(false);
+        return;
+      }
 
       const canvas = await html2canvas(documentRef.current, {
         scale: 2,
@@ -85,7 +93,10 @@ export default function DocumentPreviewPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#111111] py-20 px-6 flex flex-col items-center">
+    <>
+      <Script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" strategy="lazyOnload" />
+      <Script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" strategy="lazyOnload" />
+      <main className="min-h-screen bg-[#111111] py-20 px-6 flex flex-col items-center">
       <div className="w-full max-w-[800px] flex justify-between items-center mb-8">
         <Button 
           onClick={() => router.back()}
@@ -124,5 +135,6 @@ export default function DocumentPreviewPage() {
         <p className="text-[8px] mt-2 italic">This document is digitally verified and requires no physical signature for authentication in its digital form. For official verification, visit vervenovatech.com/verify.</p>
       </div>
     </main>
+    </>
   );
 }
