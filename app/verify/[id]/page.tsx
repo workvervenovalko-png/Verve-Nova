@@ -58,7 +58,31 @@ export default function DocumentPreviewPage() {
         pagebreak:    { mode: ['css', 'legacy'] }
       };
 
-      await html2pdf().set(opt).from(documentRef.current).save();
+      if (data.type !== 'Certificate') {
+        await html2pdf().set(opt).from(documentRef.current).toPdf().get('pdf').then((pdf: any) => {
+          const totalPages = pdf.internal.getNumberOfPages();
+          for (let i = 1; i <= totalPages; i++) {
+            pdf.setPage(i);
+            
+            // Draw Blue Triangle (Top Left)
+            pdf.setFillColor(186, 230, 253); // light blue / sky-200
+            pdf.triangle(0, 0, 160, 0, 0, 160, 'F');
+            
+            // Draw Watermark (Center)
+            pdf.setFontSize(70);
+            pdf.setTextColor(240, 240, 240); // very light gray
+            // Adding a simple centered text watermark. 
+            // Older jsPDF might not support angle object, so we pass angle as 4th/5th param
+            try {
+              pdf.text('VERVE NOVA', 400, 565, { align: 'center', angle: 45 });
+            } catch (e) {
+              pdf.text('VERVE NOVA', 200, 600); // fallback
+            }
+          }
+        }).save();
+      } else {
+        await html2pdf().set(opt).from(documentRef.current).save();
+      }
 
       toast.success("Downloaded successfully!", { id: toastId });
     } catch (err) {
