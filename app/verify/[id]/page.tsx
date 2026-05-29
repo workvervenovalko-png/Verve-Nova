@@ -68,7 +68,7 @@ export default function DocumentPreviewPage() {
       }
 
       const opt = {
-        margin:       0,
+        margin:       [20, 0, 20, 0], // Adding gap at the top and bottom
         filename:     `VNT-${data.type.replace(/\s+/g, '-')}-${data.candidateName.replace(/\s+/g, '-')}.pdf`,
         image:        { type: 'jpeg', quality: 1 },
         html2canvas:  { scale: 2, useCORS: true },
@@ -85,8 +85,8 @@ export default function DocumentPreviewPage() {
             // Draw Logo Watermark (Center)
             if (logoBase64) {
               try {
-                // Enable transparency for watermark
-                pdf.setGState(new (pdf.GState || (window as any).jsPDF.GState)({ opacity: 0.05 }));
+                // Enable transparency for watermark (8% opacity)
+                pdf.setGState(new (pdf.GState || (window as any).jsPDF.GState)({ opacity: 0.08 }));
                 // Center logo 400x400 on 800x1131 page
                 pdf.addImage(logoBase64, 'PNG', 200, 365, 400, 400);
                 pdf.setGState(new (pdf.GState || (window as any).jsPDF.GState)({ opacity: 1.0 }));
@@ -94,11 +94,6 @@ export default function DocumentPreviewPage() {
                 console.error("Could not apply watermark opacity", e);
               }
             }
-            
-            // Draw Page Number (Bottom Center)
-            pdf.setFontSize(10);
-            pdf.setTextColor(150, 150, 150);
-            pdf.text(`Page ${i} of ${totalPages}`, 400, 1110, { align: 'center' });
           }
         }).save();
       } else {
