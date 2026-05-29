@@ -182,6 +182,8 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
         <div className="w-2 h-2 bg-[#d4af37] rotate-45 mx-auto mt-2" />
       </div>
 
+      {/* Body Content */}
+      <div className="space-y-6 text-[13px] leading-relaxed">
         {type === 'Joining Letter' && (
           <>
             <p className="break-inside-avoid">
