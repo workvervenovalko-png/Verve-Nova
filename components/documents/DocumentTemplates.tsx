@@ -69,7 +69,7 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
               <img src="/vnt-logo.png" alt="VNT Logo" className="h-16 w-16 object-contain" />
               <div>
                 <h1 className="text-4xl font-black text-[#1e3a8a] tracking-tight leading-none uppercase">Verve Nova</h1>
-                <p className="text-sm font-bold text-[#1e3a8a] tracking-[0.2em] uppercase">Technologies & IT Services</p>
+                <p className="text-sm font-bold text-[#1e3a8a] tracking-[0.2em] uppercase">Technologies</p>
               </div>
             </div>
           </div>
@@ -81,12 +81,6 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
               <div className="w-48 h-[2px] bg-[#d4af37]"></div>
               <span className="text-2xl font-bold tracking-[0.3em] uppercase">OF INTERNSHIP</span>
               <div className="w-48 h-[2px] bg-[#d4af37]"></div>
-            </div>
-            {/* Diamond Decorators */}
-            <div className="flex justify-center items-center gap-2 mt-4 text-[#d4af37]">
-              <div className="w-2.5 h-2.5 bg-[#d4af37] rotate-45"></div>
-              <img src="/vnt-logo.png" alt="mini logo" className="w-6 h-6 object-contain opacity-50 sepia hue-rotate-15" />
-              <div className="w-2.5 h-2.5 bg-[#d4af37] rotate-45"></div>
             </div>
           </div>
 
@@ -118,36 +112,22 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
               <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Founder & CEO</p>
             </div>
 
-            {/* Center Stamp & Quote */}
+            {/* Center Quote */}
             <div className="flex flex-col items-center pb-2">
-              <div className="w-20 h-20 rounded-full border border-gray-300 flex flex-col items-center justify-center p-2 mb-4 relative">
-                {/* Circular Text using simple CSS approach or just stacked text */}
-                <p className="text-[5px] font-bold text-[#1e3a8a] uppercase tracking-widest text-center">Verve Nova</p>
-                <img src="/vnt-logo.png" alt="VNT Logo" className="w-6 h-6 object-contain my-1" />
-                <p className="text-[5px] font-bold text-[#1e3a8a] uppercase tracking-widest text-center">Technologies</p>
-              </div>
-              <div className="flex items-center gap-4 text-gray-500">
+              <div className="flex items-center gap-4 text-gray-500 mt-10">
                 <div className="w-16 h-[1px] bg-[#d4af37]"></div>
                 <p className="font-bold italic text-[#1e293b] text-sm">"Learn, Perform, Grow"</p>
                 <div className="w-16 h-[1px] bg-[#d4af37]"></div>
               </div>
             </div>
 
-            {/* Right Signature (HR / Authorized) */}
-            <div className="flex flex-col items-center w-56 text-center">
-              <div className="h-12 w-full flex items-end justify-center mb-2">
-                 <span className="font-serif italic text-gray-400 text-xl">Verve Nova HR</span>
-              </div>
+            {/* Right Side (Verification) */}
+            <div className="flex flex-col items-center w-56 text-center pb-2">
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Verification ID</p>
               <div className="w-full h-[1px] bg-[#d4af37] mb-2"></div>
-              <p className="font-bold text-[#0f172a] text-[15px]">Human Resources</p>
-              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Authorized Signatory</p>
+              <p className="font-bold text-[#0f172a] text-[13px]">{verificationId}</p>
             </div>
             
-          </div>
-          
-          {/* Verification ID (Bottom Left Corner inside border) */}
-          <div className="absolute bottom-4 left-6 text-[8px] font-bold text-gray-400 uppercase tracking-widest">
-            Verification ID: {verificationId}
           </div>
 
         </div>
