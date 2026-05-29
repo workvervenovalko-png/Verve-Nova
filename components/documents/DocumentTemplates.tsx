@@ -85,15 +85,15 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
           </div>
 
           {/* Presented To */}
-          <p className="text-sm font-bold text-gray-500 tracking-[0.2em] uppercase mb-4 mt-2">This certificate is proudly presented to</p>
+          <p className="text-sm font-bold text-[#6b7280] tracking-[0.2em] uppercase mb-4 mt-2">This certificate is proudly presented to</p>
           
           <div className="w-3/4 flex flex-col items-center mb-8">
             <h2 className="text-5xl font-serif italic text-[#1e293b] mb-2">{candidateName}</h2>
-            <div className="w-full h-[1px] bg-gray-400"></div>
+            <div className="w-full h-[1px] bg-[#9ca3af]"></div>
           </div>
 
           {/* Body Text */}
-          <div className="text-center max-w-3xl text-[16px] leading-relaxed text-gray-700 font-medium px-8">
+          <div className="text-center max-w-3xl text-[16px] leading-relaxed text-[#374151] font-medium px-8">
             <p>
               For successfully completing the <strong>{domain}</strong> internship program at <strong>Verve Nova Technologies</strong>. 
               The internship was conducted from <strong>{formattedStartDate}</strong> to <strong>{formattedEndDate}</strong>. 
@@ -109,12 +109,12 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
               <img src="/signatures/sign.png" alt="Signature" className="h-12 object-contain mb-2 opacity-90" />
               <div className="w-full h-[1px] bg-[#d4af37] mb-2"></div>
               <p className="font-bold text-[#0f172a] text-[15px]">Puneet Kushwaha</p>
-              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Founder & CEO</p>
+              <p className="text-[10px] font-bold text-[#6b7280] uppercase tracking-widest">Founder & CEO</p>
             </div>
 
             {/* Center Quote */}
             <div className="flex flex-col items-center pb-2">
-              <div className="flex items-center gap-4 text-gray-500 mt-10">
+              <div className="flex items-center gap-4 text-[#6b7280] mt-10">
                 <div className="w-16 h-[1px] bg-[#d4af37]"></div>
                 <p className="font-bold italic text-[#1e293b] text-sm">"Learn, Perform, Grow"</p>
                 <div className="w-16 h-[1px] bg-[#d4af37]"></div>
@@ -123,7 +123,7 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
 
             {/* Right Side (Verification) */}
             <div className="flex flex-col items-center w-56 text-center pb-2">
-              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Verification ID</p>
+              <p className="text-[10px] font-bold text-[#9ca3af] uppercase tracking-widest mb-1">Verification ID</p>
               <div className="w-full h-[1px] bg-[#d4af37] mb-2"></div>
               <p className="font-bold text-[#0f172a] text-[13px]">{verificationId}</p>
             </div>
@@ -162,9 +162,9 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
           </div>
           <div className="text-right text-xs text-[#1e3a8a] font-medium space-y-1">
             <p className="font-bold text-sm uppercase">Verve Nova Technologies</p>
-            <p className="flex items-center justify-end gap-1"><span className="text-blue-500">🌐</span> www.vervenovatech.com</p>
-            <p className="flex items-center justify-end gap-1"><span className="text-blue-500">✉️</span> work.vervenova.lko@gmail.com</p>
-            <p className="flex items-center justify-end gap-1"><span className="text-red-500">📍</span> India</p>
+            <p className="flex items-center justify-end gap-1"><span className="text-[#3b82f6]">🌐</span> www.vervenovatech.com</p>
+            <p className="flex items-center justify-end gap-1"><span className="text-[#3b82f6]">✉️</span> work.vervenova.lko@gmail.com</p>
+            <p className="flex items-center justify-end gap-1"><span className="text-[#ef4444]">📍</span> India</p>
           </div>
         </div>
 
@@ -237,7 +237,7 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
               <span>👤</span> ROLES & RESPONSIBILITIES
             </h3>
             <p className="mb-2 pl-2">Your responsibilities include (and are not limited to):</p>
-            <ul className="list-disc list-inside pl-2 space-y-1 text-gray-700">
+            <ul className="list-disc list-inside pl-2 space-y-1 text-[#374151]">
               <li>Work on company-assigned {domain.toLowerCase()} projects and tasks.</li>
               <li>Collaborate with the technical team, web designers, and project coordinators to deliver high-quality results and match design intents.</li>
               <li>Maintain project documentation, refine specifications, and perform basic testing.</li>
@@ -252,7 +252,7 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
               <h3 className="text-sm font-bold text-[#92400e] uppercase tracking-wide flex items-center gap-2 mb-3">
                 <span>🚀</span> PROJECT-BASED WORK
               </h3>
-              <p className="pl-2 text-gray-700">
+              <p className="pl-2 text-[#374151]">
                 You will work on live projects assigned by Verve Nova Technologies. You are expected to complete tasks with responsibility, discipline, and clear communication.
               </p>
             </div>
@@ -260,7 +260,7 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
               <h3 className="text-sm font-bold text-[#1d4ed8] uppercase tracking-wide flex items-center gap-2 mb-3">
                 <span>🎁</span> BENEFITS
               </h3>
-              <ul className="list-disc list-inside pl-2 space-y-1 text-gray-700">
+              <ul className="list-disc list-inside pl-2 space-y-1 text-[#374151]">
                 <li>Real-time practical experience</li>
                 <li>Internship Certificate upon completion</li>
                 <li>Letter of Recommendation (performance-based)</li>
@@ -275,12 +275,12 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
               <span>📄</span> TERMS & CONDITIONS
             </h3>
             <p className="mb-2 pl-2">In performing your responsibilities and duties, you must serve the Company:</p>
-            <ol className="list-[lower-alpha] list-inside pl-4 space-y-1 mb-3 text-gray-700">
+            <ol className="list-[lower-alpha] list-inside pl-4 space-y-1 mb-3 text-[#374151]">
               <li>faithfully and diligently, exercising all due care;</li>
               <li>acting in the best interests of the Company at all times;</li>
               <li>using best endeavors to protect and promote our good name and reputation;</li>
             </ol>
-            <ul className="list-decimal list-inside pl-2 space-y-1 text-gray-700">
+            <ul className="list-decimal list-inside pl-2 space-y-1 text-[#374151]">
               <li>This internship is purely for educational and skill development purposes (Unpaid).</li>
               <li>You are expected to maintain strict confidentiality of all company information and assets.</li>
               <li>You agree to comply with all Company policies. Non-compliance or failure to complete assigned tasks may lead to the termination of your internship without notice.</li>
@@ -292,9 +292,9 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
       </div>
 
       {/* Footer / Acceptance / Signatures */}
-      <div className="mt-12 pt-8 border-t border-gray-200">
+      <div className="mt-12 pt-8 border-t border-[#e5e7eb]">
         <h3 className="text-sm font-bold text-[#1e3a8a] uppercase tracking-wide mb-4">ACCEPTANCE</h3>
-        <p className="text-[12px] text-gray-700 leading-relaxed mb-8">
+        <p className="text-[12px] text-[#374151] leading-relaxed mb-8">
           I have had reasonable opportunity to evaluate and where necessary seek advice about this internship and understand and fully accept the conditions of my internship as detailed above. I confirm that my Date of Joining will be <strong>{formattedStartDate}</strong>.
           <br /><br />
           Upon completing this internship, you will be given a Certificate of Internship. Moreover, if your performance is above average, you can also request a Letter of Recommendation (LoR). I have read and accept the terms and conditions of this {type.toLowerCase()}.
@@ -303,10 +303,10 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
         <div className="flex justify-between items-end">
           {/* Intern Signature Block */}
           <div className="w-64 text-left">
-            <div className="w-full h-[1px] bg-gray-400 mb-2" />
+            <div className="w-full h-[1px] bg-[#9ca3af] mb-2" />
             <p className="font-bold text-[#1e293b] text-[13px]">Signature: __________________</p>
-            <p className="text-[13px] font-medium text-gray-600 mt-1">Name: {candidateName}</p>
-            <p className="text-[13px] font-medium text-gray-600 mt-1">Date: ____________________</p>
+            <p className="text-[13px] font-medium text-[#4b5563] mt-1">Name: {candidateName}</p>
+            <p className="text-[13px] font-medium text-[#4b5563] mt-1">Date: ____________________</p>
           </div>
 
           {/* Company Signature */}
@@ -314,8 +314,8 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
             <img src="/signatures/sign.png" alt="Signature" className="h-12 object-contain mx-auto mb-1 opacity-90" />
             <div className="w-full h-[1px] bg-[#1e3a8a] mb-2" />
             <p className="font-bold text-[#1e3a8a] text-[13px]">Puneet Kushwaha</p>
-            <p className="text-[11px] text-gray-600 uppercase tracking-widest">Founder & CEO</p>
-            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">Verve Nova Technologies</p>
+            <p className="text-[11px] text-[#4b5563] uppercase tracking-widest">Founder & CEO</p>
+            <p className="text-[10px] text-[#6b7280] font-bold uppercase tracking-widest mt-1">Verve Nova Technologies</p>
           </div>
         </div>
       </div>
