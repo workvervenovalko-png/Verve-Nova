@@ -39,6 +39,7 @@ export default async function AssessmentPage({ params }: { params: Promise<{ id:
       roleSlug={roleSlug} 
       questions={safeQuestions} 
       initialStatus={assessment.status}
+      startedAt={assessment.startedAt}
     />
   );
 }

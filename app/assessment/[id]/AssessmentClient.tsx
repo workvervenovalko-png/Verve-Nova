@@ -21,15 +21,27 @@ interface AssessmentClientProps {
   roleSlug: string;
   questions: Question[];
   initialStatus: string;
+  startedAt?: string | Date;
 }
 
 const TOTAL_TIME_SECONDS = 60 * 60; // 1 Hour
 
-export default function AssessmentClient({ appId, candidateName, roleSlug, questions, initialStatus }: AssessmentClientProps) {
+export default function AssessmentClient({ appId, candidateName, roleSlug, questions, initialStatus, startedAt }: AssessmentClientProps) {
+  const calculateInitialTime = () => {
+    if (initialStatus === 'In Progress' && startedAt) {
+      const now = new Date().getTime();
+      const start = new Date(startedAt).getTime();
+      const elapsedSeconds = Math.floor((now - start) / 1000);
+      const remaining = TOTAL_TIME_SECONDS - elapsedSeconds;
+      return remaining > 0 ? remaining : 0;
+    }
+    return TOTAL_TIME_SECONDS;
+  };
+
   const [status, setStatus] = useState(initialStatus);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>>({});
-  const [timeLeft, setTimeLeft] = useState(TOTAL_TIME_SECONDS);
+  const [timeLeft, setTimeLeft] = useState(calculateInitialTime());
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isStarting, setIsStarting] = useState(false);
 

@@ -61,9 +61,9 @@ export async function startAssessment(appId: string) {
 
     if (app.assessment?.status !== 'In Progress') {
       await VerveApplication.findByIdAndUpdate(appId, {
-        assessment: {
-          startedAt: new Date(),
-          status: 'In Progress'
+        $set: {
+          'assessment.startedAt': new Date(),
+          'assessment.status': 'In Progress'
         }
       });
     }
@@ -94,12 +94,11 @@ export async function submitAssessment(appId: string, userAnswers: Record<string
     });
 
     await VerveApplication.findByIdAndUpdate(appId, {
-      assessment: {
-        score,
-        totalQuestions: questions.length,
-        startedAt: app.assessment?.startedAt || new Date(),
-        submittedAt: new Date(),
-        status: 'Completed'
+      $set: {
+        'assessment.score': score,
+        'assessment.totalQuestions': questions.length,
+        'assessment.submittedAt': new Date(),
+        'assessment.status': 'Completed'
       }
     });
 
