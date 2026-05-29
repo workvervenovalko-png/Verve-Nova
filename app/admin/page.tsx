@@ -63,7 +63,7 @@ import { cn } from "@/lib/utils";
 
 export default function AdminDashboardPage() {
      const [activeTab, setActiveTab] = useState<"applications" | "leads" | "blogs" | "issuance">("applications");
-     const [subTab, setSubTab] = useState<"new" | "interviewing" | "accepted" | "offered" | "joined" | "completed" | "rejected">("new");
+     const [subTab, setSubTab] = useState<"new" | "assessment" | "interviewing" | "accepted" | "offered" | "joined" | "completed" | "rejected">("new");
      const [applications, setApplications] = useState<any[]>([]);
      const [leads, setLeads] = useState<any[]>([]);
      const [blogs, setBlogs] = useState<any[]>([]);
@@ -255,6 +255,7 @@ export default function AdminDashboardPage() {
 
                if (subTab === 'accepted') return app.status === 'Accepted';
                if (subTab === 'interviewing') return app.status === 'Interviewing';
+               if (subTab === 'assessment') return app.status === 'Assessment';
                if (subTab === 'rejected') return app.status === 'Rejected';
                if (subTab === 'new') return app.status === 'Reviewing' || !app.status;
                
@@ -340,6 +341,7 @@ export default function AdminDashboardPage() {
                                         <div className="flex flex-wrap gap-2 p-4 bg-white/[0.01] border-b border-white/[0.04]">
                                              {[
                                                   { id: 'new', label: 'Applied', icon: Clock },
+                                                  { id: 'assessment', label: 'Assessment', icon: FileText },
                                                   { id: 'interviewing', label: 'Interviewing', icon: Calendar },
                                                   { id: 'accepted', label: 'Accepted', icon: CheckCircle2 },
                                                   { id: 'offered', label: 'Offer Sent', icon: Mail },
@@ -365,6 +367,7 @@ export default function AdminDashboardPage() {
                                                                  if (hasCert || hasJoining || hasOffer) return false;
                                                                  if (tab.id === 'accepted') return app.status === 'Accepted';
                                                                  if (tab.id === 'interviewing') return app.status === 'Interviewing';
+                                                                 if (tab.id === 'assessment') return app.status === 'Assessment';
                                                                  if (tab.id === 'rejected') return app.status === 'Rejected';
                                                                  if (tab.id === 'new') return app.status === 'Reviewing' || !app.status;
                                                                  return false;
@@ -428,6 +431,7 @@ export default function AdminDashboardPage() {
                                                                        onChange={(e) => updateStatus(app._id, e.target.value)}
                                                                   >
                                                                        <option value="Reviewing" className="bg-[#09090B]">Reviewing</option>
+                                                                       <option value="Assessment" className="bg-[#09090B]">Assessment</option>
                                                                        <option value="Interviewing" className="bg-[#09090B]">Interviewing</option>
                                                                        <option value="Accepted" className="bg-[#09090B]">Accepted</option>
                                                                        <option value="Rejected" className="bg-[#09090B]">Rejected</option>
@@ -480,6 +484,17 @@ export default function AdminDashboardPage() {
                                                                                   Send Invite
                                                                              </Button>
                                                                         )}
+                                                                         {app.status === 'Assessment' && app.assessment && (
+                                                                             <div className="mt-2 p-3 bg-white/[0.02] border border-white/[0.06] rounded-lg">
+                                                                                 <p className="text-[9px] font-bold text-white/40 uppercase tracking-widest mb-1">Assessment Status</p>
+                                                                                 <p className={`text-xs font-black uppercase tracking-tighter ${app.assessment.status === 'Completed' ? 'text-emerald-400' : 'text-amber-400'}`}>
+                                                                                     {app.assessment.status}
+                                                                                 </p>
+                                                                                 {app.assessment.status === 'Completed' && (
+                                                                                     <p className="text-xs font-mono text-white mt-2">Score: {app.assessment.score}/{app.assessment.totalQuestions}</p>
+                                                                                 )}
+                                                                             </div>
+                                                                         )}
                                                                   </div>
                                                              </td>
                                                              <td className="px-8 py-8 text-right">

@@ -145,3 +145,35 @@ export const getHumanCertificateTemplate = (name: string, domain: string, verifi
   <p style="font-size: 10px; color: #999; margin-top: 30px;">Ref: ${verificationId} // Verifiable Internship Credential</p>
 </div>
 `;
+export const getAssessmentInviteTemplate = (name: string, link: string) => `
+<div style="${baseStyles}">
+  <p>Dear ${name.split(' ')[0]},</p>
+  <p>Congratulations on moving to the next stage of our selection process!</p>
+  <p>We invite you to take the <strong>Verve Nova Technical & Aptitude Assessment</strong>. This is a mandatory step to evaluate your skills and fit for the role you applied for.</p>
+  
+  <div style="background: #f8f9fa; border: 1px solid #e9ecef; padding: 20px; border-radius: 8px; margin: 20px 0;">
+    <p style="margin: 0 0 10px 0;"><strong>Assessment Link:</strong></p>
+    <p style="margin: 0 0 15px 0;"><a href="${link}" style="background-color: #6366f1; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">Start Assessment</a></p>
+    <ul style="margin: 0; padding-left: 20px; color: #555;">
+      <li><strong>Duration:</strong> 1 Hour</li>
+      <li><strong>Format:</strong> Multiple Choice Questions (Aptitude, Reasoning, Quant & Domain)</li>
+      <li><strong>Deadline:</strong> Please complete this within <strong>48 hours</strong> of receiving this email.</li>
+    </ul>
+  </div>
+  
+  <p><strong>Important:</strong> Once you start the assessment, the 1-hour timer will begin and cannot be paused. Ensure you have a stable internet connection before starting.</p>
+  <p>Best of luck!</p>
+  ${footerSection}
+</div>
+`;
+
+export const getAssessmentSubmittedTemplate = (name: string) => `
+<div style="${baseStyles}">
+  <p>Dear ${name.split(' ')[0]},</p>
+  <p>Thank you for completing the <strong>Verve Nova Technical & Aptitude Assessment</strong>.</p>
+  <p>Your responses have been successfully submitted and recorded in our system. Our team will review your results along with your application profile.</p>
+  <p>Please wait for further communication regarding the next steps (which may include a technical interview if shortlisted).</p>
+  <p>We appreciate the time and effort you have put into this process.</p>
+  ${footerSection}
+</div>
+`;

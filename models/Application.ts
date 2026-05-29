@@ -54,8 +54,15 @@ const ApplicationSchema = new Schema({
 
   status: { 
     type: String, 
-    enum: ['Reviewing', 'Interviewing', 'Accepted', 'Rejected'], 
+    enum: ['Reviewing', 'Assessment', 'Interviewing', 'Accepted', 'Rejected'], 
     default: 'Reviewing' 
+  },
+  assessment: {
+    score: { type: Number },
+    totalQuestions: { type: Number },
+    startedAt: { type: Date },
+    submittedAt: { type: Date },
+    status: { type: String, enum: ['Pending', 'In Progress', 'Completed'], default: 'Pending' }
   },
   interviewDate: { type: Date },
   interviewLink: { type: String },

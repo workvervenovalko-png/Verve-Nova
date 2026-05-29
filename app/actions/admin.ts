@@ -78,6 +78,29 @@ export async function updateApplicationStatus(appId: string, status: string) {
       }
     }
 
+    // Send Assessment Invite Email
+    if (app && status === 'Assessment') {
+      const targetEmail = (app.userId as any).email;
+      console.log(`>>> [MAIL_SYSTEM] Preparing assessment invite for: ${targetEmail}`);
+      
+      try {
+        const { resend } = await import("@/lib/resend");
+        const { getAssessmentInviteTemplate } = await import("@/lib/mail-templates");
+        
+        const assessmentLink = `https://vervenovatech.com/assessment/${app._id}`;
+        const mailRes = await resend.emails.send({
+          from: 'Verve Nova Tech <careers@vervenovatech.com>',
+          to: targetEmail,
+          subject: `ASSESSMENT ROUND INVITATION // VERVE NOVA`,
+          html: getAssessmentInviteTemplate((app.userId as any).name, assessmentLink),
+        });
+
+        console.log(`>>> [MAIL_SYSTEM] Assessment email sent. Response ID:`, mailRes.data?.id);
+      } catch (mailError: any) {
+        console.error(">>> [MAIL_SYSTEM] CRITICAL ERROR sending assessment email:", mailError.message);
+      }
+    }
+
     return { success: true };
   } catch (error: any) {
     console.error("Admin Status Update Error:", error);
