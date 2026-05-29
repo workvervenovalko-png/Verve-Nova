@@ -269,21 +269,21 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
         </div>
 
         {/* TERMS & CONDITIONS */}
-        <div>
-          <h3 className="text-sm font-bold text-[#92400e] uppercase tracking-wide flex items-center gap-2 mb-3 break-inside-avoid">
+        <div className="break-inside-avoid">
+          <h3 className="text-sm font-bold text-[#92400e] uppercase tracking-wide flex items-center gap-2 mb-3">
             <span>📄</span> TERMS & CONDITIONS
           </h3>
-          <p className="mb-2 pl-2 break-inside-avoid">In performing your responsibilities and duties, you must serve the Company:</p>
+          <p className="mb-2 pl-2">In performing your responsibilities and duties, you must serve the Company:</p>
           <ol className="list-[lower-alpha] list-inside pl-4 space-y-1 mb-3 text-[#374151]">
-            <li className="break-inside-avoid">faithfully and diligently, exercising all due care;</li>
-            <li className="break-inside-avoid">acting in the best interests of the Company at all times;</li>
-            <li className="break-inside-avoid">using best endeavors to protect and promote our good name and reputation;</li>
+            <li>faithfully and diligently, exercising all due care;</li>
+            <li>acting in the best interests of the Company at all times;</li>
+            <li>using best endeavors to protect and promote our good name and reputation;</li>
           </ol>
           <ul className="list-decimal list-inside pl-2 space-y-1 text-[#374151]">
-            <li className="break-inside-avoid">This internship is purely for educational and skill development purposes (Unpaid).</li>
-            <li className="break-inside-avoid">You are expected to maintain strict confidentiality of all company information and assets.</li>
-            <li className="break-inside-avoid">You agree to comply with all Company policies. Non-compliance or failure to complete assigned tasks may lead to the termination of your internship without notice.</li>
-            <li className="break-inside-avoid">Certificate will be awarded only after 3 months and successful project completion.</li>
+            <li>This internship is purely for educational and skill development purposes (Unpaid).</li>
+            <li>You are expected to maintain strict confidentiality of all company information and assets.</li>
+            <li>You agree to comply with all Company policies. Non-compliance or failure to complete assigned tasks may lead to the termination of your internship without notice.</li>
+            <li>Certificate will be awarded only after 3 months and successful project completion.</li>
           </ul>
         </div>
 
