@@ -122,72 +122,151 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
   }
 
   // Offer Letter and Joining Letter Template (Modern Letterhead Style)
+  const formattedIssueDate = format(new Date(issuedAt), "dd MMM yyyy");
+  
+  let start = new Date();
+  if (metadata?.startDate) {
+    start = new Date(metadata.startDate);
+  }
+  const formattedStartDate = format(start, "dd MMM yyyy");
+  
+  const end = new Date(start);
+  end.setMonth(end.getMonth() + 3);
+  const formattedEndDate = format(end, "dd MMM yyyy");
+
   return (
-    <div className="w-[800px] min-h-[1000px] bg-white text-[#09090B] p-16 font-sans relative">
-      {/* Letterhead Header */}
-      <div className="flex justify-between items-start border-b-2 border-[#6366f1]/20 pb-8 mb-12 relative z-10">
-        <div className="space-y-4">
-          <img src="/vnt-logo.png" alt="VNT Logo" className="h-20 object-contain" />
-          <div className="space-y-1">
-            <p className="text-[12px] font-black uppercase tracking-widest text-[#6366f1]">Verve Nova Technologies</p>
-            <p className="text-[10px] font-bold text-gray-400 uppercase">Innovation Hub // Digital Solutions</p>
+    <div className="w-[800px] min-h-[1050px] bg-white text-[#1e293b] p-12 font-sans relative flex flex-col justify-between">
+      <div>
+        {/* Letterhead Header */}
+        <div className="flex justify-between items-start mb-8">
+          <div className="flex items-center gap-4">
+            <img src="/vnt-logo.png" alt="VNT Logo" className="h-16 w-16 object-contain" />
+            <div>
+              <h1 className="text-3xl font-black text-[#1e3a8a] tracking-tight leading-none uppercase">Verve Nova</h1>
+              <p className="text-sm font-semibold text-[#1e3a8a]">Technologies & Digital Solutions</p>
+            </div>
+          </div>
+          <div className="text-right text-xs text-[#1e3a8a] font-medium space-y-1">
+            <p className="font-bold text-sm">VERVE NOVA</p>
+            <p>Technologies & IT Services</p>
+            <p className="flex items-center justify-end gap-1"><span className="text-blue-500">🌐</span> www.vervenovatech.com</p>
+            <p className="flex items-center justify-end gap-1"><span className="text-blue-500">✉️</span> contact@vervenovatech.com</p>
+            <p className="flex items-center justify-end gap-1"><span className="text-red-500">📍</span> India</p>
           </div>
         </div>
-        <div className="text-right space-y-2">
-          <h2 className="text-3xl font-black uppercase tracking-tighter text-[#1e1e2e]">{type}</h2>
-          <p className="text-[11px] font-bold text-gray-400 uppercase">Reference: {verificationId}</p>
-          <p className="text-[11px] font-bold text-gray-400 uppercase">Date: {dateStr}</p>
+
+        {/* Ref and Date */}
+        <div className="flex justify-between text-[13px] font-bold text-[#1e293b] mb-2">
+          <p>Ref. No.: {verificationId}</p>
+          <p>Date : {formattedIssueDate}</p>
+        </div>
+        
+        {/* Golden Line */}
+        <div className="w-full h-[2px] bg-[#d4af37] mb-8" />
+
+        {/* Title */}
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-black uppercase tracking-[0.2em] text-[#1e3a8a]">{type.toUpperCase()}</h2>
+          <div className="w-2 h-2 bg-[#d4af37] rotate-45 mx-auto mt-2" />
+        </div>
+
+        {/* Body Content */}
+        <div className="space-y-6 text-[13px] leading-relaxed">
+          <p>
+            <strong>Dear {candidateName}, Congratulations!</strong>
+          </p>
+          
+          <p>
+            We are pleased to offer you the position of <strong>Intern</strong> at <strong>Verve Nova Technologies</strong>. We were impressed with your skills, passion, and enthusiasm, and we believe you will be a great addition to our team.
+          </p>
+
+          {/* INTERNSHIP DETAILS */}
+          <div>
+            <h3 className="text-sm font-bold text-[#92400e] uppercase tracking-wide flex items-center gap-2 mb-3">
+              <span>💼</span> INTERNSHIP DETAILS
+            </h3>
+            <div className="grid grid-cols-[160px_1fr] gap-y-2 font-medium pl-6">
+              <p>Position</p>
+              <p>: Intern</p>
+              
+              <p>Department</p>
+              <p>: {domain}</p>
+              
+              <p>Internship Duration</p>
+              <p>: 3 Months</p>
+              
+              <p>Start Date</p>
+              <p>: {formattedStartDate}</p>
+              
+              <p>End Date</p>
+              <p>: {formattedEndDate}</p>
+              
+              <p>Work Mode</p>
+              <p>: Remote</p>
+            </div>
+          </div>
+
+          {/* ROLE & RESPONSIBILITIES */}
+          <div>
+            <h3 className="text-sm font-bold text-[#1d4ed8] uppercase tracking-wide flex items-center gap-2 mb-3">
+              <span>👤</span> ROLE & RESPONSIBILITIES
+            </h3>
+            <ul className="list-disc list-inside pl-2 space-y-1">
+              <li>Work on assigned tasks and projects as per the guidance of the project coordinator.</li>
+              <li>Collaborate with the team to deliver high-quality results.</li>
+              <li>Learn, implement, and contribute innovative ideas.</li>
+              <li>Maintain professionalism, discipline, and commitment throughout the internship.</li>
+            </ul>
+          </div>
+
+          {/* TERMS & CONDITIONS */}
+          <div>
+            <h3 className="text-sm font-bold text-[#92400e] uppercase tracking-wide flex items-center gap-2 mb-3">
+              <span>📄</span> TERMS & CONDITIONS
+            </h3>
+            <ol className="list-decimal list-inside pl-2 space-y-1">
+              <li>This internship is purely for educational and skill development purposes.</li>
+              <li>You are expected to maintain confidentiality of all company information.</li>
+              <li>Any misconduct or failure to meet expectations may result in termination of the internship.</li>
+              <li>Upon successful completion, you will be awarded a Certificate of Internship.</li>
+            </ol>
+          </div>
+
+          <p className="pt-2">
+            We are excited to have you on board and look forward to a productive and rewarding journey together.
+          </p>
+          <p className="font-bold">Welcome to the Verve Nova family!</p>
         </div>
       </div>
 
-      {/* Body */}
-      <div className="space-y-8 text-sm leading-relaxed text-gray-700 relative z-10">
-        <div>
-          <p className="font-bold text-[#1e1e2e] text-base">To,</p>
-          <p className="text-xl font-black uppercase text-[#1e1e2e]">{candidateName}</p>
-          <p className="text-[12px] font-mono font-bold text-[#6366f1]">{vnId}</p>
+      {/* Footer / Signatures */}
+      <div className="flex justify-between items-end mt-12 pb-4">
+        {/* Left Signature */}
+        <div className="text-center w-48">
+          <img src="/signatures/sign.png" alt="Signature" className="h-12 object-contain mx-auto mb-1 opacity-90" />
+          <div className="w-full h-[1px] bg-[#1e3a8a] mb-2" />
+          <p className="font-bold text-[#1e3a8a] text-sm">Puneet Kushwaha</p>
+          <p className="text-xs text-gray-600">Founder & CEO</p>
+          <p className="text-xs text-gray-600">Verve Nova</p>
         </div>
 
-        <div className="space-y-4">
-          <p className="font-bold">Subject: {type === 'Offer Letter' ? `Official Offer of Internship - ${domain}` : `Internship Appointment & Joining - ${domain}`}</p>
-          
-          <p>Dear {candidateName.split(' ')[0]},</p>
-          
-          {type === 'Offer Letter' ? (
-            <>
-              <p>We are pleased to offer you an internship at Verve Nova Technologies in the <span className="font-bold text-[#1e1e2e]">{domain}</span> track. Your talent and potential align perfectly with our mission to architect the future of digital solutions.</p>
-              <p>Your internship duration will be for 3 months. Your official joining date will be shared with you in the <strong>Official Joining Letter</strong>. During this period, you will receive a monthly stipend of <span className="font-bold text-[#6366f1]">{stipend}</span>.</p>
-              <p className="font-bold text-indigo-600 bg-indigo-50 p-4 rounded-lg border border-indigo-100">Please note: The official start date and onboarding coordinates will be provided in your "Joining Letter". You are requested to wait for the official Joining Letter for the next steps.</p>
-            </>
-          ) : (
-            <>
-              <p>This is to confirm your appointment as a <span className="font-bold text-[#1e1e2e]">{domain} Intern</span> at Verve Nova Technologies. We are excited to have you on board as we continue to push the boundaries of technology and innovation.</p>
-              <p>You are officially joined as of <span className="font-bold text-[#1e1e2e]">{metadata?.startDate || dateStr}</span> for a duration of 3 months. During this period, you will receive a monthly stipend of <span className="font-bold text-[#6366f1]">{stipend}</span>. You will report to the Technical Lead for your respective project domain.</p>
-            </>
-          )}
-
-          <p>At Verve Nova, we believe in a "Performance-First" culture. You will be expected to demonstrate technical excellence, creative problem-solving, and professional integrity at all times.</p>
-          
-          <p>We look forward to seeing the impact you will create during your tenure with us.</p>
+        {/* Center Seal */}
+        <div className="w-24 h-24 rounded-full border-2 border-[#1e3a8a] flex flex-col items-center justify-center p-2">
+          <p className="text-[6px] font-bold text-[#1e3a8a] uppercase tracking-widest text-center" style={{ letterSpacing: '0.2em' }}>Verve Nova</p>
+          <img src="/vnt-logo.png" alt="VNT Logo" className="w-8 h-8 object-contain my-1" />
+          <p className="text-[6px] font-bold text-[#1e3a8a] uppercase tracking-widest text-center" style={{ letterSpacing: '0.1em' }}>Technologies</p>
         </div>
 
-        <div className="pt-12">
-          <p className="font-bold text-gray-400 uppercase text-[12px] tracking-widest mb-4">Best Regards,</p>
-          <div className="flex flex-col items-start">
-            <img src="/signatures/sign.png" alt="Signature" className="h-20 object-contain mb-[-10px] opacity-90 ml-4" />
-            <div className="w-72 h-[1px] bg-gray-300 mb-2" />
-            <p className="text-lg font-black uppercase text-[#1e1e2e] mt-2">Puneet Kushwaha</p>
-            <p className="text-[12px] font-black uppercase text-[#1e1e2e]/60 mt-1">Founder & CEO</p>
-            <p className="text-[11px] font-bold text-gray-400 uppercase">Verve Nova Technologies</p>
+        {/* Right Signature (Candidate) */}
+        <div className="text-center w-48">
+          <div className="h-12 flex items-end justify-center pb-1">
+             <span className="font-serif italic text-gray-500">{candidateName.split(' ')[0]}</span>
           </div>
+          <div className="w-full h-[1px] bg-[#1e3a8a] mb-2" />
+          <p className="font-bold text-[#1e3a8a] text-sm">{candidateName}</p>
+          <p className="text-xs text-gray-600">Candidate</p>
+          <p className="text-xs text-gray-600">Verve Nova</p>
         </div>
-      </div>
-
-      {/* Decorative Stripes (Employment Letter Style) */}
-      <div className="absolute bottom-0 right-0 w-32 h-32 bg-[#6366f1]/5 flex flex-col gap-2 p-4 justify-end items-end overflow-hidden">
-        <div className="w-full h-1 bg-[#6366f1] opacity-20" />
-        <div className="w-3/4 h-1 bg-[#6366f1] opacity-40" />
-        <div className="w-1/2 h-1 bg-[#6366f1] opacity-60" />
       </div>
     </div>
   );
