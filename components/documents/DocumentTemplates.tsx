@@ -32,90 +32,124 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
   const stipend = metadata?.stipend || "As we discussed";
 
   if (type === 'Certificate') {
+    let start = new Date();
+    if (metadata?.startDate) {
+      start = new Date(metadata.startDate);
+    }
+    const formattedStartDate = format(start, "dd MMM yyyy");
+    
+    const end = new Date(start);
+    end.setMonth(end.getMonth() + 3);
+    const formattedEndDate = format(end, "dd MMM yyyy");
+
     return (
-      <div className="w-[1000px] h-[800px] bg-white text-[#0a0a0a] p-0 relative overflow-hidden font-serif border-[1px] border-gray-200 shadow-2xl flex flex-col items-center">
-        {/* Corner Accents (Triangles) */}
-        <div className="absolute top-0 left-0 w-32 h-32 bg-[#000830]" style={{ clipPath: 'polygon(0 0, 100% 0, 0 100%)' }} />
-        <div className="absolute bottom-0 right-0 w-32 h-32 bg-[#000830]" style={{ clipPath: 'polygon(100% 100%, 0 100%, 100% 0)' }} />
-        
-        {/* Golden Ribbon Seal (Top Left) */}
-        <div className="absolute top-6 left-6 z-20 scale-[0.55] origin-top-left">
-           <div className="relative w-32 h-32 flex items-center justify-center">
-              {/* Ribbon Straps */}
-              <div className="absolute top-1/2 left-[20%] w-8 h-24 bg-[#fcc419] -rotate-[15deg] origin-top" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%)' }} />
-              <div className="absolute top-1/2 right-[20%] w-8 h-24 bg-[#fcc419] rotate-[15deg] origin-top" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%)' }} />
-              
-              {/* Seal Circle */}
-              <div className="absolute w-24 h-24 rounded-full bg-gradient-to-br from-[#fcc419] via-[#ffd43b] to-[#fcc419] shadow-lg border-4 border-[#fab005] flex items-center justify-center">
-                 <div className="w-[85%] h-[85%] rounded-full border-2 border-[#fab005] border-dashed" />
+      <div className="w-[1000px] h-[750px] bg-white text-[#1e293b] p-6 relative font-sans">
+        {/* Outer Gold Border */}
+        <div className="w-full h-full border-[4px] border-[#d4af37] rounded-3xl p-12 relative flex flex-col items-center">
+          
+          {/* Top Right Ribbon Seal */}
+          <div className="absolute top-12 right-12 flex flex-col items-center z-20">
+            <div className="w-24 h-24 bg-[#0f172a] rounded-full flex flex-col items-center justify-center text-[#d4af37] text-[9px] font-bold text-center tracking-widest leading-tight border-[3px] border-[#d4af37] shadow-lg z-10">
+              <span>★ ★ ★</span>
+              <span className="mt-1">LEARN</span>
+              <span>PERFORM</span>
+              <span>GROW</span>
+              <span className="mt-1">★</span>
+            </div>
+            {/* Ribbons */}
+            <div className="flex gap-1 -mt-4">
+              <div className="w-6 h-12 bg-[#d4af37]" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%)' }}></div>
+              <div className="w-6 h-16 bg-[#d4af37]" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%)' }}></div>
+            </div>
+          </div>
+
+          {/* Logo Section */}
+          <div className="flex flex-col items-center mb-8">
+            <div className="flex items-center gap-4">
+              <img src="/vnt-logo.png" alt="VNT Logo" className="h-16 w-16 object-contain" />
+              <div>
+                <h1 className="text-4xl font-black text-[#1e3a8a] tracking-tight leading-none uppercase">Verve Nova</h1>
+                <p className="text-sm font-bold text-[#1e3a8a] tracking-[0.2em] uppercase">Technologies & IT Services</p>
               </div>
-           </div>
-        </div>
+            </div>
+          </div>
 
-        {/* Logo (Top Right) */}
-        <div className="absolute top-8 right-8 flex flex-col items-end gap-1">
-           <img src="/vnt-logo.png" alt="VNT Logo" className="h-10 w-auto object-contain brightness-110" />
-           <div className="flex flex-col text-right">
-              <span className="text-[10px] font-black text-[#000830] tracking-widest uppercase leading-none">Verve Nova Technologies</span>
-              <span className="text-[8px] font-bold text-gray-400 uppercase tracking-[0.2em] mt-1">Specialized Software Systems</span>
-           </div>
-        </div>
+          {/* Title Section */}
+          <div className="text-center mb-6 w-full relative">
+            <h1 className="text-7xl font-black text-[#0f172a] tracking-widest uppercase mb-4">CERTIFICATE</h1>
+            <div className="flex items-center justify-center gap-4 text-[#d4af37]">
+              <div className="w-48 h-[2px] bg-[#d4af37]"></div>
+              <span className="text-2xl font-bold tracking-[0.3em] uppercase">OF INTERNSHIP</span>
+              <div className="w-48 h-[2px] bg-[#d4af37]"></div>
+            </div>
+            {/* Diamond Decorators */}
+            <div className="flex justify-center items-center gap-2 mt-4 text-[#d4af37]">
+              <div className="w-2.5 h-2.5 bg-[#d4af37] rotate-45"></div>
+              <img src="/vnt-logo.png" alt="mini logo" className="w-6 h-6 object-contain opacity-50 sepia hue-rotate-15" />
+              <div className="w-2.5 h-2.5 bg-[#d4af37] rotate-45"></div>
+            </div>
+          </div>
 
-        {/* Main Content Container */}
-        <div className="relative z-10 w-full flex flex-col items-center text-center px-32 pt-20">
-           {/* Header Accent */}
-           <div className="w-12 h-1 bg-indigo-600 mb-6 rounded-full" />
-           
-           {/* Title */}
-           <h1 className="text-5xl font-bold uppercase tracking-[0.15em] text-[#000830] mb-6">Certificate of Completion</h1>
-           
-           <p className="text-lg italic text-gray-400 mb-4">This official document certifies that</p>
-           
-           {/* Recipient Name */}
-           <div className="mb-8 relative">
-              <h2 className="text-5xl font-bold text-[#000830] uppercase tracking-tight px-16 pb-3 inline-block">{candidateName}</h2>
-              <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#000830] to-transparent opacity-30" />
-           </div>
+          {/* Presented To */}
+          <p className="text-sm font-bold text-gray-500 tracking-[0.2em] uppercase mb-4 mt-2">This certificate is proudly presented to</p>
+          
+          <div className="w-3/4 flex flex-col items-center mb-8">
+            <h2 className="text-5xl font-serif italic text-[#1e293b] mb-2">{candidateName}</h2>
+            <div className="w-full h-[1px] bg-gray-400"></div>
+          </div>
 
-           {/* Body Content */}
-           <div className="max-w-2xl space-y-4 text-[15px] font-medium text-gray-700 leading-relaxed uppercase tracking-wide">
-              <p>has successfully completed <span className="text-[#000830] font-black">3 Months Internship</span> and <span className="text-[#000830] font-black">3 Months Professional Experience</span><br/>
-              in <span className="text-indigo-600 font-black underline decoration-indigo-200 underline-offset-4">{domain}</span></p>
-              
-              <p className="text-[12px] px-16 text-gray-500 italic lowercase normal-case tracking-normal">
-                During this period, the candidate demonstrated exceptional technical proficiency, dedication, and professional ethics in executing mission-critical projects at Verve Nova Technologies.
-              </p>
-              
-              <p className="text-lg italic text-gray-400 pt-4 normal-case tracking-normal">We wish them success in their future career.</p>
-           </div>
+          {/* Body Text */}
+          <div className="text-center max-w-3xl text-[16px] leading-relaxed text-gray-700 font-medium px-8">
+            <p>
+              For successfully completing the <strong>{domain}</strong> internship program at <strong>Verve Nova Technologies</strong>. 
+              The internship was conducted from <strong>{formattedStartDate}</strong> to <strong>{formattedEndDate}</strong>. 
+              During this period, the individual has shown dedication, consistency, and a strong willingness to learn and contribute.
+            </p>
+          </div>
 
-           {/* Footer Section */}
-           <div className="w-full flex justify-between items-end mt-16 px-8">
-              {/* Signature (Bottom Left) */}
-              <div className="flex flex-col items-start text-left min-w-[240px]">
-                 <img src="/signatures/sign.png" alt="Signature" className="h-14 object-contain mb-[-12px] ml-4 opacity-90" />
-                 <div className="w-full h-[1px] bg-gray-200 mb-2" />
-                 <p className="text-base font-black text-[#000830] uppercase tracking-tighter">Puneet Kushwaha</p>
-                 <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mt-0.5">Founder & CEO</p>
-                 <p className="text-[10px] font-bold text-gray-300 uppercase mt-0.5">Verve Nova Technologies</p>
+          {/* Footer Area */}
+          <div className="absolute bottom-12 w-full px-16 flex justify-between items-end">
+            
+            {/* Left Signature */}
+            <div className="flex flex-col items-center w-56 text-center">
+              <img src="/signatures/sign.png" alt="Signature" className="h-12 object-contain mb-2 opacity-90" />
+              <div className="w-full h-[1px] bg-[#d4af37] mb-2"></div>
+              <p className="font-bold text-[#0f172a] text-[15px]">Puneet Kushwaha</p>
+              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Founder & CEO</p>
+            </div>
+
+            {/* Center Stamp & Quote */}
+            <div className="flex flex-col items-center pb-2">
+              <div className="w-20 h-20 rounded-full border border-gray-300 flex flex-col items-center justify-center p-2 mb-4 relative">
+                {/* Circular Text using simple CSS approach or just stacked text */}
+                <p className="text-[5px] font-bold text-[#1e3a8a] uppercase tracking-widest text-center">Verve Nova</p>
+                <img src="/vnt-logo.png" alt="VNT Logo" className="w-6 h-6 object-contain my-1" />
+                <p className="text-[5px] font-bold text-[#1e3a8a] uppercase tracking-widest text-center">Technologies</p>
               </div>
-
-              {/* Document Details (Bottom Right) */}
-              <div className="text-right space-y-3 pb-1">
-                 <div className="flex flex-col gap-0.5">
-                    <p className="text-[10px] font-black text-gray-300 uppercase tracking-widest">Verification ID</p>
-                    <p className="text-[12px] font-bold text-gray-800 font-mono tracking-tighter">
-                       {verificationId.split('-').slice(0, 4).join('-').toUpperCase()}
-                    </p>
-                 </div>
-                 <div className="flex flex-col gap-0.5">
-                    <p className="text-[10px] font-black text-gray-300 uppercase tracking-widest">Issue Date</p>
-                    <p className="text-[12px] font-bold text-gray-800 font-mono tracking-tighter">
-                       {format(new Date(issuedAt), "dd.MM.yyyy").toUpperCase()}
-                    </p>
-                 </div>
+              <div className="flex items-center gap-4 text-gray-500">
+                <div className="w-16 h-[1px] bg-[#d4af37]"></div>
+                <p className="font-bold italic text-[#1e293b] text-sm">"Learn, Perform, Grow"</p>
+                <div className="w-16 h-[1px] bg-[#d4af37]"></div>
               </div>
-           </div>
+            </div>
+
+            {/* Right Signature (HR / Authorized) */}
+            <div className="flex flex-col items-center w-56 text-center">
+              <div className="h-12 w-full flex items-end justify-center mb-2">
+                 <span className="font-serif italic text-gray-400 text-xl">Verve Nova HR</span>
+              </div>
+              <div className="w-full h-[1px] bg-[#d4af37] mb-2"></div>
+              <p className="font-bold text-[#0f172a] text-[15px]">Human Resources</p>
+              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Authorized Signatory</p>
+            </div>
+            
+          </div>
+          
+          {/* Verification ID (Bottom Left Corner inside border) */}
+          <div className="absolute bottom-4 left-6 text-[8px] font-bold text-gray-400 uppercase tracking-widest">
+            Verification ID: {verificationId}
+          </div>
+
         </div>
       </div>
     );
