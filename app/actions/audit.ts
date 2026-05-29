@@ -42,6 +42,9 @@ export async function getDetailedAudit(applicationId: string) {
     };
   } catch (error: any) {
     console.error("Audit Retrieval Error:", error);
-    return { success: false, error: error.message };
+    if (error.name === "CastError") {
+      return { success: false, error: "Invalid application ID or record not found." };
+    }
+    return { success: false, error: "An error occurred while retrieving the audit." };
   }
 }
