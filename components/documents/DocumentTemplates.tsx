@@ -177,14 +177,13 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
             <img src="/vnt-logo.png" alt="VNT Logo" className="h-16 w-16 object-contain" />
             <div>
               <h1 className="text-3xl font-black text-[#1e3a8a] tracking-tight leading-none uppercase">Verve Nova</h1>
-              <p className="text-sm font-semibold text-[#1e3a8a]">Technologies & Digital Solutions</p>
+              <p className="text-[11px] font-bold tracking-[0.2em] text-[#1e3a8a] uppercase mt-1">Technologies</p>
             </div>
           </div>
           <div className="text-right text-xs text-[#1e3a8a] font-medium space-y-1">
-            <p className="font-bold text-sm">VERVE NOVA</p>
-            <p>Technologies & IT Services</p>
+            <p className="font-bold text-sm uppercase">Verve Nova Technologies</p>
             <p className="flex items-center justify-end gap-1"><span className="text-blue-500">🌐</span> www.vervenovatech.com</p>
-            <p className="flex items-center justify-end gap-1"><span className="text-blue-500">✉️</span> contact@vervenovatech.com</p>
+            <p className="flex items-center justify-end gap-1"><span className="text-blue-500">✉️</span> work.vervenova.lko@gmail.com</p>
             <p className="flex items-center justify-end gap-1"><span className="text-red-500">📍</span> India</p>
           </div>
         </div>
@@ -274,32 +273,14 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
       </div>
 
       {/* Footer / Signatures */}
-      <div className="flex justify-between items-end mt-12 pb-4">
+      <div className="flex justify-start items-end mt-12 pb-4">
         {/* Left Signature */}
         <div className="text-center w-48">
           <img src="/signatures/sign.png" alt="Signature" className="h-12 object-contain mx-auto mb-1 opacity-90" />
           <div className="w-full h-[1px] bg-[#1e3a8a] mb-2" />
           <p className="font-bold text-[#1e3a8a] text-sm">Puneet Kushwaha</p>
           <p className="text-xs text-gray-600">Founder & CEO</p>
-          <p className="text-xs text-gray-600">Verve Nova</p>
-        </div>
-
-        {/* Center Seal */}
-        <div className="w-24 h-24 rounded-full border-2 border-[#1e3a8a] flex flex-col items-center justify-center p-2">
-          <p className="text-[6px] font-bold text-[#1e3a8a] uppercase tracking-widest text-center" style={{ letterSpacing: '0.2em' }}>Verve Nova</p>
-          <img src="/vnt-logo.png" alt="VNT Logo" className="w-8 h-8 object-contain my-1" />
-          <p className="text-[6px] font-bold text-[#1e3a8a] uppercase tracking-widest text-center" style={{ letterSpacing: '0.1em' }}>Technologies</p>
-        </div>
-
-        {/* Right Signature (Candidate) */}
-        <div className="text-center w-48">
-          <div className="h-12 flex items-end justify-center pb-1">
-             <span className="font-serif italic text-gray-500">{candidateName.split(' ')[0]}</span>
-          </div>
-          <div className="w-full h-[1px] bg-[#1e3a8a] mb-2" />
-          <p className="font-bold text-[#1e3a8a] text-sm">{candidateName}</p>
-          <p className="text-xs text-gray-600">Candidate</p>
-          <p className="text-xs text-gray-600">Verve Nova</p>
+          <p className="text-xs text-gray-600">Verve Nova Technologies</p>
         </div>
       </div>
     </div>
