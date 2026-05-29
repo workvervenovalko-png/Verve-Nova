@@ -185,13 +185,25 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
 
         {/* Body Content */}
         <div className="space-y-6 text-[13px] leading-relaxed">
-          <p>
-            <strong>Dear {candidateName}, Congratulations!</strong>
-          </p>
-          
-          <p>
-            We are pleased to offer you the position of <strong>Intern</strong> at <strong>Verve Nova Technologies</strong>. We were impressed with your skills, passion, and enthusiasm, and we believe you will be a great addition to our team.
-          </p>
+          {type === 'Offer Letter' ? (
+            <>
+              <p>
+                <strong>Dear {candidateName}, Congratulations!</strong>
+              </p>
+              <p>
+                We are pleased to offer you the position of <strong>Intern</strong> at <strong>Verve Nova Technologies</strong>. We were impressed with your skills, passion, and enthusiasm, and we believe you will be a great addition to our team.
+              </p>
+            </>
+          ) : (
+            <>
+              <p>
+                <strong>Dear {candidateName}, Welcome Aboard!</strong>
+              </p>
+              <p>
+                This letter serves as formal confirmation of your joining as an <strong>Intern</strong> at <strong>Verve Nova Technologies</strong>. We are thrilled to officially welcome you to the team and look forward to working together.
+              </p>
+            </>
+          )}
 
           {/* INTERNSHIP DETAILS */}
           <div>
