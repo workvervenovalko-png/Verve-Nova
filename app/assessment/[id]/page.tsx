@@ -2,6 +2,8 @@ import { getAssessmentState } from "@/app/actions/assessment";
 import { getQuestionsForRole } from "@/lib/assessment-questions";
 import AssessmentClient from "./AssessmentClient";
 
+export const dynamic = "force-dynamic";
+
 export default async function AssessmentPage({ params }: { params: { id: string } }) {
   const stateRes = await getAssessmentState(params.id);
 

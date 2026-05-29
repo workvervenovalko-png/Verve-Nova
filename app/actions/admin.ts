@@ -94,7 +94,8 @@ export async function updateApplicationStatus(appId: string, status: string) {
         const { resend } = await import("@/lib/resend");
         const { getAssessmentInviteTemplate } = await import("@/lib/mail-templates");
         
-        const assessmentLink = `https://vervenovatech.com/assessment/${app._id}`;
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://vervenovatech.com';
+        const assessmentLink = `${baseUrl}/assessment/${app._id}`;
         const mailRes = await resend.emails.send({
           from: 'Verve Nova Tech <careers@vervenovatech.com>',
           to: targetEmail,
