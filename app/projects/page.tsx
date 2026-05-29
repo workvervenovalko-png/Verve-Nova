@@ -9,14 +9,14 @@ import Link from "next/link";
 export default function ProjectsPage() {
   const allProjects = [
     {
-      title: "Verve Ledger",
+      title: "VNT Billzer",
       category: "SaaS Product",
       desc: "Institutional-grade SaaS billing and inventory management platform for retail leaders and business owners.",
       image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=2072&auto=format&fit=crop",
       link: "https://verve-ledger.vercel.app/",
       icon: LayoutDashboard,
       features: ["Neural Analytics", "Unified POS", "Stock Management"],
-      isProduct: true
+      isProduct: false
     },
     {
       title: "Verve CRM",
@@ -26,7 +26,7 @@ export default function ProjectsPage() {
       link: "https://www.vervenovatechcrm.online/login",
       icon: Users,
       features: ["Sales Automation", "Lead Tracking", "Team Insights"],
-      isProduct: true
+      isProduct: false
     },
     {
       title: "Advance Transcription",
@@ -49,12 +49,13 @@ export default function ProjectsPage() {
       isProduct: false
     },
     {
-      title: "Global Core Banking Migration",
-      category: "Enterprise Solutions",
-      desc: "Architecting a multi-region cloud migration for a Tier-1 financial institution, handling 10M+ daily active users.",
-      image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop",
+      title: "Chakshura",
+      category: "Strategic Intelligence",
+      desc: "AI-Powered Strategic Foresight & Real-Time Intelligence Radar for Global Defence Networks. (SIH Winning Project for DRDO)",
+      image: "https://images.unsplash.com/photo-1517420704952-d9f39e95b43e?q=80&w=2070&auto=format&fit=crop",
+      link: "https://chak-shuraa.vercel.app/",
       icon: Globe,
-      features: ["Cloud Migration", "High Availability", "Security First"],
+      features: ["Patent Intelligence", "Market Analytics", "TRL Prediction"],
       isProduct: false
     }
   ];

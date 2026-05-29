@@ -4,22 +4,22 @@ import { ArrowUpRight } from "lucide-react";
 
 const projects = [
   {
-    title: "Global Core Banking Migration",
-    category: "Enterprise Solutions",
-    description: "Architecting a multi-region cloud migration for a Tier-1 financial institution, handling 10M+ daily active users.",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop",
+    title: "VNT Billzer",
+    category: "SaaS Product",
+    description: "Institutional-grade SaaS billing and inventory management platform for retail leaders and business owners.",
+    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=2072&auto=format&fit=crop",
   },
   {
-    title: "EcoSys Smart Grid AI",
-    category: "AI & Infrastructure",
-    description: "Neural network-based energy distribution system for metropolitan areas, reducing waste by 24% annually.",
-    image: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=2070&auto=format&fit=crop",
+    title: "Verve CRM",
+    category: "SaaS Product",
+    description: "Intelligent client relationship management system designed to automate sales and maximize lead retention.",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop",
   },
   {
-    title: "OmniChannel Retail Mesh",
-    category: "Digital Experience",
-    description: "Unified commerce engine integrating global supply chains with real-time consumer touchpoints across 40 countries.",
-    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=2070&auto=format&fit=crop",
+    title: "Chakshura",
+    category: "Strategic Intelligence",
+    description: "AI-Powered Strategic Foresight & Real-Time Intelligence Radar for Global Defence Networks. (SIH Winning Project for DRDO)",
+    image: "https://images.unsplash.com/photo-1517420704952-d9f39e95b43e?q=80&w=2070&auto=format&fit=crop",
   },
 ];
 

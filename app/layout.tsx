@@ -125,7 +125,7 @@ export default function RootLayout({
                 ],
                 "contactPoint": {
                   "@type": "ContactPoint",
-                  "telephone": "+91-XXXXXXXXXX", // Replace with actual number if known
+                  "telephone": "+91-7380663685", // Replace with actual number if known
                   "contactType": "customer service",
                   "areaServed": "IN",
                   "availableLanguage": ["en", "Hindi"]
