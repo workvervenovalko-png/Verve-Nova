@@ -112,15 +112,17 @@ export default function DocumentPreviewPage() {
         </Button>
       </div>
 
-      <div ref={documentRef} className="shadow-2xl shadow-black/50 overflow-hidden rounded-sm bg-white">
-        <DocumentTemplates 
-          type={data.type}
-          candidateName={data.candidateName}
-          vnId={data.vnId}
-          verificationId={data.verificationId}
-          issuedAt={data.issuedAt}
-          metadata={data.metadata}
-        />
+      <div className="shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] overflow-hidden rounded-sm">
+        <div ref={documentRef} className="bg-[#ffffff]">
+          <DocumentTemplates 
+            type={data.type}
+            candidateName={data.candidateName}
+            vnId={data.vnId}
+            verificationId={data.verificationId}
+            issuedAt={data.issuedAt}
+            metadata={data.metadata}
+          />
+        </div>
       </div>
 
       <div className="mt-12 text-center text-white/20 max-w-lg">

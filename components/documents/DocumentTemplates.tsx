@@ -43,7 +43,7 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
     const formattedEndDate = format(end, "dd MMM yyyy");
 
     return (
-      <div className="w-[1000px] h-[750px] bg-white text-[#1e293b] p-6 relative font-sans">
+      <div className="w-[1000px] h-[750px] bg-[#ffffff] text-[#1e293b] p-6 relative font-sans">
         {/* Outer Gold Border */}
         <div className="w-full h-full border-[4px] border-[#d4af37] rounded-3xl p-12 relative flex flex-col items-center">
           
@@ -149,7 +149,7 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
   const formattedEndDate = format(end, "dd MMM yyyy");
 
   return (
-    <div className="w-[800px] min-h-[1350px] bg-white text-[#1e293b] p-12 font-sans relative flex flex-col justify-between">
+    <div className="w-[800px] min-h-[1350px] bg-[#ffffff] text-[#1e293b] p-12 font-sans relative flex flex-col justify-between">
       <div>
         {/* Letterhead Header */}
         <div className="flex justify-between items-start mb-8">
