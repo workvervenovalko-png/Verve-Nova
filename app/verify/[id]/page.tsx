@@ -42,29 +42,23 @@ export default function DocumentPreviewPage() {
       // Small delay to ensure everything is rendered
       await new Promise(resolve => setTimeout(resolve, 500));
 
-      const html2canvas = (window as any).html2canvas;
-      const jsPDF = (window as any).jspdf.jsPDF;
+      const html2pdf = (window as any).html2pdf;
 
-      if (!html2canvas || !jsPDF) {
+      if (!html2pdf) {
         toast.error("PDF engine is still loading. Please try again in a few seconds.", { id: toastId });
         setDownloading(false);
         return;
       }
 
-      const canvas = await html2canvas(documentRef.current, {
-        scale: 2,
-        useCORS: true,
-      });
+      const opt = {
+        margin:       0,
+        filename:     `VNT-${data.type.replace(/\s+/g, '-')}-${data.candidateName.replace(/\s+/g, '-')}.pdf`,
+        image:        { type: 'jpeg', quality: 1 },
+        html2canvas:  { scale: 2, useCORS: true },
+        jsPDF:        { unit: 'px', format: data.type === 'Certificate' ? [1000, 750] : [800, 1131], orientation: data.type === 'Certificate' ? 'landscape' : 'portrait' }
+      };
 
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF({
-        orientation: data.type === 'Certificate' ? 'landscape' : 'portrait',
-        unit: 'px',
-        format: [canvas.width / 2, canvas.height / 2]
-      });
-
-      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width / 2, canvas.height / 2);
-      pdf.save(`VNT-${data.type.replace(/\s+/g, '-')}-${data.candidateName.replace(/\s+/g, '-')}.pdf`);
+      await html2pdf().set(opt).from(documentRef.current).save();
 
       toast.success("Downloaded successfully!", { id: toastId });
     } catch (err) {
@@ -94,8 +88,7 @@ export default function DocumentPreviewPage() {
 
   return (
     <>
-      <Script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" strategy="lazyOnload" />
-      <Script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" strategy="lazyOnload" />
+      <Script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" strategy="lazyOnload" />
       <main className="min-h-screen bg-[#111111] py-20 px-6 flex flex-col items-center">
       <div className="w-full max-w-[800px] flex justify-between items-center mb-8">
         <Button 
