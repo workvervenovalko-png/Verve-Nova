@@ -33,46 +33,40 @@ export default function DocumentPreviewPage() {
     fetchData();
   }, [id]);
 
-  useEffect(() => {
-    if (data && pdfEngineLoaded && documentRef.current && !pdfUrl) {
-      const generatePdfBlob = async () => {
-        setDownloading(true);
-        try {
-          await new Promise(resolve => setTimeout(resolve, 800)); // wait for images
-          const html2pdf = (window as any).html2pdf;
-          if (!html2pdf) return;
+  const handleDownloadPdf = async () => {
+    if (!documentRef.current) return;
+    
+    setDownloading(true);
+    const toastId = toast.loading("Generating high-quality PDF...");
 
-          const opt = {
-            margin:       0,
-            filename:     `VNT-${data.type.replace(/\s+/g, '-')}-${data.candidateName.replace(/\s+/g, '-')}.pdf`,
-            image:        { type: 'jpeg', quality: 1 },
-            html2canvas:  { scale: 2, useCORS: true },
-            jsPDF:        { unit: 'px', format: data.type === 'Certificate' ? [1000, 750] : [800, 1131], orientation: data.type === 'Certificate' ? 'landscape' : 'portrait' },
-            pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
-          };
+    try {
+      await new Promise(resolve => setTimeout(resolve, 300));
 
-          const worker = html2pdf().set(opt).from(documentRef.current);
-          const url = await worker.outputPdf('datauristring');
-          setPdfUrl(url);
-        } catch (err) {
-          console.error("Failed to generate PDF Data URI:", err);
-        } finally {
-          setDownloading(false);
-        }
+      const html2pdf = (window as any).html2pdf;
+
+      if (!html2pdf) {
+        toast.error("PDF engine is still loading. Please try again.", { id: toastId });
+        setDownloading(false);
+        return;
+      }
+
+      const opt = {
+        margin:       0,
+        filename:     `VNT-${data.type.replace(/\s+/g, '-')}-${data.candidateName.replace(/\s+/g, '-')}.pdf`,
+        image:        { type: 'jpeg', quality: 1 },
+        html2canvas:  { scale: 2, useCORS: true },
+        jsPDF:        { unit: 'px', format: data.type === 'Certificate' ? [1000, 750] : [800, 1131], orientation: data.type === 'Certificate' ? 'landscape' : 'portrait' },
+        pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
       };
-      generatePdfBlob();
-    }
-  }, [data, pdfEngineLoaded, pdfUrl]);
 
-  const handleDownloadPdf = () => {
-    if (pdfUrl) {
-      const link = document.createElement('a');
-      link.href = pdfUrl;
-      link.download = `VNT-${data.type.replace(/\s+/g, '-')}-${data.candidateName.replace(/\s+/g, '-')}.pdf`;
-      link.click();
-      toast.success("Downloaded successfully!");
-    } else {
-      toast.error("PDF is still generating. Please wait a moment.");
+      await html2pdf().set(opt).from(documentRef.current).save();
+
+      toast.success("Downloaded successfully!", { id: toastId });
+    } catch (err) {
+      console.error("Failed to generate PDF:", err);
+      toast.error("Failed to download PDF. Try again.", { id: toastId });
+    } finally {
+      setDownloading(false);
     }
   };
 
@@ -95,29 +89,9 @@ export default function DocumentPreviewPage() {
 
   return (
     <>
-      <Script 
-        src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" 
-        strategy="afterInteractive" 
-        onReady={() => setPdfEngineLoaded(true)}
-        onLoad={() => setPdfEngineLoaded(true)} 
-      />
-      
-      {/* Hidden HTML Template for PDF Generation */}
-      <div className="absolute top-0 left-[-9999px] opacity-0 -z-50 overflow-hidden pointer-events-none">
-        <div ref={documentRef} className="bg-[#ffffff]">
-          <DocumentTemplates 
-            type={data.type}
-            candidateName={data.candidateName}
-            vnId={data.vnId}
-            verificationId={data.verificationId}
-            issuedAt={data.issuedAt}
-            metadata={data.metadata}
-          />
-        </div>
-      </div>
-
-      <main className="min-h-screen bg-[#111111] py-20 px-6 flex flex-col items-center">
-        <div className="w-full max-w-[1000px] flex justify-between items-center mb-8">
+      <Script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" strategy="lazyOnload" />
+      <main className="min-h-screen bg-[#111111] py-20 px-6 flex flex-col items-center overflow-x-auto">
+        <div className="w-full max-w-[1000px] flex justify-between items-center mb-8 sticky left-0">
           <Button 
             onClick={() => router.back()}
             variant="ghost" 
@@ -127,7 +101,7 @@ export default function DocumentPreviewPage() {
           </Button>
           <Button 
             onClick={handleDownloadPdf}
-            disabled={downloading || !pdfUrl}
+            disabled={downloading}
             className="bg-indigo-600 hover:bg-indigo-500 text-white px-6 font-bold uppercase text-[10px] tracking-widest flex items-center gap-2"
           >
             {downloading ? (
@@ -139,26 +113,28 @@ export default function DocumentPreviewPage() {
           </Button>
         </div>
 
-        {/* PDF Viewer */}
-        <div className="w-full max-w-[1000px] h-[85vh] bg-[#1a1a1a] rounded-lg shadow-2xl overflow-hidden border border-white/10 flex items-center justify-center">
-          {pdfUrl ? (
-            <object 
-              data={pdfUrl} 
-              type="application/pdf"
-              className="w-full h-full border-none"
-              title="Document Preview"
-            >
-              <iframe src={pdfUrl} className="w-full h-full border-none" title="Document Preview" />
-            </object>
-          ) : (
-            <div className="flex flex-col items-center text-white/50">
-              <VNTLoader size="lg" />
-              <p className="mt-4 text-xs tracking-[0.2em] uppercase font-bold">Rendering Document...</p>
+        {/* PDF Viewer Styling Wrapper */}
+        <div className="w-full max-w-[1050px] bg-[#2a2a2a] p-8 rounded-lg border border-white/10 flex justify-center shadow-2xl relative">
+          <div className="absolute top-4 right-4 flex gap-2">
+            <div className="w-3 h-3 rounded-full bg-white/20"></div>
+            <div className="w-3 h-3 rounded-full bg-white/20"></div>
+            <div className="w-3 h-3 rounded-full bg-white/20"></div>
+          </div>
+          <div className="shadow-[0_25px_50px_-12px_rgba(0,0,0,0.8)] overflow-hidden rounded-sm border border-black/20">
+            <div ref={documentRef} className="bg-[#ffffff]">
+              <DocumentTemplates 
+                type={data.type}
+                candidateName={data.candidateName}
+                vnId={data.vnId}
+                verificationId={data.verificationId}
+                issuedAt={data.issuedAt}
+                metadata={data.metadata}
+              />
             </div>
-          )}
+          </div>
         </div>
 
-        <div className="mt-12 text-center text-white/20 max-w-lg">
+        <div className="mt-12 text-center text-white/20 max-w-lg sticky left-0">
           <p className="text-[10px] font-bold uppercase tracking-[0.3em]">Official Digital Certification // Verve Nova Technologies</p>
           <p className="text-[8px] mt-2 italic">This document is digitally verified and requires no physical signature for authentication in its digital form. For official verification, visit vervenovatech.com/verify.</p>
         </div>
