@@ -149,7 +149,7 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
   const formattedEndDate = format(end, "dd MMM yyyy");
 
   return (
-    <div className="w-[800px] min-h-[1050px] bg-white text-[#1e293b] p-12 font-sans relative flex flex-col justify-between">
+    <div className="w-[800px] min-h-[1350px] bg-white text-[#1e293b] p-12 font-sans relative flex flex-col justify-between">
       <div>
         {/* Letterhead Header */}
         <div className="flex justify-between items-start mb-8">
@@ -191,7 +191,7 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
                 <strong>Dear {candidateName}, Congratulations!</strong>
               </p>
               <p>
-                We are pleased to offer you the position of <strong>Intern</strong> at <strong>Verve Nova Technologies</strong>. We were impressed with your skills, passion, and enthusiasm, and we believe you will be a great addition to our team.
+                We are pleased to offer you the position of <strong>{domain} Intern</strong> at <strong>Verve Nova Technologies</strong>. We were impressed with your skills, passion, and enthusiasm. This internship will provide hands-on experience and exposure to real-time projects.
               </p>
             </>
           ) : (
@@ -200,7 +200,7 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
                 <strong>Dear {candidateName}, Welcome Aboard!</strong>
               </p>
               <p>
-                This letter serves as formal confirmation of your joining as an <strong>Intern</strong> at <strong>Verve Nova Technologies</strong>. We are thrilled to officially welcome you to the team and look forward to working together.
+                This letter serves as formal confirmation of your joining as a <strong>{domain} Intern</strong> at <strong>Verve Nova Technologies</strong>. We are thrilled to officially welcome you to the team and look forward to working closely with you on real-time projects.
               </p>
             </>
           )}
@@ -212,10 +212,10 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
             </h3>
             <div className="grid grid-cols-[160px_1fr] gap-y-2 font-medium pl-6">
               <p>Position</p>
-              <p>: Intern</p>
+              <p>: {domain} Intern</p>
               
-              <p>Department</p>
-              <p>: {domain}</p>
+              <p>Internship Type</p>
+              <p>: Free / Unpaid</p>
               
               <p>Internship Duration</p>
               <p>: 3 Months</p>
@@ -234,14 +234,39 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
           {/* ROLE & RESPONSIBILITIES */}
           <div>
             <h3 className="text-sm font-bold text-[#1d4ed8] uppercase tracking-wide flex items-center gap-2 mb-3">
-              <span>👤</span> ROLE & RESPONSIBILITIES
+              <span>👤</span> ROLES & RESPONSIBILITIES
             </h3>
-            <ul className="list-disc list-inside pl-2 space-y-1">
-              <li>Work on assigned tasks and projects as per the guidance of the project coordinator.</li>
-              <li>Collaborate with the team to deliver high-quality results.</li>
-              <li>Learn, implement, and contribute innovative ideas.</li>
-              <li>Maintain professionalism, discipline, and commitment throughout the internship.</li>
+            <p className="mb-2 pl-2">Your responsibilities include (and are not limited to):</p>
+            <ul className="list-disc list-inside pl-2 space-y-1 text-gray-700">
+              <li>Work on company-assigned {domain.toLowerCase()} projects and tasks.</li>
+              <li>Collaborate with the technical team, web designers, and project coordinators to deliver high-quality results and match design intents.</li>
+              <li>Maintain project documentation, refine specifications, and perform basic testing.</li>
+              <li>Stay plugged into emerging technologies and industry trends and apply them to operations.</li>
+              <li>Be responsible for maintaining, expanding, and scaling assigned modules.</li>
             </ul>
+          </div>
+
+          {/* PROJECT-BASED WORK & BENEFITS */}
+          <div className="grid grid-cols-2 gap-8">
+            <div>
+              <h3 className="text-sm font-bold text-[#92400e] uppercase tracking-wide flex items-center gap-2 mb-3">
+                <span>🚀</span> PROJECT-BASED WORK
+              </h3>
+              <p className="pl-2 text-gray-700">
+                You will work on live projects assigned by Verve Nova Technologies. You are expected to complete tasks with responsibility, discipline, and clear communication.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-sm font-bold text-[#1d4ed8] uppercase tracking-wide flex items-center gap-2 mb-3">
+                <span>🎁</span> BENEFITS
+              </h3>
+              <ul className="list-disc list-inside pl-2 space-y-1 text-gray-700">
+                <li>Real-time practical experience</li>
+                <li>Internship Certificate upon completion</li>
+                <li>Letter of Recommendation (performance-based)</li>
+                <li>Priority consideration for future paid roles</li>
+              </ul>
+            </div>
           </div>
 
           {/* TERMS & CONDITIONS */}
@@ -249,30 +274,49 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
             <h3 className="text-sm font-bold text-[#92400e] uppercase tracking-wide flex items-center gap-2 mb-3">
               <span>📄</span> TERMS & CONDITIONS
             </h3>
-            <ol className="list-decimal list-inside pl-2 space-y-1">
-              <li>This internship is purely for educational and skill development purposes.</li>
-              <li>You are expected to maintain confidentiality of all company information.</li>
-              <li>Any misconduct or failure to meet expectations may result in termination of the internship.</li>
-              <li>Upon successful completion, you will be awarded a Certificate of Internship.</li>
+            <p className="mb-2 pl-2">In performing your responsibilities and duties, you must serve the Company:</p>
+            <ol className="list-[lower-alpha] list-inside pl-4 space-y-1 mb-3 text-gray-700">
+              <li>faithfully and diligently, exercising all due care;</li>
+              <li>acting in the best interests of the Company at all times;</li>
+              <li>using best endeavors to protect and promote our good name and reputation;</li>
             </ol>
+            <ul className="list-decimal list-inside pl-2 space-y-1 text-gray-700">
+              <li>This internship is purely for educational and skill development purposes (Unpaid).</li>
+              <li>You are expected to maintain strict confidentiality of all company information and assets.</li>
+              <li>You agree to comply with all Company policies. Non-compliance or failure to complete assigned tasks may lead to the termination of your internship without notice.</li>
+              <li>Certificate will be awarded only after 3 months and successful project completion.</li>
+            </ul>
           </div>
 
-          <p className="pt-2">
-            We are excited to have you on board and look forward to a productive and rewarding journey together.
-          </p>
-          <p className="font-bold">Welcome to the Verve Nova family!</p>
         </div>
       </div>
 
-      {/* Footer / Signatures */}
-      <div className="flex justify-start items-end mt-12 pb-4">
-        {/* Left Signature */}
-        <div className="text-center w-48">
-          <img src="/signatures/sign.png" alt="Signature" className="h-12 object-contain mx-auto mb-1 opacity-90" />
-          <div className="w-full h-[1px] bg-[#1e3a8a] mb-2" />
-          <p className="font-bold text-[#1e3a8a] text-sm">Puneet Kushwaha</p>
-          <p className="text-xs text-gray-600">Founder & CEO</p>
-          <p className="text-xs text-gray-600">Verve Nova Technologies</p>
+      {/* Footer / Acceptance / Signatures */}
+      <div className="mt-12 pt-8 border-t border-gray-200">
+        <h3 className="text-sm font-bold text-[#1e3a8a] uppercase tracking-wide mb-4">ACCEPTANCE</h3>
+        <p className="text-[12px] text-gray-700 leading-relaxed mb-8">
+          I have had reasonable opportunity to evaluate and where necessary seek advice about this internship and understand and fully accept the conditions of my internship as detailed above. I confirm that my Date of Joining will be <strong>{formattedStartDate}</strong>.
+          <br /><br />
+          Upon completing this internship, you will be given a Certificate of Internship. Moreover, if your performance is above average, you can also request a Letter of Recommendation (LoR). I have read and accept the terms and conditions of this {type.toLowerCase()}.
+        </p>
+        
+        <div className="flex justify-between items-end">
+          {/* Intern Signature Block */}
+          <div className="w-64 text-left">
+            <div className="w-full h-[1px] bg-gray-400 mb-2" />
+            <p className="font-bold text-[#1e293b] text-[13px]">Signature: __________________</p>
+            <p className="text-[13px] font-medium text-gray-600 mt-1">Name: {candidateName}</p>
+            <p className="text-[13px] font-medium text-gray-600 mt-1">Date: ____________________</p>
+          </div>
+
+          {/* Company Signature */}
+          <div className="text-center w-48">
+            <img src="/signatures/sign.png" alt="Signature" className="h-12 object-contain mx-auto mb-1 opacity-90" />
+            <div className="w-full h-[1px] bg-[#1e3a8a] mb-2" />
+            <p className="font-bold text-[#1e3a8a] text-[13px]">Puneet Kushwaha</p>
+            <p className="text-[11px] text-gray-600 uppercase tracking-widest">Founder & CEO</p>
+            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">Verve Nova Technologies</p>
+          </div>
         </div>
       </div>
     </div>
