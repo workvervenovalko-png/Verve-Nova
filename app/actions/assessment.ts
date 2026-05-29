@@ -14,6 +14,15 @@ export async function getAssessmentState(appId: string) {
       return { success: false, error: "Candidate is not in the Assessment stage." };
     }
 
+    if (app.assessment?.invitedAt && app.assessment.status !== 'Completed') {
+      const now = new Date();
+      const diffMs = now.getTime() - new Date(app.assessment.invitedAt).getTime();
+      const diffHrs = diffMs / (1000 * 60 * 60);
+      if (diffHrs > 48) {
+        return { success: false, error: "Assessment link has expired (48-hour limit)." };
+      }
+    }
+
     return { 
       success: true, 
       data: {
@@ -35,6 +44,15 @@ export async function startAssessment(appId: string) {
 
     if (app.status !== 'Assessment') {
       return { success: false, error: "Candidate is not in the Assessment stage." };
+    }
+
+    if (app.assessment?.invitedAt) {
+      const now = new Date();
+      const diffMs = now.getTime() - new Date(app.assessment.invitedAt).getTime();
+      const diffHrs = diffMs / (1000 * 60 * 60);
+      if (diffHrs > 48) {
+        return { success: false, error: "Assessment link has expired (48-hour limit)." };
+      }
     }
 
     if (app.assessment?.status === 'Completed') {

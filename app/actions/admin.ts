@@ -54,7 +54,14 @@ export async function updateApplicationStatus(appId: string, status: string) {
     }
 
     await dbConnect();
-    const app = await VerveApplication.findByIdAndUpdate(appId, { status }, { new: true }).populate('userId', 'name email');
+    
+    let updatePayload: any = { status };
+    if (status === 'Assessment') {
+      updatePayload['assessment.invitedAt'] = new Date();
+      updatePayload['assessment.status'] = 'Pending';
+    }
+
+    const app = await VerveApplication.findByIdAndUpdate(appId, updatePayload, { new: true }).populate('userId', 'name email');
     
     // Send Status Update Email (Accepted/Rejected)
     if (app && (status === 'Accepted' || status === 'Rejected')) {

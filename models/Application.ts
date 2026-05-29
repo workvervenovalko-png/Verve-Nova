@@ -60,6 +60,7 @@ const ApplicationSchema = new Schema({
   assessment: {
     score: { type: Number },
     totalQuestions: { type: Number },
+    invitedAt: { type: Date },
     startedAt: { type: Date },
     submittedAt: { type: Date },
     status: { type: String, enum: ['Pending', 'In Progress', 'Completed'], default: 'Pending' }

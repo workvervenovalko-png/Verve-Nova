@@ -235,6 +235,7 @@ export default function AssessmentClient({ appId, candidateName, roleSlug, quest
           </Button>
           
           <Button
+            disabled={answers[currentQ.id] === undefined}
             onClick={() => {
               if (currentQuestionIndex === questions.length - 1) {
                 handleManualSubmit();
@@ -242,9 +243,9 @@ export default function AssessmentClient({ appId, candidateName, roleSlug, quest
                 setCurrentQuestionIndex(p => Math.min(questions.length - 1, p + 1));
               }
             }}
-            className={`${currentQuestionIndex === questions.length - 1 ? 'bg-emerald-600 hover:bg-emerald-500' : 'bg-white/10 hover:bg-white/20'} text-white uppercase text-[10px] tracking-widest font-bold h-12 px-8 border-0`}
+            className={`${currentQuestionIndex === questions.length - 1 ? 'bg-emerald-600 hover:bg-emerald-500' : 'bg-indigo-600 hover:bg-indigo-500'} ${answers[currentQ.id] === undefined ? 'opacity-50 cursor-not-allowed' : ''} text-white uppercase text-[10px] tracking-widest font-bold h-12 px-8 border-0 transition-all`}
           >
-            {currentQuestionIndex === questions.length - 1 ? "Submit" : "Next"}
+            {currentQuestionIndex === questions.length - 1 ? "Submit Assessment" : "Next Question"}
           </Button>
         </div>
       </main>
