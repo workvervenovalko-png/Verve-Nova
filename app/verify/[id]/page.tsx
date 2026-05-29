@@ -7,7 +7,8 @@ import { ArrowLeft, Download, Image as ImageIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { VNTLoader } from "@/components/vnt-loader";
 import { useRef } from "react";
-import { toPng } from "html-to-image";
+import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
 import { toast } from "sonner";
 
 export default function DocumentPreviewPage() {
@@ -32,31 +33,35 @@ export default function DocumentPreviewPage() {
     fetchData();
   }, [id]);
 
-  const handleDownloadImage = async () => {
+  const handleDownloadPdf = async () => {
     if (!documentRef.current) return;
     
     setDownloading(true);
-    const toastId = toast.loading("Generating high-quality image...");
+    const toastId = toast.loading("Generating high-quality PDF...");
 
     try {
       // Small delay to ensure everything is rendered
       await new Promise(resolve => setTimeout(resolve, 500));
 
-      const dataUrl = await toPng(documentRef.current, {
-        quality: 1.0,
-        pixelRatio: 2, // Higher resolution
-        cacheBust: true,
+      const canvas = await html2canvas(documentRef.current, {
+        scale: 2,
+        useCORS: true,
       });
 
-      const link = document.createElement('a');
-      link.download = `VNT-${data.type.replace(/\s+/g, '-')}-${data.candidateName.replace(/\s+/g, '-')}.png`;
-      link.href = dataUrl;
-      link.click();
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({
+        orientation: data.type === 'Certificate' ? 'landscape' : 'portrait',
+        unit: 'px',
+        format: [canvas.width / 2, canvas.height / 2]
+      });
+
+      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width / 2, canvas.height / 2);
+      pdf.save(`VNT-${data.type.replace(/\s+/g, '-')}-${data.candidateName.replace(/\s+/g, '-')}.pdf`);
 
       toast.success("Downloaded successfully!", { id: toastId });
     } catch (err) {
-      console.error("Failed to generate image:", err);
-      toast.error("Failed to download image. Try again.", { id: toastId });
+      console.error("Failed to generate PDF:", err);
+      toast.error("Failed to download PDF. Try again.", { id: toastId });
     } finally {
       setDownloading(false);
     }
@@ -90,7 +95,7 @@ export default function DocumentPreviewPage() {
           <ArrowLeft className="w-4 h-4" /> Back to Verification
         </Button>
         <Button 
-          onClick={handleDownloadImage}
+          onClick={handleDownloadPdf}
           disabled={downloading}
           className="bg-indigo-600 hover:bg-indigo-500 text-white px-6 font-bold uppercase text-[10px] tracking-widest flex items-center gap-2"
         >
@@ -99,7 +104,7 @@ export default function DocumentPreviewPage() {
           ) : (
             <Download className="w-4 h-4" />
           )}
-          {downloading ? "Generating..." : "Save as Image"}
+          {downloading ? "Generating..." : "Save as PDF"}
         </Button>
       </div>
 
