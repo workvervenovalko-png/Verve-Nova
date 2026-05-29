@@ -66,7 +66,7 @@ export async function updateApplicationStatus(appId: string, status: string) {
         const { getStatusTemplate } = await import("@/lib/mail-templates");
         
         const mailRes = await resend.emails.send({
-          from: 'Verve Nova Tech <work.vervenova.lko@gmail.com>',
+          from: 'Verve Nova Tech <careers@vervenovatech.com>',
           to: targetEmail,
           subject: `APPLICATION ${status.toUpperCase()} // VERVE NOVA`,
           html: getStatusTemplate((app.userId as any).name, status),
@@ -110,7 +110,7 @@ export async function scheduleInterview(appId: string, interviewDate?: string, i
         const { getInterviewTemplate } = await import("@/lib/mail-templates");
         
         const mailRes = await resend.emails.send({
-          from: 'Verve Nova Tech <work.vervenova.lko@gmail.com>',
+          from: 'Verve Nova Tech <careers@vervenovatech.com>',
           to: targetEmail,
           subject: 'INTERVIEW PROTOCOL INITIALIZED // VERVE NOVA',
           html: getInterviewTemplate((app.userId as any).name, new Date(interviewDate).toLocaleString(), interviewLink),
@@ -258,7 +258,7 @@ export async function issueDocument(formData: FormData) {
     }
 
     const mailRes = await resend.emails.send({
-      from: 'Verve Nova Technologies <work.vervenova.lko@gmail.com>',
+      from: 'Verve Nova Technologies <onboarding@vervenovatech.com>',
       to: email,
       subject: subject,
       html: htmlContent,
@@ -330,7 +330,7 @@ export async function generateDocument(appId: string, docType: string, metadata:
       }
       
       await resend.emails.send({
-        from: 'Verve Nova Technologies <work.vervenova.lko@gmail.com>',
+        from: 'Verve Nova Technologies <onboarding@vervenovatech.com>',
         to: targetEmail,
         subject: `Internship ${newDoc.type} // Verve Nova`,
         html: emailHtml,
@@ -338,7 +338,7 @@ export async function generateDocument(appId: string, docType: string, metadata:
 
       // Admin CC Notification
       await resend.emails.send({
-        from: 'Verve Nova Tech <work.vervenova.lko@gmail.com>',
+        from: 'Verve Nova Tech <system@vervenovatech.com>',
         to: 'work.vervenova.lko@gmail.com',
         subject: `DOC ISSUED: ${docName} // ${targetName}`,
         html: `

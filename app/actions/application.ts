@@ -36,7 +36,7 @@ export async function submitApplication(data: any) {
       if (user) {
         // Mail to Candidate
         await resend.emails.send({
-          from: 'Verve Nova Tech <work.vervenova.lko@gmail.com>',
+          from: 'Verve Nova Tech <careers@vervenovatech.com>',
           to: user.email,
           subject: 'APPLICATION STAGED // VERVE NOVA',
           html: getApplicationTemplate(user.name, data.roleSlug),
@@ -44,7 +44,7 @@ export async function submitApplication(data: any) {
 
         // Notification to Admin
         await resend.emails.send({
-          from: 'Verve Nova Tech <work.vervenova.lko@gmail.com>',
+          from: 'Verve Nova Tech <system@vervenovatech.com>',
           to: 'work.vervenova.lko@gmail.com',
           subject: `NEW APPLICATION: ${user.name} // ${data.roleSlug.toUpperCase()}`,
           html: `

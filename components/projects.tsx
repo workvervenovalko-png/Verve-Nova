@@ -7,19 +7,19 @@ const projects = [
     title: "VNT Billzer",
     category: "SaaS Product",
     description: "Institutional-grade SaaS billing and inventory management platform for retail leaders and business owners.",
-    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=2072&auto=format&fit=crop",
+    image: "/projects/billzer.png",
   },
   {
     title: "Verve CRM",
     category: "SaaS Product",
     description: "Intelligent client relationship management system designed to automate sales and maximize lead retention.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop",
+    image: "/projects/crm.png",
   },
   {
     title: "Chakshura",
     category: "Strategic Intelligence",
     description: "AI-Powered Strategic Foresight & Real-Time Intelligence Radar for Global Defence Networks. (SIH Winning Project for DRDO)",
-    image: "https://images.unsplash.com/photo-1517420704952-d9f39e95b43e?q=80&w=2070&auto=format&fit=crop",
+    image: "/projects/chakshura.png",
   },
 ];
 
