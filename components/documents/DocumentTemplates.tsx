@@ -258,10 +258,10 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
         {type === 'Offer Letter' && (
           <>
             <p className="break-inside-avoid">
-              <strong>Dear {candidateName}, Congratulations!</strong>
+              <strong>Dear {candidateName},</strong>
             </p>
             <p className="break-inside-avoid">
-              We are pleased to offer you the position of <strong>{domain} Intern</strong> at <strong>Verve Nova Technologies</strong>. We were impressed with your skills, passion, and enthusiasm. This internship will provide hands-on experience and exposure to real-time projects.
+              <strong>Verve Nova Technologies</strong> is pleased to offer you the position of <strong>{domain} Intern</strong>. This internship will provide hands-on experience and exposure to real-time projects.
             </p>
 
             {/* INTERNSHIP DETAILS */}
@@ -282,8 +282,8 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
                 <p>Start Date</p>
                 <p>: {formattedStartDate}</p>
                 
-                <p>End Date</p>
-                <p>: {formattedEndDate}</p>
+                <p>Working Hours</p>
+                <p>: Flexible</p>
                 
                 <p>Work Mode</p>
                 <p>: Remote</p>
@@ -300,8 +300,10 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
                 <li className="break-inside-avoid">Work on company-assigned {domain.toLowerCase()} projects and tasks.</li>
                 <li className="break-inside-avoid">Collaborate with the technical team, web designers, and project coordinators to deliver high-quality results and match design intents.</li>
                 <li className="break-inside-avoid">Maintain project documentation, refine specifications, and perform basic testing.</li>
-                <li className="break-inside-avoid">Stay plugged into emerging technologies and industry trends and apply them to operations.</li>
-                <li className="break-inside-avoid">Be responsible for maintaining, expanding, and scaling assigned modules.</li>
+                <li className="break-inside-avoid">Gather and refine specifications and requirements based on technical needs.</li>
+                <li className="break-inside-avoid">Be responsible for maintaining, expanding, and scaling our platforms.</li>
+                <li className="break-inside-avoid">Stay plugged into emerging technologies and industry trends and apply them into operations and activities.</li>
+                <li className="break-inside-avoid">Prepare reports for the management stating trends, patterns, and predictions using relevant data.</li>
               </ul>
             </div>
 
@@ -311,14 +313,17 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
                 <h3 className="text-sm font-bold text-[#92400e] uppercase tracking-wide flex items-center gap-2 mb-3">
                   <span>🚀</span> PROJECT-BASED WORK
                 </h3>
-                <p className="pl-2 text-[#374151]">
+                <p className="pl-2 text-[#374151] break-inside-avoid">
                   You will work on live projects assigned by Verve Nova Technologies. You are expected to complete tasks with responsibility, discipline, and clear communication.
                 </p>
               </div>
               <div className="break-inside-avoid">
                 <h3 className="text-sm font-bold text-[#1d4ed8] uppercase tracking-wide flex items-center gap-2 mb-3">
-                  <span>🎁</span> BENEFITS
+                  <span>🎁</span> DATE OF JOINING & BENEFITS
                 </h3>
+                <p className="pl-2 mb-2 text-[#374151] break-inside-avoid">
+                  Your date of joining the Company will be <strong>{formattedStartDate}</strong>, the duration would be 3 month(s) and your last working day would be <strong>{formattedEndDate}</strong>.
+                </p>
                 <ul className="list-disc list-inside pl-2 space-y-1 text-[#374151]">
                   <li className="break-inside-avoid">Real-time practical experience</li>
                   <li className="break-inside-avoid">Internship Certificate upon completion</li>
@@ -333,19 +338,41 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
               <h3 className="text-sm font-bold text-[#92400e] uppercase tracking-wide flex items-center gap-2 mb-3">
                 <span>📄</span> TERMS & CONDITIONS
               </h3>
-              <p className="mb-2 pl-2 break-inside-avoid">In performing your responsibilities and duties, you must serve the Company:</p>
-              <ol className="list-[lower-alpha] list-inside pl-4 space-y-1 mb-3 text-[#374151]">
-                <li className="break-inside-avoid">faithfully and diligently, exercising all due care;</li>
-                <li className="break-inside-avoid">acting in the best interests of the Company at all times;</li>
-                <li className="break-inside-avoid">using best endeavors to protect and promote our good name and reputation;</li>
-              </ol>
-              <ul className="list-decimal list-inside pl-2 space-y-1 text-[#374151]">
-                <li className="break-inside-avoid">This internship is purely for educational and skill development purposes (Unpaid).</li>
-                <li className="break-inside-avoid">You are expected to maintain strict confidentiality of all company information and assets.</li>
-                <li className="break-inside-avoid">You agree to comply with all Company policies. Non-compliance or failure to complete assigned tasks may lead to the termination of your internship without notice.</li>
+              <ul className="list-decimal list-inside pl-4 space-y-1 text-[#374151]">
+                <li className="break-inside-avoid">This is an unpaid internship.</li>
+                <li className="break-inside-avoid">The intern must follow all company rules and confidentiality policies.</li>
+                <li className="break-inside-avoid">Failure to complete assigned tasks may result in termination.</li>
                 <li className="break-inside-avoid">Certificate will be awarded only after 3 months and successful project completion.</li>
               </ul>
             </div>
+
+            {/* ACTING IN BEST INTERESTS */}
+            <div className="break-inside-avoid">
+              <h3 className="text-sm font-bold text-[#1d4ed8] uppercase tracking-wide flex items-center gap-2 mb-3">
+                <span>🛡️</span> ACTING IN THE BEST INTERESTS OF THE COMPANY
+              </h3>
+              <p className="mb-2 pl-2 break-inside-avoid">In performing your responsibilities and duties, you must serve the Company:</p>
+              <ol className="list-[upper-alpha] list-inside pl-4 space-y-1 text-[#374151]">
+                <li className="break-inside-avoid">faithfully and diligently, exercising all due care;</li>
+                <li className="break-inside-avoid">acting in the best interests of the Company at all times;</li>
+                <li className="break-inside-avoid">using best endeavors to protect and promote the good name and reputation; and</li>
+                <li className="break-inside-avoid">perform your responsibilities and duties to the best of your endeavors.</li>
+              </ol>
+            </div>
+
+            {/* POLICIES AND PROCEDURES */}
+            <div className="break-inside-avoid">
+              <h3 className="text-sm font-bold text-[#92400e] uppercase tracking-wide flex items-center gap-2 mb-3">
+                <span>⚖️</span> COMPANY POLICIES AND PROCEDURES
+              </h3>
+              <p className="pl-2 text-[#374151] break-inside-avoid">
+                You agree to comply with all the Company policies and procedures as determined and amended by the Company from time to time, including all anti-discrimination, sexual harassment, and occupational health and safety policies. You agree that compliance with the Company Policies and Procedures and/or legal compliance requirements to do with your position may lead to the termination of your internship without notice.
+              </p>
+            </div>
+            
+            <p className="break-inside-avoid mt-4">
+              Please sign and return to us one copy of this Letter of Offer in confirmation of your acceptance of these terms and conditions of the internship. We look forward to your acceptance and to working closely with you in the near future.
+            </p>
           </>
         )}
 
