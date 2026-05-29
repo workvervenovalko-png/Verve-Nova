@@ -103,7 +103,7 @@ export default function DocumentPreviewPage() {
       />
       
       {/* Hidden HTML Template for PDF Generation */}
-      <div className="fixed top-[200vh] left-[-9999px] opacity-0 pointer-events-none">
+      <div className="absolute top-0 left-[-9999px] opacity-0 -z-50 overflow-hidden pointer-events-none">
         <div ref={documentRef} className="bg-[#ffffff]">
           <DocumentTemplates 
             type={data.type}
@@ -143,7 +143,7 @@ export default function DocumentPreviewPage() {
         <div className="w-full max-w-[1000px] h-[85vh] bg-[#1a1a1a] rounded-lg shadow-2xl overflow-hidden border border-white/10 flex items-center justify-center">
           {pdfUrl ? (
             <iframe 
-              src={`${pdfUrl}#toolbar=0`} 
+              src={pdfUrl} 
               className="w-full h-full border-none"
               title="Document Preview"
             />
