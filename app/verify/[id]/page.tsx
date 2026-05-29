@@ -16,7 +16,8 @@ export default function DocumentPreviewPage() {
   const [loading, setLoading] = useState(true);
   const [downloading, setDownloading] = useState(false);
   const router = useRouter();
-  const documentRef = useRef<HTMLDivElement>(null);
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+  const [pdfEngineLoaded, setPdfEngineLoaded] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,40 +33,46 @@ export default function DocumentPreviewPage() {
     fetchData();
   }, [id]);
 
-  const handleDownloadPdf = async () => {
-    if (!documentRef.current) return;
-    
-    setDownloading(true);
-    const toastId = toast.loading("Generating high-quality PDF...");
+  useEffect(() => {
+    if (data && pdfEngineLoaded && documentRef.current && !pdfUrl) {
+      const generatePdfBlob = async () => {
+        setDownloading(true);
+        try {
+          await new Promise(resolve => setTimeout(resolve, 800)); // wait for images
+          const html2pdf = (window as any).html2pdf;
+          if (!html2pdf) return;
 
-    try {
-      // Small delay to ensure everything is rendered
-      await new Promise(resolve => setTimeout(resolve, 500));
+          const opt = {
+            margin:       0,
+            filename:     `VNT-${data.type.replace(/\s+/g, '-')}-${data.candidateName.replace(/\s+/g, '-')}.pdf`,
+            image:        { type: 'jpeg', quality: 1 },
+            html2canvas:  { scale: 2, useCORS: true },
+            jsPDF:        { unit: 'px', format: data.type === 'Certificate' ? [1000, 750] : [800, 1131], orientation: data.type === 'Certificate' ? 'landscape' : 'portrait' },
+            pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+          };
 
-      const html2pdf = (window as any).html2pdf;
-
-      if (!html2pdf) {
-        toast.error("PDF engine is still loading. Please try again in a few seconds.", { id: toastId });
-        setDownloading(false);
-        return;
-      }
-
-      const opt = {
-        margin:       0,
-        filename:     `VNT-${data.type.replace(/\s+/g, '-')}-${data.candidateName.replace(/\s+/g, '-')}.pdf`,
-        image:        { type: 'jpeg', quality: 1 },
-        html2canvas:  { scale: 2, useCORS: true },
-        jsPDF:        { unit: 'px', format: data.type === 'Certificate' ? [1000, 750] : [800, 1131], orientation: data.type === 'Certificate' ? 'landscape' : 'portrait' }
+          const worker = html2pdf().set(opt).from(documentRef.current);
+          const url = await worker.outputPdf('bloburl');
+          setPdfUrl(url);
+        } catch (err) {
+          console.error("Failed to generate PDF Blob:", err);
+        } finally {
+          setDownloading(false);
+        }
       };
+      generatePdfBlob();
+    }
+  }, [data, pdfEngineLoaded, pdfUrl]);
 
-      await html2pdf().set(opt).from(documentRef.current).save();
-
-      toast.success("Downloaded successfully!", { id: toastId });
-    } catch (err) {
-      console.error("Failed to generate PDF:", err);
-      toast.error("Failed to download PDF. Try again.", { id: toastId });
-    } finally {
-      setDownloading(false);
+  const handleDownloadPdf = () => {
+    if (pdfUrl) {
+      const link = document.createElement('a');
+      link.href = pdfUrl;
+      link.download = `VNT-${data.type.replace(/\s+/g, '-')}-${data.candidateName.replace(/\s+/g, '-')}.pdf`;
+      link.click();
+      toast.success("Downloaded successfully!");
+    } else {
+      toast.error("PDF is still generating. Please wait a moment.");
     }
   };
 
@@ -88,31 +95,15 @@ export default function DocumentPreviewPage() {
 
   return (
     <>
-      <Script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" strategy="lazyOnload" />
-      <main className="min-h-screen bg-[#111111] py-20 px-6 flex flex-col items-center">
-      <div className="w-full max-w-[800px] flex justify-between items-center mb-8">
-        <Button 
-          onClick={() => router.back()}
-          variant="ghost" 
-          className="text-white/40 hover:text-white flex items-center gap-2"
-        >
-          <ArrowLeft className="w-4 h-4" /> Back to Verification
-        </Button>
-        <Button 
-          onClick={handleDownloadPdf}
-          disabled={downloading}
-          className="bg-indigo-600 hover:bg-indigo-500 text-white px-6 font-bold uppercase text-[10px] tracking-widest flex items-center gap-2"
-        >
-          {downloading ? (
-            <VNTLoader size="sm" />
-          ) : (
-            <Download className="w-4 h-4" />
-          )}
-          {downloading ? "Generating..." : "Save as PDF"}
-        </Button>
-      </div>
-
-      <div className="shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] overflow-hidden rounded-sm">
+      <Script 
+        src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" 
+        strategy="afterInteractive" 
+        onReady={() => setPdfEngineLoaded(true)}
+        onLoad={() => setPdfEngineLoaded(true)} 
+      />
+      
+      {/* Hidden HTML Template for PDF Generation */}
+      <div className="fixed top-[200vh] left-[-9999px] opacity-0 pointer-events-none">
         <div ref={documentRef} className="bg-[#ffffff]">
           <DocumentTemplates 
             type={data.type}
@@ -125,11 +116,50 @@ export default function DocumentPreviewPage() {
         </div>
       </div>
 
-      <div className="mt-12 text-center text-white/20 max-w-lg">
-        <p className="text-[10px] font-bold uppercase tracking-[0.3em]">Official Digital Certification // Verve Nova Technologies</p>
-        <p className="text-[8px] mt-2 italic">This document is digitally verified and requires no physical signature for authentication in its digital form. For official verification, visit vervenovatech.com/verify.</p>
-      </div>
-    </main>
+      <main className="min-h-screen bg-[#111111] py-20 px-6 flex flex-col items-center">
+        <div className="w-full max-w-[1000px] flex justify-between items-center mb-8">
+          <Button 
+            onClick={() => router.back()}
+            variant="ghost" 
+            className="text-white/40 hover:text-white flex items-center gap-2"
+          >
+            <ArrowLeft className="w-4 h-4" /> Back to Verification
+          </Button>
+          <Button 
+            onClick={handleDownloadPdf}
+            disabled={downloading || !pdfUrl}
+            className="bg-indigo-600 hover:bg-indigo-500 text-white px-6 font-bold uppercase text-[10px] tracking-widest flex items-center gap-2"
+          >
+            {downloading ? (
+              <VNTLoader size="sm" />
+            ) : (
+              <Download className="w-4 h-4" />
+            )}
+            {downloading ? "Generating PDF..." : "Save as PDF"}
+          </Button>
+        </div>
+
+        {/* PDF Viewer */}
+        <div className="w-full max-w-[1000px] h-[85vh] bg-[#1a1a1a] rounded-lg shadow-2xl overflow-hidden border border-white/10 flex items-center justify-center">
+          {pdfUrl ? (
+            <iframe 
+              src={`${pdfUrl}#toolbar=0`} 
+              className="w-full h-full border-none"
+              title="Document Preview"
+            />
+          ) : (
+            <div className="flex flex-col items-center text-white/50">
+              <VNTLoader size="lg" />
+              <p className="mt-4 text-xs tracking-[0.2em] uppercase font-bold">Rendering Document...</p>
+            </div>
+          )}
+        </div>
+
+        <div className="mt-12 text-center text-white/20 max-w-lg">
+          <p className="text-[10px] font-bold uppercase tracking-[0.3em]">Official Digital Certification // Verve Nova Technologies</p>
+          <p className="text-[8px] mt-2 italic">This document is digitally verified and requires no physical signature for authentication in its digital form. For official verification, visit vervenovatech.com/verify.</p>
+        </div>
+      </main>
     </>
   );
 }
