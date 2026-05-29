@@ -52,10 +52,10 @@ export default function DocumentPreviewPage() {
           };
 
           const worker = html2pdf().set(opt).from(documentRef.current);
-          const url = await worker.outputPdf('bloburl');
+          const url = await worker.outputPdf('datauristring');
           setPdfUrl(url);
         } catch (err) {
-          console.error("Failed to generate PDF Blob:", err);
+          console.error("Failed to generate PDF Data URI:", err);
         } finally {
           setDownloading(false);
         }
@@ -142,11 +142,14 @@ export default function DocumentPreviewPage() {
         {/* PDF Viewer */}
         <div className="w-full max-w-[1000px] h-[85vh] bg-[#1a1a1a] rounded-lg shadow-2xl overflow-hidden border border-white/10 flex items-center justify-center">
           {pdfUrl ? (
-            <iframe 
-              src={pdfUrl} 
+            <object 
+              data={pdfUrl} 
+              type="application/pdf"
               className="w-full h-full border-none"
               title="Document Preview"
-            />
+            >
+              <iframe src={pdfUrl} className="w-full h-full border-none" title="Document Preview" />
+            </object>
           ) : (
             <div className="flex flex-col items-center text-white/50">
               <VNTLoader size="lg" />
