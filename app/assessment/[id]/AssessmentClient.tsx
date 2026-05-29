@@ -222,13 +222,13 @@ export default function AssessmentClient({ appId, candidateName, roleSlug, quest
                       : 'bg-white/[0.02] border-white/[0.08] text-white/70 hover:bg-white/[0.05] hover:border-white/20'
                   }`}
                 >
-                  <div className="flex items-center gap-4">
-                    <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                  <div className="flex items-start gap-4 w-full">
+                    <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 mt-0.5 ${
                       isSelected ? 'border-indigo-400 bg-indigo-400/20' : 'border-white/20'
                     }`}>
                       {isSelected && <div className="w-2.5 h-2.5 bg-indigo-400 rounded-full" />}
                     </div>
-                    <span className="font-medium">{opt}</span>
+                    <span className="font-medium flex-1 break-words min-w-0">{opt}</span>
                   </div>
                 </button>
               );
