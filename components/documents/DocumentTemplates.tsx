@@ -67,9 +67,9 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
           <div className="flex flex-col items-center mb-8">
             <div className="flex items-center gap-4">
               <img src="/vnt-logo.png" alt="VNT Logo" className="h-16 w-16 object-contain" />
-              <div>
+              <div className="flex items-baseline gap-3">
                 <h1 className="text-4xl font-black text-[#1e3a8a] tracking-tight leading-none uppercase">Verve Nova</h1>
-                <p className="text-sm font-bold text-[#1e3a8a] tracking-[0.2em] uppercase">Technologies</p>
+                <p className="text-2xl font-bold text-[#1e3a8a] tracking-[0.2em] uppercase leading-none">Technologies</p>
               </div>
             </div>
           </div>
@@ -155,9 +155,9 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
         <div className="flex justify-between items-start mb-8">
           <div className="flex items-center gap-4">
             <img src="/vnt-logo.png" alt="VNT Logo" className="h-16 w-16 object-contain" />
-            <div>
+            <div className="flex items-baseline gap-2">
               <h1 className="text-3xl font-black text-[#1e3a8a] tracking-tight leading-none uppercase">Verve Nova</h1>
-              <p className="text-[11px] font-bold tracking-[0.2em] text-[#1e3a8a] uppercase mt-1">Technologies</p>
+              <p className="text-xl font-bold tracking-[0.2em] text-[#1e3a8a] uppercase leading-none">Technologies</p>
             </div>
           </div>
           <div className="text-right text-xs text-[#1e3a8a] font-medium space-y-1">
