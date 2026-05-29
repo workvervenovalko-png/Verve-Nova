@@ -16,8 +16,7 @@ export default function DocumentPreviewPage() {
   const [loading, setLoading] = useState(true);
   const [downloading, setDownloading] = useState(false);
   const router = useRouter();
-  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
-  const [pdfEngineLoaded, setPdfEngineLoaded] = useState(false);
+  const documentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchData = async () => {
