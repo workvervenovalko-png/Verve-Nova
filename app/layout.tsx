@@ -118,6 +118,17 @@ export default function RootLayout({
                 "name": "VNT - Verve Nova Tech",
                 "url": "https://vervenovatech.com",
                 "logo": "https://vervenovatech.com/vnt-logo.png",
+                "foundingDate": "2024",
+                "founders": [
+                  {
+                    "@type": "Person",
+                    "name": "Puneet Kushwaha"
+                  },
+                  {
+                    "@type": "Person",
+                    "name": "Mehak Agarwal"
+                  }
+                ],
                 "sameAs": [
                   "https://www.linkedin.com/company/vervenovatech",
                   "https://x.com/vervenovatech",
@@ -125,7 +136,7 @@ export default function RootLayout({
                 ],
                 "contactPoint": {
                   "@type": "ContactPoint",
-                  "telephone": "+91-7380663685", // Replace with actual number if known
+                  "telephone": "+91-7380663685",
                   "contactType": "customer service",
                   "areaServed": "IN",
                   "availableLanguage": ["en", "Hindi"]
@@ -159,6 +170,20 @@ export default function RootLayout({
                 "knowsAbout": ["Website Development", "Software Development", "IT Solutions", "AI Solutions", "Digital Transformation"]
               }
             ])
+          }}
+        />
+        {/* Google Analytics Tag */}
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent('14965936414')}`}></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '14965936414', {
+                page_path: window.location.pathname,
+              });
+            `,
           }}
         />
       </head>
