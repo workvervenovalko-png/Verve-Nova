@@ -105,7 +105,7 @@ export function Navbar() {
             <Link
               key={link.name}
               href={link.href}
-              className="text-[11px] font-bold text-white/40 hover:text-white uppercase tracking-[0.3em] transition-colors relative group/link"
+              className="text-[11px] font-bold text-white/40 hover:text-white uppercase tracking-[0.3em] transition-colors relative group/link whitespace-nowrap"
             >
               {link.name}
               <span className="absolute -bottom-1 left-0 w-0 h-px bg-indigo-500 group-hover/link:w-full transition-all duration-300" />

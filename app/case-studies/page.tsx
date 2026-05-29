@@ -60,7 +60,7 @@ export default function CaseStudiesPage() {
             transition={{ delay: 0.1 }}
             className="text-5xl md:text-8xl font-black tracking-tighter uppercase leading-none mb-8"
           >
-            Our <span className="text-gradient">Case Studies</span>
+            Our <span className="text-gradient whitespace-nowrap">Case Studies</span>
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
