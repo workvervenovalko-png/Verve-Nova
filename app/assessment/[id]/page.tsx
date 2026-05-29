@@ -34,7 +34,7 @@ export default async function AssessmentPage({ params }: { params: Promise<{ id:
 
   return (
     <AssessmentClient 
-      appId={params.id} 
+      appId={resolvedParams.id} 
       candidateName={candidateName} 
       roleSlug={roleSlug} 
       questions={safeQuestions} 
