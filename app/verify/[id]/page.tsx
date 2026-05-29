@@ -49,6 +49,24 @@ export default function DocumentPreviewPage() {
         return;
       }
 
+      const getBase64ImageFromUrl = async (imageUrl: string) => {
+        const res = await fetch(imageUrl);
+        const blob = await res.blob();
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        });
+      };
+
+      let logoBase64: any = null;
+      try {
+        logoBase64 = await getBase64ImageFromUrl('/vnt-logo.png');
+      } catch (e) {
+        console.error("Could not load logo for watermark");
+      }
+
       const opt = {
         margin:       0,
         filename:     `VNT-${data.type.replace(/\s+/g, '-')}-${data.candidateName.replace(/\s+/g, '-')}.pdf`,
@@ -64,20 +82,23 @@ export default function DocumentPreviewPage() {
           for (let i = 1; i <= totalPages; i++) {
             pdf.setPage(i);
             
-            // Draw Blue Triangle (Top Left)
-            pdf.setFillColor(186, 230, 253); // light blue / sky-200
-            pdf.triangle(0, 0, 160, 0, 0, 160, 'F');
-            
-            // Draw Watermark (Center)
-            pdf.setFontSize(70);
-            pdf.setTextColor(240, 240, 240); // very light gray
-            // Adding a simple centered text watermark. 
-            // Older jsPDF might not support angle object, so we pass angle as 4th/5th param
-            try {
-              pdf.text('VERVE NOVA', 400, 565, { align: 'center', angle: 45 });
-            } catch (e) {
-              pdf.text('VERVE NOVA', 200, 600); // fallback
+            // Draw Logo Watermark (Center)
+            if (logoBase64) {
+              try {
+                // Enable transparency for watermark
+                pdf.setGState(new (pdf.GState || (window as any).jsPDF.GState)({ opacity: 0.05 }));
+                // Center logo 400x400 on 800x1131 page
+                pdf.addImage(logoBase64, 'PNG', 200, 365, 400, 400);
+                pdf.setGState(new (pdf.GState || (window as any).jsPDF.GState)({ opacity: 1.0 }));
+              } catch (e) {
+                console.error("Could not apply watermark opacity", e);
+              }
             }
+            
+            // Draw Page Number (Bottom Center)
+            pdf.setFontSize(10);
+            pdf.setTextColor(150, 150, 150);
+            pdf.text(`Page ${i} of ${totalPages}`, 400, 1110, { align: 'center' });
           }
         }).save();
       } else {
