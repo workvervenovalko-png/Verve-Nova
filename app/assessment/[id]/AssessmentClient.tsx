@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { startAssessment, submitAssessment } from "@/app/actions/assessment";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, Clock, Play, BrainCircuit } from "lucide-react";
+import { CheckCircle2, Clock, Play, BrainCircuit, Linkedin, Instagram } from "lucide-react";
 import { toast } from "sonner";
 import { VNTLoader } from "@/components/vnt-loader";
 
@@ -44,6 +44,15 @@ export default function AssessmentClient({ appId, candidateName, roleSlug, quest
   const [timeLeft, setTimeLeft] = useState(calculateInitialTime());
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isStarting, setIsStarting] = useState(false);
+
+  const [socialFollows, setSocialFollows] = useState({
+    linkedin: false,
+    instaGlobal: false,
+    instaIndia: false,
+    instaLucknow: false
+  });
+
+  const allFollowed = socialFollows.linkedin && socialFollows.instaGlobal && socialFollows.instaIndia && socialFollows.instaLucknow;
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -126,27 +135,104 @@ export default function AssessmentClient({ appId, candidateName, roleSlug, quest
         {/* Ambient Glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-500/[0.05] blur-[100px] rounded-full pointer-events-none" />
         
-        <div className="glass-card max-w-xl w-full p-10 rounded-[2.5rem] border-white/[0.08] relative z-10 text-center">
+        <div className="glass-card max-w-xl w-full p-8 md:p-10 rounded-[2.5rem] border-white/[0.08] relative z-10 text-center">
           <BrainCircuit className="w-16 h-16 text-indigo-400 mx-auto mb-6 opacity-80" />
           <h1 className="text-3xl font-black text-white uppercase tracking-tighter mb-2">Technical Assessment</h1>
           <p className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest mb-8">{roleSlug.replace('-', ' ')} Domain</p>
           
-          <div className="text-left bg-white/[0.02] border border-white/[0.04] p-6 rounded-2xl mb-8 space-y-4">
-            <p className="text-sm font-medium text-white/70">Welcome, <strong className="text-white">{candidateName}</strong>.</p>
-            <ul className="text-xs text-white/50 space-y-2 uppercase tracking-wide">
-              <li>• Total Questions: <strong className="text-white">{questions.length}</strong></li>
-              <li>• Time Allowed: <strong className="text-white">60 Minutes</strong></li>
-              <li>• Sections: <strong className="text-white">Aptitude, Quant, Reasoning, Technical</strong></li>
-              <li>• <strong className="text-rose-400">Warning:</strong> Timer cannot be paused once started.</li>
-            </ul>
-          </div>
+          {!allFollowed ? (
+            <div className="text-left bg-white/[0.02] border border-white/[0.04] p-6 rounded-2xl mb-8 space-y-4">
+              <h3 className="text-lg font-bold text-white">Step 1: Connect with Us</h3>
+              <p className="text-xs text-white/50 mb-4">Please follow our official channels to unlock the start button.</p>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <a 
+                  href="https://www.linkedin.com/company/105071910/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  onClick={() => setSocialFollows(prev => ({...prev, linkedin: true}))}
+                  className={`flex items-center gap-3 p-3 rounded-xl border transition-all ${socialFollows.linkedin ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-[#0077b5]/10 border-[#0077b5]/30 hover:bg-[#0077b5]/20'}`}
+                >
+                  <div className="w-8 h-8 rounded bg-[#0077b5] flex items-center justify-center text-white">
+                    {socialFollows.linkedin ? <CheckCircle2 className="w-4 h-4" /> : <Linkedin className="w-4 h-4" />}
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-xs font-bold text-white">LinkedIn</p>
+                    <p className="text-[10px] text-white/50">{socialFollows.linkedin ? "Followed" : "Follow Us"}</p>
+                  </div>
+                </a>
+
+                <a 
+                  href="https://www.instagram.com/vntech_global" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  onClick={() => setSocialFollows(prev => ({...prev, instaGlobal: true}))}
+                  className={`flex items-center gap-3 p-3 rounded-xl border transition-all ${socialFollows.instaGlobal ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-pink-500/10 border-pink-500/30 hover:bg-pink-500/20'}`}
+                >
+                  <div className="w-8 h-8 rounded bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center text-white">
+                    {socialFollows.instaGlobal ? <CheckCircle2 className="w-4 h-4" /> : <Instagram className="w-4 h-4" />}
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-xs font-bold text-white">Global Page</p>
+                    <p className="text-[10px] text-white/50">{socialFollows.instaGlobal ? "Followed" : "Follow Us"}</p>
+                  </div>
+                </a>
+
+                <a 
+                  href="https://www.instagram.com/vntech_india" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  onClick={() => setSocialFollows(prev => ({...prev, instaIndia: true}))}
+                  className={`flex items-center gap-3 p-3 rounded-xl border transition-all ${socialFollows.instaIndia ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-pink-500/10 border-pink-500/30 hover:bg-pink-500/20'}`}
+                >
+                  <div className="w-8 h-8 rounded bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center text-white">
+                    {socialFollows.instaIndia ? <CheckCircle2 className="w-4 h-4" /> : <Instagram className="w-4 h-4" />}
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-xs font-bold text-white">India Page</p>
+                    <p className="text-[10px] text-white/50">{socialFollows.instaIndia ? "Followed" : "Follow Us"}</p>
+                  </div>
+                </a>
+
+                <a 
+                  href="https://www.instagram.com/vntech_lucknow" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  onClick={() => setSocialFollows(prev => ({...prev, instaLucknow: true}))}
+                  className={`flex items-center gap-3 p-3 rounded-xl border transition-all ${socialFollows.instaLucknow ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-pink-500/10 border-pink-500/30 hover:bg-pink-500/20'}`}
+                >
+                  <div className="w-8 h-8 rounded bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center text-white">
+                    {socialFollows.instaLucknow ? <CheckCircle2 className="w-4 h-4" /> : <Instagram className="w-4 h-4" />}
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-xs font-bold text-white">Lucknow Page</p>
+                    <p className="text-[10px] text-white/50">{socialFollows.instaLucknow ? "Followed" : "Follow Us"}</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+          ) : (
+            <div className="text-left bg-emerald-500/10 border border-emerald-500/30 p-6 rounded-2xl mb-8 space-y-4 animate-in fade-in zoom-in duration-500">
+              <div className="flex items-center gap-2 mb-2">
+                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                <h3 className="text-sm font-bold text-emerald-400 uppercase tracking-widest">Assessment Unlocked</h3>
+              </div>
+              <p className="text-sm font-medium text-white/70">Welcome, <strong className="text-white">{candidateName}</strong>.</p>
+              <ul className="text-xs text-white/50 space-y-2 uppercase tracking-wide">
+                <li>• Total Questions: <strong className="text-white">{questions.length}</strong></li>
+                <li>• Time Allowed: <strong className="text-white">60 Minutes</strong></li>
+                <li>• Sections: <strong className="text-white">Aptitude, Quant, Reasoning, Technical</strong></li>
+                <li>• <strong className="text-rose-400">Warning:</strong> Timer cannot be paused once started.</li>
+              </ul>
+            </div>
+          )}
 
           <Button 
             onClick={handleStart} 
-            disabled={isStarting}
-            className="w-full h-14 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all"
+            disabled={isStarting || !allFollowed}
+            className={`w-full h-14 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-300 ${!allFollowed ? 'bg-white/[0.05] text-white/30 cursor-not-allowed border border-white/[0.05]' : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-[0_0_20px_rgba(79,70,229,0.3)]'}`}
           >
-            {isStarting ? <VNTLoader size="sm" /> : <><Play className="w-4 h-4 mr-2" /> Start Assessment</>}
+            {isStarting ? <VNTLoader size="sm" /> : <><Play className="w-4 h-4 mr-2" /> {allFollowed ? 'Start Assessment' : 'Locked'}</>}
           </Button>
         </div>
       </div>
