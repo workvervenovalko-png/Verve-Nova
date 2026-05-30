@@ -63,7 +63,9 @@ const ApplicationSchema = new Schema({
     invitedAt: { type: Date },
     startedAt: { type: Date },
     submittedAt: { type: Date },
-    status: { type: String, enum: ['Pending', 'In Progress', 'Completed'], default: 'Pending' }
+    status: { type: String, enum: ['Pending', 'In Progress', 'Completed'], default: 'Pending' },
+    lastReminderSentAt: { type: Date },
+    remindersSentCount: { type: Number, default: 0 }
   },
   interviewDate: { type: Date },
   interviewLink: { type: String },

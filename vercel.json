@@ -1,7 +1,8 @@
 {
-  "framework": "nextjs",
-  "cleanUrls": true,
-  "github": {
-    "silent": true
-  }
+  "crons": [
+    {
+      "path": "/api/cron/reminders",
+      "schedule": "0 * * * *"
+    }
+  ]
 }

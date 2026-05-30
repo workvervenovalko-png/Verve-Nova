@@ -177,3 +177,20 @@ export const getAssessmentSubmittedTemplate = (name: string) => `
   ${footerSection}
 </div>
 `;
+
+export const getAssessmentReminderTemplate = (name: string, link: string) => `
+<div style="${baseStyles}">
+  <p>Dear ${name.split(' ')[0]},</p>
+  <p>This is a gentle reminder regarding the <strong>Verve Nova Technical & Aptitude Assessment</strong> that was sent to you.</p>
+  <p>We noticed that you haven't started your assessment yet. Please remember that you must complete this assessment within the <strong>48-hour deadline</strong> from the time the original invitation was sent.</p>
+  
+  <div style="background: #fff3cd; border: 1px solid #ffeeba; padding: 20px; border-radius: 8px; margin: 20px 0;">
+    <p style="margin: 0 0 10px 0; color: #856404;"><strong>Action Required:</strong></p>
+    <p style="margin: 0 0 15px 0;"><a href="${link}" style="background-color: #6366f1; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">Start Assessment Now</a></p>
+    <p style="margin: 0; color: #856404; font-size: 13px;">Failure to complete the assessment within the timeframe will result in the automatic expiration of the link and rejection of your application.</p>
+  </div>
+  
+  <p>If you have already submitted the assessment in the last few minutes, please ignore this email.</p>
+  ${footerSection}
+</div>
+`;
