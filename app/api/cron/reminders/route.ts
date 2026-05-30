@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import VerveApplication from '@/models/Application';
 import { resend } from '@/lib/resend';
-import { getAssessmentReminderTemplate } from '@/lib/mail-templates';
+import { getAssessmentReminderTemplate, getAssessmentExpiredTemplate } from '@/lib/mail-templates';
 
 // Ensure this runs purely on the server and is not statically cached
 export const dynamic = 'force-dynamic';
@@ -28,8 +28,30 @@ export async function GET(req: Request) {
       const invitedAt = new Date(app.assessment.invitedAt);
       const hoursSinceInvite = (now.getTime() - invitedAt.getTime()) / (1000 * 60 * 60);
 
-      // We only care about applications that are older than 24 hours but haven't expired (48 hours)
-      if (hoursSinceInvite >= 24 && hoursSinceInvite <= 48) {
+      const user = app.userId as any;
+
+      if (hoursSinceInvite > 48) {
+        // Assessment has expired
+        try {
+          if (user && user.email) {
+            await resend.emails.send({
+              from: 'Verve Nova Tech <careers@vervenovatech.com>',
+              to: user.email,
+              subject: `ASSESSMENT EXPIRED // VERVE NOVA`,
+              html: getAssessmentExpiredTemplate(user.name),
+            });
+          }
+
+          // Mark as expired/rejected
+          app.status = 'Rejected';
+          app.assessment.status = 'Completed'; // Marking completed so it doesn't get picked up by cron again
+          await app.save();
+
+        } catch (err) {
+          console.error(`Failed to process expiration for ${user?.email}`, err);
+        }
+      } 
+      else if (hoursSinceInvite >= 24 && hoursSinceInvite <= 48) {
         
         const lastReminder = app.assessment.lastReminderSentAt ? new Date(app.assessment.lastReminderSentAt) : null;
         let hoursSinceLastReminder = 999;
@@ -40,7 +62,6 @@ export async function GET(req: Request) {
 
         // Send a reminder if 5 hours have passed since the last reminder (or if no reminder was ever sent)
         if (hoursSinceLastReminder >= 5) {
-          const user = app.userId as any;
           if (user && user.email) {
             const assessmentLink = `https://vervenovatech.com/assessment/${app._id}`;
 

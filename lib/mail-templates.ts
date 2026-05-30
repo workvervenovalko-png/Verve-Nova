@@ -194,3 +194,20 @@ export const getAssessmentReminderTemplate = (name: string, link: string) => `
   ${footerSection}
 </div>
 `;
+
+export const getAssessmentExpiredTemplate = (name: string) => `
+<div style="${baseStyles}">
+  <p>Dear ${name.split(' ')[0]},</p>
+  <p>This is to inform you that your <strong>48-hour deadline</strong> to complete the Verve Nova Technical & Aptitude Assessment has <strong>expired</strong>.</p>
+  
+  <p>Because the assessment was not completed within the mandatory timeframe, your application has been automatically placed on hold/rejected.</p>
+
+  <div style="background: #f8d7da; border: 1px solid #f5c6cb; padding: 20px; border-radius: 8px; margin: 20px 0;">
+    <p style="margin: 0; color: #721c24;">If you believe this is an error, or if you faced technical difficulties and would like to request a deadline extension, please contact our Talent Acquisition team immediately at:</p>
+    <p style="margin: 10px 0 0 0; font-weight: bold;"><a href="mailto:work.vervenova.lko@gmail.com" style="color: #721c24;">work.vervenova.lko@gmail.com</a></p>
+  </div>
+  
+  <p>We wish you the best in your career endeavors.</p>
+  ${footerSection}
+</div>
+`;
