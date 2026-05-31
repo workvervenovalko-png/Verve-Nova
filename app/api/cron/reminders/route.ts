@@ -30,7 +30,9 @@ export async function GET(req: Request) {
 
       const user = app.userId as any;
 
-      if (hoursSinceInvite > 48) {
+      const deadlineHours = app.assessment.deadlineHours || 48;
+
+      if (hoursSinceInvite > deadlineHours) {
         // Assessment has expired
         try {
           if (user && user.email) {
@@ -44,14 +46,16 @@ export async function GET(req: Request) {
 
           // Mark as expired/rejected
           app.status = 'Rejected';
-          app.assessment.status = 'Completed'; // Marking completed so it doesn't get picked up by cron again
+          app.assessment.status = 'Expired'; // Marking Expired so it doesn't get picked up by cron again and shows on dashboard
           await app.save();
 
         } catch (err) {
           console.error(`Failed to process expiration for ${user?.email}`, err);
         }
       } 
-      else if (hoursSinceInvite >= 24 && hoursSinceInvite <= 48) {
+      else if (deadlineHours === 48 && hoursSinceInvite >= 24 && hoursSinceInvite <= 48) {
+        // Only send 5-hour reminders if it's the standard 48-hour deadline. 
+        // We don't send reminders during the 8-hour last chance.
         
         const lastReminder = app.assessment.lastReminderSentAt ? new Date(app.assessment.lastReminderSentAt) : null;
         let hoursSinceLastReminder = 999;

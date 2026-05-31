@@ -18,8 +18,9 @@ export async function getAssessmentState(appId: string) {
       const now = new Date();
       const diffMs = now.getTime() - new Date(app.assessment.invitedAt).getTime();
       const diffHrs = diffMs / (1000 * 60 * 60);
-      if (diffHrs > 48) {
-        return { success: false, error: "Assessment link has expired (48-hour limit)." };
+      const deadlineHours = app.assessment.deadlineHours || 48;
+      if (diffHrs > deadlineHours) {
+        return { success: false, error: `Assessment link has expired (${deadlineHours}-hour limit).` };
       }
     }
 
@@ -50,8 +51,9 @@ export async function startAssessment(appId: string) {
       const now = new Date();
       const diffMs = now.getTime() - new Date(app.assessment.invitedAt).getTime();
       const diffHrs = diffMs / (1000 * 60 * 60);
-      if (diffHrs > 48) {
-        return { success: false, error: "Assessment link has expired (48-hour limit)." };
+      const deadlineHours = app.assessment.deadlineHours || 48;
+      if (diffHrs > deadlineHours) {
+        return { success: false, error: `Assessment link has expired (${deadlineHours}-hour limit).` };
       }
     }
 

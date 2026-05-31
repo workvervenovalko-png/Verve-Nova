@@ -11,7 +11,8 @@ import {
      deleteBlog,
      searchCandidateByVnId,
      issueDocument,
-     generateDocument
+     generateDocument,
+     resendLastChanceAssessment
 } from "@/app/actions/admin";
 import { useRouter } from "next/navigation";
 import { Navbar } from "@/components/navbar";
@@ -231,10 +232,23 @@ export default function AdminDashboardPage() {
                if (result.success) toast.success("Interview Invitation Dispatched.");
                else toast.error("Failed to send invitation.");
                fetchData();
-          } else {
+           } else {
                if (result.success) toast.success("Details updated.");
                else toast.error("Update failed.");
                fetchData();
+          }
+     };
+
+     const handleResendLastChance = async (id: string) => {
+          if (!confirm("Are you sure you want to send an 8-hour last chance assessment?")) return;
+          setIsSubmitting(true);
+          const result = await resendLastChanceAssessment(id);
+          setIsSubmitting(false);
+          if (result.success) {
+               toast.success("Last chance assessment sent!");
+               fetchData();
+          } else {
+               toast.error(result.error || "Failed to send last chance.");
           }
      };
 
@@ -484,14 +498,23 @@ export default function AdminDashboardPage() {
                                                                                   Send Invite
                                                                              </Button>
                                                                         )}
-                                                                         {app.status === 'Assessment' && app.assessment && (
+                                                                         {(app.status === 'Assessment' || (app.status === 'Rejected' && app.assessment?.status === 'Expired')) && app.assessment && (
                                                                              <div className="mt-2 p-3 bg-white/[0.02] border border-white/[0.06] rounded-lg">
                                                                                  <p className="text-[9px] font-bold text-white/40 uppercase tracking-widest mb-1">Assessment Status</p>
-                                                                                 <p className={`text-xs font-black uppercase tracking-tighter ${app.assessment.status === 'Completed' ? 'text-emerald-400' : 'text-amber-400'}`}>
+                                                                                 <p className={`text-xs font-black uppercase tracking-tighter ${app.assessment.status === 'Completed' ? 'text-emerald-400' : app.assessment.status === 'Expired' ? 'text-red-400' : 'text-amber-400'}`}>
                                                                                      {app.assessment.status}
                                                                                  </p>
                                                                                  {app.assessment.status === 'Completed' && (
                                                                                      <p className="text-xs font-mono text-white mt-2">Score: {app.assessment.score}/{app.assessment.totalQuestions}</p>
+                                                                                 )}
+                                                                                 {app.assessment.status === 'Expired' && (
+                                                                                     <Button
+                                                                                         disabled={isSubmitting}
+                                                                                         onClick={() => handleResendLastChance(app._id)}
+                                                                                         className="mt-3 h-8 w-full bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 rounded text-[8px] font-black uppercase tracking-widest transition-all"
+                                                                                     >
+                                                                                         Send Last Chance (8h)
+                                                                                     </Button>
                                                                                  )}
                                                                              </div>
                                                                          )}

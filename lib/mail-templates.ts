@@ -211,3 +211,19 @@ export const getAssessmentExpiredTemplate = (name: string) => `
   ${footerSection}
 </div>
 `;
+
+export const getLastChanceAssessmentTemplate = (name: string, link: string) => `
+<div style="${baseStyles}">
+  <p>Dear ${name.split(' ')[0]},</p>
+  <p>Your previous assessment link had expired. However, after reviewing your profile, our Talent Acquisition team has decided to grant you a <strong>FINAL 8-HOUR EXTENSION</strong> to complete the Verve Nova Technical & Aptitude Assessment.</p>
+  
+  <div style="background: #fff3cd; border: 1px solid #ffeeba; padding: 20px; border-radius: 8px; margin: 20px 0;">
+    <p style="margin: 0 0 10px 0; color: #856404;"><strong>Urgent Action Required:</strong></p>
+    <p style="margin: 0 0 15px 0;"><a href="${link}" style="background-color: #dc3545; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">Start Last Chance Assessment</a></p>
+    <p style="margin: 0; color: #856404; font-size: 13px;">This link is strictly valid for <strong>8 HOURS</strong> from the time this email was sent. There will be no further extensions.</p>
+  </div>
+  
+  <p>We strongly advise you to take this assessment immediately. Ensure you have a stable internet connection for the 1-hour duration.</p>
+  ${footerSection}
+</div>
+`;

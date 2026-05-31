@@ -392,3 +392,51 @@ export async function generateDocument(appId: string, docType: string, metadata:
     return { success: false, error: error.message };
   }
 }
+
+export async function resendLastChanceAssessment(appId: string) {
+  try {
+    const session = await getServerSession(authOptions) as any;
+    if (!session || session.user?.role !== 'ADMIN') {
+      return { success: false, error: "Unauthorized" };
+    }
+
+    await dbConnect();
+    
+    const updatePayload: any = { 
+      status: 'Assessment',
+      'assessment.invitedAt': new Date(),
+      'assessment.status': 'Pending',
+      'assessment.deadlineHours': 8
+    };
+
+    const app = await VerveApplication.findByIdAndUpdate(appId, updatePayload, { new: true }).populate('userId', 'name email');
+    
+    if (app) {
+      const targetEmail = (app.userId as any).email;
+      console.log(`>>> [MAIL_SYSTEM] Preparing Last Chance Assessment Invite for: ${targetEmail}`);
+      
+      try {
+        const { resend } = await import("@/lib/resend");
+        const { getLastChanceAssessmentTemplate } = await import("@/lib/mail-templates");
+        
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://vervenovatech.com';
+        const assessmentLink = `${baseUrl}/assessment/${app._id}`;
+        const mailRes = await resend.emails.send({
+          from: 'Verve Nova Tech <careers@vervenovatech.com>',
+          to: targetEmail,
+          subject: `URGENT: LAST CHANCE ASSESSMENT (8 HOURS) // VERVE NOVA`,
+          html: getLastChanceAssessmentTemplate((app.userId as any).name, assessmentLink),
+        });
+
+        console.log(`>>> [MAIL_SYSTEM] Last Chance email sent. Response ID:`, mailRes.data?.id);
+      } catch (mailError: any) {
+        console.error(">>> [MAIL_SYSTEM] CRITICAL ERROR sending Last Chance email:", mailError.message);
+      }
+    }
+
+    return { success: true };
+  } catch (error: any) {
+    console.error("Resend Last Chance Assessment Error:", error);
+    return { success: false, error: error.message };
+  }
+}
