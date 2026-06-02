@@ -167,22 +167,34 @@ export async function scheduleInterview(appId: string, interviewDate?: string, i
           subject: 'INTERVIEW PROTOCOL INITIALIZED // VERVE NOVA',
           html: getInterviewTemplate(candidateName, combinedDateTimeStr, interviewLink),
         });
+        
+        if (mailRes.error) {
+            throw new Error(`Candidate Mail Error: ${mailRes.error.message}`);
+        }
         console.log(`>>> [MAIL_SYSTEM] Interview mail dispatched to Candidate. Response ID:`, mailRes.data?.id);
 
         // 2. Send to Interviewers
         if (parsedEmails.length > 0) {
           console.log(`>>> [MAIL_SYSTEM] Sending Brief to Interviewers:`, parsedEmails);
-          const briefMailRes = await resend.emails.send({
-            from: 'Verve Nova Tech <careers@vervenovatech.com>',
-            to: parsedEmails,
-            subject: `INTERVIEW SCHEDULED: ${candidateName} // VERVE NOVA`,
-            html: getInterviewerBriefTemplate(candidateName, targetEmail, vnId, roleTrack, combinedDateTimeStr, interviewLink || "TBD"),
-          });
-          console.log(`>>> [MAIL_SYSTEM] Interviewer brief dispatched. Response ID:`, briefMailRes.data?.id);
+          
+          for (const email of parsedEmails) {
+              const briefMailRes = await resend.emails.send({
+                from: 'Verve Nova Tech <careers@vervenovatech.com>',
+                to: email,
+                subject: `INTERVIEW SCHEDULED: ${candidateName} // VERVE NOVA`,
+                html: getInterviewerBriefTemplate(candidateName, targetEmail, vnId, roleTrack, combinedDateTimeStr, interviewLink || "TBD"),
+              });
+              
+              if (briefMailRes.error) {
+                  throw new Error(`Failed to send to interviewer ${email}: ${briefMailRes.error.message}`);
+              }
+              console.log(`>>> [MAIL_SYSTEM] Interviewer brief dispatched to ${email}. Response ID:`, briefMailRes.data?.id);
+          }
         }
 
       } catch (mailError: any) {
         console.error(">>> [MAIL_SYSTEM] CRITICAL ERROR sending interview mail:", mailError.message);
+        return { success: false, error: `Mail System Error: ${mailError.message}` };
       }
     } else if (triggerEmail) {
         console.log(">>> [MAIL_SYSTEM] Email skipped despite trigger: App or InterviewDate missing", { hasApp: !!app, hasDate: !!interviewDate });
