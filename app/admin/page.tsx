@@ -500,7 +500,7 @@ export default function AdminDashboardPage() {
                                                                        <div className="relative group">
                                                                             <Input
                                                                                  type="text"
-                                                                                 placeholder="INTERVIEWER EMAILS (CSV)"
+                                                                                 placeholder="INTERVIEWER EMAILS (e.g. a@b.com, c@d.com)"
                                                                                  className="h-10 text-[9px] font-bold border-white/[0.06] bg-white/[0.02] uppercase rounded-lg pr-10 focus:border-indigo-600 transition-all text-white placeholder:text-white/10"
                                                                                  defaultValue={app.interviewerEmails?.join(', ') || ''}
                                                                                  onBlur={(e) => setInterview(app._id, app.interviewDate, app.interviewTime, app.interviewLink, e.target.value, false)}
