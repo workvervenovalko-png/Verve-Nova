@@ -478,44 +478,62 @@ export default function AdminDashboardPage() {
                                                                                  />
                                                                             </PopoverContent>
                                                                        </Popover>
-                                                                       <div className="relative group">
-                                                                            <Input
-                                                                                 type="time"
-                                                                                 className="h-10 text-[9px] font-bold border-white/[0.06] bg-white/[0.02] uppercase rounded-lg pr-10 focus:border-indigo-600 transition-all text-white placeholder:text-white/10"
-                                                                                 defaultValue={app.interviewTime || ''}
-                                                                                 onBlur={(e) => setInterview(app._id, app.interviewDate, e.target.value, app.interviewLink, app.interviewerEmails?.join(', '), false)}
-                                                                            />
-                                                                            <Clock className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/10 group-focus-within:text-indigo-600 transition-colors" />
-                                                                       </div>
-                                                                       <div className="relative group">
-                                                                            <Input
-                                                                                 type="text"
-                                                                                 placeholder="MEET LINK / URL"
-                                                                                 className="h-10 text-[9px] font-bold border-white/[0.06] bg-white/[0.02] uppercase rounded-lg pr-10 focus:border-indigo-600 transition-all text-white placeholder:text-white/10"
-                                                                                 defaultValue={app.interviewLink || ''}
-                                                                                 onBlur={(e) => setInterview(app._id, app.interviewDate, app.interviewTime, e.target.value, app.interviewerEmails?.join(', '), false)}
-                                                                            />
-                                                                            <Globe className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/10 group-focus-within:text-indigo-600 transition-colors" />
-                                                                       </div>
-                                                                       <div className="relative group">
-                                                                            <Input
-                                                                                 type="text"
-                                                                                 placeholder="INTERVIEWER EMAILS (e.g. a@b.com, c@d.com)"
-                                                                                 className="h-10 text-[9px] font-bold border-white/[0.06] bg-white/[0.02] uppercase rounded-lg pr-10 focus:border-indigo-600 transition-all text-white placeholder:text-white/10"
-                                                                                 defaultValue={app.interviewerEmails?.join(', ') || ''}
-                                                                                 onBlur={(e) => setInterview(app._id, app.interviewDate, app.interviewTime, app.interviewLink, e.target.value, false)}
-                                                                            />
-                                                                            <Users className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/10 group-focus-within:text-indigo-600 transition-colors" />
-                                                                       </div>
-                                                                        {app.status === 'Interviewing' && (
-                                                                             <Button
-                                                                                  disabled={!app.interviewDate || !app.interviewLink || !app.interviewTime || isSubmitting}
-                                                                                  onClick={() => setInterview(app._id, app.interviewDate, app.interviewTime, app.interviewLink, app.interviewerEmails?.join(', '), true)}
-                                                                                  className="h-10 bg-indigo-600/20 hover:bg-indigo-600 text-indigo-400 hover:text-white border border-indigo-500/30 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all w-full mt-2"
-                                                                             >
-                                                                                  {isSubmitting ? <VNTLoader size="sm" /> : <Mail className="w-3 h-3 mr-2" />}
-                                                                                  Send Invite
-                                                                             </Button>
+                                                                        <div className="relative group">
+                                                                             <Input
+                                                                                  id={`time-${app._id}`}
+                                                                                  type="time"
+                                                                                  className="h-10 text-[9px] font-bold border-white/[0.06] bg-white/[0.02] uppercase rounded-lg pr-10 focus:border-indigo-600 transition-all text-white placeholder:text-white/10"
+                                                                                  defaultValue={app.interviewTime || ''}
+                                                                                  onBlur={(e) => setInterview(app._id, app.interviewDate, e.target.value, app.interviewLink, app.interviewerEmails?.join(', '), false)}
+                                                                             />
+                                                                             <Clock className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/10 group-focus-within:text-indigo-600 transition-colors" />
+                                                                        </div>
+                                                                        <div className="relative group">
+                                                                             <Input
+                                                                                  id={`link-${app._id}`}
+                                                                                  type="text"
+                                                                                  placeholder="MEET LINK / URL"
+                                                                                  className="h-10 text-[9px] font-bold border-white/[0.06] bg-white/[0.02] uppercase rounded-lg pr-10 focus:border-indigo-600 transition-all text-white placeholder:text-white/10"
+                                                                                  defaultValue={app.interviewLink || ''}
+                                                                                  onBlur={(e) => setInterview(app._id, app.interviewDate, app.interviewTime, e.target.value, app.interviewerEmails?.join(', '), false)}
+                                                                             />
+                                                                             <Globe className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/10 group-focus-within:text-indigo-600 transition-colors" />
+                                                                        </div>
+                                                                        <div className="relative group">
+                                                                             <Input
+                                                                                  id={`email-${app._id}`}
+                                                                                  type="text"
+                                                                                  placeholder="INTERVIEWER EMAILS (e.g. a@b.com, c@d.com)"
+                                                                                  className="h-10 text-[9px] font-bold border-white/[0.06] bg-white/[0.02] uppercase rounded-lg pr-10 focus:border-indigo-600 transition-all text-white placeholder:text-white/10"
+                                                                                  defaultValue={app.interviewerEmails?.join(', ') || ''}
+                                                                                  onBlur={(e) => setInterview(app._id, app.interviewDate, app.interviewTime, app.interviewLink, e.target.value, false)}
+                                                                             />
+                                                                             <Users className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/10 group-focus-within:text-indigo-600 transition-colors" />
+                                                                        </div>
+                                                                         {app.status === 'Interviewing' && (
+                                                                              <Button
+                                                                                   disabled={!app.interviewDate || isSubmitting}
+                                                                                   onClick={() => {
+                                                                                       const timeInput = document.getElementById(`time-${app._id}`) as HTMLInputElement;
+                                                                                       const linkInput = document.getElementById(`link-${app._id}`) as HTMLInputElement;
+                                                                                       const emailInput = document.getElementById(`email-${app._id}`) as HTMLInputElement;
+                                                                                       
+                                                                                       const timeVal = timeInput?.value || app.interviewTime;
+                                                                                       const linkVal = linkInput?.value || app.interviewLink;
+                                                                                       const emailVal = emailInput?.value || app.interviewerEmails?.join(', ');
+
+                                                                                       if (!linkVal || !timeVal) {
+                                                                                           toast.error("Please provide both time and link.");
+                                                                                           return;
+                                                                                       }
+                                                                                       
+                                                                                       setInterview(app._id, app.interviewDate, timeVal, linkVal, emailVal, true);
+                                                                                   }}
+                                                                                   className="h-10 bg-indigo-600/20 hover:bg-indigo-600 text-indigo-400 hover:text-white border border-indigo-500/30 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all w-full mt-2"
+                                                                              >
+                                                                                   {isSubmitting ? <VNTLoader size="sm" /> : <Mail className="w-3 h-3 mr-2" />}
+                                                                                   Send Invite
+                                                                              </Button>
                                                                         )}
                                                                          {(app.status === 'Assessment' || (app.status === 'Rejected' && app.assessment?.status === 'Expired')) && app.assessment && (
                                                                              <div className="mt-2 p-3 bg-white/[0.02] border border-white/[0.06] rounded-lg">
