@@ -230,11 +230,11 @@ export default function AdminDashboardPage() {
           if (triggerEmail) {
                setIsSubmitting(false);
                if (result.success) toast.success("Interview Invitation Dispatched.");
-               else toast.error("Failed to send invitation.");
+               else toast.error(result.error || "Failed to send invitation.");
                fetchData();
            } else {
                if (result.success) toast.success("Details updated.");
-               else toast.error("Update failed.");
+               else toast.error(result.error || "Update failed.");
                fetchData();
           }
      };
