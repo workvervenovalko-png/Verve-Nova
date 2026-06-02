@@ -227,3 +227,31 @@ export const getLastChanceAssessmentTemplate = (name: string, link: string) => `
   ${footerSection}
 </div>
 `;
+
+export const getInterviewerBriefTemplate = (candidateName: string, candidateEmail: string, vnId: string, roleTrack: string, dateStr: string, meetLink: string) => `
+<div style="${baseStyles}">
+  <p>Hello Team,</p>
+  <p>An interview has been scheduled for a candidate. Please find the details below:</p>
+  
+  <div style="background: #f8f9fa; border: 1px solid #e9ecef; padding: 20px; border-radius: 8px; margin: 20px 0;">
+    <p style="margin: 0 0 10px 0; color: #6366f1;"><strong>Candidate Information:</strong></p>
+    <ul style="margin: 0 0 20px 0; padding-left: 20px; color: #333;">
+      <li><strong>Name:</strong> ${candidateName}</li>
+      <li><strong>Email:</strong> ${candidateEmail}</li>
+      <li><strong>Role / Track:</strong> ${roleTrack}</li>
+      <li><strong>VN ID:</strong> ${vnId}</li>
+    </ul>
+
+    <p style="margin: 0 0 10px 0; color: #6366f1;"><strong>Interview Details:</strong></p>
+    <ul style="margin: 0; padding-left: 20px; color: #333;">
+      <li><strong>Scheduled Time:</strong> ${dateStr}</li>
+      <li><strong>Format:</strong> Virtual / Online Session</li>
+    </ul>
+    
+    <p style="margin: 20px 0 0 0;"><a href="${meetLink}" style="background-color: #6366f1; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">Join Interview Session</a></p>
+  </div>
+  
+  <p>Please review the candidate's profile and assessment results in the Admin Dashboard prior to the interview.</p>
+  ${footerSection}
+</div>
+`;
