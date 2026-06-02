@@ -69,6 +69,7 @@ const ApplicationSchema = new Schema({
     deadlineHours: { type: Number, default: 48 }
   },
   interviewDate: { type: Date },
+  interviewTime: { type: String },
   interviewLink: { type: String },
   documents: [{
     type: { type: String, enum: ['Offer Letter', 'Joining Letter', 'Certificate'] },

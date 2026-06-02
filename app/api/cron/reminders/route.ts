@@ -18,7 +18,7 @@ export async function GET(req: Request) {
     // Find applications that are in Assessment state and haven't completed it
     const pendingAssessments = await VerveApplication.find({
       status: 'Assessment',
-      'assessment.status': 'Pending',
+      'assessment.status': { $in: ['Pending', 'In Progress'] },
       'assessment.invitedAt': { $exists: true }
     }).populate('userId', 'name email');
 

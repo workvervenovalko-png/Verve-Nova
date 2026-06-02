@@ -222,10 +222,10 @@ export default function AdminDashboardPage() {
           }
      };
 
-     const setInterview = async (id: string, date?: any, link?: string, triggerEmail: boolean = false) => {
-          if (!date && !link) return;
+     const setInterview = async (id: string, date?: any, time?: string, link?: string, triggerEmail: boolean = false) => {
+          if (!date && !link && !time) return;
           if (triggerEmail) setIsSubmitting(true);
-          const result = await scheduleInterview(id, date, link, triggerEmail);
+          const result = await scheduleInterview(id, date, time, link, triggerEmail);
           
           if (triggerEmail) {
                setIsSubmitting(false);
@@ -471,7 +471,7 @@ export default function AdminDashboardPage() {
                                                                                       mode="single"
                                                                                       selected={app.interviewDate ? new Date(app.interviewDate) : undefined}
                                                                                       onSelect={(date) => {
-                                                                                           if (date) setInterview(app._id, date.toISOString(), app.interviewLink, false);
+                                                                                           if (date) setInterview(app._id, date.toISOString(), app.interviewTime, app.interviewLink, false);
                                                                                       }}
                                                                                       initialFocus
                                                                                       className="p-4"
@@ -480,18 +480,27 @@ export default function AdminDashboardPage() {
                                                                        </Popover>
                                                                        <div className="relative group">
                                                                             <Input
+                                                                                 type="time"
+                                                                                 className="h-10 text-[9px] font-bold border-white/[0.06] bg-white/[0.02] uppercase rounded-lg pr-10 focus:border-indigo-600 transition-all text-white placeholder:text-white/10"
+                                                                                 defaultValue={app.interviewTime || ''}
+                                                                                 onBlur={(e) => setInterview(app._id, app.interviewDate, e.target.value, app.interviewLink, false)}
+                                                                            />
+                                                                            <Clock className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/10 group-focus-within:text-indigo-600 transition-colors" />
+                                                                       </div>
+                                                                       <div className="relative group">
+                                                                            <Input
                                                                                  type="text"
                                                                                  placeholder="MEET LINK / URL"
                                                                                  className="h-10 text-[9px] font-bold border-white/[0.06] bg-white/[0.02] uppercase rounded-lg pr-10 focus:border-indigo-600 transition-all text-white placeholder:text-white/10"
                                                                                  defaultValue={app.interviewLink || ''}
-                                                                                 onBlur={(e) => setInterview(app._id, app.interviewDate, e.target.value, false)}
+                                                                                 onBlur={(e) => setInterview(app._id, app.interviewDate, app.interviewTime, e.target.value, false)}
                                                                             />
                                                                             <Globe className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/10 group-focus-within:text-indigo-600 transition-colors" />
                                                                        </div>
                                                                         {app.status === 'Interviewing' && (
                                                                              <Button
-                                                                                  disabled={!app.interviewDate || !app.interviewLink || isSubmitting}
-                                                                                  onClick={() => setInterview(app._id, app.interviewDate, app.interviewLink, true)}
+                                                                                  disabled={!app.interviewDate || !app.interviewLink || !app.interviewTime || isSubmitting}
+                                                                                  onClick={() => setInterview(app._id, app.interviewDate, app.interviewTime, app.interviewLink, true)}
                                                                                   className="h-10 bg-indigo-600/20 hover:bg-indigo-600 text-indigo-400 hover:text-white border border-indigo-500/30 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all w-full mt-2"
                                                                              >
                                                                                   {isSubmitting ? <VNTLoader size="sm" /> : <Mail className="w-3 h-3 mr-2" />}

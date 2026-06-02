@@ -116,7 +116,7 @@ export async function updateApplicationStatus(appId: string, status: string) {
   }
 }
 
-export async function scheduleInterview(appId: string, interviewDate?: string, interviewLink?: string, triggerEmail: boolean = false) {
+export async function scheduleInterview(appId: string, interviewDate?: string, interviewTime?: string, interviewLink?: string, triggerEmail: boolean = false) {
   try {
     const session = await getServerSession(authOptions) as any;
     if (!session || session.user?.role !== 'ADMIN') {
@@ -126,6 +126,7 @@ export async function scheduleInterview(appId: string, interviewDate?: string, i
     await dbConnect();
     const update: any = { status: 'Interviewing' };
     if (interviewDate) update.interviewDate = new Date(interviewDate);
+    if (interviewTime !== undefined) update.interviewTime = interviewTime;
     if (interviewLink !== undefined) update.interviewLink = interviewLink;
 
     console.log(">>> [ADMIN_SYSTEM] Updating Interview Details:", { appId, update, triggerEmail });
@@ -140,11 +141,17 @@ export async function scheduleInterview(appId: string, interviewDate?: string, i
         const { resend } = await import("@/lib/resend");
         const { getInterviewTemplate } = await import("@/lib/mail-templates");
         
+        // Format date and time
+        const dateObj = new Date(interviewDate);
+        const dateStr = dateObj.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        const timeStr = interviewTime ? interviewTime : "Time to be decided";
+        const combinedDateTimeStr = `${dateStr} at ${timeStr}`;
+        
         const mailRes = await resend.emails.send({
           from: 'Verve Nova Tech <careers@vervenovatech.com>',
           to: targetEmail,
           subject: 'INTERVIEW PROTOCOL INITIALIZED // VERVE NOVA',
-          html: getInterviewTemplate((app.userId as any).name, new Date(interviewDate).toLocaleString(), interviewLink),
+          html: getInterviewTemplate((app.userId as any).name, combinedDateTimeStr, interviewLink),
         });
 
         console.log(`>>> [MAIL_SYSTEM] Interview mail dispatched. Response ID:`, mailRes.data?.id);
