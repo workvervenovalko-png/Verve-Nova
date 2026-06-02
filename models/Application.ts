@@ -71,6 +71,7 @@ const ApplicationSchema = new Schema({
   interviewDate: { type: Date },
   interviewTime: { type: String },
   interviewLink: { type: String },
+  interviewerEmails: [{ type: String }],
   documents: [{
     type: { type: String, enum: ['Offer Letter', 'Joining Letter', 'Certificate'] },
     verificationId: { type: String, unique: true, sparse: true },

@@ -116,11 +116,19 @@ export async function updateApplicationStatus(appId: string, status: string) {
   }
 }
 
-export async function scheduleInterview(appId: string, interviewDate?: string, interviewTime?: string, interviewLink?: string, triggerEmail: boolean = false) {
+export async function scheduleInterview(appId: string, interviewDate?: string, interviewTime?: string, interviewLink?: string, interviewerEmailsStr?: string, triggerEmail: boolean = false) {
   try {
     const session = await getServerSession(authOptions) as any;
     if (!session || session.user?.role !== 'ADMIN') {
       return { success: false, error: "Unauthorized" };
+    }
+
+    let parsedEmails: string[] = [];
+    if (interviewerEmailsStr) {
+      parsedEmails = interviewerEmailsStr.split(',').map(e => e.trim()).filter(e => e !== '');
+      if (parsedEmails.length > 5) {
+        return { success: false, error: "Maximum 5 interviewers allowed." };
+      }
     }
 
     await dbConnect();
@@ -128,18 +136,23 @@ export async function scheduleInterview(appId: string, interviewDate?: string, i
     if (interviewDate) update.interviewDate = new Date(interviewDate);
     if (interviewTime !== undefined) update.interviewTime = interviewTime;
     if (interviewLink !== undefined) update.interviewLink = interviewLink;
+    if (parsedEmails.length > 0) update.interviewerEmails = parsedEmails;
 
     console.log(">>> [ADMIN_SYSTEM] Updating Interview Details:", { appId, update, triggerEmail });
-    const app = await VerveApplication.findByIdAndUpdate(appId, update, { new: true }).populate('userId', 'name email');
+    const app = await VerveApplication.findByIdAndUpdate(appId, update, { new: true }).populate('userId', 'name email vnId');
     
     // Send Interview Email ONLY if explicitly triggered
     if (triggerEmail && app && interviewDate) {
       const targetEmail = (app.userId as any).email;
+      const candidateName = (app.userId as any).name;
+      const vnId = (app.userId as any).vnId || "VN-PENDING";
+      const roleTrack = app.roleSlug ? app.roleSlug.replace(/-/g, ' ').toUpperCase() : "GENERAL";
+      
       console.log(`>>> [MAIL_SYSTEM] Manual trigger received. Initiating interview protocol for: ${targetEmail}`);
 
       try {
         const { resend } = await import("@/lib/resend");
-        const { getInterviewTemplate } = await import("@/lib/mail-templates");
+        const { getInterviewTemplate, getInterviewerBriefTemplate } = await import("@/lib/mail-templates");
         
         // Format date and time
         const dateObj = new Date(interviewDate);
@@ -147,14 +160,27 @@ export async function scheduleInterview(appId: string, interviewDate?: string, i
         const timeStr = interviewTime ? interviewTime : "Time to be decided";
         const combinedDateTimeStr = `${dateStr} at ${timeStr}`;
         
+        // 1. Send to Candidate
         const mailRes = await resend.emails.send({
           from: 'Verve Nova Tech <careers@vervenovatech.com>',
           to: targetEmail,
           subject: 'INTERVIEW PROTOCOL INITIALIZED // VERVE NOVA',
-          html: getInterviewTemplate((app.userId as any).name, combinedDateTimeStr, interviewLink),
+          html: getInterviewTemplate(candidateName, combinedDateTimeStr, interviewLink),
         });
+        console.log(`>>> [MAIL_SYSTEM] Interview mail dispatched to Candidate. Response ID:`, mailRes.data?.id);
 
-        console.log(`>>> [MAIL_SYSTEM] Interview mail dispatched. Response ID:`, mailRes.data?.id);
+        // 2. Send to Interviewers
+        if (parsedEmails.length > 0) {
+          console.log(`>>> [MAIL_SYSTEM] Sending Brief to Interviewers:`, parsedEmails);
+          const briefMailRes = await resend.emails.send({
+            from: 'Verve Nova Tech <careers@vervenovatech.com>',
+            to: parsedEmails,
+            subject: `INTERVIEW SCHEDULED: ${candidateName} // VERVE NOVA`,
+            html: getInterviewerBriefTemplate(candidateName, targetEmail, vnId, roleTrack, combinedDateTimeStr, interviewLink || "TBD"),
+          });
+          console.log(`>>> [MAIL_SYSTEM] Interviewer brief dispatched. Response ID:`, briefMailRes.data?.id);
+        }
+
       } catch (mailError: any) {
         console.error(">>> [MAIL_SYSTEM] CRITICAL ERROR sending interview mail:", mailError.message);
       }
