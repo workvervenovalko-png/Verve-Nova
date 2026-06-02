@@ -206,8 +206,8 @@ export default function DetailedApplicationPage() {
         return;
     }
 
-    if (resumeFile.size > 8 * 1024 * 1024) {
-        toast.error("File is too large (Max 8MB allowed).");
+    if (resumeFile.size > 3 * 1024 * 1024) {
+        toast.error("File is too large (Max 3MB allowed).");
         return;
     }
 
@@ -715,7 +715,7 @@ export default function DetailedApplicationPage() {
                                 </div>
                                 <div className="text-center">
                                     <p className="text-sm font-bold text-white/60">Drop your resume here or click to upload</p>
-                                    <p className="text-[10px] font-bold text-white/15 uppercase tracking-widest mt-1">PDF or DOC only (Max 10MB)</p>
+                                    <p className="text-[10px] font-bold text-white/15 uppercase tracking-widest mt-1">PDF or DOC only (Max 3MB)</p>
                                 </div>
                             </>
                         )}
