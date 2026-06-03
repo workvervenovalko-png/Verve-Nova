@@ -15,6 +15,8 @@ export async function getAdminData() {
       return { success: false, error: "Unauthorized access detected." };
     }
 
+    await dbConnect();
+
     console.log("Fetching Admin Data (VerveApplication)...");
     const [applications, leads] = await Promise.all([
       VerveApplication.find()
