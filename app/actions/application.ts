@@ -25,6 +25,7 @@ export async function submitApplication(data: any) {
       projects: data.projects,
       skills: data.skills,
       links: data.links,
+      caAnswers: data.caAnswers,
       referredByCode: data.referredByCode,
     });
 

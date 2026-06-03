@@ -42,6 +42,12 @@ const ApplicationSchema = new Schema({
 
   skills: [String],
 
+  // CA Specific Answers
+  caAnswers: {
+    clubs: String,
+    whyJoin: String
+  },
+
   // Terminal Assets
   links: {
     resumeUrl: String,

@@ -64,7 +64,7 @@ import { cn } from "@/lib/utils";
 
 
 export default function AdminDashboardPage() {
-     const [activeTab, setActiveTab] = useState<"applications" | "leads" | "blogs" | "issuance">("applications");
+     const [activeTab, setActiveTab] = useState<"applications" | "leads" | "blogs" | "issuance" | "campus-ambassadors">("applications");
      const [subTab, setSubTab] = useState<"new" | "assessment" | "interviewing" | "accepted" | "offered" | "joined" | "completed" | "rejected">("new");
      const [applications, setApplications] = useState<any[]>([]);
      const [leads, setLeads] = useState<any[]>([]);
@@ -268,6 +268,10 @@ export default function AdminDashboardPage() {
 
      const getFilteredApplications = () => {
           return applications.filter(app => {
+               const isCA = app.roleSlug === 'campus-ambassador';
+               if (activeTab === 'applications' && isCA) return false;
+               if (activeTab === 'campus-ambassadors' && !isCA) return false;
+
                const hasCert = app.documents?.some((d: any) => d.type === 'Certificate');
                const hasJoining = app.documents?.some((d: any) => d.type === 'Joining Letter');
                const hasOffer = app.documents?.some((d: any) => d.type === 'Offer Letter');
@@ -347,6 +351,12 @@ export default function AdminDashboardPage() {
                                    >
                                         Documents
                                    </button>
+                                   <button
+                                        onClick={() => setActiveTab("campus-ambassadors")}
+                                        className={`px-6 py-3 rounded-xl text-[9px] font-bold uppercase tracking-widest transition-all ${activeTab === 'campus-ambassadors' ? 'bg-indigo-600 text-white shadow-lg' : 'text-white/30 hover:bg-white/[0.05]'}`}
+                                   >
+                                        Ambassadors
+                                   </button>
 
                               </div>
                          </div>
@@ -363,7 +373,7 @@ export default function AdminDashboardPage() {
                          )}
 
                           <div className="glass-card rounded-[2.5rem] border-white/[0.06] shadow-2xl overflow-hidden min-h-[400px]">
-                              {activeTab === "applications" ? (
+                              {(activeTab === "applications" || activeTab === "campus-ambassadors") ? (
                                    <div className="flex flex-col">
                                         {/* Sub-Tabs for Applications */}
                                         <div className="flex flex-wrap gap-2 p-4 bg-white/[0.01] border-b border-white/[0.04]">
@@ -386,6 +396,10 @@ export default function AdminDashboardPage() {
                                                        {tab.label}
                                                        <span className="ml-1 opacity-40">
                                                             ({applications.filter(app => {
+                                                                 const isCA = app.roleSlug === 'campus-ambassador';
+                                                                 if (activeTab === 'applications' && isCA) return false;
+                                                                 if (activeTab === 'campus-ambassadors' && !isCA) return false;
+
                                                                  const hasCert = app.documents?.some((d: any) => d.type === 'Certificate');
                                                                  const hasJoining = app.documents?.some((d: any) => d.type === 'Joining Letter');
                                                                  const hasOffer = app.documents?.some((d: any) => d.type === 'Offer Letter');
