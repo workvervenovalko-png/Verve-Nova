@@ -180,6 +180,9 @@ export async function scheduleInterview(appId: string, interviewDate?: string, i
           console.log(`>>> [MAIL_SYSTEM] Sending Brief to Interviewers:`, parsedEmails);
           
           for (const email of parsedEmails) {
+              // Wait 600ms between requests to avoid Resend 2 req/sec rate limit
+              await new Promise(resolve => setTimeout(resolve, 600));
+              
               const briefMailRes = await resend.emails.send({
                 from: 'Verve Nova Tech <careers@vervenovatech.com>',
                 to: email,
