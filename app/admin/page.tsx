@@ -386,7 +386,7 @@ export default function AdminDashboardPage() {
                                                   { id: 'joined', label: 'Joined', icon: Briefcase },
                                                   { id: 'completed', label: 'Completed', icon: ShieldCheck },
                                                   { id: 'rejected', label: 'Rejected', icon: XCircle }
-                                             ].map((tab) => (
+                                             ].filter(tab => !(activeTab === 'campus-ambassadors' && tab.id === 'assessment')).map((tab) => (
                                                   <button
                                                        key={tab.id}
                                                        onClick={() => setSubTab(tab.id as any)}
@@ -473,7 +473,9 @@ export default function AdminDashboardPage() {
                                                                        onChange={(e) => updateStatus(app._id, e.target.value)}
                                                                   >
                                                                        <option value="Reviewing" className="bg-[#09090B]">Reviewing</option>
-                                                                       <option value="Assessment" className="bg-[#09090B]">Assessment</option>
+                                                                       {app.roleSlug !== 'campus-ambassador' && (
+                                                                            <option value="Assessment" className="bg-[#09090B]">Assessment</option>
+                                                                       )}
                                                                        <option value="Interviewing" className="bg-[#09090B]">Interviewing</option>
                                                                        <option value="Accepted" className="bg-[#09090B]">Accepted</option>
                                                                        <option value="Rejected" className="bg-[#09090B]">Rejected</option>
