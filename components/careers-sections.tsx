@@ -10,7 +10,7 @@ import { useSession } from "next-auth/react";
 
 export function CareersHero() {
   const [time, setTime] = useState<string>("");
-  const { status } = useSession();
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     const updateTime = () => {
@@ -61,7 +61,7 @@ export function CareersHero() {
                   asChild
                   className="h-14 px-10 bg-white/[0.04] border border-white/[0.08] text-white font-bold rounded-xl transition-all hover:bg-white/[0.08] uppercase text-[10px] tracking-[0.2em] group backdrop-blur-sm"
                 >
-                  <Link href={status === 'authenticated' ? "/profile" : "/careers/auth"}>
+                  <Link href={status === 'authenticated' ? (session?.user?.role?.toUpperCase() === 'ADMIN' ? '/admin' : '/profile') : "/careers/auth"}>
                     <User2 className="mr-3 w-4 h-4" />
                     {status === 'authenticated' ? "My Profile" : "Candidate Portal"}
                   </Link>

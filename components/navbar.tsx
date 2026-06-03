@@ -118,7 +118,7 @@ export function Navbar() {
               onMouseLeave={() => setShowLogout(false)}
             >
               <Link
-                href={session?.user?.role === 'ADMIN' ? '/admin' : '/profile'}
+                href={session?.user?.role?.toUpperCase() === 'ADMIN' ? '/admin' : '/profile'}
                 className="relative w-10 h-10 rounded-full bg-white/[0.03] border border-white/[0.08] flex items-center justify-center hover:border-indigo-500/50 transition-all overflow-hidden"
               >
                 {session?.user?.image ? (
