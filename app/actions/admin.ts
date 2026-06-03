@@ -526,7 +526,7 @@ export async function generateCACredentials(appId: string) {
     
     const initials = user.name.split(' ').map((n: string) => n[0]).join('').toUpperCase();
     const uniqueSuffix = Math.random().toString(36).slice(-4).toUpperCase();
-    const referralCode = \`VNT-CA-\${initials}-\${uniqueSuffix}\`;
+    const referralCode = `VNT-CA-${initials}-${uniqueSuffix}`;
 
     // Update User
     await User.findByIdAndUpdate(user._id, {
@@ -541,7 +541,7 @@ export async function generateCACredentials(appId: string) {
     const { getCACredentialTemplate } = await import("@/lib/mail-templates");
     
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://vervenovatech.com';
-    const loginLink = \`\${baseUrl}/careers/auth\`;
+    const loginLink = `${baseUrl}/careers/auth`;
 
     const mailRes = await resend.emails.send({
       from: 'Verve Nova Tech <careers@vervenovatech.com>',
@@ -550,7 +550,7 @@ export async function generateCACredentials(appId: string) {
       html: getCACredentialTemplate(user.name, user.email, password, loginLink, referralCode),
     });
 
-    console.log(\`>>> [MAIL_SYSTEM] CA Credentials sent to \${user.email}. Response ID: \`, mailRes.data?.id);
+    console.log(`>>> [MAIL_SYSTEM] CA Credentials sent to ${user.email}. Response ID: `, mailRes.data?.id);
 
     return { success: true, message: "Credentials generated and sent." };
   } catch (error: any) {

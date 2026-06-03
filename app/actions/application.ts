@@ -36,7 +36,7 @@ export async function submitApplication(data: any) {
         { $inc: { referralCount: 1 } }
       );
       if (caUser) {
-        console.log(\`>>> [CA_SYSTEM] Referral count incremented for CA: \${caUser.email}\`);
+        console.log(`>>> [CA_SYSTEM] Referral count incremented for CA: ${caUser.email}`);
       }
     }
 

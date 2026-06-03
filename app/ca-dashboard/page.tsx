@@ -160,18 +160,18 @@ export default function CADashboardPage() {
                     leaderboard.map((ca, index) => (
                       <div 
                         key={ca._id} 
-                        className={\`flex items-center justify-between p-4 rounded-2xl border transition-all \${
+                        className={`flex items-center justify-between p-4 rounded-2xl border transition-all ${
                           index === 0 ? 'bg-indigo-500/10 border-indigo-500/30 shadow-[0_0_30px_rgba(99,102,241,0.1)]' : 
                           index === 1 ? 'bg-white/[0.03] border-white/10' :
                           index === 2 ? 'bg-white/[0.02] border-white/[0.05]' :
                           'bg-transparent border-transparent hover:bg-white/[0.01]'
-                        }\`}
+                        }`}
                       >
                         <div className="flex items-center gap-4">
-                          <div className={\`w-10 h-10 rounded-full flex items-center justify-center font-black text-sm \${
+                          <div className={`w-10 h-10 rounded-full flex items-center justify-center font-black text-sm ${
                             index === 0 ? 'bg-indigo-500 text-white' : 
                             'bg-white/5 text-white/40'
-                          }\`}>
+                          }`}>
                             #{index + 1}
                           </div>
                           <div>
