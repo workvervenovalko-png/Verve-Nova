@@ -279,5 +279,32 @@ export const internshipRoles: Record<string, InternshipRole> = {
       "Highest standards of ethics and integrity."
     ],
     techStack: ["Ethical Hacking Tools", "Nmap", "Wireshark", "Burp Suite", "OWASP", "CloudFlare"]
+  },
+  "campus-ambassador": {
+    slug: "campus-ambassador",
+    title: "Campus Ambassador",
+    shortDesc: "Represent Verve Nova at your campus. Build network & gain leadership experience.",
+    duration: "3 Months",
+    responsibilities: [
+      "Promote Verve Nova internship programs across campus and student groups.",
+      "Identify and onboard top talent to apply for our specialized tracks.",
+      "Organize virtual or offline events/sessions to boost brand awareness.",
+      "Provide regular insights on campus trends and student requirements.",
+      "Act as the primary bridge between the student community and Verve Nova."
+    ],
+    benefits: [
+      "Official Campus Ambassador Certificate.",
+      "Performance-based incentives and rewards for top referrers.",
+      "Exclusive access to Verve Nova leadership and networking events.",
+      "Direct pathway to core team or full-time roles.",
+      "Premium CA Dashboard to track referrals and leaderboard ranking."
+    ],
+    requirements: [
+      "Currently enrolled in a recognized university or college.",
+      "Strong communication and networking skills.",
+      "Active presence in student clubs or campus communities.",
+      "Enthusiasm for technology and startup ecosystems."
+    ],
+    techStack: ["Networking", "Communication", "Leadership", "Marketing", "Community Building"]
   }
 };
