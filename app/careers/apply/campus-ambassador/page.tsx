@@ -25,7 +25,9 @@ import {
   CheckCircle2,
   ShieldCheck,
   ArrowRight,
-  UploadCloud
+  UploadCloud,
+  Sparkles,
+  Briefcase
 } from "lucide-react";
 import { submitApplication } from "@/app/actions/application";
 import { toast } from "sonner";
@@ -234,6 +236,28 @@ export default function CampusAmbassadorApplyPage() {
               CA <span className="text-gradient">Application.</span>
             </h1>
             <p className="text-[10px] text-white/20 font-bold tracking-[0.4em] uppercase">Represent Verve Nova in your campus</p>
+          </div>
+
+          {/* PERKS SECTION */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16 max-w-3xl mx-auto">
+            <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/[0.08] flex items-start gap-4">
+              <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center shrink-0">
+                <Sparkles className="w-5 h-5 text-indigo-400" />
+              </div>
+              <div>
+                <h3 className="text-white font-bold mb-2 text-sm uppercase tracking-wider">Certificate & LoR</h3>
+                <p className="text-xs text-white/50 leading-relaxed">Earn a recognized Certificate of Completion and a performance-based Letter of Recommendation.</p>
+              </div>
+            </div>
+            <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/[0.08] flex items-start gap-4">
+              <div className="w-10 h-10 rounded-xl bg-violet-500/10 flex items-center justify-center shrink-0">
+                <Briefcase className="w-5 h-5 text-violet-400" />
+              </div>
+              <div>
+                <h3 className="text-white font-bold mb-2 text-sm uppercase tracking-wider">Career Priority</h3>
+                <p className="text-xs text-white/50 leading-relaxed">Gain real-world experience and get priority consideration for future paid roles.</p>
+              </div>
+            </div>
           </div>
 
           <div className="flex items-center justify-between mb-20 max-w-xl mx-auto px-4">
