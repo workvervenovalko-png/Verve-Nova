@@ -307,6 +307,33 @@ export const internshipRoles: Record<string, InternshipRole> = {
     ],
     techStack: ["SQL", "Python", "Tableau", "PowerBI", "Excel", "Pandas"]
   },
+  "social-media-management": {
+    slug: "social-media-management",
+    title: "Social Media Management",
+    shortDesc: "Architect brand growth through viral content, reels, and community engagement.",
+    duration: "3 Months",
+    responsibilities: [
+      "Create and edit high-impact Reels and short-form video content.",
+      "Manage daily posting and engagement across Instagram, LinkedIn, and Twitter.",
+      "Design aesthetic graphics and memes aligned with the brand voice.",
+      "Build and nurture the online community, responding to comments and DMs.",
+      "Analyze social media metrics to optimize content strategy."
+    ],
+    benefits: [
+      "Official Social Media Management Certificate.",
+      "Live brand portfolio to showcase your viral content and metrics.",
+      "Hands-on experience growing a tech company's digital footprint.",
+      "Mentorship from digital marketing strategists.",
+      "Direct pathway to a full-time role based on engagement growth."
+    ],
+    requirements: [
+      "Strong understanding of Instagram/LinkedIn algorithms and trends.",
+      "Proficiency in video editing (CapCut, VN, Premiere Pro).",
+      "Basic graphic design skills (Canva, Figma, Photoshop).",
+      "Creative mindset with a knack for tech humor and memes."
+    ],
+    techStack: ["Instagram", "LinkedIn", "CapCut", "Canva", "Meta Business Suite"]
+  },
   "campus-ambassador": {
     slug: "campus-ambassador",
     title: "Campus Ambassador",

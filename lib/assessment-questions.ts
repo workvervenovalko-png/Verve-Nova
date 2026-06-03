@@ -215,6 +215,30 @@ export const assessmentQuestions: Record<string, AssessmentQuestion[]> = {
     { id: "ub_18", type: "domain", text: "How important are relevant portfolio items?", options: ["Not important", "Somewhat important", "Extremely important to prove capability", "Only important for designers"], correctOptionIndex: 2 },
     { id: "ub_19", type: "domain", text: "What should you do if you realize you can't meet a deadline?", options: ["Ignore the client", "Communicate proactively with the client to find a solution", "Submit unfinished work", "Cancel the contract without telling them"], correctOptionIndex: 1 },
     { id: "ub_20", type: "domain", text: "What is the best way to price your services initially?", options: ["Highest rate possible", "Lowest rate possible", "Competitive rate based on your skills and market average", "Free"], correctOptionIndex: 2 },
+  ],
+  "social-media-management": [
+    ...genericQuestions,
+    // 20 Social Media Management Questions
+    { id: "smm_1", type: "domain", text: "Which platform is best known for short-form, highly viral video content?", options: ["LinkedIn", "Twitter", "TikTok/Reels", "Pinterest"], correctOptionIndex: 2 },
+    { id: "smm_2", type: "domain", text: "What does engagement rate measure?", options: ["How many people saw the post", "How many people interacted (liked, commented, shared) with the post relative to reach", "How much money the post made", "How fast the post loaded"], correctOptionIndex: 1 },
+    { id: "smm_3", type: "domain", text: "What is the primary purpose of a hashtag?", options: ["To make text look cool", "To categorize content and make it discoverable", "To hide text from competitors", "To increase video resolution"], correctOptionIndex: 1 },
+    { id: "smm_4", type: "domain", text: "What does 'algorithm' mean in the context of social media?", options: ["A mathematical formula used to solve complex equations", "The set of rules a platform uses to decide which content to show users", "A type of video effect", "A social media influencer"], correctOptionIndex: 1 },
+    { id: "smm_5", type: "domain", text: "Which tool is commonly used for scheduling social media posts?", options: ["VS Code", "Buffer / Hootsuite", "Postman", "Figma"], correctOptionIndex: 1 },
+    { id: "smm_6", type: "domain", text: "What is User-Generated Content (UGC)?", options: ["Content created by the brand's CEO", "Content created by AI", "Content created by the brand's customers or followers", "Content downloaded from stock websites"], correctOptionIndex: 2 },
+    { id: "smm_7", type: "domain", text: "What is a 'Call to Action' (CTA) in a social media post?", options: ["A legal warning", "A prompt encouraging the audience to do something (e.g., 'Link in bio')", "A type of meme", "The title of the video"], correctOptionIndex: 1 },
+    { id: "smm_8", type: "domain", text: "Which metric is considered a 'vanity metric'?", options: ["Conversion rate", "Click-through rate", "Number of likes", "Return on ad spend"], correctOptionIndex: 2 },
+    { id: "smm_9", type: "domain", text: "What does 'Hook' mean in short-form video?", options: ["A fishing tool", "The first 3 seconds designed to grab the viewer's attention", "The credits at the end", "The background music"], correctOptionIndex: 1 },
+    { id: "smm_10", type: "domain", text: "Which platform is primarily used for B2B networking and professional content?", options: ["Snapchat", "Instagram", "LinkedIn", "TikTok"], correctOptionIndex: 2 },
+    { id: "smm_11", type: "domain", text: "What is the recommended aspect ratio for an Instagram Reel or TikTok?", options: ["16:9", "1:1", "9:16", "4:3"], correctOptionIndex: 2 },
+    { id: "smm_12", type: "domain", text: "What is 'Newsjacking'?", options: ["Stealing the news", "Capitalizing on the popularity of a news story to amplify your brand's success", "A software bug", "Deleting old news articles"], correctOptionIndex: 1 },
+    { id: "smm_13", type: "domain", text: "What is the purpose of 'A/B Testing' in social media ads?", options: ["To test two different versions of an ad to see which performs better", "To test if the app crashes", "To test the alphabet", "To test user passwords"], correctOptionIndex: 0 },
+    { id: "smm_14", type: "domain", text: "Which of the following is NOT a common social media KPI?", options: ["Reach", "Engagement", "Lines of Code Written", "Follower Growth"], correctOptionIndex: 2 },
+    { id: "smm_15", type: "domain", text: "What does 'Impressions' mean?", options: ["How many times a post was clicked", "How many unique people saw the post", "How many times a post was displayed on a screen", "How many times a post was shared"], correctOptionIndex: 2 },
+    { id: "smm_16", type: "domain", text: "What is 'Shadowbanning'?", options: ["Blocking the sun for better lighting", "When a platform secretly restricts a user's visibility without notifying them", "A dark mode feature", "A type of graphic design"], correctOptionIndex: 1 },
+    { id: "smm_17", type: "domain", text: "Which app is widely popular for quick, easy video editing for Reels/TikTok?", options: ["AutoCAD", "CapCut", "Microsoft Word", "Notion"], correctOptionIndex: 1 },
+    { id: "smm_18", type: "domain", text: "What is a 'Carousel' post on Instagram?", options: ["A post containing multiple images or videos that users swipe through", "A post with horses", "A 24-hour disappearing post", "A live broadcast"], correctOptionIndex: 0 },
+    { id: "smm_19", type: "domain", text: "Why is 'community management' important?", options: ["To delete the app", "To build relationships, trust, and loyalty with followers", "To hide metrics", "To change the logo"], correctOptionIndex: 1 },
+    { id: "smm_20", type: "domain", text: "What is the best way to handle negative comments?", options: ["Insult them back", "Delete all of them immediately", "Respond professionally or take the conversation to DMs to resolve the issue", "Ignore them completely forever"], correctOptionIndex: 2 },
   ]
 };
 

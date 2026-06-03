@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowUpRight, GraduationCap, Briefcase, Zap, Globe, Cpu, CheckCircle2, ChevronRight, Target, Sparkles, Code2, Rocket, Layout, BrainCircuit, LineChart, Building2, Database, Cloud, ShieldCheck, User2, Layers } from "lucide-react";
+import { ArrowUpRight, GraduationCap, Briefcase, Zap, Globe, Cpu, CheckCircle2, ChevronRight, Target, Sparkles, Code2, Rocket, Layout, BrainCircuit, LineChart, Building2, Database, Cloud, ShieldCheck, User2, Layers, Smartphone } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
@@ -199,6 +199,7 @@ export function InternshipProgram() {
     { slug: "qa-testing", title: "QA / Testing", icon: CheckCircle2, desc: "Ensuring a mirror-finish. Bug hunting and automated testing.", tasks: ["Bug Hunting", "UX Testing"] },
     { slug: "cybersecurity", title: "Cybersecurity", icon: ShieldCheck, desc: "Securing systems and conducting strategic risk assessments.", tasks: ["Risk Analysis", "Security Audits"] },
     { slug: "data-analytics", title: "Data Analytics", icon: Database, desc: "Transform raw data into strategic insights and business intelligence.", tasks: ["Data Modeling", "Pipelines"] },
+    { slug: "social-media-management", title: "Social Media Mngt", icon: Smartphone, desc: "Architect brand growth through viral content, reels, and community engagement.", tasks: ["Reels & Content", "Community"] },
     { slug: "campus-ambassador", title: "Campus Ambassador", icon: Layers, desc: "Represent Verve Nova at your campus. Build network & gain leadership experience.", tasks: ["Campus Outreach", "Networking"] }
   ];
 
