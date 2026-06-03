@@ -197,7 +197,8 @@ export function InternshipProgram() {
     { slug: "ai-automation", title: "AI & Automation", icon: BrainCircuit, desc: "Implementing intelligent chatbots and automation for enterprise.", tasks: ["AI Tuning", "Workflow Logic"] },
     { slug: "digital-marketing", title: "Digital Marketing", icon: LineChart, desc: "Attracting clients through SEO and strategic brand positioning.", tasks: ["SEO Optimization", "Lead Gen"] },
     { slug: "qa-testing", title: "QA / Testing", icon: CheckCircle2, desc: "Ensuring a mirror-finish. Bug hunting and automated testing.", tasks: ["Bug Hunting", "UX Testing"] },
-    { slug: "cybersecurity", title: "Cybersecurity", icon: ShieldCheck, desc: "Securing systems and conducting strategic risk assessments.", tasks: ["Risk Analysis", "Security Audits"] }
+    { slug: "cybersecurity", title: "Cybersecurity", icon: ShieldCheck, desc: "Securing systems and conducting strategic risk assessments.", tasks: ["Risk Analysis", "Security Audits"] },
+    { slug: "campus-ambassador", title: "Campus Ambassador", icon: Layers, desc: "Represent Verve Nova at your campus. Build network & gain leadership experience.", tasks: ["Campus Outreach", "Networking"] }
   ];
 
   return (
