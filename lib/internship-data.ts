@@ -280,6 +280,33 @@ export const internshipRoles: Record<string, InternshipRole> = {
     ],
     techStack: ["Ethical Hacking Tools", "Nmap", "Wireshark", "Burp Suite", "OWASP", "CloudFlare"]
   },
+  "data-analytics": {
+    slug: "data-analytics",
+    title: "Data Analytics",
+    shortDesc: "Transform raw data into strategic insights and business intelligence.",
+    duration: "3 Months",
+    responsibilities: [
+      "Analyze complex datasets to identify trends and patterns.",
+      "Build interactive dashboards and visualizations for stakeholders.",
+      "Clean, process, and optimize data pipelines for accuracy.",
+      "Collaborate with the business team to drive data-informed decisions.",
+      "Generate detailed analytical reports and performance metrics."
+    ],
+    benefits: [
+      "Professional Data Analytics Certificate.",
+      "Experience with real-world enterprise datasets.",
+      "Mentorship from senior data architects.",
+      "Opportunity for a full-time conversion based on performance.",
+      "Strong portfolio of data models and interactive dashboards."
+    ],
+    requirements: [
+      "Proficiency in SQL, Python, or R.",
+      "Experience with data visualization tools (Tableau, PowerBI, etc.).",
+      "Strong analytical and problem-solving skills.",
+      "Understanding of basic statistical concepts."
+    ],
+    techStack: ["SQL", "Python", "Tableau", "PowerBI", "Excel", "Pandas"]
+  },
   "campus-ambassador": {
     slug: "campus-ambassador",
     title: "Campus Ambassador",
