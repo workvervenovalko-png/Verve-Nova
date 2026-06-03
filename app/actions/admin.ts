@@ -158,7 +158,13 @@ export async function scheduleInterview(appId: string, interviewDate?: string, i
         
         // Format date and time
         const dateObj = new Date(interviewDate);
-        const dateStr = dateObj.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        const dateStr = dateObj.toLocaleDateString('en-US', { 
+            timeZone: 'Asia/Kolkata', 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        });
         const timeStr = interviewTime ? interviewTime : "Time to be decided";
         const combinedDateTimeStr = `${dateStr} at ${timeStr}`;
         
