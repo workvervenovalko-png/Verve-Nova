@@ -7,6 +7,7 @@ import User from "@/models/User";
 import Blog from "@/models/Blog";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
+import { revalidatePath } from "next/cache";
 
 export async function getAdminData() {
   try {
@@ -213,6 +214,7 @@ export async function scheduleInterview(appId: string, interviewDate?: string, i
         console.log(">>> [MAIL_SYSTEM] Background update complete. Email pending manual trigger.");
     }
 
+    revalidatePath('/admin');
     return { success: true };
   } catch (error: any) {
     console.error("Admin Interview Update Error:", error);
