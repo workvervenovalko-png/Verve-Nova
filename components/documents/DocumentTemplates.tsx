@@ -30,6 +30,7 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
   const dateStr = format(new Date(issuedAt), "PPPP");
   const domain = metadata?.domain || "Web Development";
   const stipend = metadata?.stipend || "As we discussed";
+  const isCA = domain === 'CAMPUS AMBASSADOR' || domain === 'Campus Ambassador';
 
   if (type === 'Certificate') {
     let start = new Date();
@@ -79,7 +80,7 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
             <h1 className="text-7xl font-black text-[#0f172a] tracking-widest uppercase mb-4">CERTIFICATE</h1>
             <div className="flex items-center justify-center gap-4 text-[#d4af37]">
               <div className="w-48 h-[2px] bg-[#d4af37]"></div>
-              <span className="text-2xl font-bold tracking-[0.3em] uppercase">OF INTERNSHIP</span>
+              <span className="text-2xl font-bold tracking-[0.3em] uppercase">OF {isCA ? 'COMPLETION' : 'INTERNSHIP'}</span>
               <div className="w-48 h-[2px] bg-[#d4af37]"></div>
             </div>
           </div>
@@ -95,8 +96,8 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
           {/* Body Text */}
           <div className="text-center max-w-3xl text-[16px] leading-relaxed text-[#374151] font-medium px-8">
             <p>
-              For successfully completing the <strong>{domain}</strong> {domain === 'CAMPUS AMBASSADOR' || domain === 'Campus Ambassador' ? 'program' : 'internship program'} at <strong>Verve Nova Technologies</strong>. 
-              The {domain === 'CAMPUS AMBASSADOR' || domain === 'Campus Ambassador' ? 'program' : 'internship'} was conducted from <strong>{formattedStartDate}</strong> to <strong>{formattedEndDate}</strong>. 
+              For successfully completing the <strong>{domain}</strong> {isCA ? 'program' : 'internship program'} at <strong>Verve Nova Technologies</strong>. 
+              The {isCA ? 'program' : 'internship'} was conducted from <strong>{formattedStartDate}</strong> to <strong>{formattedEndDate}</strong>. 
               During this period, the individual has shown dedication, consistency, and a strong willingness to learn and contribute.
             </p>
           </div>
@@ -190,7 +191,7 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
               <strong>Dear {candidateName}, Welcome Aboard!</strong>
             </p>
             <p className="break-inside-avoid">
-              This letter serves as formal confirmation of your onboarding as a <strong>{domain}{(domain === 'CAMPUS AMBASSADOR' || domain === 'Campus Ambassador') ? '' : ' Intern'}</strong> at <strong>Verve Nova Technologies</strong> effective from <strong>{formattedStartDate}</strong>. We are thrilled to have you join our team and are confident that your contributions will be valuable to our organization.
+              This letter serves as formal confirmation of your onboarding as a <strong>{domain}{isCA ? '' : ' Intern'}</strong> at <strong>Verve Nova Technologies</strong> effective from <strong>{formattedStartDate}</strong>. We are thrilled to have you join our team and are confident that your contributions will be valuable to our organization.
             </p>
 
             {/* JOINING DETAILS */}
@@ -200,7 +201,7 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
               </h3>
               <div className="grid grid-cols-[160px_1fr] gap-y-2 font-medium pl-6">
                 <p>Designation</p>
-                <p>: {domain}{(domain === 'CAMPUS AMBASSADOR' || domain === 'Campus Ambassador') ? '' : ' Intern'}</p>
+                <p>: {domain}{isCA ? '' : ' Intern'}</p>
                 
                 <p>Date of Joining</p>
                 <p>: {formattedStartDate}</p>
@@ -235,14 +236,27 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
             {/* CONFIDENTIALITY (NDA) */}
             <div className="break-inside-avoid">
               <h3 className="text-sm font-bold text-[#92400e] uppercase tracking-wide flex items-center gap-2 mb-3">
-                <span>🔒</span> CONFIDENTIALITY & NDA
+                <span>{isCA ? '📣' : '🔒'}</span> {isCA ? 'BRAND REPRESENTATION' : 'CONFIDENTIALITY & NDA'}
               </h3>
-              <p className="mb-2 pl-2 break-inside-avoid">During your tenure, you will have access to sensitive company data, codebases, and intellectual property. You agree to:</p>
-              <ul className="list-disc list-inside pl-2 space-y-1 text-[#374151]">
-                <li className="break-inside-avoid">Strictly maintain the confidentiality of all proprietary information and trade secrets.</li>
-                <li className="break-inside-avoid">Not share, distribute, or copy company code, assets, or client data for personal or external use.</li>
-                <li className="break-inside-avoid">Return or destroy all company-owned digital assets upon the completion or termination of the internship.</li>
-              </ul>
+              {isCA ? (
+                <>
+                  <p className="mb-2 pl-2 break-inside-avoid">As a representative of our brand, you agree to:</p>
+                  <ul className="list-disc list-inside pl-2 space-y-1 text-[#374151]">
+                    <li className="break-inside-avoid">Uphold the reputation and core values of Verve Nova Technologies in all promotional activities.</li>
+                    <li className="break-inside-avoid">Not make any false claims or commitments on behalf of the company.</li>
+                    <li className="break-inside-avoid">Use only approved marketing materials and logos provided by the team.</li>
+                  </ul>
+                </>
+              ) : (
+                <>
+                  <p className="mb-2 pl-2 break-inside-avoid">During your tenure, you will have access to sensitive company data, codebases, and intellectual property. You agree to:</p>
+                  <ul className="list-disc list-inside pl-2 space-y-1 text-[#374151]">
+                    <li className="break-inside-avoid">Strictly maintain the confidentiality of all proprietary information and trade secrets.</li>
+                    <li className="break-inside-avoid">Not share, distribute, or copy company code, assets, or client data for personal or external use.</li>
+                    <li className="break-inside-avoid">Return or destroy all company-owned digital assets upon the completion or termination of the internship.</li>
+                  </ul>
+                </>
+              )}
             </div>
 
             {/* NEXT STEPS */}
@@ -251,7 +265,9 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
                 <span>🚀</span> NEXT STEPS
               </h3>
               <p className="pl-2 text-[#374151]">
-                You will shortly receive your project onboarding details and access credentials. Please ensure you have set up the necessary development environment as instructed by the technical team.
+                {isCA 
+                  ? "You will shortly receive your ambassador kit and access credentials. Please join the official communication channels as instructed by your coordinator."
+                  : "You will shortly receive your project onboarding details and access credentials. Please ensure you have set up the necessary development environment as instructed by the technical team."}
               </p>
             </div>
           </>
@@ -263,7 +279,7 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
               <strong>Dear {candidateName},</strong>
             </p>
             <p className="break-inside-avoid">
-              <strong>Verve Nova Technologies</strong> is pleased to offer you the position of <strong>{domain}{(domain === 'CAMPUS AMBASSADOR' || domain === 'Campus Ambassador') ? '' : ' Intern'}</strong>. This {(domain === 'CAMPUS AMBASSADOR' || domain === 'Campus Ambassador') ? 'program' : 'internship'} will provide hands-on experience and exposure to real-time projects.
+              <strong>Verve Nova Technologies</strong> is pleased to offer you the position of <strong>{domain}{isCA ? '' : ' Intern'}</strong>. This {isCA ? 'program' : 'internship'} will provide hands-on experience and exposure to real-time projects.
             </p>
 
             {/* INTERNSHIP DETAILS */}
@@ -273,12 +289,12 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
               </h3>
               <div className="grid grid-cols-[160px_1fr] gap-y-2 font-medium pl-6">
                 <p>Position</p>
-                <p>: {domain}{(domain === 'CAMPUS AMBASSADOR' || domain === 'Campus Ambassador') ? '' : ' Intern'}</p>
+                <p>: {domain}{isCA ? '' : ' Intern'}</p>
                 
-                <p>{(domain === 'CAMPUS AMBASSADOR' || domain === 'Campus Ambassador') ? 'Program Type' : 'Internship Type'}</p>
+                <p>{isCA ? 'Program Type' : 'Internship Type'}</p>
                 <p>: Free / Unpaid</p>
                 
-                <p>{(domain === 'CAMPUS AMBASSADOR' || domain === 'Campus Ambassador') ? 'Program Duration' : 'Internship Duration'}</p>
+                <p>{isCA ? 'Program Duration' : 'Internship Duration'}</p>
                 <p>: 3 Months</p>
                 
                 <p>Start Date</p>
@@ -299,13 +315,25 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
               </h3>
               <p className="mb-2 pl-2 break-inside-avoid">Your responsibilities include (and are not limited to):</p>
               <ul className="list-disc list-inside pl-2 space-y-1 text-[#374151]">
-                <li className="break-inside-avoid">Work on company-assigned {domain.toLowerCase()} projects and tasks.</li>
-                <li className="break-inside-avoid">Collaborate with the technical team, web designers, and project coordinators to deliver high-quality results and match design intents.</li>
-                <li className="break-inside-avoid">Maintain project documentation, refine specifications, and perform basic testing.</li>
-                <li className="break-inside-avoid">Gather and refine specifications and requirements based on technical needs.</li>
-                <li className="break-inside-avoid">Be responsible for maintaining, expanding, and scaling our platforms.</li>
-                <li className="break-inside-avoid">Stay plugged into emerging technologies and industry trends and apply them into operations and activities.</li>
-                <li className="break-inside-avoid">Prepare reports for the management stating trends, patterns, and predictions using relevant data.</li>
+                {isCA ? (
+                  <>
+                    <li className="break-inside-avoid">Promote Verve Nova internship programs within your campus and community.</li>
+                    <li className="break-inside-avoid">Act as the primary point of contact between students and Verve Nova Technologies.</li>
+                    <li className="break-inside-avoid">Encourage student participation and assist them in the application process.</li>
+                    <li className="break-inside-avoid">Organize online/offline drives, webinars, and coordinate promotional activities.</li>
+                    <li className="break-inside-avoid">Maintain an active presence on social media and share verified updates.</li>
+                    <li className="break-inside-avoid">Provide feedback on campaigns and suggest new ideas for engagement.</li>
+                  </>
+                ) : (
+                  <>
+                    <li className="break-inside-avoid">Work on company-assigned {domain.toLowerCase()} projects and tasks.</li>
+                    <li className="break-inside-avoid">Collaborate with the technical team, web designers, and project coordinators to deliver high-quality results.</li>
+                    <li className="break-inside-avoid">Maintain project documentation, refine specifications, and perform basic testing.</li>
+                    <li className="break-inside-avoid">Gather and refine specifications and requirements based on technical needs.</li>
+                    <li className="break-inside-avoid">Be responsible for maintaining, expanding, and scaling our platforms.</li>
+                    <li className="break-inside-avoid">Stay plugged into emerging technologies and industry trends.</li>
+                  </>
+                )}
               </ul>
             </div>
 
@@ -313,10 +341,12 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
             <div className="grid grid-cols-2 gap-8">
               <div className="break-inside-avoid">
                 <h3 className="text-sm font-bold text-[#92400e] uppercase tracking-wide flex items-center gap-2 mb-3">
-                  <span>🚀</span> PROJECT-BASED WORK
+                  <span>🚀</span> {isCA ? 'PROGRAM WORKFLOW' : 'PROJECT-BASED WORK'}
                 </h3>
                 <p className="pl-2 text-[#374151] break-inside-avoid">
-                  You will work on live projects assigned by Verve Nova Technologies. You are expected to complete tasks with responsibility, discipline, and clear communication.
+                  {isCA 
+                    ? "You will operate under the guidance of our coordinators to achieve targeted outreach goals. You are expected to perform activities with responsibility, discipline, and clear communication."
+                    : "You will work on live projects assigned by Verve Nova Technologies. You are expected to complete tasks with responsibility, discipline, and clear communication."}
                 </p>
               </div>
               <div className="break-inside-avoid">
@@ -328,7 +358,7 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
                 </p>
                 <ul className="list-disc list-inside pl-2 space-y-1 text-[#374151]">
                   <li className="break-inside-avoid">Real-time practical experience</li>
-                  <li className="break-inside-avoid">Internship Certificate upon completion</li>
+                  <li className="break-inside-avoid">{isCA ? 'Certificate of Completion' : 'Internship Certificate upon completion'}</li>
                   <li className="break-inside-avoid">Letter of Recommendation (performance-based)</li>
                   <li className="break-inside-avoid">Priority consideration for future paid roles</li>
                 </ul>
@@ -341,10 +371,10 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
                 <span>📄</span> TERMS & CONDITIONS
               </h3>
               <ul className="list-decimal list-inside pl-4 space-y-1 text-[#374151]">
-                <li className="break-inside-avoid">This is an unpaid internship.</li>
-                <li className="break-inside-avoid">The intern must follow all company rules and confidentiality policies.</li>
+                <li className="break-inside-avoid">This is an unpaid {isCA ? 'program' : 'internship'}.</li>
+                <li className="break-inside-avoid">The {isCA ? 'ambassador' : 'intern'} must follow all company rules and confidentiality policies.</li>
                 <li className="break-inside-avoid">Failure to complete assigned tasks may result in termination.</li>
-                <li className="break-inside-avoid">Certificate will be awarded only after 3 months and successful project completion.</li>
+                <li className="break-inside-avoid">Certificate will be awarded only after 3 months and successful {isCA ? 'program completion' : 'project completion'}.</li>
               </ul>
             </div>
 
@@ -368,12 +398,12 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
                 <span>⚖️</span> COMPANY POLICIES AND PROCEDURES
               </h3>
               <p className="pl-2 text-[#374151] break-inside-avoid">
-                You agree to comply with all the Company policies and procedures as determined and amended by the Company from time to time, including all anti-discrimination, sexual harassment, and occupational health and safety policies. You agree that compliance with the Company Policies and Procedures and/or legal compliance requirements to do with your position may lead to the termination of your internship without notice.
+                You agree to comply with all the Company policies and procedures as determined and amended by the Company from time to time, including all anti-discrimination, sexual harassment, and occupational health and safety policies. You agree that compliance with the Company Policies and Procedures and/or legal compliance requirements to do with your position may lead to the termination of your {isCA ? 'role' : 'internship'} without notice.
               </p>
             </div>
             
             <p className="break-inside-avoid mt-4">
-              Please sign and return to us one copy of this Letter of Offer in confirmation of your acceptance of these terms and conditions of the internship. We look forward to your acceptance and to working closely with you in the near future.
+              Please sign and return to us one copy of this Letter of Offer in confirmation of your acceptance of these terms and conditions of the {isCA ? 'program' : 'internship'}. We look forward to your acceptance and to working closely with you in the near future.
             </p>
           </>
         )}
@@ -384,9 +414,9 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
       <div className="mt-12 pt-8 border-t border-[#e5e7eb] html2pdf__page-break-avoid">
         <h3 className="text-sm font-bold text-[#1e3a8a] uppercase tracking-wide mb-4">ACCEPTANCE</h3>
         <p className="text-[12px] text-[#374151] leading-relaxed mb-8">
-          I have had reasonable opportunity to evaluate and where necessary seek advice about this {(domain === 'CAMPUS AMBASSADOR' || domain === 'Campus Ambassador') ? 'program' : 'internship'} and understand and fully accept the conditions of my {(domain === 'CAMPUS AMBASSADOR' || domain === 'Campus Ambassador') ? 'role' : 'internship'} as detailed above. I confirm that my Date of Joining will be <strong>{formattedStartDate}</strong>.
+          I have had reasonable opportunity to evaluate and where necessary seek advice about this {isCA ? 'program' : 'internship'} and understand and fully accept the conditions of my {isCA ? 'role' : 'internship'} as detailed above. I confirm that my Date of Joining will be <strong>{formattedStartDate}</strong>.
           <br /><br />
-          Upon completing this {(domain === 'CAMPUS AMBASSADOR' || domain === 'Campus Ambassador') ? 'program' : 'internship'}, you will be given a Certificate of Completion. Moreover, if your performance is above average, you can also request a Letter of Recommendation (LoR). I have read and accept the terms and conditions of this {type.toLowerCase()}.
+          Upon completing this {isCA ? 'program' : 'internship'}, you will be given a Certificate of Completion. Moreover, if your performance is above average, you can also request a Letter of Recommendation (LoR). I have read and accept the terms and conditions of this {type.toLowerCase()}.
         </p>
         
         <div className="flex justify-between items-end">
