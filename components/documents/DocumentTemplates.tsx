@@ -95,8 +95,8 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
           {/* Body Text */}
           <div className="text-center max-w-3xl text-[16px] leading-relaxed text-[#374151] font-medium px-8">
             <p>
-              For successfully completing the <strong>{domain}</strong> internship program at <strong>Verve Nova Technologies</strong>. 
-              The internship was conducted from <strong>{formattedStartDate}</strong> to <strong>{formattedEndDate}</strong>. 
+              For successfully completing the <strong>{domain}</strong> {domain === 'CAMPUS AMBASSADOR' || domain === 'Campus Ambassador' ? 'program' : 'internship program'} at <strong>Verve Nova Technologies</strong>. 
+              The {domain === 'CAMPUS AMBASSADOR' || domain === 'Campus Ambassador' ? 'program' : 'internship'} was conducted from <strong>{formattedStartDate}</strong> to <strong>{formattedEndDate}</strong>. 
               During this period, the individual has shown dedication, consistency, and a strong willingness to learn and contribute.
             </p>
           </div>
@@ -190,7 +190,7 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
               <strong>Dear {candidateName}, Welcome Aboard!</strong>
             </p>
             <p className="break-inside-avoid">
-              This letter serves as formal confirmation of your onboarding as a <strong>{domain} Intern</strong> at <strong>Verve Nova Technologies</strong> effective from <strong>{formattedStartDate}</strong>. We are thrilled to have you join our team and are confident that your contributions will be valuable to our organization.
+              This letter serves as formal confirmation of your onboarding as a <strong>{domain}{(domain === 'CAMPUS AMBASSADOR' || domain === 'Campus Ambassador') ? '' : ' Intern'}</strong> at <strong>Verve Nova Technologies</strong> effective from <strong>{formattedStartDate}</strong>. We are thrilled to have you join our team and are confident that your contributions will be valuable to our organization.
             </p>
 
             {/* JOINING DETAILS */}
@@ -200,7 +200,7 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
               </h3>
               <div className="grid grid-cols-[160px_1fr] gap-y-2 font-medium pl-6">
                 <p>Designation</p>
-                <p>: {domain} Intern</p>
+                <p>: {domain}{(domain === 'CAMPUS AMBASSADOR' || domain === 'Campus Ambassador') ? '' : ' Intern'}</p>
                 
                 <p>Date of Joining</p>
                 <p>: {formattedStartDate}</p>
@@ -263,7 +263,7 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
               <strong>Dear {candidateName},</strong>
             </p>
             <p className="break-inside-avoid">
-              <strong>Verve Nova Technologies</strong> is pleased to offer you the position of <strong>{domain} Intern</strong>. This internship will provide hands-on experience and exposure to real-time projects.
+              <strong>Verve Nova Technologies</strong> is pleased to offer you the position of <strong>{domain}{(domain === 'CAMPUS AMBASSADOR' || domain === 'Campus Ambassador') ? '' : ' Intern'}</strong>. This {(domain === 'CAMPUS AMBASSADOR' || domain === 'Campus Ambassador') ? 'program' : 'internship'} will provide hands-on experience and exposure to real-time projects.
             </p>
 
             {/* INTERNSHIP DETAILS */}
@@ -273,12 +273,12 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
               </h3>
               <div className="grid grid-cols-[160px_1fr] gap-y-2 font-medium pl-6">
                 <p>Position</p>
-                <p>: {domain} Intern</p>
+                <p>: {domain}{(domain === 'CAMPUS AMBASSADOR' || domain === 'Campus Ambassador') ? '' : ' Intern'}</p>
                 
-                <p>Internship Type</p>
+                <p>{(domain === 'CAMPUS AMBASSADOR' || domain === 'Campus Ambassador') ? 'Program Type' : 'Internship Type'}</p>
                 <p>: Free / Unpaid</p>
                 
-                <p>Internship Duration</p>
+                <p>{(domain === 'CAMPUS AMBASSADOR' || domain === 'Campus Ambassador') ? 'Program Duration' : 'Internship Duration'}</p>
                 <p>: 3 Months</p>
                 
                 <p>Start Date</p>
@@ -384,9 +384,9 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
       <div className="mt-12 pt-8 border-t border-[#e5e7eb] html2pdf__page-break-avoid">
         <h3 className="text-sm font-bold text-[#1e3a8a] uppercase tracking-wide mb-4">ACCEPTANCE</h3>
         <p className="text-[12px] text-[#374151] leading-relaxed mb-8">
-          I have had reasonable opportunity to evaluate and where necessary seek advice about this internship and understand and fully accept the conditions of my internship as detailed above. I confirm that my Date of Joining will be <strong>{formattedStartDate}</strong>.
+          I have had reasonable opportunity to evaluate and where necessary seek advice about this {(domain === 'CAMPUS AMBASSADOR' || domain === 'Campus Ambassador') ? 'program' : 'internship'} and understand and fully accept the conditions of my {(domain === 'CAMPUS AMBASSADOR' || domain === 'Campus Ambassador') ? 'role' : 'internship'} as detailed above. I confirm that my Date of Joining will be <strong>{formattedStartDate}</strong>.
           <br /><br />
-          Upon completing this internship, you will be given a Certificate of Internship. Moreover, if your performance is above average, you can also request a Letter of Recommendation (LoR). I have read and accept the terms and conditions of this {type.toLowerCase()}.
+          Upon completing this {(domain === 'CAMPUS AMBASSADOR' || domain === 'Campus Ambassador') ? 'program' : 'internship'}, you will be given a Certificate of Completion. Moreover, if your performance is above average, you can also request a Letter of Recommendation (LoR). I have read and accept the terms and conditions of this {type.toLowerCase()}.
         </p>
         
         <div className="flex justify-between items-end">
