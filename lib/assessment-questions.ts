@@ -46,7 +46,7 @@ export const assessmentQuestions: Record<string, AssessmentQuestion[]> = {
     { id: "wd_19", type: "coding", text: "What does `Array.isArray([])` return?", options: ["false", "true", "undefined", "object"], correctOptionIndex: 1 },
     { id: "wd_20", type: "domain", text: "Which command is used to start a Next.js development server?", options: ["npm run build", "npm start", "npm run dev", "npm init"], correctOptionIndex: 2 },
   ],
-  "data-science": [
+  "data-analytics": [
     ...genericQuestions,
     // 20 Data Science Questions
     { id: "ds_1", type: "domain", text: "Which Python library is primarily used for data manipulation and analysis?", options: ["NumPy", "Pandas", "Matplotlib", "Scikit-learn"], correctOptionIndex: 1 },
