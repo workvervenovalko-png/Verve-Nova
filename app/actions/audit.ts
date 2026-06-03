@@ -30,7 +30,7 @@ export async function getDetailedAudit(applicationId: string) {
     // Security Clearance Check:
     // Only the owner of the application or an ADMIN can view the audit.
     const isOwner = application.userId._id.toString() === session.user.id;
-    const isAdmin = session.user.role === 'ADMIN';
+    const isAdmin = session.user.role?.toUpperCase() === 'ADMIN';
 
     if (!isOwner && !isAdmin) {
       return { success: false, error: "Access Denied. Insufficient clearance level." };

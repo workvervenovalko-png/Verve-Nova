@@ -177,7 +177,7 @@ export default function AdminDashboardPage() {
      useEffect(() => {
           if (authStatus === "loading") return;
 
-          if (authStatus === "unauthenticated" || (session?.user as any)?.role !== "ADMIN") {
+          if (authStatus === "unauthenticated" || (session?.user as any)?.role?.toUpperCase() !== "ADMIN") {
                toast.error("Access Denied. Administrative clearance required.");
                router.push("/profile");
                return;

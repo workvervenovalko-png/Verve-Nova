@@ -87,7 +87,7 @@ export async function submitApplication(data: any) {
 export async function getApplications() {
   try {
     const session = await getServerSession(authOptions) as any;
-    if (!session || session.user?.role !== 'ADMIN') {
+    if (!session || session.user?.role?.toUpperCase() !== 'ADMIN') {
       return { success: false, error: "Unauthorized" };
     }
 

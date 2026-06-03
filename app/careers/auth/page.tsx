@@ -64,7 +64,7 @@ export default function CareersAuthPage() {
 
         if (loginRes?.ok) {
           const session = await getSession();
-          if (session?.user?.role === 'ADMIN') {
+          if (session?.user?.role?.toUpperCase() === 'ADMIN') {
             router.push("/admin");
           } else {
             router.push("/profile");
@@ -92,7 +92,7 @@ export default function CareersAuthPage() {
         if (result?.ok) {
           toast.success("Welcome back to the Arena.");
           const session = await getSession();
-          if (session?.user?.role === 'ADMIN') {
+          if (session?.user?.role?.toUpperCase() === 'ADMIN') {
             router.push("/admin");
           } else {
             router.push("/profile");

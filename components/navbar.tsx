@@ -242,11 +242,11 @@ export function Navbar() {
                     className="flex flex-col items-center gap-6 mt-4"
                   >
                     <Link
-                      href={session?.user?.role === 'ADMIN' ? '/admin' : '/profile'}
+                      href={session?.user?.role?.toUpperCase() === 'ADMIN' ? '/admin' : '/profile'}
                       onClick={() => setIsOpen(false)}
                       className="text-sm font-black text-indigo-400 uppercase tracking-[0.5em]"
                     >
-                      {session?.user?.role === 'ADMIN' ? "Admin" : "My Profile"}
+                      {session?.user?.role?.toUpperCase() === 'ADMIN' ? "Admin" : "My Profile"}
                     </Link>
                     <button
                       onClick={() => {

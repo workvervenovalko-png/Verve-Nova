@@ -12,7 +12,7 @@ import bcrypt from "bcryptjs";
 export async function getAdminData() {
   try {
     const session = await getServerSession(authOptions) as any;
-    if (!session || session.user?.role !== 'ADMIN') {
+    if (!session || session.user?.role?.toUpperCase() !== 'ADMIN') {
       return { success: false, error: "Unauthorized access detected." };
     }
 
@@ -52,7 +52,7 @@ export async function getAdminData() {
 export async function updateApplicationStatus(appId: string, status: string) {
   try {
     const session = await getServerSession(authOptions) as any;
-    if (!session || session.user?.role !== 'ADMIN') {
+    if (!session || session.user?.role?.toUpperCase() !== 'ADMIN') {
       return { success: false, error: "Unauthorized" };
     }
 
@@ -122,7 +122,7 @@ export async function updateApplicationStatus(appId: string, status: string) {
 export async function scheduleInterview(appId: string, interviewDate?: string, interviewTime?: string, interviewLink?: string, interviewerEmailsStr?: string, triggerEmail: boolean = false) {
   try {
     const session = await getServerSession(authOptions) as any;
-    if (!session || session.user?.role !== 'ADMIN') {
+    if (!session || session.user?.role?.toUpperCase() !== 'ADMIN') {
       return { success: false, error: "Unauthorized" };
     }
 
@@ -225,7 +225,7 @@ export async function scheduleInterview(appId: string, interviewDate?: string, i
 export async function createBlog(data: { title: string; excerpt: string; content: string; coverImage?: string }) {
   try {
     const session = await getServerSession(authOptions) as any;
-    if (!session || session.user?.role !== 'ADMIN') {
+    if (!session || session.user?.role?.toUpperCase() !== 'ADMIN') {
       return { success: false, error: "Unauthorized" };
     }
 
@@ -253,7 +253,7 @@ export async function createBlog(data: { title: string; excerpt: string; content
 export async function deleteBlog(blogId: string) {
   try {
     const session = await getServerSession(authOptions) as any;
-    if (!session || session.user?.role !== 'ADMIN') {
+    if (!session || session.user?.role?.toUpperCase() !== 'ADMIN') {
       return { success: false, error: "Unauthorized" };
     }
 
@@ -289,7 +289,7 @@ export async function getBlogBySlug(slug: string) {
 export async function searchCandidateByVnId(vnId: string) {
   try {
     const session = await getServerSession(authOptions) as any;
-    if (!session || session.user?.role !== 'ADMIN') {
+    if (!session || session.user?.role?.toUpperCase() !== 'ADMIN') {
       return { success: false, error: "Unauthorized" };
     }
 
@@ -310,7 +310,7 @@ export async function searchCandidateByVnId(vnId: string) {
 export async function issueDocument(formData: FormData) {
   try {
     const session = await getServerSession(authOptions) as any;
-    if (!session || session.user?.role !== 'ADMIN') {
+    if (!session || session.user?.role?.toUpperCase() !== 'ADMIN') {
       return { success: false, error: "Unauthorized" };
     }
 
@@ -371,7 +371,7 @@ export async function issueDocument(formData: FormData) {
 export async function generateDocument(appId: string, docType: string, metadata: any) {
   try {
     const session = await getServerSession(authOptions) as any;
-    if (!session || session.user?.role !== 'ADMIN') {
+    if (!session || session.user?.role?.toUpperCase() !== 'ADMIN') {
       return { success: false, error: "Unauthorized" };
     }
 
@@ -454,7 +454,7 @@ export async function generateDocument(appId: string, docType: string, metadata:
 export async function resendLastChanceAssessment(appId: string) {
   try {
     const session = await getServerSession(authOptions) as any;
-    if (!session || session.user?.role !== 'ADMIN') {
+    if (!session || session.user?.role?.toUpperCase() !== 'ADMIN') {
       return { success: false, error: "Unauthorized" };
     }
 
@@ -502,7 +502,7 @@ export async function resendLastChanceAssessment(appId: string) {
 export async function generateCACredentials(appId: string) {
   try {
     const session = await getServerSession(authOptions) as any;
-    if (!session || session.user?.role !== 'ADMIN') {
+    if (!session || session.user?.role?.toUpperCase() !== 'ADMIN') {
       return { success: false, error: "Unauthorized" };
     }
 
@@ -562,7 +562,7 @@ export async function generateCACredentials(appId: string) {
 export async function getCADashboardData() {
   try {
     const session = await getServerSession(authOptions) as any;
-    if (!session || (session.user?.role !== 'CA' && session.user?.role !== 'ADMIN')) {
+    if (!session || (session.user?.role !== 'CA' && session.user?.role?.toUpperCase() !== 'ADMIN')) {
       return { success: false, error: "Unauthorized access detected." };
     }
 
