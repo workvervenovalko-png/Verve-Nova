@@ -255,3 +255,25 @@ export const getInterviewerBriefTemplate = (candidateName: string, candidateEmai
   ${footerSection}
 </div>
 `;
+
+export const getCACredentialTemplate = (name: string, email: string, password: string, loginLink: string, referralCode: string) => `
+<div style="${baseStyles}">
+  <p>Dear ${name.split(' ')[0]},</p>
+  <p>Congratulations on being selected as a <strong>Campus Ambassador</strong> for <strong>Verve Nova Technologies</strong>!</p>
+  <p>We are thrilled to have you on board. Below are your official credentials to access the CA Dashboard, where you can track your referrals, points, and leaderboard status.</p>
+  
+  <div style="background: #f8f9fa; border: 1px solid #e9ecef; padding: 20px; border-radius: 8px; margin: 20px 0;">
+    <p style="margin: 0 0 10px 0; color: #6366f1;"><strong>Your Credentials:</strong></p>
+    <ul style="margin: 0 0 20px 0; padding-left: 20px; color: #333;">
+      <li><strong>Login ID (Email):</strong> ${email}</li>
+      <li><strong>Password:</strong> ${password}</li>
+      <li><strong>Your Referral Code:</strong> <span style="background: #e0e7ff; padding: 2px 6px; border-radius: 4px; font-weight: bold;">${referralCode}</span></li>
+    </ul>
+    
+    <p style="margin: 20px 0 0 0;"><a href="${loginLink}" style="background-color: #6366f1; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">Login to CA Dashboard</a></p>
+  </div>
+  
+  <p>Please log in and change your password if needed. Use your <strong>Referral Code</strong> when promoting VNT internships in your campus to earn points!</p>
+  ${footerSection}
+</div>
+`;

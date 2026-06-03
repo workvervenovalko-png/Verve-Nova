@@ -12,7 +12,8 @@ import {
      searchCandidateByVnId,
      issueDocument,
      generateDocument,
-     resendLastChanceAssessment
+     resendLastChanceAssessment,
+     generateCACredentials
 } from "@/app/actions/admin";
 import { useRouter } from "next/navigation";
 import { Navbar } from "@/components/navbar";
@@ -249,6 +250,19 @@ export default function AdminDashboardPage() {
                fetchData();
           } else {
                toast.error(result.error || "Failed to send last chance.");
+          }
+     };
+
+     const handleGenerateCA = async (id: string) => {
+          if (!confirm("Are you sure you want to generate CA credentials? This will email the candidate.")) return;
+          setIsSubmitting(true);
+          const result = await generateCACredentials(id);
+          setIsSubmitting(false);
+          if (result.success) {
+               toast.success("CA Credentials generated and sent!");
+               fetchData();
+          } else {
+               toast.error(result.error || "Failed to generate credentials.");
           }
      };
 
@@ -559,6 +573,17 @@ export default function AdminDashboardPage() {
                                                              </td>
                                                              <td className="px-8 py-8 text-right">
                                                                   <div className="flex justify-end gap-2">
+                                                                        {app.roleSlug === 'campus-ambassador' && app.status === 'Accepted' && app.userId?.role !== 'CA' && (
+                                                                             <Button
+                                                                                  variant="ghost"
+                                                                                  size="icon"
+                                                                                  className="rounded-xl hover:bg-white/[0.05] text-white/20 hover:text-indigo-400"
+                                                                                  onClick={() => handleGenerateCA(app._id)}
+                                                                                  title="Generate CA Credentials"
+                                                                             >
+                                                                                  <User2 className="w-5 h-5" />
+                                                                             </Button>
+                                                                        )}
                                                                        <Dialog>
                                                                             <DialogTrigger asChild>
                                                                                  <Button

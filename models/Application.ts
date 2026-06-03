@@ -85,6 +85,7 @@ const ApplicationSchema = new Schema({
       domain: String
     }
   }],
+  referredByCode: { type: String },
   createdAt: { type: Date, default: Date.now }
 });
 

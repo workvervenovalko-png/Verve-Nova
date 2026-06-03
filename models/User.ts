@@ -8,7 +8,9 @@ const UserSchema = new Schema({
   image: { type: String },
   emailVerified: { type: Date },
   vn_id: { type: String, unique: true },
-  role: { type: String, enum: ['CANDIDATE', 'ADMIN'], default: 'CANDIDATE' },
+  role: { type: String, enum: ['CANDIDATE', 'ADMIN', 'CA'], default: 'CANDIDATE' },
+  referralCode: { type: String, sparse: true, unique: true },
+  referralCount: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now }
 });
 

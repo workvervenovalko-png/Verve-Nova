@@ -90,7 +90,8 @@ export default function DetailedApplicationPage() {
       portfolio: "",
       linkedIn: "",
       github: ""
-    }
+    },
+    referredByCode: ""
   });
 
   useEffect(() => {
@@ -440,6 +441,16 @@ export default function DetailedApplicationPage() {
                         value={formData.personal.currentCity}
                         onChange={handlePersonalChange}
                         placeholder="Mumbai, IN" 
+                        className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] focus:border-indigo-500/30 transition-all text-sm text-white placeholder:text-white/10"
+                      />
+                    </div>
+                    <div className="space-y-3 md:col-span-2">
+                      <Label className="text-[10px] uppercase tracking-[0.3em] text-white/20 font-bold ml-1">Referral Code (Optional)</Label>
+                      <Input 
+                        name="referredByCode"
+                        value={formData.referredByCode}
+                        onChange={(e) => setFormData(prev => ({ ...prev, referredByCode: e.target.value.trim().toUpperCase() }))}
+                        placeholder="e.g. VNT-CA-XYZ" 
                         className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] focus:border-indigo-500/30 transition-all text-sm text-white placeholder:text-white/10"
                       />
                     </div>

@@ -8,7 +8,7 @@ import Blog from "@/models/Blog";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
-
+import bcrypt from "bcryptjs";
 export async function getAdminData() {
   try {
     const session = await getServerSession(authOptions) as any;
@@ -495,6 +495,98 @@ export async function resendLastChanceAssessment(appId: string) {
     return { success: true };
   } catch (error: any) {
     console.error("Resend Last Chance Assessment Error:", error);
+    return { success: false, error: error.message };
+  }
+}
+
+export async function generateCACredentials(appId: string) {
+  try {
+    const session = await getServerSession(authOptions) as any;
+    if (!session || session.user?.role !== 'ADMIN') {
+      return { success: false, error: "Unauthorized" };
+    }
+
+    await dbConnect();
+    
+    const app = await VerveApplication.findById(appId).populate('userId', 'name email');
+    if (!app || !app.userId) {
+      return { success: false, error: "Application or User not found." };
+    }
+
+    const user = app.userId as any;
+    
+    // Check if already a CA
+    if (user.role === 'CA') {
+      return { success: false, error: "User is already a Campus Ambassador." };
+    }
+
+    // Generate credentials
+    const password = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-4).toUpperCase();
+    const hashedPassword = await bcrypt.hash(password, 10);
+    
+    const initials = user.name.split(' ').map((n: string) => n[0]).join('').toUpperCase();
+    const uniqueSuffix = Math.random().toString(36).slice(-4).toUpperCase();
+    const referralCode = \`VNT-CA-\${initials}-\${uniqueSuffix}\`;
+
+    // Update User
+    await User.findByIdAndUpdate(user._id, {
+      role: 'CA',
+      password: hashedPassword,
+      referralCode: referralCode,
+      referralCount: 0
+    });
+
+    // Send Email
+    const { resend } = await import("@/lib/resend");
+    const { getCACredentialTemplate } = await import("@/lib/mail-templates");
+    
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://vervenovatech.com';
+    const loginLink = \`\${baseUrl}/careers/auth\`;
+
+    const mailRes = await resend.emails.send({
+      from: 'Verve Nova Tech <careers@vervenovatech.com>',
+      to: user.email,
+      subject: 'CAMPUS AMBASSADOR CREDENTIALS // VERVE NOVA',
+      html: getCACredentialTemplate(user.name, user.email, password, loginLink, referralCode),
+    });
+
+    console.log(\`>>> [MAIL_SYSTEM] CA Credentials sent to \${user.email}. Response ID: \`, mailRes.data?.id);
+
+    return { success: true, message: "Credentials generated and sent." };
+  } catch (error: any) {
+    console.error("CA Credentials Generation Error:", error);
+    return { success: false, error: error.message };
+  }
+}
+
+export async function getCADashboardData() {
+  try {
+    const session = await getServerSession(authOptions) as any;
+    if (!session || (session.user?.role !== 'CA' && session.user?.role !== 'ADMIN')) {
+      return { success: false, error: "Unauthorized access detected." };
+    }
+
+    await dbConnect();
+
+    // 1. Get the current CA's data
+    const currentUser = await User.findById(session.user.id).select('name email referralCode referralCount').lean();
+    
+    // 2. Get the Leaderboard (Top 10 CAs by referralCount)
+    const leaderboard = await User.find({ role: 'CA' })
+      .select('name referralCount')
+      .sort({ referralCount: -1 })
+      .limit(10)
+      .lean();
+
+    return { 
+      success: true, 
+      data: {
+        caData: JSON.parse(JSON.stringify(currentUser)),
+        leaderboard: JSON.parse(JSON.stringify(leaderboard))
+      }
+    };
+  } catch (error: any) {
+    console.error("CA Dashboard Data Error:", error);
     return { success: false, error: error.message };
   }
 }

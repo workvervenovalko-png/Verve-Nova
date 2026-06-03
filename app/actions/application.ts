@@ -25,7 +25,20 @@ export async function submitApplication(data: any) {
       projects: data.projects,
       skills: data.skills,
       links: data.links,
+      referredByCode: data.referredByCode,
     });
+
+    // If there is a referral code, increment the CA's referral count
+    if (data.referredByCode) {
+      const code = data.referredByCode.trim().toUpperCase();
+      const caUser = await User.findOneAndUpdate(
+        { referralCode: code, role: 'CA' },
+        { $inc: { referralCount: 1 } }
+      );
+      if (caUser) {
+        console.log(\`>>> [CA_SYSTEM] Referral count incremented for CA: \${caUser.email}\`);
+      }
+    }
 
     // Send Application Received Email
     try {
