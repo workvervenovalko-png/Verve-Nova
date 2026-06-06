@@ -19,6 +19,30 @@ interface DocumentProps {
   };
 }
 
+const DigitalStamp = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 200 200" className={cn("opacity-85 mix-blend-multiply", className)}>
+    <defs>
+      <path id="circlePathTop" d="M 30, 100 a 70,70 0 1,1 140,0" />
+      <path id="circlePathBottom" d="M 170, 100 a 70,70 0 0,1 -140,0" />
+    </defs>
+    <circle cx="100" cy="100" r="95" fill="none" stroke="currentColor" strokeWidth="4" />
+    <circle cx="100" cy="100" r="88" fill="none" stroke="currentColor" strokeWidth="1" />
+    <circle cx="100" cy="100" r="55" fill="none" stroke="currentColor" strokeWidth="2" />
+    <circle cx="100" cy="100" r="48" fill="none" stroke="currentColor" strokeWidth="1" />
+    <text fill="currentColor" fontWeight="bold" fontSize="18" letterSpacing="2">
+      <textPath href="#circlePathTop" startOffset="50%" textAnchor="middle">
+        VERVE NOVA TECHNOLOGIES
+      </textPath>
+    </text>
+    <text fill="currentColor" fontWeight="bold" fontSize="18" letterSpacing="4">
+      <textPath href="#circlePathBottom" startOffset="50%" textAnchor="middle">
+        ★ AUTHORIZED ★
+      </textPath>
+    </text>
+    <polygon points="100,65 110,85 130,85 115,100 120,120 100,105 80,120 85,100 70,85 90,85" fill="currentColor" />
+  </svg>
+);
+
 export const DocumentTemplates: React.FC<DocumentProps> = ({
   type,
   candidateName,
@@ -106,11 +130,14 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
           <div className="absolute bottom-12 w-full px-16 flex justify-between items-end">
             
             {/* Left Signature */}
-            <div className="flex flex-col items-center w-56 text-center">
-              <img src="/signatures/sign.png" alt="Signature" className="h-12 object-contain mb-2 opacity-90" />
-              <div className="w-full h-[1px] bg-[#d4af37] mb-2"></div>
-              <p className="font-bold text-[#0f172a] text-[15px]">Puneet Kushwaha</p>
-              <p className="text-[10px] font-bold text-[#6b7280] uppercase tracking-widest">Founder & CEO</p>
+            <div className="flex flex-col items-center w-56 text-center relative">
+              <div className="absolute -top-12 -right-8 -rotate-12 z-0">
+                <DigitalStamp className="w-24 h-24 text-[#1e3a8a] opacity-50" />
+              </div>
+              <img src="/signatures/sign.png" alt="Signature" className="h-12 object-contain mb-2 opacity-90 z-10 relative" />
+              <div className="w-full h-[1px] bg-[#d4af37] mb-2 z-10 relative"></div>
+              <p className="font-bold text-[#0f172a] text-[15px] z-10 relative">Puneet Kushwaha</p>
+              <p className="text-[10px] font-bold text-[#6b7280] uppercase tracking-widest z-10 relative">Founder & CEO</p>
             </div>
 
             {/* Center Quote */}
@@ -429,12 +456,15 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
           </div>
 
           {/* Company Signature */}
-          <div className="text-center w-48">
-            <img src="/signatures/sign.png" alt="Signature" className="h-12 object-contain mx-auto mb-1 opacity-90" />
-            <div className="w-full h-[1px] bg-[#1e3a8a] mb-2" />
-            <p className="font-bold text-[#1e3a8a] text-[13px]">Puneet Kushwaha</p>
-            <p className="text-[11px] text-[#4b5563] uppercase tracking-widest">Founder & CEO</p>
-            <p className="text-[10px] text-[#6b7280] font-bold uppercase tracking-widest mt-1">Verve Nova Technologies</p>
+          <div className="text-center w-48 relative">
+            <div className="absolute -top-10 -left-12 -rotate-12 z-0">
+              <DigitalStamp className="w-24 h-24 text-[#1e3a8a] opacity-50" />
+            </div>
+            <img src="/signatures/sign.png" alt="Signature" className="h-12 object-contain mx-auto mb-1 opacity-90 z-10 relative" />
+            <div className="w-full h-[1px] bg-[#1e3a8a] mb-2 z-10 relative" />
+            <p className="font-bold text-[#1e3a8a] text-[13px] z-10 relative">Puneet Kushwaha</p>
+            <p className="text-[11px] text-[#4b5563] uppercase tracking-widest z-10 relative">Founder & CEO</p>
+            <p className="text-[10px] text-[#6b7280] font-bold uppercase tracking-widest mt-1 z-10 relative">Verve Nova Technologies</p>
           </div>
         </div>
       </div>
