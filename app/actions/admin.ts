@@ -21,6 +21,7 @@ export async function getAdminData() {
     console.log("Fetching Admin Data (VerveApplication)...");
     const [applications, leads] = await Promise.all([
       VerveApplication.find()
+        .select('-links.resumeContent')
         .populate({
           path: 'userId',
           select: 'vn_id name email'

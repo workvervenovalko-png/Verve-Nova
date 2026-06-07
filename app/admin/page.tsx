@@ -41,7 +41,8 @@ import {
      Trash2,
      BookOpen,
      UploadCloud,
-     FileText
+     FileText,
+     MessageCircle
 } from "lucide-react";
 
 import { toast } from "sonner";
@@ -541,7 +542,8 @@ export default function AdminDashboardPage() {
                                                                              <Users className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/10 group-focus-within:text-indigo-600 transition-colors" />
                                                                         </div>
                                                                          {app.status === 'Interviewing' && (
-                                                                              <Button
+                                                                            <>
+                                                                               <Button
                                                                                    disabled={!app.interviewDate || isSubmitting}
                                                                                    onClick={() => {
                                                                                        const timeInput = document.getElementById(`time-${app._id}`) as HTMLInputElement;
@@ -562,9 +564,37 @@ export default function AdminDashboardPage() {
                                                                                    className="h-10 bg-indigo-600/20 hover:bg-indigo-600 text-indigo-400 hover:text-white border border-indigo-500/30 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all w-full mt-2"
                                                                               >
                                                                                    {isSubmitting ? <VNTLoader size="sm" /> : <Mail className="w-3 h-3 mr-2" />}
-                                                                                   Send Invite
-                                                                              </Button>
-                                                                        )}
+                                                                                    Send Invite
+                                                                               </Button>
+                                                                               <Button
+                                                                                   disabled={!app.interviewLink || !app.personal?.phone}
+                                                                                   onClick={() => {
+                                                                                       const timeInput = document.getElementById(`time-${app._id}`) as HTMLInputElement;
+                                                                                       const linkInput = document.getElementById(`link-${app._id}`) as HTMLInputElement;
+                                                                                       
+                                                                                       const timeVal = timeInput?.value || app.interviewTime;
+                                                                                       const linkVal = linkInput?.value || app.interviewLink;
+                                                                                       
+                                                                                       if (!app.personal?.phone) {
+                                                                                           import("sonner").then(m => m.toast.error("Candidate phone number missing!"));
+                                                                                           return;
+                                                                                       }
+                                                                                       
+                                                                                       const phoneStr = app.personal.phone.replace(/\D/g, '');
+                                                                                       const formattedPhone = phoneStr.length === 10 ? `91${phoneStr}` : phoneStr;
+                                                                                       
+                                                                                       const text = `Hi ${app.personal.fullName || 'there'},\n\nThis is a reminder from Verve Nova Technologies regarding your ${app.roleSlug === 'campus-ambassador' ? 'Campus Ambassador' : 'Internship'} interview scheduled at ${timeVal}.\n\nPlease join 5 minutes early using the following link:\n${linkVal}\n\nBest of luck!`;
+                                                                                       
+                                                                                       const waUrl = `https://wa.me/${formattedPhone}?text=${encodeURIComponent(text)}`;
+                                                                                       window.open(waUrl, '_blank');
+                                                                                   }}
+                                                                                   className="h-10 bg-emerald-600/20 hover:bg-emerald-600 text-emerald-400 hover:text-white border border-emerald-500/30 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all w-full mt-2"
+                                                                               >
+                                                                                   <MessageCircle className="w-3 h-3 mr-2" />
+                                                                                   WhatsApp Reminder
+                                                                               </Button>
+                                                                            </>
+                                                                         )}
                                                                          {(app.status === 'Assessment' || (app.status === 'Rejected' && app.assessment?.status === 'Expired')) && app.assessment && (
                                                                              <div className="mt-2 p-3 bg-white/[0.02] border border-white/[0.06] rounded-lg">
                                                                                  <p className="text-[9px] font-bold text-white/40 uppercase tracking-widest mb-1">Assessment Status</p>
