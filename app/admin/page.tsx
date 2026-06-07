@@ -665,7 +665,7 @@ export default function AdminDashboardPage() {
                                                                             variant="ghost"
                                                                             size="icon"
                                                                             className="rounded-xl hover:bg-white/[0.05] text-white/20 hover:text-indigo-400"
-                                                                            onClick={() => router.push(`/careers/audit/${app._id}`)}
+                                                                            onClick={() => window.open(`/careers/audit/${app._id}`, '_blank')}
                                                                        >
                                                                             <FileSearch className="w-5 h-5" />
                                                                        </Button>

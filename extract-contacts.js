@@ -71,6 +71,16 @@ async function extractContacts() {
         phone = manualOverrides[file];
       }
 
+      // Extract email
+      const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi;
+      let emailMatch;
+      let email = null;
+      while ((emailMatch = emailRegex.exec(text)) !== null) {
+        if (!email) {
+          email = emailMatch[1];
+        }
+      }
+
       // Try to guess name from filename
       let name = file.replace('.pdf', '');
       name = name.replace(/^[0-9a-f]+_/i, ''); // remove hex prefix
@@ -81,10 +91,10 @@ async function extractContacts() {
       // Capitalize first letters
       name = name.replace(/\b\w/g, l => l.toUpperCase());
 
-      if (phone) {
-        contacts.push({ name, phone, file });
+      if (phone || email) {
+        contacts.push({ name, phone: phone || 'N/A', email: email || 'N/A', file });
       } else {
-        console.log(`Could not find phone number in: ${file}`);
+        console.log(`Could not find phone or email in: ${file}`);
       }
     } catch (error) {
       console.error(`Error processing ${file}:`, error.message);
@@ -92,11 +102,21 @@ async function extractContacts() {
   }
 
   // Generate CSV
-  let csvContent = 'Name,Phone,Filename\n';
+  let csvContent = 'Name,Phone,Email,Filename\n';
   contacts.forEach(c => {
-    csvContent += `"${c.name}","${c.phone}","${c.file}"\n`;
+    csvContent += `"${c.name}","${c.phone}","${c.email}","${c.file}"\n`;
   });
   fs.writeFileSync(csvFile, csvContent);
+
+  const validEmails = contacts.filter(c => c.email !== 'N/A').map(c => c.email);
+  const emailSubject = "Action Required: Next Step for Campus Ambassador Program at Verve Nova Technologies";
+  const emailBody = messageTemplate.replace(/\{\{candidate_full_name\}\}/g, 'Candidate');
+  
+  // Create batches of 20 emails
+  const batches = [];
+  for (let i = 0; i < validEmails.length; i += 20) {
+    batches.push(validEmails.slice(i, i + 20));
+  }
 
   // Generate HTML Dashboard
   let htmlContent = `
@@ -105,40 +125,71 @@ async function extractContacts() {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Verve Nova Bulk Messenger</title>
+  <title>Hostinger Bulk Mail Dashboard</title>
   <style>
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; background: #f3f4f6; }
     h1 { color: #111827; }
-    .card { background: white; padding: 15px; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-    .info strong { display: block; color: #374151; font-size: 16px; }
-    .info span { color: #6b7280; font-size: 14px; }
-    .btn { background: #25D366; color: white; padding: 8px 16px; text-decoration: none; border-radius: 6px; font-weight: bold; }
-    .btn:hover { background: #128C7E; }
+    .card { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .section { margin-bottom: 15px; }
+    label { font-weight: bold; color: #374151; display: block; margin-bottom: 5px; }
+    textarea, input { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 4px; font-family: monospace; margin-bottom: 10px; box-sizing: border-box; }
+    .btn-copy { background: #6366f1; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+    .btn-copy:hover { background: #4f46e5; }
+    .instructions { background: #e0e7ff; padding: 15px; border-radius: 8px; margin-bottom: 20px; color: #3730a3; border-left: 4px solid #4338ca; }
   </style>
+  <script>
+    function copyText(id, btn) {
+      const text = document.getElementById(id).value;
+      navigator.clipboard.writeText(text);
+      const oldText = btn.innerText;
+      btn.innerText = "Copied! ✅";
+      setTimeout(() => btn.innerText = oldText, 2000);
+    }
+  </script>
 </head>
 <body>
-  <h1>WhatsApp Messenger Dashboard</h1>
-  <p>Total contacts found: ${contacts.length}</p>
-  <div id="list">
+  <h1>Hostinger Webmail / Outlook Web Dashboard</h1>
+  <div class="instructions">
+    <strong>How to use this for Hostinger Webmail:</strong>
+    <ol>
+      <li>Open your Hostinger Webmail and click <strong>Compose</strong>.</li>
+      <li>Put <code>hr@vervenovatech.com</code> in the <strong>To</strong> field.</li>
+      <li>Copy the BCC list from a Batch below and paste it into the <strong>BCC</strong> field. (Max 20 per batch to avoid spam limits!)</li>
+      <li>Copy the Subject and Message Body and click Send. Repeat for the next batch.</li>
+    </ol>
+  </div>
+  
+  <div class="card">
+    <h3>✉️ Email Content (Same for all batches)</h3>
+    <div class="section">
+      <label>Subject Line</label>
+      <input type="text" id="subject-text" value="\${emailSubject.replace(/"/g, '&quot;')}" readonly>
+      <button class="btn-copy" onclick="copyText('subject-text', this)">Copy Subject</button>
+    </div>
+    <div class="section">
+      <label>Message Body</label>
+      <textarea id="body-text" rows="10" readonly>\${emailBody.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</textarea>
+      <button class="btn-copy" onclick="copyText('body-text', this)">Copy Message Body</button>
+    </div>
+  </div>
+
+  <h2>📦 Batched Candidates (\${validEmails.length} total)</h2>
 `;
 
-  contacts.forEach(c => {
-    const customizedMessage = messageTemplate.replace('{{candidate_full_name}}', c.name);
-    const encodedMessage = encodeURIComponent(customizedMessage);
-    const whatsappLink = `https://wa.me/91${c.phone}?text=${encodedMessage}`;
-    
+  batches.forEach((batch, index) => {
+    const bccString = batch.join(',');
     htmlContent += `
-    <div class="card">
-      <div class="info">
-        <strong>${c.name}</strong>
-        <span>+91 ${c.phone} | File: ${c.file}</span>
-      </div>
-      <a href="${whatsappLink}" target="_blank" class="btn">Send WhatsApp</a>
-    </div>`;
+  <div class="card">
+    <h3>Batch ${index + 1} (${batch.length} Candidates)</h3>
+    <div class="section">
+      <label>BCC Emails</label>
+      <textarea id="batch-${index}" rows="3" readonly>${bccString}</textarea>
+      <button class="btn-copy" onclick="copyText('batch-${index}', this)">Copy BCC List</button>
+    </div>
+  </div>`;
   });
 
   htmlContent += `
-  </div>
 </body>
 </html>`;
 
