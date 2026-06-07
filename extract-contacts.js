@@ -2,38 +2,36 @@ const fs = require('fs');
 const path = require('path');
 const pdf = require('pdf-parse');
 
-const resDir = path.join('C:', 'Users', 'Lenovo', 'Desktop', 'Verve Nova', 'ca');
+const resDir = path.join('C:', 'Users', 'Lenovo', 'Desktop', 'Verve Nova', 'web');
 const csvFile = path.join(resDir, 'contacts.csv');
 const htmlFile = path.join(resDir, 'send-messages.html');
 
 // Template message
 const messageTemplate = `Hello {{candidate_full_name}},
 
-Thank you for applying for the Campus Ambassador Program at Verve Nova Technologies. We love your enthusiasm to represent our brand!
+Thank you for applying for the Web Development Internship at Verve Nova Technologies. We appreciate your interest in joining our team!
 
-While we have received your initial application, our official selection and onboarding process is exclusively conducted through our own careers portal.
+While we have received your initial application, our official hiring and evaluation process is exclusively conducted through our own careers portal.
 
-What you need to do next: To move forward with your application and secure your spot, please submit your details directly on our official website.
+What you need to do next: To move forward with your application, please submit your details directly on our official website.
 
-Application Link: https://www.vervenovatech.com/careers/internships/campus-ambassador
+Application Link: https://www.vervenovatech.com/careers/internships/web-development
 
 (We have attached a quick PDF guide to this email that explains the step-by-step process of applying on our portal).
 
 Pdf Link: https://drive.google.com/file/d/1sFXuFvmU651MsHPJsN9f34u9M-nLMvZo/view?usp=sharing
 
 Our Selection Process: Once you apply on our website, your application will go through the following rounds:
+Round 1: Resume & Profile Screening (via Website).
+Round 2: Automated Skill Assessment
+Round 3: Final HR / Technical Interview (Virtual).
 
-Round 1: Profile & Leadership Screening (via Website).
-Round 2: Final Telephonic / Virtual Interview.
-
-Please complete this step as soon as possible so we can proceed with evaluating your profile and setting up your CA Dashboard.
+Please complete this step as soon as possible so we can proceed with evaluating your profile.
 
 Looking forward to seeing your application on our portal!
 
-Best Regards, 
-
-HR Team 
-
+Best Regards,
+HR Team
 Verve Nova Technologies`;
 
 async function extractContacts() {
@@ -109,7 +107,7 @@ async function extractContacts() {
   fs.writeFileSync(csvFile, csvContent);
 
   const validEmails = contacts.filter(c => c.email !== 'N/A').map(c => c.email);
-  const emailSubject = "Action Required: Next Step for Campus Ambassador Program at Verve Nova Technologies";
+  const emailSubject = "Action Required: Next Step for Web Development Internship at Verve Nova Technologies";
   const emailBody = messageTemplate.replace(/\{\{candidate_full_name\}\}/g, 'Candidate');
   
   // Create batches of 20 emails
@@ -190,6 +188,39 @@ async function extractContacts() {
   });
 
   htmlContent += `
+  <h2>📱 WhatsApp Candidates (Girls Only)</h2>
+  <div id="whatsapp-list">
+  `;
+
+  // Female regex matcher based on common names and specific filenames in the folder
+  const femaleRegex = /arunthathi|aarna|akalya|amruta|anushka|arpita|asiya|bebee|benasir|chanchal|dhiviya|damini|darshini|dipanshi|divya|jagni|janhavi|jayasri|kaveri|kirti|katha|manasa|rajeshwari|pinki|poorvika|prachi|rahini|rani|reshu|rayeesa|rimjhim|saisree|sanjana|swati|sarada|shabnam|sharmila|shifnal|shravani|shreya|shruti|sreedarshini/i;
+
+  let whatsappCount = 0;
+  contacts.forEach(c => {
+    if (femaleRegex.test(c.file) || femaleRegex.test(c.name)) {
+      whatsappCount++;
+      // Use 'Candidate' instead of name for WhatsApp to avoid spelling mistakes/glitches
+      const customizedMessage = messageTemplate.replace('{{candidate_full_name}}', 'Candidate');
+      const encodedMessage = encodeURIComponent(customizedMessage);
+      const whatsappLink = `https://wa.me/91${c.phone}?text=${encodedMessage}`;
+      
+      htmlContent += `
+      <div class="card" style="display:flex; justify-content:space-between; align-items:center;">
+        <div class="info">
+          <strong style="display:block; color:#374151; font-size:16px;">${c.name}</strong>
+          <span style="color:#6b7280; font-size:14px;">+91 ${c.phone} | File: ${c.file}</span>
+        </div>
+        <a href="${whatsappLink}" target="_blank" class="btn-copy" style="background:#25D366; text-decoration:none;">Send WhatsApp</a>
+      </div>`;
+    }
+  });
+
+  if (whatsappCount === 0) {
+    htmlContent += `<p>No female candidates matched for WhatsApp.</p>`;
+  }
+
+  htmlContent += `
+  </div>
 </body>
 </html>`;
 
