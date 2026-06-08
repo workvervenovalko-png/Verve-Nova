@@ -431,12 +431,17 @@ export async function generateDocument(appId: string, docType: string, metadata:
         emailHtml = getHumanDocumentTemplate(targetName, domainName, startDate, verificationId, newDoc.type);
       }
       
-      await resend.emails.send({
+      const candidateMailRes = await resend.emails.send({
         from: 'Verve Nova Technologies <onboarding@vervenovatech.com>',
         to: targetEmail,
         subject: `Internship ${newDoc.type} // Verve Nova`,
         html: emailHtml,
       });
+
+      if (candidateMailRes.error) {
+        console.error(">>> [MAIL_SYSTEM] Candidate Mail Error:", candidateMailRes.error);
+        return { success: false, error: candidateMailRes.error.message };
+      }
 
       // Admin CC Notification
       await resend.emails.send({
