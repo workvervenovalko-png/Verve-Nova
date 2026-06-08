@@ -24,6 +24,7 @@ export const resend = {
              currentOptions.from = currentOptions.from.replace('@vervenovatech.com', '@vervenovatechcrm.online');
           }
 
+          console.log(`>>> [MAIL_SYSTEM] Sending email from: ${currentOptions.from || 'default'} (Using API Key #${i + 1})`);
           const result = await clients[i].emails.send(currentOptions);
           
           // Resend sometimes returns the error in the result object
