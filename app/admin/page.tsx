@@ -613,6 +613,28 @@ export default function AdminDashboardPage() {
                                                                                          Send Last Chance (8h)
                                                                                      </Button>
                                                                                  )}
+                                                                                 {app.assessment.status !== 'Completed' && (
+                                                                                     <Button
+                                                                                         disabled={!app.personal?.phone}
+                                                                                         onClick={() => {
+                                                                                             if (!app.personal?.phone) {
+                                                                                                 import("sonner").then(m => m.toast.error("Candidate phone number missing!"));
+                                                                                                 return;
+                                                                                             }
+                                                                                             const phoneStr = app.personal.phone.replace(/\D/g, '');
+                                                                                             const formattedPhone = phoneStr.length === 10 ? `91${phoneStr}` : phoneStr;
+                                                                                             const baseUrl = window.location.origin;
+                                                                                             const assessmentLink = `${baseUrl}/assessment/${app._id}`;
+                                                                                             const text = `Hi ${app.personal.fullName || 'there'},\n\nThis is a reminder from Verve Nova Technologies regarding your pending Assessment Round for the ${app.roleSlug === 'campus-ambassador' ? 'Campus Ambassador' : 'Internship'} role.\n\nPlease complete your assessment via this link:\n${assessmentLink}\n\nBest of luck!`;
+                                                                                             const waUrl = `https://wa.me/${formattedPhone}?text=${encodeURIComponent(text)}`;
+                                                                                             window.open(waUrl, '_blank');
+                                                                                         }}
+                                                                                         className="mt-2 h-8 w-full bg-emerald-500/10 hover:bg-emerald-500 text-emerald-400 hover:text-white border border-emerald-500/30 rounded text-[8px] font-black uppercase tracking-widest transition-all flex items-center justify-center"
+                                                                                     >
+                                                                                         <MessageCircle className="w-3 h-3 mr-2" />
+                                                                                         WhatsApp Reminder
+                                                                                     </Button>
+                                                                                 )}
                                                                              </div>
                                                                          )}
                                                                   </div>

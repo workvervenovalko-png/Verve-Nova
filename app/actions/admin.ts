@@ -18,6 +18,18 @@ export async function getAdminData() {
 
     await dbConnect();
 
+    // Auto-expire assessments older than 48 hours
+    const fortyEightHoursAgo = new Date(Date.now() - 48 * 60 * 60 * 1000);
+    await VerveApplication.updateMany(
+      {
+        'assessment.status': { $in: ['Pending', 'In Progress'] },
+        'assessment.invitedAt': { $lt: fortyEightHoursAgo }
+      },
+      {
+        $set: { 'assessment.status': 'Expired' }
+      }
+    );
+
     console.log("Fetching Admin Data (VerveApplication)...");
     const [applications, leads] = await Promise.all([
       VerveApplication.find()
