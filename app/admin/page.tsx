@@ -68,6 +68,7 @@ export default function AdminDashboardPage() {
      const [activeTab, setActiveTab] = useState<"applications" | "leads" | "blogs" | "issuance" | "campus-ambassadors">("applications");
      const [subTab, setSubTab] = useState<"new" | "assessment" | "interviewing" | "accepted" | "offered" | "joined" | "completed" | "rejected">("new");
      const [searchQuery, setSearchQuery] = useState("");
+     const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
      const [applications, setApplications] = useState<any[]>([]);
      const [leads, setLeads] = useState<any[]>([]);
      const [blogs, setBlogs] = useState<any[]>([]);
@@ -269,7 +270,7 @@ export default function AdminDashboardPage() {
      };
 
      const getFilteredApplications = () => {
-          return applications.filter(app => {
+          let filtered = applications.filter(app => {
                const isCA = app.roleSlug === 'campus-ambassador';
                if (activeTab === 'applications' && isCA) return false;
                if (activeTab === 'campus-ambassadors' && !isCA) return false;
@@ -302,6 +303,12 @@ export default function AdminDashboardPage() {
                if (subTab === 'new') return app.status === 'Reviewing' || !app.status;
                
                return false;
+          });
+
+          return filtered.sort((a, b) => {
+               const dateA = new Date(a.createdAt || 0).getTime();
+               const dateB = new Date(b.createdAt || 0).getTime();
+               return sortOrder === "newest" ? dateB - dateA : dateA - dateB;
           });
      };
 
@@ -437,15 +444,24 @@ export default function AdminDashboardPage() {
                                                        </button>
                                                   ))}
                                              </div>
-                                             
-                                             <div className="relative w-full xl:w-64 shrink-0">
-                                                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20" />
-                                                  <Input 
-                                                       value={searchQuery}
-                                                       onChange={(e) => setSearchQuery(e.target.value)}
-                                                       placeholder="Search Candidate..."
-                                                       className="w-full pl-9 h-10 bg-white/[0.03] border-white/[0.08] text-[10px] uppercase font-bold text-white placeholder:text-white/20 focus:border-indigo-500 rounded-xl"
-                                                  />
+                                             <div className="flex items-center gap-3 w-full xl:w-auto shrink-0">
+                                                  <div className="relative w-full xl:w-64">
+                                                       <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20" />
+                                                       <Input 
+                                                            value={searchQuery}
+                                                            onChange={(e) => setSearchQuery(e.target.value)}
+                                                            placeholder="Search Candidate..."
+                                                            className="w-full pl-9 h-10 bg-white/[0.03] border-white/[0.08] text-[10px] uppercase font-bold text-white placeholder:text-white/20 focus:border-indigo-500 rounded-xl"
+                                                       />
+                                                  </div>
+                                                  <select
+                                                       value={sortOrder}
+                                                       onChange={(e) => setSortOrder(e.target.value as any)}
+                                                       className="h-10 px-3 bg-white/[0.03] border border-white/[0.08] text-[10px] uppercase font-bold text-white focus:border-indigo-500 rounded-xl outline-none"
+                                                  >
+                                                       <option value="newest" className="bg-neutral-900">Newest First</option>
+                                                       <option value="oldest" className="bg-neutral-900">Oldest First</option>
+                                                  </select>
                                              </div>
                                         </div>
 
