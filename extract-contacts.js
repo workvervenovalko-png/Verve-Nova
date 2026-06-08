@@ -6,8 +6,9 @@ const resDir = path.join('C:', 'Users', 'Lenovo', 'Desktop', 'Verve Nova', 'web'
 const csvFile = path.join(resDir, 'contacts.csv');
 const htmlFile = path.join(resDir, 'send-messages.html');
 
-// Template message
-const messageTemplate = `Hello {{candidate_full_name}},
+// Template message for Emails (Generic name)
+const emailSubject = "Action Required: Next Step for Web Development Internship at Verve Nova Technologies";
+const emailBody = `Hello Candidate,
 
 Thank you for applying for the Web Development Internship at Verve Nova Technologies. We appreciate your interest in joining our team!
 
@@ -107,8 +108,6 @@ async function extractContacts() {
   fs.writeFileSync(csvFile, csvContent);
 
   const validEmails = contacts.filter(c => c.email !== 'N/A').map(c => c.email);
-  const emailSubject = "Action Required: Next Step for Web Development Internship at Verve Nova Technologies";
-  const emailBody = messageTemplate.replace(/\{\{candidate_full_name\}\}/g, 'Candidate');
   
   // Create batches of 20 emails
   const batches = [];
@@ -161,17 +160,17 @@ async function extractContacts() {
     <h3>✉️ Email Content (Same for all batches)</h3>
     <div class="section">
       <label>Subject Line</label>
-      <input type="text" id="subject-text" value="\${emailSubject.replace(/"/g, '&quot;')}" readonly>
+      <input type="text" id="subject-text" value="${emailSubject}" readonly>
       <button class="btn-copy" onclick="copyText('subject-text', this)">Copy Subject</button>
     </div>
     <div class="section">
       <label>Message Body</label>
-      <textarea id="body-text" rows="10" readonly>\${emailBody.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</textarea>
+      <textarea id="body-text" rows="22" readonly>${emailBody}</textarea>
       <button class="btn-copy" onclick="copyText('body-text', this)">Copy Message Body</button>
     </div>
   </div>
 
-  <h2>📦 Batched Candidates (\${validEmails.length} total)</h2>
+  <h2>📦 Batched Candidates (${validEmails.length} total)</h2>
 `;
 
   batches.forEach((batch, index) => {
@@ -192,16 +191,22 @@ async function extractContacts() {
   <div id="whatsapp-list">
   `;
 
-  // Female regex matcher based on common names and specific filenames in the folder
-  const femaleRegex = /arunthathi|aarna|akalya|amruta|anushka|arpita|asiya|bebee|benasir|chanchal|dhiviya|damini|darshini|dipanshi|divya|jagni|janhavi|jayasri|kaveri|kirti|katha|manasa|rajeshwari|pinki|poorvika|prachi|rahini|rani|reshu|rayeesa|rimjhim|saisree|sanjana|swati|sarada|shabnam|sharmila|shifnal|shravani|shreya|shruti|sreedarshini/i;
+  // Smarter guess for girls
+  const hardcodedFemaleNames = /arunthathi|aarna|akalya|amruta|anushka|arpita|asiya|bebee|benasir|chanchal|dhiviya|damini|darshini|dipanshi|divya|jagni|janhavi|jayasri|kaveri|kirti|katha|manasa|rajeshwari|pinki|poorvika|prachi|rahini|rani|reshu|rayeesa|rimjhim|saisree|sanjana|swati|sarada|shabnam|sharmila|shifnal|shravani|shreya|shruti|sreedarshini/i;
 
   let whatsappCount = 0;
   contacts.forEach(c => {
-    if (femaleRegex.test(c.file) || femaleRegex.test(c.name)) {
+    const firstName = c.name.split(' ')[0].toLowerCase();
+    const isGirl = hardcodedFemaleNames.test(firstName) || 
+                   firstName.endsWith('a') || 
+                   firstName.endsWith('i') || 
+                   firstName.endsWith('y') || 
+                   firstName.endsWith('ee');
+
+    if (isGirl && c.phone !== 'N/A') {
       whatsappCount++;
-      // Use 'Candidate' instead of name for WhatsApp to avoid spelling mistakes/glitches
-      const customizedMessage = messageTemplate.replace('{{candidate_full_name}}', 'Candidate');
-      const encodedMessage = encodeURIComponent(customizedMessage);
+      const whatsappMessage = emailBody.replace('Hello Candidate', `Hello ${c.name}`);
+      const encodedMessage = encodeURIComponent(whatsappMessage);
       const whatsappLink = `https://wa.me/91${c.phone}?text=${encodedMessage}`;
       
       htmlContent += `
@@ -227,6 +232,7 @@ async function extractContacts() {
   fs.writeFileSync(htmlFile, htmlContent);
 
   console.log(`Successfully processed ${files.length} PDFs. Found ${contacts.length} phone numbers.`);
+  console.log(`Potential female candidates for WhatsApp: ${whatsappCount}`);
   console.log(`Saved CSV to ${csvFile}`);
   console.log(`Saved HTML Dashboard to ${htmlFile}`);
 }
