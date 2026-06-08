@@ -67,6 +67,7 @@ import { cn } from "@/lib/utils";
 export default function AdminDashboardPage() {
      const [activeTab, setActiveTab] = useState<"applications" | "leads" | "blogs" | "issuance" | "campus-ambassadors">("applications");
      const [subTab, setSubTab] = useState<"new" | "assessment" | "interviewing" | "accepted" | "offered" | "joined" | "completed" | "rejected">("new");
+     const [searchQuery, setSearchQuery] = useState("");
      const [applications, setApplications] = useState<any[]>([]);
      const [leads, setLeads] = useState<any[]>([]);
      const [blogs, setBlogs] = useState<any[]>([]);
@@ -273,6 +274,14 @@ export default function AdminDashboardPage() {
                if (activeTab === 'applications' && isCA) return false;
                if (activeTab === 'campus-ambassadors' && !isCA) return false;
 
+               if (searchQuery) {
+                    const query = searchQuery.toLowerCase();
+                    const name = (app.userId?.name || '').toLowerCase();
+                    const email = (app.personal?.email || '').toLowerCase();
+                    const vnId = (app.userId?.vn_id || '').toLowerCase();
+                    if (!name.includes(query) && !email.includes(query) && !vnId.includes(query)) return false;
+               }
+
                const hasCert = app.documents?.some((d: any) => d.type === 'Certificate');
                const hasJoining = app.documents?.some((d: any) => d.type === 'Joining Letter');
                const hasOffer = app.documents?.some((d: any) => d.type === 'Offer Letter');
@@ -377,47 +386,67 @@ export default function AdminDashboardPage() {
                               {(activeTab === "applications" || activeTab === "campus-ambassadors") ? (
                                    <div className="flex flex-col">
                                         {/* Sub-Tabs for Applications */}
-                                        <div className="flex flex-wrap gap-2 p-4 bg-white/[0.01] border-b border-white/[0.04]">
-                                             {[
-                                                  { id: 'new', label: 'Applied', icon: Clock },
-                                                  { id: 'assessment', label: 'Assessment', icon: FileText },
-                                                  { id: 'interviewing', label: 'Interviewing', icon: Calendar },
-                                                  { id: 'accepted', label: 'Accepted', icon: CheckCircle2 },
-                                                  { id: 'offered', label: 'Offer Sent', icon: Mail },
-                                                  { id: 'joined', label: 'Joined', icon: Briefcase },
-                                                  { id: 'completed', label: 'Completed', icon: ShieldCheck },
-                                                  { id: 'rejected', label: 'Rejected', icon: XCircle }
-                                             ].filter(tab => !(activeTab === 'campus-ambassadors' && tab.id === 'assessment')).map((tab) => (
-                                                  <button
-                                                       key={tab.id}
-                                                       onClick={() => setSubTab(tab.id as any)}
-                                                       className={`flex items-center gap-2 px-4 py-2 rounded-lg text-[9px] font-bold uppercase tracking-widest transition-all ${subTab === tab.id ? 'bg-white/10 text-white border border-white/10 shadow-lg' : 'text-white/20 hover:text-white/40 hover:bg-white/[0.02]'}`}
-                                                  >
-                                                       <tab.icon className="w-3 h-3" />
-                                                       {tab.label}
-                                                       <span className="ml-1 opacity-40">
-                                                            ({applications.filter(app => {
-                                                                 const isCA = app.roleSlug === 'campus-ambassador';
-                                                                 if (activeTab === 'applications' && isCA) return false;
-                                                                 if (activeTab === 'campus-ambassadors' && !isCA) return false;
+                                        <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 p-4 bg-white/[0.01] border-b border-white/[0.04]">
+                                             <div className="flex flex-wrap gap-2">
+                                                  {[
+                                                       { id: 'new', label: 'Applied', icon: Clock },
+                                                       { id: 'assessment', label: 'Assessment', icon: FileText },
+                                                       { id: 'interviewing', label: 'Interviewing', icon: Calendar },
+                                                       { id: 'accepted', label: 'Accepted', icon: CheckCircle2 },
+                                                       { id: 'offered', label: 'Offer Sent', icon: Mail },
+                                                       { id: 'joined', label: 'Joined', icon: Briefcase },
+                                                       { id: 'completed', label: 'Completed', icon: ShieldCheck },
+                                                       { id: 'rejected', label: 'Rejected', icon: XCircle }
+                                                  ].filter(tab => !(activeTab === 'campus-ambassadors' && tab.id === 'assessment')).map((tab) => (
+                                                       <button
+                                                            key={tab.id}
+                                                            onClick={() => setSubTab(tab.id as any)}
+                                                            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-[9px] font-bold uppercase tracking-widest transition-all ${subTab === tab.id ? 'bg-white/10 text-white border border-white/10 shadow-lg' : 'text-white/20 hover:text-white/40 hover:bg-white/[0.02]'}`}
+                                                       >
+                                                            <tab.icon className="w-3 h-3" />
+                                                            {tab.label}
+                                                            <span className="ml-1 opacity-40">
+                                                                 ({applications.filter(app => {
+                                                                      const isCA = app.roleSlug === 'campus-ambassador';
+                                                                      if (activeTab === 'applications' && isCA) return false;
+                                                                      if (activeTab === 'campus-ambassadors' && !isCA) return false;
 
-                                                                 const hasCert = app.documents?.some((d: any) => d.type === 'Certificate');
-                                                                 const hasJoining = app.documents?.some((d: any) => d.type === 'Joining Letter');
-                                                                 const hasOffer = app.documents?.some((d: any) => d.type === 'Offer Letter');
-                                                                 if (tab.id === 'completed') return hasCert;
-                                                                 if (tab.id === 'joined') return hasJoining && !hasCert;
-                                                                 if (tab.id === 'offered') return hasOffer && !hasJoining && !hasCert;
-                                                                 if (hasCert || hasJoining || hasOffer) return false;
-                                                                 if (tab.id === 'accepted') return app.status === 'Accepted';
-                                                                 if (tab.id === 'interviewing') return app.status === 'Interviewing';
-                                                                 if (tab.id === 'assessment') return app.status === 'Assessment';
-                                                                 if (tab.id === 'rejected') return app.status === 'Rejected';
-                                                                 if (tab.id === 'new') return app.status === 'Reviewing' || !app.status;
-                                                                 return false;
-                                                            }).length})
-                                                       </span>
-                                                  </button>
-                                             ))}
+                                                                      if (searchQuery) {
+                                                                           const query = searchQuery.toLowerCase();
+                                                                           const name = (app.userId?.name || '').toLowerCase();
+                                                                           const email = (app.personal?.email || '').toLowerCase();
+                                                                           const vnId = (app.userId?.vn_id || '').toLowerCase();
+                                                                           if (!name.includes(query) && !email.includes(query) && !vnId.includes(query)) return false;
+                                                                      }
+
+                                                                      const hasCert = app.documents?.some((d: any) => d.type === 'Certificate');
+                                                                      const hasJoining = app.documents?.some((d: any) => d.type === 'Joining Letter');
+                                                                      const hasOffer = app.documents?.some((d: any) => d.type === 'Offer Letter');
+                                                                      if (tab.id === 'completed') return hasCert;
+                                                                      if (tab.id === 'joined') return hasJoining && !hasCert;
+                                                                      if (tab.id === 'offered') return hasOffer && !hasJoining && !hasCert;
+                                                                      if (hasCert || hasJoining || hasOffer) return false;
+                                                                      if (tab.id === 'accepted') return app.status === 'Accepted';
+                                                                      if (tab.id === 'interviewing') return app.status === 'Interviewing';
+                                                                      if (tab.id === 'assessment') return app.status === 'Assessment';
+                                                                      if (tab.id === 'rejected') return app.status === 'Rejected';
+                                                                      if (tab.id === 'new') return app.status === 'Reviewing' || !app.status;
+                                                                      return false;
+                                                                 }).length})
+                                                            </span>
+                                                       </button>
+                                                  ))}
+                                             </div>
+                                             
+                                             <div className="relative w-full xl:w-64 shrink-0">
+                                                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20" />
+                                                  <Input 
+                                                       value={searchQuery}
+                                                       onChange={(e) => setSearchQuery(e.target.value)}
+                                                       placeholder="Search Candidate..."
+                                                       className="w-full pl-9 h-10 bg-white/[0.03] border-white/[0.08] text-[10px] uppercase font-bold text-white placeholder:text-white/20 focus:border-indigo-500 rounded-xl"
+                                                  />
+                                             </div>
                                         </div>
 
                                         <div className="overflow-x-auto">
