@@ -17,7 +17,14 @@ export const resend = {
       
       for (let i = 0; i < clients.length; i++) {
         try {
-          const result = await clients[i].emails.send(options);
+          const currentOptions = { ...options };
+          
+          // Fallback to secondary domain for secondary keys
+          if (i > 0 && currentOptions.from) {
+             currentOptions.from = currentOptions.from.replace('@vervenovatech.com', '@vervenovatechcrm.online');
+          }
+
+          const result = await clients[i].emails.send(currentOptions);
           
           // Resend sometimes returns the error in the result object
           if (result.error && (result.error.message.toLowerCase().includes('quota') || result.error.message.toLowerCase().includes('rate limit'))) {
