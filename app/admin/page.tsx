@@ -69,6 +69,7 @@ export default function AdminDashboardPage() {
      const [subTab, setSubTab] = useState<"new" | "assessment" | "interviewing" | "accepted" | "offered" | "joined" | "completed" | "rejected">("new");
      const [searchQuery, setSearchQuery] = useState("");
      const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
+     const [domainFilter, setDomainFilter] = useState("all");
      const [applications, setApplications] = useState<any[]>([]);
      const [leads, setLeads] = useState<any[]>([]);
      const [blogs, setBlogs] = useState<any[]>([]);
@@ -275,6 +276,8 @@ export default function AdminDashboardPage() {
                if (activeTab === 'applications' && isCA) return false;
                if (activeTab === 'campus-ambassadors' && !isCA) return false;
 
+               if (domainFilter !== 'all' && app.roleSlug !== domainFilter) return false;
+
                if (searchQuery) {
                     const query = searchQuery.toLowerCase();
                     const name = (app.userId?.name || '').toLowerCase();
@@ -418,6 +421,8 @@ export default function AdminDashboardPage() {
                                                                       if (activeTab === 'applications' && isCA) return false;
                                                                       if (activeTab === 'campus-ambassadors' && !isCA) return false;
 
+                                                                      if (domainFilter !== 'all' && app.roleSlug !== domainFilter) return false;
+
                                                                       if (searchQuery) {
                                                                            const query = searchQuery.toLowerCase();
                                                                            const name = (app.userId?.name || '').toLowerCase();
@@ -454,6 +459,20 @@ export default function AdminDashboardPage() {
                                                             className="w-full pl-9 h-10 bg-white/[0.03] border-white/[0.08] text-[10px] uppercase font-bold text-white placeholder:text-white/20 focus:border-indigo-500 rounded-xl"
                                                        />
                                                   </div>
+                                                  {activeTab === 'applications' && (
+                                                       <select
+                                                            value={domainFilter}
+                                                            onChange={(e) => setDomainFilter(e.target.value)}
+                                                            className="h-10 px-3 bg-white/[0.03] border border-white/[0.08] text-[10px] uppercase font-bold text-white focus:border-indigo-500 rounded-xl outline-none"
+                                                       >
+                                                            <option value="all" className="bg-neutral-900">All Domains</option>
+                                                            {Array.from(new Set(applications.filter(app => app.roleSlug && app.roleSlug !== 'campus-ambassador').map(app => app.roleSlug))).map(domain => (
+                                                                 <option key={domain as string} value={domain as string} className="bg-neutral-900">
+                                                                      {(domain as string).replace(/-/g, ' ')}
+                                                                 </option>
+                                                            ))}
+                                                       </select>
+                                                  )}
                                                   <select
                                                        value={sortOrder}
                                                        onChange={(e) => setSortOrder(e.target.value as any)}
