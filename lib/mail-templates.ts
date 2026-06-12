@@ -124,7 +124,14 @@ export const getHumanDocumentTemplate = (name: string, domain: string, startDate
     <li><strong>Joining Date:</strong> To be shared in the Official Joining Letter</li>
   </ul>
   <p>Attached to this email, you will find your official <strong>Internship ${type}</strong>, which includes details regarding your role, duration of the internship, reporting structure, and other relevant terms and conditions.</p>
-  <p>Please review the ${type.toLowerCase()} carefully. If you agree to the terms outlined, kindly reply with "I accept the offer".</p>
+  <p>Please review the ${type.toLowerCase()} carefully. If you agree to the terms outlined, kindly reply to this email with <strong>"I accept the offer"</strong>.</p>
+  ${type.toLowerCase().includes('offer') ? `
+  <p>To proceed with your onboarding and subsequent document generation, please also attach the following to your reply:</p>
+  <ul style="list-style: none; padding-left: 0;">
+    <li>✅ A clear scanned copy of your Government ID (Aadhar/PAN) or your valid College ID.</li>
+    <li>✅ A clean, professional photograph of yourself.</li>
+  </ul>
+  ` : ''}
   <p>Alternatively, you can view and download your document directly from our secure portal:<br/>
   <a href="https://vervenovatech.com/verify/${verificationId}" style="color: #6366f1; text-decoration: underline; font-weight: bold;">View & Download Official Document</a></p>
   ${footerSection}
