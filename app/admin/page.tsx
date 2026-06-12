@@ -14,7 +14,8 @@ import {
      generateDocument,
      resendLastChanceAssessment,
      generateCACredentials,
-     resetCandidateAssessment
+     resetCandidateAssessment,
+     requestCandidateDocuments
 } from "@/app/actions/admin";
 import { useRouter } from "next/navigation";
 import { Navbar } from "@/components/navbar";
@@ -44,7 +45,8 @@ import {
      UploadCloud,
      FileText,
      MessageCircle,
-     RotateCcw
+     RotateCcw,
+     IdCard
 } from "lucide-react";
 
 import { toast } from "sonner";
@@ -269,6 +271,19 @@ export default function AdminDashboardPage() {
                fetchData();
           } else {
                toast.error(result.error || "Failed to reset assessment.");
+          }
+     };
+
+     const handleRequestDocuments = async (id: string) => {
+          if (!confirm("Are you sure you want to request ID and Photo from this candidate?")) return;
+          setIsSubmitting(true);
+          const result = await requestCandidateDocuments(id);
+          setIsSubmitting(false);
+          if (result.success) {
+               toast.success("Document request email sent successfully.");
+               fetchData();
+          } else {
+               toast.error(result.error || "Failed to send request.");
           }
      };
 
@@ -729,6 +744,17 @@ export default function AdminDashboardPage() {
                                                                                   title="Generate CA Credentials"
                                                                              >
                                                                                   <User2 className="w-5 h-5" />
+                                                                             </Button>
+                                                                        )}
+                                                                        {app.status === 'Accepted' && (
+                                                                             <Button
+                                                                                  variant="ghost"
+                                                                                  size="icon"
+                                                                                  className="rounded-xl hover:bg-white/[0.05] text-white/20 hover:text-amber-400"
+                                                                                  onClick={() => handleRequestDocuments(app._id)}
+                                                                                  title="Request ID & Photo"
+                                                                             >
+                                                                                  <IdCard className="w-5 h-5" />
                                                                              </Button>
                                                                         )}
                                                                        <Dialog>

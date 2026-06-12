@@ -191,6 +191,51 @@ export async function resetCandidateAssessment(appId: string) {
   }
 }
 
+export async function requestCandidateDocuments(appId: string) {
+  try {
+    const session = await getServerSession(authOptions) as any;
+    if (!session || session.user?.role?.toUpperCase() !== 'ADMIN') {
+      return { success: false, error: "Unauthorized" };
+    }
+    await dbConnect();
+
+    const app = await VerveApplication.findById(appId).populate('userId', 'name email');
+    if (!app) return { success: false, error: "Application not found." };
+
+    const targetEmail = (app.userId as any).email;
+    const candidateName = (app.userId as any).name;
+    
+    const { resend } = await import("@/lib/resend");
+    const html = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 8px;">
+        <h2 style="color: #000000; text-transform: uppercase; font-weight: 900; letter-spacing: 2px;">DOCUMENT REQUEST 📄</h2>
+        <p style="color: #4a4a4a; font-size: 16px; line-height: 1.6;">Hi ${candidateName},</p>
+        <p style="color: #4a4a4a; font-size: 16px; line-height: 1.6;">Congratulations once again on your selection for the <strong>${app.roleSlug.replace(/-/g, ' ')}</strong> role at Verve Nova Tech!</p>
+        <p style="color: #4a4a4a; font-size: 16px; line-height: 1.6;">To proceed with your onboarding and document generation (Offer Letter/Joining Letter), we require the following details from you as soon as possible:</p>
+        <ul style="color: #4a4a4a; font-size: 16px; line-height: 1.6; font-weight: bold;">
+          <li>A clear scanned copy of your Government ID (Aadhar/PAN) or your valid College ID.</li>
+          <li>A clean, professional photograph of yourself.</li>
+        </ul>
+        <p style="color: #4a4a4a; font-size: 16px; line-height: 1.6;">Please reply directly to this email and attach the requested documents so our HR team can verify and issue your credentials.</p>
+        <p style="color: #4a4a4a; font-size: 14px; line-height: 1.6;">Welcome aboard!<br>&mdash; HR Team, Verve Nova</p>
+      </div>
+    `;
+
+    await resend.emails.send({
+      from: 'Verve Nova Tech <careers@vervenovatech.com>',
+      to: targetEmail,
+      subject: "ACTION REQUIRED: SUBMIT ID & PHOTO // VERVE NOVA",
+      html: html,
+      reply_to: 'work.vervenova.lko@gmail.com'
+    });
+
+    return { success: true };
+  } catch (error: any) {
+    console.error("Document Request Error:", error);
+    return { success: false, error: error.message };
+  }
+}
+
 export async function scheduleInterview(appId: string, interviewDate?: string, interviewTime?: string, interviewLink?: string, interviewerEmailsStr?: string, triggerEmail: boolean = false) {
   try {
     const session = await getServerSession(authOptions) as any;
