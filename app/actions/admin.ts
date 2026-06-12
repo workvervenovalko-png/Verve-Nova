@@ -176,7 +176,7 @@ export async function resetCandidateAssessment(appId: string) {
         await resend.emails.send({
           from: 'Verve Nova Tech <careers@vervenovatech.com>',
           to: targetEmail,
-          subject: \`ASSESSMENT RESET // VERVE NOVA\`,
+          subject: "ASSESSMENT RESET // VERVE NOVA",
           html: html,
         });
       } catch (err) {

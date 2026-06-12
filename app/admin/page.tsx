@@ -717,7 +717,8 @@ export default function AdminDashboardPage() {
                                                                              </div>
                                                                          )}
                                                                   </div>
-                                                             <td className="px-8 py-8 text-right">
+                                                              </td>
+                                                              <td className="px-8 py-8 text-right">
                                                                   <div className="flex justify-end gap-2">
                                                                         {app.roleSlug === 'campus-ambassador' && app.status === 'Accepted' && app.userId?.role !== 'CA' && (
                                                                              <Button
