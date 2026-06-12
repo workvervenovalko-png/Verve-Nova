@@ -140,7 +140,7 @@ export async function resetCandidateAssessment(appId: string) {
     }
     await dbConnect();
 
-    await VerveApplication.findByIdAndUpdate(appId, {
+    const app = await VerveApplication.findByIdAndUpdate(appId, {
       $unset: {
         'assessment.score': 1,
         'assessment.totalQuestions': 1,
@@ -151,7 +151,38 @@ export async function resetCandidateAssessment(appId: string) {
         'assessment.status': 'Pending',
         'status': 'Assessment'
       }
-    });
+    }).populate('userId', 'name email');
+
+    if (app) {
+      try {
+        const { resend } = await import("@/lib/resend");
+        const targetEmail = (app.userId as any).email;
+        const candidateName = (app.userId as any).name;
+        
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://vervenovatech.com';
+        const assessmentLink = `${baseUrl}/assessment/${app._id}`;
+
+        const html = `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 8px;">
+            <h2 style="color: #000000; text-transform: uppercase; font-weight: 900; letter-spacing: 2px;">Assessment Reset 🔄</h2>
+            <p style="color: #4a4a4a; font-size: 16px; line-height: 1.6;">Hi ${candidateName},</p>
+            <p style="color: #4a4a4a; font-size: 16px; line-height: 1.6;">As requested, your assessment for the <strong>${app.roleSlug.replace(/-/g, ' ')}</strong> role has been successfully reset.</p>
+            <p style="color: #4a4a4a; font-size: 16px; line-height: 1.6;">You can now attempt it again using your unique link:</p>
+            <a href="${assessmentLink}" style="display: inline-block; background-color: #4f46e5; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; margin-top: 10px; margin-bottom: 20px;">Retake Assessment</a>
+            <p style="color: #4a4a4a; font-size: 14px; line-height: 1.6;">Best of luck!<br>&mdash; Team Verve Nova</p>
+          </div>
+        `;
+
+        await resend.emails.send({
+          from: 'Verve Nova Tech <careers@vervenovatech.com>',
+          to: targetEmail,
+          subject: \`ASSESSMENT RESET // VERVE NOVA\`,
+          html: html,
+        });
+      } catch (err) {
+        console.error("Failed to send reset email:", err);
+      }
+    }
 
     return { success: true };
   } catch (error: any) {
