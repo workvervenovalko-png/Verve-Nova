@@ -132,6 +132,34 @@ export async function updateApplicationStatus(appId: string, status: string) {
   }
 }
 
+export async function resetCandidateAssessment(appId: string) {
+  try {
+    const session = await getServerSession(authOptions) as any;
+    if (!session || session.user?.role?.toUpperCase() !== 'ADMIN') {
+      return { success: false, error: "Unauthorized" };
+    }
+    await dbConnect();
+
+    await VerveApplication.findByIdAndUpdate(appId, {
+      $unset: {
+        'assessment.score': 1,
+        'assessment.totalQuestions': 1,
+        'assessment.startedAt': 1,
+        'assessment.submittedAt': 1
+      },
+      $set: {
+        'assessment.status': 'Pending',
+        'status': 'Assessment'
+      }
+    });
+
+    return { success: true };
+  } catch (error: any) {
+    console.error("Assessment Reset Error:", error);
+    return { success: false, error: error.message };
+  }
+}
+
 export async function scheduleInterview(appId: string, interviewDate?: string, interviewTime?: string, interviewLink?: string, interviewerEmailsStr?: string, triggerEmail: boolean = false) {
   try {
     const session = await getServerSession(authOptions) as any;

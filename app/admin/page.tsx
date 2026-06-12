@@ -13,7 +13,8 @@ import {
      issueDocument,
      generateDocument,
      resendLastChanceAssessment,
-     generateCACredentials
+     generateCACredentials,
+     resetCandidateAssessment
 } from "@/app/actions/admin";
 import { useRouter } from "next/navigation";
 import { Navbar } from "@/components/navbar";
@@ -42,7 +43,8 @@ import {
      BookOpen,
      UploadCloud,
      FileText,
-     MessageCircle
+     MessageCircle,
+     RotateCcw
 } from "lucide-react";
 
 import { toast } from "sonner";
@@ -250,10 +252,23 @@ export default function AdminDashboardPage() {
           const result = await resendLastChanceAssessment(id);
           setIsSubmitting(false);
           if (result.success) {
-               toast.success("Last chance assessment sent!");
+               toast.success("Last chance assessment dispatched.");
                fetchData();
           } else {
-               toast.error(result.error || "Failed to send last chance.");
+               toast.error(result.error || "Failed to dispatch.");
+          }
+     };
+
+     const handleResetAssessment = async (id: string) => {
+          if (!confirm("Are you sure you want to reset this candidate's assessment? This will clear their score and allow them to retake it.")) return;
+          setIsSubmitting(true);
+          const result = await resetCandidateAssessment(id);
+          setIsSubmitting(false);
+          if (result.success) {
+               toast.success("Assessment reset successfully.");
+               fetchData();
+          } else {
+               toast.error(result.error || "Failed to reset assessment.");
           }
      };
 
@@ -702,7 +717,6 @@ export default function AdminDashboardPage() {
                                                                              </div>
                                                                          )}
                                                                   </div>
-                                                             </td>
                                                              <td className="px-8 py-8 text-right">
                                                                   <div className="flex justify-end gap-2">
                                                                         {app.roleSlug === 'campus-ambassador' && app.status === 'Accepted' && app.userId?.role !== 'CA' && (
