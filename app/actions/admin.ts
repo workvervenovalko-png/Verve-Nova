@@ -468,6 +468,7 @@ export async function issueDocument(formData: FormData) {
       to: email,
       subject: subject,
       html: htmlContent,
+      reply_to: 'work.vervenova.lko@gmail.com',
       attachments: [
         {
           filename: file.name,
@@ -540,6 +541,7 @@ export async function generateDocument(appId: string, docType: string, metadata:
         to: targetEmail,
         subject: `Internship ${newDoc.type} // Verve Nova`,
         html: emailHtml,
+        reply_to: 'work.vervenova.lko@gmail.com'
       });
 
       if (candidateMailRes.error) {
