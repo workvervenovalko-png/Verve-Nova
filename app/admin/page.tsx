@@ -676,8 +676,25 @@ export default function AdminDashboardPage() {
                                                                                        
                                                                                        const phoneStr = app.personal.phone.replace(/\D/g, '');
                                                                                        const formattedPhone = phoneStr.length === 10 ? `91${phoneStr}` : phoneStr;
+
+                                                                                       const formatTime12Hour = (time24?: string) => {
+                                                                                           if (!time24) return "Time to be decided";
+                                                                                           if (time24.toLowerCase().includes("am") || time24.toLowerCase().includes("pm")) return time24;
+                                                                                           const parts = time24.split(':');
+                                                                                           if (parts.length < 2) return time24;
+                                                                                           let hours = parseInt(parts[0], 10);
+                                                                                           const minutes = parts[1];
+                                                                                           if (isNaN(hours)) return time24;
+                                                                                           const ampm = hours >= 12 ? 'PM' : 'AM';
+                                                                                           hours = hours % 12;
+                                                                                           hours = hours ? hours : 12;
+                                                                                           return `${hours}:${minutes} ${ampm}`;
+                                                                                       };
+
+                                                                                       const formattedDate = app.interviewDate ? format(new Date(app.interviewDate), "do MMMM yyyy (EEEE)") : 'Date to be decided';
+                                                                                       const formattedTime = formatTime12Hour(timeVal);
                                                                                        
-                                                                                       const text = `Hi ${app.personal.fullName || 'there'},\n\nThis is a reminder from Verve Nova Technologies regarding your ${app.roleSlug === 'campus-ambassador' ? 'Campus Ambassador' : 'Internship'} interview scheduled at ${timeVal}.\n\nPlease join 5 minutes early using the following link:\n${linkVal}\n\nBest of luck!`;
+                                                                                       const text = `Hi ${app.personal.fullName || 'there'},\n\nThis is a reminder from Verve Nova Technologies regarding your ${app.roleSlug === 'campus-ambassador' ? 'Campus Ambassador' : 'Internship'} interview scheduled on ${formattedDate} at ${formattedTime}.\n\nPlease join 5 minutes early using the following link:\n${linkVal}\n\nBest of luck!`;
                                                                                        
                                                                                        const waUrl = `https://wa.me/${formattedPhone}?text=${encodeURIComponent(text)}`;
                                                                                        window.open(waUrl, '_blank');

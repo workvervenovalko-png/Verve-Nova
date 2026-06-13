@@ -283,7 +283,20 @@ export async function scheduleInterview(appId: string, interviewDate?: string, i
             month: 'long', 
             day: 'numeric' 
         });
-        const timeStr = interviewTime ? interviewTime : "Time to be decided";
+        const formatTime12Hour = (time24?: string) => {
+            if (!time24) return "Time to be decided";
+            if (time24.toLowerCase().includes("am") || time24.toLowerCase().includes("pm")) return time24;
+            const parts = time24.split(':');
+            if (parts.length < 2) return time24;
+            let hours = parseInt(parts[0], 10);
+            const minutes = parts[1];
+            if (isNaN(hours)) return time24;
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            return `${hours}:${minutes} ${ampm}`;
+        };
+        const timeStr = formatTime12Hour(interviewTime);
         const combinedDateTimeStr = `${dateStr} at ${timeStr}`;
         
         // 1. Send to Candidate
