@@ -3,11 +3,31 @@
 import { motion } from "framer-motion";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { ArrowUpRight, CheckCircle2, Headphones, Building2, Globe, Cpu, LayoutDashboard, Users } from "lucide-react";
+import { ArrowUpRight, CheckCircle2, Headphones, Building2, Globe, LayoutDashboard, Users, ShoppingBag, Wrench } from "lucide-react";
 import Link from "next/link";
 
 export default function ProjectsPage() {
   const allProjects = [
+    {
+      title: "ChotU (छोटू)",
+      category: "Hyperlocal Quick Commerce",
+      desc: "Zero-commission hyperlocal kirana marketplace and instant delivery ecosystem empowering neighborhood grocery stores with 1-5km delivery logistics.",
+      image: "/projects/chotu.jpg",
+      link: "https://chotuapp.in",
+      icon: ShoppingBag,
+      features: ["Zero Commission", "Barcode Catalog", "Geofenced Delivery"],
+      isProduct: false
+    },
+    {
+      title: "ServiceHub",
+      category: "On-Demand Service Engine",
+      desc: "Enterprise handyman and home-repair platform with automated stock alerts, Supabase realtime engine, FCM siren alerts, and customer-technician wallets.",
+      image: "/projects/servicehub.jpg",
+      link: "#",
+      icon: Wrench,
+      features: ["Live Tracking", "Stock Deduction", "FCM Siren Alerts"],
+      isProduct: false
+    },
     {
       title: "VNT Billzer",
       category: "SaaS Product",

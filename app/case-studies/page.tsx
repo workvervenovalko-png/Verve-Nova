@@ -3,11 +3,39 @@
 import { motion } from "framer-motion";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { ArrowUpRight, CheckCircle2, ShieldCheck, Zap, Layers, Database } from "lucide-react";
+import { ArrowUpRight, CheckCircle2, ShieldCheck, Zap, Layers, Database, ShoppingBag, Wrench, Store, Bell, Smartphone } from "lucide-react";
 import Link from "next/link";
 
 export default function CaseStudiesPage() {
   const caseStudies = [
+    {
+      title: "ChotU (छोटू) Quick Commerce",
+      subtitle: "Revolutionizing Local Kirana Commerce with Zero-Commission Architecture",
+      image: "/projects/chotu.jpg",
+      challenge: "Traditional dark-store quick-commerce giants impose heavy commissions (15-25%) and platform fees on local shopkeepers while charging inflated prices to customers. Local kirana store owners lacked a low-cost, direct digital marketplace to capture neighborhood delivery demands within 1-5km radius.",
+      solution: [
+        "Architected a zero-commission hyperlocal marketplace platform connecting customers directly with neighborhood grocery stores.",
+        "Implemented barcode-assisted instant inventory cataloging, enabling merchant onboarding in under 60 seconds.",
+        "Engineered transparent delivery fee distribution (100% credited to merchant delivery helper) alongside automated daily ledger settlements via payment gateways."
+      ],
+      result: "Empowered traditional kirana stores to digitalize operations without profit margin erosion, achieving high store retention, instant neighborhood delivery, and direct merchant payouts.",
+      icons: [ShoppingBag, Store],
+      link: "https://chotuapp.in"
+    },
+    {
+      title: "ServiceHub Platform",
+      subtitle: "Architecting an On-Demand Home Service & Repair Ecosystem",
+      image: "/projects/servicehub.jpg",
+      challenge: "Coordinating multi-role home service dispatching (Customer, Technician, Admin, Shop Owner) required real-time job allocation, reliable background wake-up push notifications, dynamic inventory stock deduction, and real-time wallet payout settlements.",
+      solution: [
+        "Built a cross-platform mobile suite powered by Supabase Realtime for sub-second booking stream propagation and live technician tracking.",
+        "Created custom database functions for camelCase stock deduction and dynamic low-stock alerts on shop owner dashboards.",
+        "Configured FCM data-only payload push notifications to wake up background/terminated devices with custom loud siren sounds for incoming service bookings."
+      ],
+      result: "Delivered a full-stack, enterprise service dispatch platform featuring seamless wallet settlement, 100% background notification reliability, and real-time order tracking.",
+      icons: [Wrench, Smartphone],
+      link: "#"
+    },
     {
       title: "Siora Infra Design",
       subtitle: "Delivering a Next-Gen 3D Web Experience",

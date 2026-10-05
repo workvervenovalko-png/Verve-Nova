@@ -1,11 +1,27 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight, CheckCircle2, Headphones, Building2, ChevronRight } from "lucide-react";
+import { ArrowUpRight, CheckCircle2, Headphones, Building2, ChevronRight, ShoppingBag, Wrench } from "lucide-react";
 import Link from "next/link";
 
 export function ReadyProjects() {
   const projects = [
+    {
+      title: "ChotU (छोटू)",
+      desc: "Zero-commission hyperlocal kirana marketplace and instant delivery ecosystem empowering neighborhood grocery stores with 1-5km delivery logistics.",
+      image: "/projects/chotu.jpg",
+      link: "https://chotuapp.in",
+      icon: ShoppingBag,
+      features: ["Zero Commission", "Barcode Catalog", "Geofenced Payouts"]
+    },
+    {
+      title: "ServiceHub",
+      desc: "Enterprise handyman & home service platform featuring real-time technician tracking, automated stock deduction, and Supabase backend.",
+      image: "/projects/servicehub.jpg",
+      link: "#",
+      icon: Wrench,
+      features: ["Live Tracking", "Stock Alerts", "Supabase Backend"]
+    },
     {
       title: "Advance Transcription",
       desc: "An easy-to-use software that converts audio files into text quickly. Perfect for meetings and interviews.",
