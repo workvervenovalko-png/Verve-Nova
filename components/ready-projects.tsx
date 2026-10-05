@@ -8,19 +8,21 @@ export function ReadyProjects() {
   const projects = [
     {
       title: "ChotU (छोटू)",
-      desc: "Zero-commission hyperlocal kirana marketplace and instant delivery ecosystem empowering neighborhood grocery stores with 1-5km delivery logistics.",
+      desc: "Zero-commission hyperlocal kirana marketplace and instant delivery mobile app empowering neighborhood grocery stores with 1-5km delivery logistics.",
       image: "/projects/chotu.jpg",
-      link: "https://chotuapp.in",
+      link: "/case-studies",
       icon: ShoppingBag,
-      features: ["Zero Commission", "Barcode Catalog", "Geofenced Payouts"]
+      features: ["Zero Commission", "Barcode Catalog", "Geofenced Payouts"],
+      ctaText: "View App Details"
     },
     {
       title: "ServiceHub",
-      desc: "Enterprise handyman & home service platform featuring real-time technician tracking, automated stock deduction, and Supabase backend.",
+      desc: "Enterprise handyman & home service Android app featuring real-time technician tracking, automated stock deduction, and Supabase backend.",
       image: "/projects/servicehub.jpg",
-      link: "#",
+      link: "https://play.google.com/store/apps/details?id=com.sahil.servicehub&pcampaignid=web_share",
       icon: Wrench,
-      features: ["Live Tracking", "Stock Alerts", "Supabase Backend"]
+      features: ["Live Tracking", "Stock Alerts", "Supabase Backend"],
+      ctaText: "View On Play Store"
     },
     {
       title: "Advance Transcription",
@@ -28,7 +30,8 @@ export function ReadyProjects() {
       image: "/projects/transcription.png",
       link: "https://www.advancetranscription.com/",
       icon: Headphones,
-      features: ["Fast Conversion", "Simple Interface", "Secure Storage"]
+      features: ["Fast Conversion", "Simple Interface", "Secure Storage"],
+      ctaText: "Visit Website"
     },
     {
       title: "Siora Infra Design",
@@ -36,7 +39,8 @@ export function ReadyProjects() {
       image: "/projects/siora.png",
       link: "https://siorainfradesign.com/",
       icon: Building2,
-      features: ["Project Tracking", "Modern Design", "Client Dashboard"]
+      features: ["Project Tracking", "Modern Design", "Client Dashboard"],
+      ctaText: "Visit Website"
     }
   ];
 
@@ -48,12 +52,12 @@ export function ReadyProjects() {
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-6 mb-16 text-center md:text-left">
           <div className="max-w-lg flex flex-col items-center md:items-start">
-            <p className="text-xs font-bold text-indigo-400 uppercase tracking-[0.5em] mb-4">Pre-Built Software</p>
+            <p className="text-xs font-bold text-indigo-400 uppercase tracking-[0.5em] mb-4">Featured Applications</p>
             <h2 className="text-3xl md:text-5xl font-black text-white tracking-tighter uppercase leading-none mb-4">
               Our <span className="text-gradient">Projects</span>
             </h2>
             <p className="text-sm text-white/30 font-light leading-relaxed">
-              Specialized tools and custom platforms we've built for high-growth businesses.
+              Specialized mobile applications and custom platforms we've built for high-growth businesses.
             </p>
           </div>
           <Link 
@@ -104,11 +108,11 @@ export function ReadyProjects() {
 
                 <a 
                   href={project.link}
-                  target="_blank"
+                  target={project.link.startsWith("/") ? "_self" : "_blank"}
                   rel="noopener noreferrer"
                   className="inline-flex h-14 px-8 items-center bg-gradient-to-r from-indigo-600 to-violet-600 text-white text-[10px] font-black uppercase tracking-[0.3em] hover:shadow-[0_0_30px_rgba(99,102,241,0.4)] transition-all rounded-2xl w-full justify-center"
                 >
-                  Visit Website <ArrowUpRight className="ml-2 w-4 h-4" />
+                  {project.ctaText} <ArrowUpRight className="ml-2 w-4 h-4" />
                 </a>
               </div>
             </motion.div>

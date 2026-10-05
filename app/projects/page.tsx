@@ -10,22 +10,24 @@ export default function ProjectsPage() {
   const allProjects = [
     {
       title: "ChotU (छोटू)",
-      category: "Hyperlocal Quick Commerce",
-      desc: "Zero-commission hyperlocal kirana marketplace and instant delivery ecosystem empowering neighborhood grocery stores with 1-5km delivery logistics.",
+      category: "Mobile App Ecosystem",
+      desc: "Zero-commission hyperlocal kirana marketplace and instant delivery mobile app empowering neighborhood grocery stores with 1-5km delivery logistics.",
       image: "/projects/chotu.jpg",
-      link: "https://chotuapp.in",
+      link: "/case-studies",
       icon: ShoppingBag,
       features: ["Zero Commission", "Barcode Catalog", "Geofenced Delivery"],
+      ctaText: "View App Details",
       isProduct: false
     },
     {
       title: "ServiceHub",
-      category: "On-Demand Service Engine",
-      desc: "Enterprise handyman and home-repair platform with automated stock alerts, Supabase realtime engine, FCM siren alerts, and customer-technician wallets.",
+      category: "Android Mobile App",
+      desc: "Enterprise handyman and home-repair mobile application with automated stock alerts, Supabase realtime engine, FCM siren alerts, and customer-technician wallets.",
       image: "/projects/servicehub.jpg",
-      link: "#",
+      link: "https://play.google.com/store/apps/details?id=com.sahil.servicehub&pcampaignid=web_share",
       icon: Wrench,
       features: ["Live Tracking", "Stock Deduction", "FCM Siren Alerts"],
+      ctaText: "View On Play Store",
       isProduct: false
     },
     {
@@ -36,6 +38,7 @@ export default function ProjectsPage() {
       link: "https://verve-ledger.vercel.app/",
       icon: LayoutDashboard,
       features: ["Neural Analytics", "Unified POS", "Stock Management"],
+      ctaText: "Visit Live Project",
       isProduct: false
     },
     {
@@ -46,6 +49,7 @@ export default function ProjectsPage() {
       link: "https://www.vervenovatechcrm.online/login",
       icon: Users,
       features: ["Sales Automation", "Lead Tracking", "Team Insights"],
+      ctaText: "Visit Live Project",
       isProduct: false
     },
     {
@@ -56,6 +60,7 @@ export default function ProjectsPage() {
       link: "https://www.advancetranscription.com/",
       icon: Headphones,
       features: ["Fast Conversion", "Simple Interface", "Secure Storage"],
+      ctaText: "Visit Live Project",
       isProduct: false
     },
     {
@@ -66,6 +71,7 @@ export default function ProjectsPage() {
       link: "https://siorainfradesign.com/",
       icon: Building2,
       features: ["Project Tracking", "Modern Design", "Client Dashboard"],
+      ctaText: "Visit Live Project",
       isProduct: false
     },
     {
@@ -76,6 +82,7 @@ export default function ProjectsPage() {
       link: "https://chak-shuraa.vercel.app/",
       icon: Globe,
       features: ["Patent Intelligence", "Market Analytics", "TRL Prediction"],
+      ctaText: "Visit Live Project",
       isProduct: false
     }
   ];
@@ -164,11 +171,11 @@ export default function ProjectsPage() {
 
                 <a 
                   href={project.link}
-                  target="_blank"
+                  target={project.link.startsWith("/") ? "_self" : "_blank"}
                   rel="noopener noreferrer"
                   className="inline-flex h-14 px-8 items-center bg-gradient-to-r from-indigo-600 to-violet-600 text-white text-[10px] font-black uppercase tracking-[0.3em] hover:shadow-[0_0_30px_rgba(99,102,241,0.5)] hover:scale-[1.02] transition-all rounded-2xl w-full justify-center"
                 >
-                  Visit Live Project <ArrowUpRight className="ml-2 w-4 h-4" />
+                  {project.ctaText} <ArrowUpRight className="ml-2 w-4 h-4" />
                 </a>
               </div>
             </motion.div>

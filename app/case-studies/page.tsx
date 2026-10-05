@@ -34,7 +34,8 @@ export default function CaseStudiesPage() {
       ],
       result: "Delivered a full-stack, enterprise service dispatch platform featuring seamless wallet settlement, 100% background notification reliability, and real-time order tracking.",
       icons: [Wrench, Smartphone],
-      link: "#"
+      link: "https://play.google.com/store/apps/details?id=com.sahil.servicehub&pcampaignid=web_share",
+      ctaText: "View On Play Store"
     },
     {
       title: "Siora Infra Design",
@@ -162,11 +163,11 @@ export default function CaseStudiesPage() {
 
                 <a 
                   href={study.link}
-                  target="_blank"
+                  target={study.link.startsWith("/") ? "_self" : "_blank"}
                   rel="noopener noreferrer"
                   className="inline-flex h-12 px-8 items-center bg-white/5 text-white text-[10px] font-black uppercase tracking-[0.3em] hover:bg-indigo-600 hover:text-white transition-all rounded-full w-max border border-white/10 hover:border-transparent"
                 >
-                  View Live Project <ArrowUpRight className="ml-2 w-4 h-4" />
+                  {study.ctaText || "View Live Project"} <ArrowUpRight className="ml-2 w-4 h-4" />
                 </a>
               </div>
             </div>
