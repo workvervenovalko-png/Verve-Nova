@@ -115,13 +115,29 @@ export default function CaseStudiesPage() {
           >
             {/* Image Column */}
             <div className={`w-full lg:w-1/2 ${i % 2 !== 0 ? 'lg:order-2' : ''}`}>
-              <div className="relative aspect-video lg:aspect-[4/3] rounded-[2rem] overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] group">
-                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-violet-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10" />
-                <img 
-                  src={study.image} 
-                  alt={study.title} 
-                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-                />
+              <div className={`relative aspect-video lg:aspect-[4/3] rounded-[2rem] overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] group flex items-center justify-center p-8 ${
+                study.image.includes('chotu') 
+                  ? 'bg-gradient-to-br from-[#042111] via-[#0A4D27] to-[#02140A]' 
+                  : study.image.includes('servicehub')
+                  ? 'bg-gradient-to-br from-[#08152D] via-[#102958] to-[#050C1A]'
+                  : 'bg-black/60'
+              }`}>
+                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-violet-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10 pointer-events-none" />
+                {study.image.endsWith('.png') && (study.image.includes('chotu') || study.image.includes('servicehub')) ? (
+                  <div className={`relative z-20 flex items-center justify-center ${study.image.includes('servicehub') ? 'bg-white p-4 rounded-3xl shadow-2xl' : 'bg-black/40 backdrop-blur-xl p-5 rounded-3xl border border-white/10 shadow-2xl'}`}>
+                    <img 
+                      src={study.image} 
+                      alt={study.title} 
+                      className="max-h-24 md:max-h-32 object-contain drop-shadow-2xl transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
+                ) : (
+                  <img 
+                    src={study.image} 
+                    alt={study.title} 
+                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                  />
+                )}
               </div>
             </div>
 
