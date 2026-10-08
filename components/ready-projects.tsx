@@ -9,7 +9,7 @@ export function ReadyProjects() {
     {
       title: "ChotU (छोटू)",
       desc: "Zero-commission hyperlocal kirana marketplace and instant delivery mobile app empowering neighborhood grocery stores with 1-5km delivery logistics.",
-      image: "/projects/chotu.jpg",
+      image: "/projects/chotu.png",
       link: "/case-studies",
       icon: ShoppingBag,
       features: ["Zero Commission", "Barcode Catalog", "Geofenced Payouts"],
@@ -18,7 +18,7 @@ export function ReadyProjects() {
     {
       title: "ServiceHub",
       desc: "Enterprise handyman & home service Android app featuring real-time technician tracking, automated stock deduction, and Supabase backend.",
-      image: "/projects/servicehub.jpg",
+      image: "/projects/servicehub.png",
       link: "https://play.google.com/store/apps/details?id=com.sahil.servicehub&pcampaignid=web_share",
       icon: Wrench,
       features: ["Live Tracking", "Stock Alerts", "Supabase Backend"],

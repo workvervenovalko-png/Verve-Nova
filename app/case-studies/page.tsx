@@ -11,7 +11,7 @@ export default function CaseStudiesPage() {
     {
       title: "ChotU (छोटू) Quick Commerce",
       subtitle: "Revolutionizing Local Kirana Commerce with Zero-Commission Architecture",
-      image: "/projects/chotu.jpg",
+      image: "/projects/chotu.png",
       challenge: "Traditional dark-store quick-commerce giants impose heavy commissions (15-25%) and platform fees on local shopkeepers while charging inflated prices to customers. Local kirana store owners lacked a low-cost, direct digital marketplace to capture neighborhood delivery demands within 1-5km radius.",
       solution: [
         "Architected a zero-commission hyperlocal marketplace platform connecting customers directly with neighborhood grocery stores.",
@@ -25,7 +25,7 @@ export default function CaseStudiesPage() {
     {
       title: "ServiceHub Platform",
       subtitle: "Architecting an On-Demand Home Service & Repair Ecosystem",
-      image: "/projects/servicehub.jpg",
+      image: "/projects/servicehub.png",
       challenge: "Coordinating multi-role home service dispatching (Customer, Technician, Admin, Shop Owner) required real-time job allocation, reliable background wake-up push notifications, dynamic inventory stock deduction, and real-time wallet payout settlements.",
       solution: [
         "Built a cross-platform mobile suite powered by Supabase Realtime for sub-second booking stream propagation and live technician tracking.",
