@@ -7,37 +7,37 @@
    ═══════════════════════════════════════════════════════════ */
 
 :root {
-  /* Deep Obsidian Base */
-  --background: #09090B;
-  --foreground: #FAFAFA;
-  --card: #111113;
-  --card-foreground: #FAFAFA;
-  --popover: #111113;
-  --popover-foreground: #FAFAFA;
+  /* Crisp Light Theme Canvas */
+  --background: #FFFFFF;
+  --foreground: #0F172A;
+  --card: #FFFFFF;
+  --card-foreground: #0F172A;
+  --popover: #FFFFFF;
+  --popover-foreground: #0F172A;
 
-  /* Aurora Accent System */
-  --primary: #818CF8;
-  --primary-foreground: #09090B;
-  --secondary: #1A1A2E;
-  --secondary-foreground: #FAFAFA;
-  --muted: #18181B;
-  --muted-foreground: #71717A;
-  --accent: #6366F1;
-  --accent-foreground: #FAFAFA;
+  /* AppSquadz Royal Blue & Dynamic Accents */
+  --primary: #1B67B2;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F8FAFC;
+  --secondary-foreground: #0F172A;
+  --muted: #F1F5F9;
+  --muted-foreground: #64748B;
+  --accent: #2563EB;
+  --accent-foreground: #FFFFFF;
   --destructive: #EF4444;
-  --destructive-foreground: #FAFAFA;
+  --destructive-foreground: #FFFFFF;
 
-  /* Structural */
-  --border: #27272A;
-  --input: #1A1A2E;
-  --ring: #818CF8;
+  /* Structural Borders & Inputs */
+  --border: #E2E8F0;
+  --input: #F8FAFC;
+  --ring: #1B67B2;
   --radius: 0.75rem;
 
-  /* Premium Glow Colors */
-  --glow-primary: rgba(99, 102, 241, 0.15);
-  --glow-cyan: rgba(6, 182, 212, 0.12);
-  --glow-violet: rgba(139, 92, 246, 0.12);
-  --glow-rose: rgba(244, 63, 94, 0.08);
+  /* Luminous Light Glow Accents */
+  --glow-primary: rgba(27, 103, 178, 0.12);
+  --glow-cyan: rgba(6, 182, 212, 0.10);
+  --glow-violet: rgba(99, 102, 241, 0.10);
+  --glow-orange: rgba(249, 102, 27, 0.10);
 }
 
 @theme inline {
