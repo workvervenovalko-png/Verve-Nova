@@ -103,7 +103,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${poppins.variable} dark`}>
+    <html lang="en" className={`${inter.variable} ${poppins.variable} light`}>
       <head>
         <script
           type="application/ld+json"
@@ -178,7 +178,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="font-sans antialiased bg-background text-foreground">
+      <body className="font-sans antialiased bg-white text-slate-900 selection:bg-[#1b67b2] selection:text-white">
         <Providers>
           {children}
           <SocialSidebar />

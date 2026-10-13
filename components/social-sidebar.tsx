@@ -5,10 +5,8 @@ import {
   Linkedin, 
   Instagram, 
   Facebook, 
-  MessageCircle,
-  Twitter,
-  Phone,
-  Hash
+  MessageCircle, 
+  Phone, 
 } from "lucide-react";
 import Link from "next/link";
 
@@ -17,19 +15,19 @@ const socialLinks = [
     icon: <Linkedin className="w-4 h-4" />,
     label: "LinkedIn",
     href: "https://www.linkedin.com/company/verve-nova/",
-    color: "hover:bg-blue-600 hover:border-blue-600/30 hover:shadow-[0_0_16px_rgba(59,130,246,0.2)]"
+    hoverBg: "hover:bg-blue-600 hover:text-white hover:border-blue-600",
   },
   {
     icon: <Phone className="w-4 h-4" />,
-    label: "Call Us",
+    label: "Direct Call",
     href: "tel:7380663685",
-    color: "hover:bg-blue-600 hover:border-blue-600/30 hover:shadow-[0_0_16px_rgba(59,130,246,0.2)]"
+    hoverBg: "hover:bg-neutral-900 hover:text-white hover:border-neutral-900",
   },
   {
     icon: <MessageCircle className="w-4 h-4" />,
     label: "WhatsApp",
     href: "https://wa.me/917380663685",
-    color: "hover:bg-emerald-500 hover:border-emerald-500/30 hover:shadow-[0_0_16px_rgba(16,185,129,0.2)]"
+    hoverBg: "hover:bg-emerald-600 hover:text-white hover:border-emerald-600",
   },
   {
     icon: (
@@ -37,26 +35,26 @@ const socialLinks = [
         <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932 6.064-6.932zm-1.292 19.49h2.039L6.486 3.24H4.298l13.311 17.403z" />
       </svg>
     ),
-    label: "X",
+    label: "X (Twitter)",
     href: "https://x.com/vervenova",
-    color: "hover:bg-white/10 hover:border-white/20"
+    hoverBg: "hover:bg-neutral-900 hover:text-white hover:border-neutral-900",
   },
   {
     icon: <Instagram className="w-4 h-4" />,
     label: "Instagram",
-    color: "hover:bg-pink-600 hover:border-pink-600/30 hover:shadow-[0_0_16px_rgba(219,39,119,0.2)]",
+    hoverBg: "hover:bg-pink-600 hover:text-white hover:border-pink-600",
     handles: [
       { label: "Global", href: "https://www.instagram.com/vntech_global" },
       { label: "India", href: "https://www.instagram.com/vntech_india" },
-      { label: "Lucknow", href: "https://www.instagram.com/vntech_lucknow" }
-    ]
+      { label: "Lucknow", href: "https://www.instagram.com/vntech_lucknow" },
+    ],
   },
   {
     icon: <Facebook className="w-4 h-4" />,
     label: "Facebook",
     href: "https://www.facebook.com/share/1CboBbz1bF/",
-    color: "hover:bg-blue-800 hover:border-blue-800/30 hover:shadow-[0_0_16px_rgba(30,64,175,0.2)]"
-  }
+    hoverBg: "hover:bg-blue-700 hover:text-white hover:border-blue-700",
+  },
 ];
 
 export function SocialSidebar() {
@@ -78,14 +76,15 @@ export function SocialSidebar() {
                     key={h.label}
                     href={h.href}
                     target="_blank"
-                    className="px-4 py-2 bg-white/[0.05] backdrop-blur-xl border border-white/[0.08] text-white text-[9px] font-black uppercase tracking-[0.2em] rounded-xl hover:bg-pink-600 hover:border-pink-600/30 transition-all whitespace-nowrap"
+                    className="px-4 py-2 bg-white border border-black/[0.08] text-neutral-800 text-[10px] font-mono uppercase tracking-wider rounded-xl hover:bg-pink-600 hover:text-white hover:border-pink-600 transition-all whitespace-nowrap shadow-lg"
                   >
                     {h.label}
                   </Link>
                 ))}
               </div>
               <button
-                className={`w-12 h-12 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center text-white/25 group-hover:text-white ${link.color} transition-all duration-300`}
+                className={`w-11 h-11 rounded-2xl bg-white/90 backdrop-blur-xl border border-black/[0.08] flex items-center justify-center text-neutral-500 shadow-sm ${link.hoverBg} transition-all duration-300`}
+                aria-label={link.label}
               >
                 {link.icon}
               </button>
@@ -95,19 +94,20 @@ export function SocialSidebar() {
               <Link
                 href={link.href || "#"}
                 target="_blank"
-                className={`w-12 h-12 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center text-white/25 group-hover:text-white ${link.color} transition-all duration-300`}
+                className={`w-11 h-11 rounded-2xl bg-white/90 backdrop-blur-xl border border-black/[0.08] flex items-center justify-center text-neutral-500 shadow-sm ${link.hoverBg} transition-all duration-300`}
+                aria-label={link.label}
               >
                 {link.icon}
               </Link>
-              
-              <div className="absolute right-16 top-1/2 -translate-y-1/2 px-4 py-2 bg-white/[0.05] backdrop-blur-xl border border-white/[0.08] text-white text-[9px] font-black uppercase tracking-[0.2em] rounded-xl opacity-0 translate-x-4 pointer-events-none group-hover:opacity-100 group-hover:translate-x-0 transition-all">
+
+              <div className="absolute right-16 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-white border border-black/[0.08] text-neutral-800 text-[10px] font-mono uppercase tracking-wider rounded-xl opacity-0 translate-x-3 pointer-events-none group-hover:opacity-100 group-hover:translate-x-0 transition-all shadow-lg whitespace-nowrap">
                 {link.label}
               </div>
             </>
           )}
         </motion.div>
       ))}
-      <div className="w-[1px] h-20 bg-gradient-to-b from-white/[0.06] to-transparent mx-auto mt-4" />
+      <div className="w-[1px] h-16 bg-neutral-300 mx-auto mt-2" />
     </div>
   );
 }
