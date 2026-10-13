@@ -104,7 +104,7 @@ export function Services() {
     <section id="services" className="py-32 px-4 bg-[#0C0C0F] relative overflow-hidden section-glow">
       {/* Mesh gradient */}
       <div className="absolute inset-0 mesh-gradient-2 pointer-events-none" />
-      
+
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="flex flex-col items-center text-center mb-16 md:mb-24 px-4">
           <motion.h2

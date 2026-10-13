@@ -54,7 +54,7 @@ export function ProductEcosystem() {
             <Globe className="w-4 h-4" /> The Verve Nova Ecosystem
           </div>
           <h2 className="text-3xl sm:text-5xl md:text-7xl font-black text-white font-display tracking-tighter leading-[1] uppercase">
-            Our SaaS <br /> 
+            Our SaaS <br />
             <span className="text-gradient-aurora">Products</span>
           </h2>
           <p className="text-white/40 text-lg md:text-xl max-w-2xl mx-auto font-medium">
@@ -64,7 +64,7 @@ export function ProductEcosystem() {
 
         <div className="grid md:grid-cols-3 gap-8 md:gap-10">
           {products.map((product, i) => (
-            <motion.div 
+            <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -74,22 +74,22 @@ export function ProductEcosystem() {
             >
               {/* Product Logo & Name Area (Horizontal) */}
               <Link href={`/products/${product.slug}`} className="relative z-10 flex items-center gap-5 mb-8 hover:opacity-80 transition-opacity">
-                 <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${product.color} p-0.5 shadow-2xl group-hover:scale-110 transition-all duration-500 shrink-0`}>
-                    <div className="w-full h-full bg-[#09090B] rounded-[0.9rem] flex items-center justify-center">
-                       <product.icon className="w-7 h-7 text-white" />
-                    </div>
-                 </div>
-                 <div>
-                    <h3 className="text-2xl font-black text-white font-display leading-tight">{product.name}</h3>
-                    <p className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em]">{product.type}</p>
-                 </div>
+                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${product.color} p-0.5 shadow-2xl group-hover:scale-110 transition-all duration-500 shrink-0`}>
+                  <div className="w-full h-full bg-[#09090B] rounded-[0.9rem] flex items-center justify-center">
+                    <product.icon className="w-7 h-7 text-white" />
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-2xl font-black text-white font-display leading-tight">{product.name}</h3>
+                  <p className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em]">{product.type}</p>
+                </div>
               </Link>
 
               {/* Content Section */}
               <div className="flex flex-col flex-grow relative z-10">
                 {/* Hover Gradient Overlay */}
                 <div className={`absolute -inset-10 bg-gradient-to-br ${product.color} opacity-0 group-hover:opacity-5 blur-3xl transition-all duration-700 pointer-events-none`} />
-                
+
                 <div className="space-y-6 flex-grow relative z-10">
                   <div className="flex justify-between items-start">
                     <span className={cn(
@@ -106,22 +106,22 @@ export function ProductEcosystem() {
                 </div>
 
                 <div className="relative z-10 pt-10 mt-auto grid grid-cols-2 gap-3">
-                  <Link 
+                  <Link
                     href={`/products/${product.slug}`}
                     className="h-14 rounded-2xl bg-white/5 border border-white/10 text-white font-black text-[10px] uppercase tracking-widest flex items-center justify-center hover:bg-white/10 transition-all"
                   >
                     View Details
                   </Link>
                   {product.status === "Live Now" ? (
-                    <Link 
-                      href={product.link} 
+                    <Link
+                      href={product.link}
                       target="_blank"
                       className="h-14 rounded-2xl bg-white text-black hover:bg-indigo-600 hover:text-white font-black text-[10px] uppercase tracking-widest flex items-center justify-center transition-all group/btn shadow-xl"
                     >
                       Live <ArrowUpRight className="ml-1 w-3 h-3 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
                     </Link>
                   ) : (
-                    <button 
+                    <button
                       disabled
                       className="h-14 rounded-2xl bg-white/5 border border-white/10 text-white/20 font-black text-[10px] uppercase tracking-widest flex items-center justify-center cursor-not-allowed"
                     >

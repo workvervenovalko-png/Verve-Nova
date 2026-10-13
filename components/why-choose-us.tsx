@@ -6,7 +6,7 @@ const reasons = [
   {
     icon: Scale,
     title: "Enterprise Reliability",
-    description: "Battle-tested systems designed for 99.99% availability and mission-critical performance.",
+    description: "Battle-tested systems designed for 99.99% availability and high-performance scalability.",
   },
   {
     icon: Globe,

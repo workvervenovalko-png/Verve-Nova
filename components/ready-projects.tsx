@@ -91,8 +91,8 @@ export function ReadyProjects() {
               Explore production-ready mobile applications and web platforms engineered for industry leaders.
             </p>
           </div>
-          <Link 
-            href="/projects" 
+          <Link
+            href="/projects"
             className="group flex items-center gap-3 text-[11px] font-bold text-indigo-400 uppercase tracking-widest hover:text-white transition-all bg-white/5 hover:bg-indigo-600 px-7 py-3.5 rounded-2xl border border-white/10 hover:border-transparent shadow-lg"
           >
             Explore Full Portfolio <ChevronRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
@@ -112,7 +112,7 @@ export function ReadyProjects() {
               {/* Premium Hero Canvas */}
               <div className={`aspect-[16/9] relative overflow-hidden bg-gradient-to-br ${project.bgGradient} flex items-center justify-center p-8 border-b border-white/10`}>
                 {/* Glow aura */}
-                <div 
+                <div
                   className="absolute inset-0 opacity-40 group-hover:opacity-70 transition-opacity duration-700 blur-2xl"
                   style={{ background: `radial-gradient(circle at center, ${project.glowColor} 0%, transparent 70%)` }}
                 />
@@ -134,8 +134,8 @@ export function ReadyProjects() {
                 {project.logo ? (
                   <div className="relative z-10 flex flex-col items-center text-center space-y-3 group-hover:scale-105 transition-transform duration-700">
                     <div className={`relative flex items-center justify-center ${project.logoBg || "bg-black/40 backdrop-blur-xl p-4 rounded-3xl border border-white/10 shadow-2xl"}`}>
-                      <img 
-                        src={project.logo} 
+                      <img
+                        src={project.logo}
                         alt={project.title}
                         className="h-16 md:h-20 max-w-[200px] object-contain drop-shadow-2xl"
                       />
@@ -146,8 +146,8 @@ export function ReadyProjects() {
                   </div>
                 ) : (
                   <div className="w-full h-full relative overflow-hidden rounded-xl border border-white/10 shadow-2xl">
-                    <img 
-                      src={project.image} 
+                    <img
+                      src={project.image}
                       alt={project.title}
                       className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                     />
@@ -172,7 +172,7 @@ export function ReadyProjects() {
                 <p className="text-sm text-white/50 font-medium leading-relaxed mb-8 mt-2 line-clamp-3">
                   {project.desc}
                 </p>
-                
+
                 {/* Feature Chips */}
                 <div className="flex flex-wrap gap-2.5 mb-8 mt-auto">
                   {project.features.map(feat => (
@@ -184,7 +184,7 @@ export function ReadyProjects() {
                 </div>
 
                 {/* Primary Action Button */}
-                <a 
+                <a
                   href={project.link}
                   target={project.link.startsWith("/") ? "_self" : "_blank"}
                   rel="noopener noreferrer"

@@ -48,7 +48,6 @@ export default function ContactPage() {
           {[
             { label: "Email Us", val: "work.vervenova.lko@gmail.com", icon: Mail, color: "text-indigo-400" },
             { label: "Call Us", val: "+91 7380663685", icon: Phone, color: "text-violet-400" },
-            { label: "Headquarters", val: "Lucknow, India", icon: MapPin, color: "text-cyan-400" },
             { label: "Web", val: "www.vervenovatech.com", icon: Globe, color: "text-emerald-400" }
           ].map((item, i) => (
             <motion.div

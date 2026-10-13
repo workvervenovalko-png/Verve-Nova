@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'Verve Nova Tech',
     short_name: 'Verve Nova',
-    description: 'Top Website & Software Company in Lucknow',
+    description: 'Enterprise Software Engineering & Cloud Systems',
     start_url: '/',
     display: 'standalone',
     background_color: '#000000',

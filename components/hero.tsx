@@ -89,7 +89,7 @@ export function Hero() {
           >
 
             <h1 className="sr-only">
-              Verve Nova Tech (VNT) - Top Website Company and Software Company in Lucknow. VNT Global offers enterprise technology, AI solutions, and software development.
+              Verve Nova Technologies - Engineering Scalable Digital Solutions for Modern Businesses Worldwide.
             </h1>
             <div role="heading" aria-level={2} className="text-[14vw] sm:text-[12vw] lg:text-[11vw] font-black text-white leading-[0.8] tracking-tighter uppercase select-none flex mb-6 md:mb-8">
               {"VERVE".split("").map((c, i) => (
@@ -141,7 +141,7 @@ export function Hero() {
                   <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform ml-2" />
                 </Button>
               </Link>
- 
+
               <Link href="/contact" className="group flex items-center gap-4 text-[9px] font-black tracking-[0.4em] uppercase text-white transition-all py-2">
                 <Fingerprint className="w-4 h-4 md:w-5 md:h-5 text-indigo-300 drop-shadow-[0_0_8px_rgba(129,140,248,0.5)] transition-colors" />
                 Contact Us

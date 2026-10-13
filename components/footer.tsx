@@ -72,7 +72,7 @@ export function Footer() {
               </Link>
               <div className="h-px w-full max-w-[120px] bg-gradient-to-r from-indigo-500/30 to-transparent my-1 hidden md:block" />
               <p className="text-[9px] md:text-[10px] text-white/30 font-bold leading-relaxed max-w-xs uppercase tracking-widest">
-                Global engineering / Specialized software systems / Mission-Critical Excellence.
+                Global engineering / Specialized software systems / Enterprise Scalability.
               </p>
             </div>
 

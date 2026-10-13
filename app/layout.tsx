@@ -24,23 +24,20 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL('https://vervenovatech.com'), // Replace with your actual domain
   title: {
-    default: 'VNT - Verve Nova Tech | Top Website & Software Company in Lucknow',
-    template: '%s | VNT - Verve Nova Tech'
+    default: 'Verve Nova Technologies | Next-Gen Cloud Systems & Software Engineering',
+    template: '%s | Verve Nova Technologies'
   },
-  description: 'VNT (Verve Nova Tech) is a premium website and software development company in Lucknow. Specializing in custom software, AI solutions, and digital transformation, VNT delivers elite tech globally.',
+  description: 'Verve Nova Technologies engineers enterprise digital solutions, custom software, AI platforms, and scalable cloud systems for high-growth businesses globally.',
   keywords: [
     'VNT',
     'VNT Global',
-    'Verve Nova Tech',
-    'VNT Lucknow',
-    'Website company',
-    'Website company in Lucknow',
-    'Software company',
-    'Software company in Lucknow',
-    'Best website company in Lucknow',
-    'Top IT company',
-    'Web development agency',
-    'IT Solutions'
+    'Verve Nova Technologies',
+    'Enterprise Software Engineering',
+    'Cloud Systems',
+    'AI Software Development',
+    'Custom Application Development',
+    'Global IT Solutions',
+    'Full-Stack Web Engineering'
   ],
   authors: [{ name: 'VNT - Verve Nova Tech' }],
   creator: 'VNT - Verve Nova Tech',
@@ -59,16 +56,16 @@ export const metadata: Metadata = {
   },
   manifest: '/manifest.json',
   openGraph: {
-    title: 'VNT - Verve Nova Tech | Top Website & Software Company',
-    description: 'VNT (Verve Nova Tech) is a leading software and website company in Lucknow, delivering cutting-edge digital solutions globally.',
+    title: 'Verve Nova Technologies | Enterprise Software & Cloud Systems',
+    description: 'Verve Nova Technologies engineers custom enterprise software, AI platforms, and cloud systems for modern businesses worldwide.',
     url: 'https://vervenovatech.com',
-    siteName: 'VNT - Verve Nova Tech',
+    siteName: 'Verve Nova Technologies',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'VNT - Verve Nova Tech - Enterprise IT Solutions',
+        alt: 'Verve Nova Technologies - Enterprise IT Solutions',
       },
     ],
     locale: 'en_US',
@@ -76,8 +73,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'VNT - Verve Nova Tech | Top Website & Software Company',
-    description: 'VNT (Verve Nova Tech) is a leading software and website company in Lucknow.',
+    title: 'Verve Nova Technologies | Enterprise Software & Cloud Systems',
+    description: 'Verve Nova Technologies engineers custom enterprise software, AI platforms, and cloud systems for modern businesses worldwide.',
     creator: '@vervenovatech',
   },
   robots: {
@@ -155,19 +152,13 @@ export default function RootLayout({
               },
               {
                 "@context": "https://schema.org",
-                "@type": "LocalBusiness",
-                "name": "VNT - Verve Nova Tech",
-                "alternateName": ["VNT", "VNT Global", "VNT Lucknow", "Verve Nova Technologies"],
+                "@type": "Organization",
+                "name": "Verve Nova Technologies",
+                "alternateName": ["VNT", "VNT Global", "Verve Nova Tech"],
                 "url": "https://vervenovatech.com",
-                "description": "VNT (Verve Nova Tech) is a leading website company and software company in Lucknow. We specialize in software development, web apps, AI, and enterprise tech globally.",
-                "address": {
-                  "@type": "PostalAddress",
-                  "addressLocality": "Lucknow",
-                  "addressRegion": "Uttar Pradesh",
-                  "addressCountry": "IN"
-                },
-                "areaServed": ["Lucknow", "India", "Global"],
-                "knowsAbout": ["Website Development", "Software Development", "IT Solutions", "AI Solutions", "Digital Transformation"]
+                "description": "Verve Nova Technologies specializes in enterprise software engineering, cloud systems, AI platforms, and digital transformation for businesses worldwide.",
+                "areaServed": ["Global", "India"],
+                "knowsAbout": ["Enterprise Software Development", "Cloud Systems", "AI Solutions", "Full-Stack Web Engineering", "Mobile Applications"]
               }
             ])
           }}
