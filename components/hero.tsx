@@ -4,26 +4,21 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  ChevronLeft,
-  ChevronRight,
-  Server,
-  Cloud,
-  Zap,
-  ShieldCheck,
-  Code2,
   Rocket,
-  FileCheck,
-  Smartphone,
-  Star,
-  Sparkles,
+  LayoutDashboard,
+  Users,
   Cpu,
-  Lock,
-  Award,
+  Cloud,
+  ShieldCheck,
+  Star,
+  CheckCircle2,
+  Receipt,
+  Store,
   Layers,
-  Activity,
-  ArrowDownToLine,
-  ThumbsUp,
-  Brain
+  Award,
+  Zap,
+  Lock,
+  Globe
 } from "lucide-react";
 
 interface BannerSlide {
@@ -34,7 +29,8 @@ interface BannerSlide {
   subtitle: string;
   ctaText: string;
   ctaLink: string;
-  accentColor: string; // "orange" | "blue"
+  isExternalLink?: boolean;
+  accentColor: "blue" | "orange";
   bgGradient: string;
   glowColor: string;
   stats: {
@@ -46,44 +42,133 @@ interface BannerSlide {
 
 const slides: BannerSlide[] = [
   {
-    id: "educrypt-style-web",
-    category: "Web & SaaS",
-    brandTag: "VerveWeb:",
-    headline: "Custom Enterprise Web Platforms & Scalable SaaS",
-    subtitle: "Empowering fast-growing enterprises with ultra-fast, secure, and customizable digital platforms built with Next.js 15 & React.",
-    ctaText: "Explore More",
-    ctaLink: "/services",
+    id: "verve-digital-engineering",
+    category: "Software & Digital Engineering",
+    brandTag: "Verve Nova:",
+    headline: "Engineering Scalable Digital Solutions That Power Modern Businesses Worldwide",
+    subtitle: "Enterprise digital engineering, custom software systems, AI automation, and mobile applications engineered to scale smoothly and drive measurable growth.",
+    ctaText: "Start Your Project",
+    ctaLink: "/contact",
+    accentColor: "blue",
+    bgGradient: "from-blue-50/40 via-sky-50/20 to-blue-100/30",
+    glowColor: "rgba(27, 103, 178, 0.15)",
+    stats: [
+      {
+        icon: Rocket,
+        number: "50+",
+        label: "Successful Projects Delivered"
+      },
+      {
+        icon: Star,
+        number: "100%",
+        label: "Upwork Job Success Score"
+      },
+      {
+        icon: Award,
+        number: "4.9★",
+        label: "Google Verified Client Rating"
+      }
+    ]
+  },
+  {
+    id: "vnt-billzer",
+    category: "Billing & Inventory SaaS",
+    brandTag: "VNT Billzer:",
+    headline: "Institutional-Grade SaaS Billing & High-Performance POS Platform",
+    subtitle: "High-performance POS with neural analytics, real-time GST invoicing, and multi-store inventory synchronization built for modern retail leaders.",
+    ctaText: "Explore VNT Billzer",
+    ctaLink: "https://verve-ledger.vercel.app/",
+    isExternalLink: true,
     accentColor: "orange",
     bgGradient: "from-orange-50/40 via-amber-50/20 to-orange-100/30",
     glowColor: "rgba(249, 102, 27, 0.15)",
     stats: [
       {
-        icon: Rocket,
-        number: "50+",
-        label: "Enterprise Platforms Shipped Worldwide"
+        icon: Receipt,
+        number: "Instant",
+        label: "Automated GST Invoicing"
+      },
+      {
+        icon: Store,
+        number: "Multi-Store",
+        label: "Real-Time Inventory Sync"
       },
       {
         icon: Zap,
-        number: "<1.0s",
-        label: "Sub-Second Core Web Vitals Speed"
-      },
-      {
-        icon: FileCheck,
-        number: "100%",
-        label: "Full Source Code & IP Transfer"
+        number: "Live SaaS",
+        label: "Cloud POS Production Suite"
       }
     ]
   },
   {
-    id: "cloud-devops",
-    category: "Cloud Systems",
-    brandTag: "VerveCloud:",
-    headline: "High-Performance AWS & Multi-Cloud Architecture",
-    subtitle: "Architecting high-availability infrastructure, automated CI/CD pipelines, and Kubernetes microservices engineered for 99.99% uptime.",
-    ctaText: "Get Cloud Consultation",
-    ctaLink: "/contact",
+    id: "verve-crm",
+    category: "Client Relationship Management",
+    brandTag: "Verve CRM:",
+    headline: "Intelligent Client Relationship Management System",
+    subtitle: "Built to transform leads into lifelong customers. Automates the boring parts of sales so your team can focus on closing high-value deals.",
+    ctaText: "Access Verve CRM",
+    ctaLink: "https://www.vervenovatechcrm.online/login",
+    isExternalLink: true,
     accentColor: "blue",
-    bgGradient: "from-blue-50/40 via-sky-50/20 to-blue-100/30",
+    bgGradient: "from-blue-50/40 via-slate-50/20 to-indigo-100/30",
+    glowColor: "rgba(27, 103, 178, 0.15)",
+    stats: [
+      {
+        icon: Users,
+        number: "Automated",
+        label: "Lead Pipeline & Smart Follow-ups"
+      },
+      {
+        icon: LayoutDashboard,
+        number: "Real-Time",
+        label: "Sales Telemetry & Analytics"
+      },
+      {
+        icon: CheckCircle2,
+        number: "Live System",
+        label: "Active Production CRM Suite"
+      }
+    ]
+  },
+  {
+    id: "verve-erp",
+    category: "Enterprise Resource Planning",
+    brandTag: "Verve ERP:",
+    headline: "Comprehensive Enterprise Resource Planning Orchestration",
+    subtitle: "Integrates every department—from logistics and HR to finance and production—into a single high-performance source of truth.",
+    ctaText: "Request ERP Demo",
+    ctaLink: "/contact?service=erp",
+    accentColor: "orange",
+    bgGradient: "from-amber-50/40 via-orange-50/20 to-amber-100/30",
+    glowColor: "rgba(249, 102, 27, 0.15)",
+    stats: [
+      {
+        icon: Layers,
+        number: "All-in-One",
+        label: "Logistics, HR & Finance Engine"
+      },
+      {
+        icon: Cpu,
+        number: "Zero-Lag",
+        label: "Cross-Department Operations Sync"
+      },
+      {
+        icon: Globe,
+        number: "Enterprise",
+        label: "Early Access Deployment"
+      }
+    ]
+  },
+  {
+    id: "cloud-ai-security",
+    category: "Cloud, AI & Cybersecurity",
+    brandTag: "Enterprise Services:",
+    headline: "Next-Gen Cloud Architecture, AI Automation & VAPT Audits",
+    subtitle: "AWS/GCP deployments, intelligent workflow chatbots, and bank-grade security audits backed by a Govt. of India registered enterprise.",
+    ctaText: "Explore All Services",
+    ctaLink: "/services",
+    accentColor: "blue",
+    bgGradient: "from-sky-50/40 via-blue-50/20 to-indigo-100/30",
     glowColor: "rgba(27, 103, 178, 0.15)",
     stats: [
       {
@@ -92,101 +177,14 @@ const slides: BannerSlide[] = [
         label: "Cloud SLA Uptime Guarantee"
       },
       {
-        icon: Activity,
-        number: "120ms",
-        label: "Average Global Edge Latency"
-      },
-      {
-        icon: ShieldCheck,
-        number: "Multi-AZ",
-        label: "High-Availability Redundancy"
-      }
-    ]
-  },
-  {
-    id: "mobile-apps",
-    category: "Mobile Apps",
-    brandTag: "VerveMobile:",
-    headline: "Fluid & Intuitive iOS and Android Applications",
-    subtitle: "Delivering 60 FPS cross-platform mobile apps built with Flutter and React Native for frictionless user growth and 5-star ratings.",
-    ctaText: "Explore Mobile Apps",
-    ctaLink: "/services",
-    accentColor: "orange",
-    bgGradient: "from-amber-50/40 via-orange-50/20 to-amber-100/30",
-    glowColor: "rgba(249, 102, 27, 0.15)",
-    stats: [
-      {
-        icon: ArrowDownToLine,
-        number: "2M+",
-        label: "Active Mobile App User Downloads"
-      },
-      {
-        icon: Star,
-        number: "4.9★",
-        label: "Average App Store & Play Store Rating"
-      },
-      {
-        icon: ThumbsUp,
-        number: "98%",
-        label: "Client & User Retention Rate"
-      }
-    ]
-  },
-  {
-    id: "gen-ai",
-    category: "Generative AI",
-    brandTag: "VerveAI:",
-    headline: "Autonomous Enterprise AI & Custom LLM Systems",
-    subtitle: "Deploying domain-specific LLMs, intelligent RAG knowledge retrieval, and autonomous agents that multiply operational efficiency.",
-    ctaText: "Discover AI Labz",
-    ctaLink: "/services",
-    accentColor: "blue",
-    bgGradient: "from-indigo-50/40 via-blue-50/20 to-indigo-100/30",
-    glowColor: "rgba(27, 103, 178, 0.15)",
-    stats: [
-      {
-        icon: Brain,
-        number: "10x",
-        label: "Workflow & Operations Acceleration"
-      },
-      {
-        icon: Sparkles,
-        number: "Custom",
-        label: "Fine-Tuned Domain LLMs"
-      },
-      {
-        icon: Lock,
-        number: "100%",
-        label: "Private Hosting & Zero Data Leakage"
-      }
-    ]
-  },
-  {
-    id: "cybersecurity",
-    category: "Cybersecurity & VAPT",
-    brandTag: "VerveSec:",
-    headline: "Bank-Grade Digital Security & Rigorous VAPT Audits",
-    subtitle: "Protecting enterprise assets from modern vulnerabilities. Comprehensive penetration testing, OWASP compliance, and zero-trust policies.",
-    ctaText: "Request Security Audit",
-    ctaLink: "/contact",
-    accentColor: "orange",
-    bgGradient: "from-orange-50/40 via-amber-50/20 to-orange-100/30",
-    glowColor: "rgba(249, 102, 27, 0.15)",
-    stats: [
-      {
-        icon: ShieldCheck,
-        number: "OWASP",
-        label: "Top 10 Full Matrix Audited"
-      },
-      {
         icon: Award,
-        number: "Govt. Reg.",
-        label: "MSME UDYAM-UP-10-0047070"
+        number: "MSME Reg.",
+        label: "UDYAM-UP-10-0047070"
       },
       {
-        icon: Lock,
-        number: "AES-256",
-        label: "End-to-End Encryption Standard"
+        icon: ShieldCheck,
+        number: "100% IP",
+        label: "Full Source Code Ownership"
       }
     ]
   }
@@ -209,14 +207,6 @@ export function Hero() {
     };
   }, [isPaused, currentSlide]);
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  };
-
   const active = slides[currentSlide];
 
   return (
@@ -238,20 +228,16 @@ export function Hero() {
         {/* Subtle Decorative Line-Art Doodles in Corners (AppSquadz Style) */}
         <div className="absolute bottom-6 left-8 pointer-events-none opacity-25 hidden sm:block">
           <svg width="240" height="160" viewBox="0 0 180 120" fill="none" stroke={active.accentColor === "orange" ? "#f9661b" : "#1b67b2"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-            {/* Lightbulb / Idea doodle */}
             <path d="M30 45 A14 14 0 1 1 48 45 C46 51 44 55 44 60 L34 60 C34 55 32 51 30 45 Z" />
             <line x1="35" y1="64" x2="43" y2="64" />
             <line x1="37" y1="68" x2="41" y2="68" />
-            {/* Gear doodle */}
             <circle cx="95" cy="70" r="10" strokeDasharray="3 3" />
             <circle cx="95" cy="70" r="5" />
-            {/* Molecule / Code node */}
             <circle cx="140" cy="35" r="5" />
             <circle cx="165" cy="55" r="4" />
             <circle cx="135" cy="75" r="4" />
             <line x1="140" y1="35" x2="165" y2="55" />
             <line x1="140" y1="35" x2="135" y2="75" />
-            {/* Small book / pad */}
             <rect x="15" y="80" width="22" height="18" rx="2" />
             <line x1="19" y1="86" x2="31" y2="86" />
             <line x1="19" y1="91" x2="27" y2="91" />
@@ -272,8 +258,8 @@ export function Hero() {
               {/* Left Column: Headline, Divider, Subtitle, Pill Button */}
               <div className="lg:col-span-6 flex flex-col justify-center text-center lg:text-left">
                 
-                {/* Main Headline (Brand Tag Colored + Clean Headline Text) */}
-                <h1 className="text-3xl sm:text-4xl lg:text-[3.25rem] xl:text-[3.5rem] font-bold tracking-tight leading-[1.18] text-slate-950">
+                {/* Main Headline (Real Verve Nova Brand Tag + Headline) */}
+                <h1 className="text-3xl sm:text-4xl lg:text-[3.15rem] xl:text-[3.4rem] font-bold tracking-tight leading-[1.2] text-slate-950">
                   <span className={`font-extrabold ${active.accentColor === "orange" ? "text-[#f9661b]" : "text-[#1b67b2]"}`}>
                     {active.brandTag}
                   </span>{" "}
@@ -296,21 +282,36 @@ export function Hero() {
 
                 {/* AppSquadz-Style Rounded-Full Solid Pill Button */}
                 <div className="flex justify-center lg:justify-start">
-                  <Link
-                    href={active.ctaLink}
-                    className={`inline-flex items-center justify-center px-10 py-4 rounded-full text-white font-bold text-base sm:text-lg tracking-wide shadow-md transition-all duration-200 hover:shadow-xl hover:scale-[1.03] active:scale-[0.98] ${
-                      active.accentColor === "orange"
-                        ? "bg-[#f9661b] hover:bg-[#e05510]"
-                        : "bg-[#1b67b2] hover:bg-[#15528e]"
-                    }`}
-                  >
-                    <span>{active.ctaText}</span>
-                  </Link>
+                  {active.isExternalLink ? (
+                    <a
+                      href={active.ctaLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`inline-flex items-center justify-center px-10 py-4 rounded-full text-white font-bold text-base sm:text-lg tracking-wide shadow-md transition-all duration-200 hover:shadow-xl hover:scale-[1.03] active:scale-[0.98] ${
+                        active.accentColor === "orange"
+                          ? "bg-[#f9661b] hover:bg-[#e05510]"
+                          : "bg-[#1b67b2] hover:bg-[#15528e]"
+                      }`}
+                    >
+                      <span>{active.ctaText}</span>
+                    </a>
+                  ) : (
+                    <Link
+                      href={active.ctaLink}
+                      className={`inline-flex items-center justify-center px-10 py-4 rounded-full text-white font-bold text-base sm:text-lg tracking-wide shadow-md transition-all duration-200 hover:shadow-xl hover:scale-[1.03] active:scale-[0.98] ${
+                        active.accentColor === "orange"
+                          ? "bg-[#f9661b] hover:bg-[#e05510]"
+                          : "bg-[#1b67b2] hover:bg-[#15528e]"
+                      }`}
+                    >
+                      <span>{active.ctaText}</span>
+                    </Link>
+                  )}
                 </div>
 
               </div>
 
-              {/* Right Column: 3 Prominent Stat Elements (Icons + Big Numbers + Labels) Side-by-Side */}
+              {/* Right Column: 3 Real Verve Nova Stat Elements (Icons + Big Numbers + Labels) Side-by-Side */}
               <div className="lg:col-span-6 flex items-center justify-center lg:justify-end">
                 <div className="grid grid-cols-3 gap-4 sm:gap-8 w-full max-w-[620px]">
                   {active.stats.map((st, idx) => {
