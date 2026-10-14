@@ -142,7 +142,7 @@ export function TrustMatrix() {
                 </p>
 
                 <Link
-                  href="/verify"
+                  href="/registry"
                   className="w-full bg-[#1b67b2] hover:bg-[#15538e] text-white text-xs font-bold uppercase py-2.5 rounded-lg transition-colors flex items-center justify-center gap-1.5 relative z-10 shadow-sm"
                 >
                   <span>Verify Credentials</span>
