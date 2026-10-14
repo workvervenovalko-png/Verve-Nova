@@ -252,12 +252,10 @@ export function Hero() {
               {/* Left Column: Headline, Tags, CTAs */}
               <div className="lg:col-span-7 flex flex-col justify-center text-center lg:text-left">
                 
-                {/* Main Headline with Highlight Pill */}
-                <h1 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold tracking-tight leading-[1.2] mb-5 text-slate-950">
+                {/* Main Headline with Colored Highlight Text */}
+                <h1 className="text-3xl sm:text-4xl lg:text-[2.85rem] font-extrabold tracking-tight leading-[1.2] mb-5 text-slate-950">
                   {active.titlePrefix}{" "}
-                  <span className={`inline-block px-3 py-1 rounded-xl text-white font-extrabold shadow-sm ${
-                    active.accentColor === "orange" ? "bg-[#f9661b]" : "bg-[#1b67b2]"
-                  }`}>
+                  <span className={active.accentColor === "orange" ? "text-[#f9661b]" : "text-[#1b67b2]"}>
                     {active.titleHighlight}
                   </span>{" "}
                   {active.titleSuffix}
