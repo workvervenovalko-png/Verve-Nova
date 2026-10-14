@@ -97,7 +97,6 @@ export const metadata: Metadata = {
 
 import { Providers } from '@/components/providers'
 import { SocialSidebar } from '@/components/social-sidebar';
-import { WhatsAppFAB } from '@/components/whatsapp-fab';
 import { MaintenanceGuard } from '@/components/maintenance-guard';
 
 export default function RootLayout({
@@ -113,7 +112,6 @@ export default function RootLayout({
             {children}
           </MaintenanceGuard>
           <SocialSidebar />
-          <WhatsAppFAB />
         </Providers>
         <Analytics />
         <Script

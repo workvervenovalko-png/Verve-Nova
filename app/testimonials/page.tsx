@@ -24,7 +24,6 @@ import {
   Layers,
   ArrowRight
 } from "lucide-react";
-import { WhatsAppFAB } from "@/components/whatsapp-fab";
 import Link from "next/link";
 
 const VERIFIED_DEPLOYMENTS = [
@@ -373,7 +372,6 @@ export default function TestimonialsPage() {
       </section>
 
       <Footer />
-      <WhatsAppFAB />
     </main>
   );
 }
