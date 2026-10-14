@@ -1,134 +1,161 @@
 "use client";
 
-import { motion, useSpring, useTransform, useInView, useMotionValueEvent } from "framer-motion";
-import { Star, ShieldCheck, Award, MessageSquare, Cloud, Globe } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-
-function AnimatedNumber({ value }: { value: string }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
-  const [roundedValue, setRoundedValue] = useState("0");
-
-  const numericValue = parseFloat(value.match(/[\d.]+/)?.[0] || "0");
-  const suffix = value.replace(/[\d.]+/, "");
-  const isDecimal = value.includes(".");
-
-  const spring = useSpring(0, {
-    mass: 1,
-    stiffness: 100,
-    damping: 30,
-  });
-
-  const display = useTransform(spring, (current) =>
-    isDecimal ? current.toFixed(1) : Math.floor(current).toString()
-  );
-
-  useMotionValueEvent(display, "change", (latest) => {
-    setRoundedValue(latest.toString());
-  });
-
-  useEffect(() => {
-    if (isInView) {
-      spring.set(numericValue);
-    }
-  }, [isInView, numericValue, spring]);
-
-  return (
-    <span ref={ref}>
-      {roundedValue}
-      {suffix}
-    </span>
-  );
-}
+import React from "react";
+import { Award, Briefcase, Users, RefreshCw, ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 export function TrustMatrix() {
-  const stats = [
+  const metrics = [
     {
-      label: "Google Rating",
       value: "4.9/5.0",
+      label: "Google Rating",
       sub: "Verified Reviews",
-      icon: Star,
-      gradient: "from-amber-500 to-orange-500",
-      glow: "rgba(245, 158, 11, 0.15)"
-    },
-    {
-      label: "Upwork Success",
-      value: "100%",
-      sub: "Job Success Score",
       icon: Award,
-      gradient: "from-emerald-500 to-teal-500",
-      glow: "rgba(16, 185, 129, 0.15)"
     },
     {
-      label: "Projects Done",
+      value: "100%",
+      label: "Upwork Success",
+      sub: "Job Success Score",
+      icon: Briefcase,
+    },
+    {
       value: "50+",
+      label: "Projects Done",
       sub: "Successful Deliveries",
-      icon: MessageSquare,
-      gradient: "from-indigo-500 to-violet-500",
-      glow: "rgba(99, 102, 241, 0.15)"
+      icon: Users,
     },
     {
-      label: "Data Security",
-      value: "NDA Ready",
-      sub: "100% Confidentiality",
-      icon: ShieldCheck,
-      gradient: "from-blue-500 to-cyan-500",
-      glow: "rgba(59, 130, 246, 0.15)"
+      value: "100% IP",
+      label: "Code Ownership",
+      sub: "Full Client IP Transfer",
+      icon: RefreshCw,
     },
+    {
+      value: "MSME URN",
+      label: "Govt. Registered",
+      sub: "UDYAM-UP-10-0047070",
+      icon: Award,
+    },
+  ];
 
-    {
-      label: "Global Reach",
-      value: "12+ Countries",
-      sub: "International Clients",
-      icon: Globe,
-      gradient: "from-violet-500 to-purple-500",
-      glow: "rgba(139, 92, 246, 0.15)"
-    }
+  const competencies = [
+    "Software & Applications (Web, Mobile, Enterprise)",
+    "AI & Automation (Chatbots & Workflow Agents)",
+    "Enterprise Systems (Custom CRM & ERP Engines)",
+    "Backend & APIs (REST, Auth, Secure Payments)",
+    "Cloud & DevOps (AWS / GCP & CI/CD Pipelines)",
+    "Cybersecurity (VAPT Audits & Zero-Trust SecOps)",
+    "UI/UX & Branding (Design Systems & Interfaces)",
+    "Performance Marketing & Search Optimization",
+    "MSME Govt. of India Registered Enterprise",
+    "100% NDA & Intellectual Property Confidentiality",
   ];
 
   return (
-    <section className="py-28 bg-background relative overflow-hidden section-glow">
-      {/* Background Mesh */}
-      <div className="absolute inset-0 mesh-gradient-1 pointer-events-none" />
-
-      <div className="max-w-[1600px] mx-auto px-6 relative z-10">
-        <div className="text-center mb-16 md:mb-20 px-4">
-          <p className="text-[10px] font-bold text-indigo-400 uppercase tracking-[0.5em] mb-5">Why Clients Trust Us</p>
-          <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black text-white tracking-tighter uppercase leading-[0.9]">
-            Proven Results & <br className="hidden md:block" />
-            <span className="text-white/10">High Ratings</span>
+    <div className="w-full bg-white py-12 border-b border-[#e2e8f0]">
+      
+      {/* 1. AppSquadz Style 5-Card Metrics Strip with Exact Verve Nova Stats */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+        <div className="text-center mb-8">
+          <p className="text-xs font-bold text-[#1b67b2] uppercase tracking-[0.4em] mb-2">Why Clients Trust Us</p>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0f172a] uppercase tracking-tight">
+            Proven Results & High Ratings
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-nowrap justify-center gap-4 lg:gap-8">
-          {stats.map((stat, i) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              whileInView={{ opacity: 1, scale: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08, type: "spring", stiffness: 120 }}
-              className="glass-card p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] hover:glass-card-hover transition-all duration-500 group flex flex-col items-center text-center cursor-default w-full lg:w-[240px]"
-              style={{ "--glow": stat.glow } as React.CSSProperties}
-            >
-              <div className="flex items-center justify-center w-full mb-8">
-                <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${stat.gradient} flex items-center justify-center shadow-lg group-hover:shadow-[0_0_20px_var(--glow)] transition-all`}>
-                  <stat.icon className="w-6 h-6 text-white" />
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          {metrics.map((item, idx) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={idx}
+                className="flex flex-col items-center text-center bg-[#f8fafc] hover:bg-white hover:border-[#1b67b2] p-5 rounded-[16px] border border-[#e2e8f0] transition-all duration-300 hover:shadow-md"
+              >
+                {/* Circular Blue Icon */}
+                <div className="w-11 h-11 rounded-full bg-[#1b67b2] flex items-center justify-center shrink-0 text-white shadow-sm mb-3">
+                  <Icon className="w-5 h-5 text-white" />
                 </div>
+
+                <span className="text-xl sm:text-2xl font-black text-[#0f172a] tracking-tight">
+                  {item.value}
+                </span>
+                <p className="text-xs font-bold text-[#1b67b2] mt-0.5 uppercase tracking-wider">
+                  {item.label}
+                </p>
+                <p className="text-[11px] text-[#64748b] mt-0.5">
+                  {item.sub}
+                </p>
               </div>
-              <p className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] mb-3">{stat.label}</p>
-              <h3 className="text-2xl font-black text-white mb-2 tracking-tight">
-                {stat.value.match(/\d/) ? (
-                  <AnimatedNumber value={stat.value} />
-                ) : (
-                  stat.value
-                )}
-              </h3>
-              <p className="text-[9px] font-bold text-white/20 uppercase tracking-widest">{stat.sub}</p>
-            </motion.div>
-          ))}
+            );
+          })}
         </div>
       </div>
-    </section>
+
+      {/* 2. "Trusted to Deliver Across Every Cloud & Software Dimension" Competency Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-[#f8fafc] rounded-2xl border border-[#e2e8f0] p-8 sm:p-12 shadow-sm">
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            
+            {/* Left Column: Heading, Subhead & Competency Grid with Orange Dots */}
+            <div className="lg:col-span-8">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-[#1b67b2] text-xs font-bold uppercase tracking-wider mb-3">
+                Core Engineering Capabilities
+              </div>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#0f172a] tracking-tight mb-4">
+                Trusted Across Every Software & Digital Dimension
+              </h2>
+              <p className="text-sm sm:text-base text-[#475569] font-normal leading-relaxed mb-8 max-w-2xl">
+                Recognized as a premier digital engineering firm, our competencies reflect the engineering precision and reliability behind every successful software deployment.
+              </p>
+
+              {/* 2-Column List with Orange Bullets (Exact AppSquadz Design) */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3.5">
+                {competencies.map((comp, idx) => (
+                  <div key={idx} className="flex items-center gap-3">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#f9661b] shrink-0" />
+                    <span className="text-sm sm:text-[15px] font-bold text-[#1e293b]">
+                      {comp}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right Column: Verve Nova MSME / Enterprise Partner Badge */}
+            <div className="lg:col-span-4 flex flex-col items-center justify-center">
+              <div className="w-64 p-6 bg-white rounded-2xl border-2 border-[#f9661b]/40 shadow-lg flex flex-col items-center text-center relative overflow-hidden group hover:border-[#f9661b] transition-all">
+                <div className="absolute top-0 right-0 w-20 h-20 bg-orange-100/60 rounded-bl-full -z-0" />
+                
+                <div className="w-16 h-16 rounded-xl bg-orange-50 border border-orange-200 flex items-center justify-center mb-4 relative z-10">
+                  <Award className="w-9 h-9 text-[#f9661b]" />
+                </div>
+
+                <div className="text-xs font-mono font-bold uppercase text-[#f9661b] tracking-widest mb-1 relative z-10">
+                  VERVE NOVA TECH
+                </div>
+                <h3 className="text-base font-extrabold text-[#0f172a] mb-1 relative z-10">
+                  MSME Govt. Registered
+                </h3>
+                <p className="text-xs text-[#64748b] mb-4 relative z-10">
+                  ISO 27001 : 2022 Certified, NDA Protected Enterprise Software Engineering
+                </p>
+
+                <Link
+                  href="/verify"
+                  className="w-full bg-[#1b67b2] hover:bg-[#15538e] text-white text-xs font-bold uppercase py-2.5 rounded-lg transition-colors flex items-center justify-center gap-1.5 relative z-10 shadow-sm"
+                >
+                  <span>Verify Credentials</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
   );
 }

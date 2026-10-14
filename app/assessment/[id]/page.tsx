@@ -10,9 +10,9 @@ export default async function AssessmentPage({ params }: { params: Promise<{ id:
 
   if (!stateRes.success) {
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 text-center">
-        <h1 className="text-3xl font-black text-white uppercase tracking-tighter mb-4">ACCESS DENIED</h1>
-        <p className="text-white/40 uppercase tracking-widest text-sm max-w-md">{stateRes.error}</p>
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center p-6 text-center">
+        <h1 className="text-3xl font-black text-slate-950 uppercase tracking-tighter mb-4">ACCESS DENIED</h1>
+        <p className="text-slate-600 uppercase tracking-wider text-sm max-w-md">{stateRes.error}</p>
       </div>
     );
   }
@@ -21,9 +21,9 @@ export default async function AssessmentPage({ params }: { params: Promise<{ id:
 
   if (assessment.status === 'Completed') {
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 text-center">
-        <h1 className="text-3xl font-black text-emerald-400 uppercase tracking-tighter mb-4">ASSESSMENT SUBMITTED</h1>
-        <p className="text-white/40 uppercase tracking-widest text-sm max-w-md">You have successfully completed the assessment. You may close this window. Please wait for further communication.</p>
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center p-6 text-center">
+        <h1 className="text-3xl font-black text-emerald-600 uppercase tracking-tighter mb-4">ASSESSMENT SUBMITTED</h1>
+        <p className="text-slate-600 uppercase tracking-wider text-sm max-w-md">You have successfully completed the assessment. You may close this window. Please wait for further communication.</p>
       </div>
     );
   }

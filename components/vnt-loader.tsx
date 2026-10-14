@@ -5,9 +5,10 @@ import { motion } from "framer-motion";
 interface VNTLoaderProps {
   className?: string;
   size?: "sm" | "md" | "lg" | "xl";
+  text?: string;
 }
 
-export function VNTLoader({ className = "", size = "md" }: VNTLoaderProps) {
+export function VNTLoader({ className = "", size = "md", text }: VNTLoaderProps) {
   const sizes = {
     sm: "w-6 h-6",
     md: "w-12 h-12",
@@ -16,7 +17,7 @@ export function VNTLoader({ className = "", size = "md" }: VNTLoaderProps) {
   };
 
   return (
-    <div className={`relative flex items-center justify-center ${className}`}>
+    <div className={`relative flex items-center justify-center gap-2.5 ${className}`}>
       {/* Delicate Rotating Arc */}
       <motion.div
         animate={{
@@ -50,6 +51,7 @@ export function VNTLoader({ className = "", size = "md" }: VNTLoaderProps) {
           className="w-full h-full object-contain grayscale-[0.2] opacity-90"
         />
       </motion.div>
+      {text && <span className="text-xs font-bold tracking-wider text-current">{text}</span>}
     </div>
   );
 }

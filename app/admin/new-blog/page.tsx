@@ -70,37 +70,37 @@ export default function NewBlogPage() {
                     <div className="glass-card p-10 md:p-14 rounded-[2.5rem] border border-white/[0.06] shadow-2xl relative overflow-hidden bg-white/[0.01]">
                         <div className="grid gap-10">
                             <div className="grid gap-3">
-                                <label className="text-[10px] font-bold uppercase tracking-widest text-white/40 ml-1">Headline</label>
+                                <label className="text-xs font-bold uppercase tracking-wider text-slate-200 ml-1">Headline *</label>
                                 <Input
-                                    placeholder="ENTER BLOG TITLE"
-                                    className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] focus:border-indigo-500/50 transition-all text-sm font-bold uppercase tracking-wide text-white placeholder:text-white/10 px-6"
+                                    placeholder="Enter blog title"
+                                    className="h-14 bg-white/[0.04] border-white/15 rounded-xl focus:bg-white/[0.08] focus:border-indigo-400 transition-all text-sm font-bold text-white placeholder:text-slate-400 px-6"
                                     value={blogForm.title}
                                     onChange={(e) => setBlogForm({ ...blogForm, title: e.target.value })}
                                 />
                             </div>
                             <div className="grid gap-3">
-                                <label className="text-[10px] font-bold uppercase tracking-widest text-white/40 ml-1">Excerpt (Short Summary)</label>
+                                <label className="text-xs font-bold uppercase tracking-wider text-slate-200 ml-1">Excerpt (Short Summary) *</label>
                                 <Input
-                                    placeholder="BRIEF OVERVIEW FOR PREVIEW CARDS"
-                                    className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] focus:border-indigo-500/50 transition-all text-xs text-white placeholder:text-white/10 px-6"
+                                    placeholder="Brief overview for preview cards"
+                                    className="h-14 bg-white/[0.04] border-white/15 rounded-xl focus:bg-white/[0.08] focus:border-indigo-400 transition-all text-sm text-white placeholder:text-slate-400 px-6"
                                     value={blogForm.excerpt}
                                     onChange={(e) => setBlogForm({ ...blogForm, excerpt: e.target.value })}
                                 />
                             </div>
                             <div className="grid gap-3">
-                                <label className="text-[10px] font-bold uppercase tracking-widest text-white/40 ml-1">Intel Content (Full Article)</label>
+                                <label className="text-xs font-bold uppercase tracking-wider text-slate-200 ml-1">Intel Content (Full Article) *</label>
                                 <Textarea
-                                    placeholder="WRITE YOUR LONG-FORM CONTENT HERE..."
-                                    className="min-h-[300px] bg-white/[0.03] border-white/[0.06] rounded-[1.5rem] focus:bg-white/[0.05] focus:border-indigo-500/50 transition-all text-sm leading-relaxed text-white placeholder:text-white/10 p-6 custom-scrollbar"
+                                    placeholder="Write your long-form article content here..."
+                                    className="min-h-[300px] bg-white/[0.04] border-white/15 rounded-[1.5rem] focus:bg-white/[0.08] focus:border-indigo-400 transition-all text-sm leading-relaxed text-white placeholder:text-slate-400 p-6 custom-scrollbar"
                                     value={blogForm.content}
                                     onChange={(e) => setBlogForm({ ...blogForm, content: e.target.value })}
                                 />
                             </div>
                             <div className="grid gap-3">
-                                <label className="text-[10px] font-bold uppercase tracking-widest text-white/40 ml-1">Cover Image URL</label>
+                                <label className="text-xs font-bold uppercase tracking-wider text-slate-200 ml-1">Cover Image URL</label>
                                 <Input
                                     placeholder="https://images.unsplash.com/..."
-                                    className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] focus:border-indigo-500/50 transition-all text-xs font-mono text-indigo-400 placeholder:text-white/10 px-6"
+                                    className="h-14 bg-white/[0.04] border-white/15 rounded-xl focus:bg-white/[0.08] focus:border-indigo-400 transition-all text-sm font-mono text-indigo-400 placeholder:text-slate-400 px-6"
                                     value={blogForm.coverImage}
                                     onChange={(e) => setBlogForm({ ...blogForm, coverImage: e.target.value })}
                                 />

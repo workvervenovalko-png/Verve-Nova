@@ -5,6 +5,8 @@ const ContactSchema = new Schema({
   email: { type: String, required: true },
   phone: { type: String, required: true },
   service: { type: String, required: true },
+  budget: { type: String, default: "" },
+  timeline: { type: String, default: "" },
   message: { type: String, required: true },
   createdAt: { type: Date, default: Date.now }
 });

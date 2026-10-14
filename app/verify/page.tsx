@@ -39,31 +39,31 @@ export default function VerificationPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#09090B] text-white selection:bg-indigo-500/30">
+    <main className="min-h-screen bg-white text-slate-900 selection:bg-blue-500/20 font-sans">
       <Navbar />
       
-      <section className="relative pt-48 pb-32 px-6">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-indigo-500/[0.05] blur-[120px] rounded-full pointer-events-none" />
+      <section className="relative pt-36 pb-32 px-6 bg-gradient-to-b from-blue-50/70 via-slate-50/40 to-white border-b border-slate-200">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-blue-500/[0.05] blur-[140px] rounded-full pointer-events-none" />
         
         <div className="max-w-3xl mx-auto relative z-10 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-8">
-            <ShieldCheck className="w-4 h-4 text-indigo-400" />
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400">Authenticity Verification Portal</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-200 mb-8 shadow-xs">
+            <ShieldCheck className="w-4 h-4 text-[#1b67b2]" />
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1b67b2]">Authenticity Verification Portal</span>
           </div>
           
-          <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-6">
-            Verify <span className="text-gradient">Credentials.</span>
+          <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tight mb-6 text-slate-950">
+            Verify <span className="text-[#1b67b2]">Credentials.</span>
           </h1>
-          <p className="text-sm text-white/40 font-light mb-12 max-w-lg mx-auto leading-relaxed">
+          <p className="text-base text-slate-600 font-normal mb-12 max-w-lg mx-auto leading-relaxed">
             Enter the unique Document Verification ID to authenticate certificates, offer letters, and professional records issued by Verve Nova Technologies.
           </p>
 
-          <div className="flex flex-col md:flex-row gap-4 p-2 bg-white/[0.03] border border-white/[0.08] rounded-2xl backdrop-blur-xl mb-16">
+          <div className="flex flex-col md:flex-row gap-4 p-2.5 bg-white border border-slate-200 rounded-2xl mb-16 shadow-lg">
             <div className="relative flex-1 group">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-focus-within:text-indigo-400 transition-colors" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#1b67b2]" />
               <Input 
                 placeholder="ENTER VERIFICATION ID (e.g. VN-WD-2026-001)"
-                className="h-14 pl-12 bg-transparent border-none text-white placeholder:text-white/10 text-[11px] font-black tracking-widest uppercase focus-visible:ring-0"
+                className="h-14 pl-12 bg-transparent border-none text-slate-900 placeholder:text-slate-400 text-xs font-bold tracking-wider uppercase focus-visible:ring-0"
                 value={verifyId}
                 onChange={(e) => setVerifyId(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleVerify()}
@@ -72,7 +72,7 @@ export default function VerificationPage() {
             <Button 
               onClick={handleVerify}
               disabled={isVerifying || !verifyId}
-              className="h-14 px-10 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl tracking-[0.2em] uppercase text-[10px] transition-all"
+              className="h-14 px-10 bg-[#1b67b2] hover:bg-[#15538e] text-white font-extrabold rounded-xl tracking-[0.2em] uppercase text-[11px] shadow-md shadow-blue-500/20 transition-all active:scale-95"
             >
               {isVerifying ? <VNTLoader size="sm" /> : "Authenticate"}
             </Button>
@@ -82,57 +82,60 @@ export default function VerificationPage() {
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="glass-card p-10 rounded-[2.5rem] border-indigo-500/20 text-left relative overflow-hidden"
+              className="p-8 md:p-10 rounded-3xl bg-white border border-slate-200 text-left relative overflow-hidden shadow-xl"
             >
               <div className="absolute top-0 right-0 p-8">
-                <CheckCircle2 className="w-12 h-12 text-emerald-500/20" />
+                <CheckCircle2 className="w-12 h-12 text-emerald-500" />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-6">
                   <div>
-                    <label className="text-[9px] font-bold text-white/20 uppercase tracking-[0.4em] block mb-2">Verified Recipient</label>
+                    <label className="text-xs font-extrabold text-[#1b67b2] uppercase tracking-widest block mb-2">Verified Recipient</label>
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-indigo-600/20 flex items-center justify-center">
-                        <User className="w-5 h-5 text-indigo-400" />
+                      <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-[#1b67b2]">
+                        <User className="w-5 h-5" />
                       </div>
                       <div>
-                        <h4 className="text-xl font-black uppercase text-white leading-none">{result.candidateName}</h4>
-                        <p className="text-[10px] font-mono text-white/40 mt-1">{result.vnId}</p>
+                        <h4 className="text-xl font-black uppercase text-slate-900 leading-none">{result.candidateName}</h4>
+                        <p className="text-xs font-mono text-slate-500 font-bold mt-1">{result.vnId}</p>
                       </div>
                     </div>
                   </div>
 
                   <div>
-                    <label className="text-[9px] font-bold text-white/20 uppercase tracking-[0.4em] block mb-2">Role / Domain</label>
-                    <div className="flex items-center gap-3 text-white/60">
-                      <Briefcase className="w-4 h-4" />
-                      <span className="text-xs font-bold uppercase tracking-widest">{result.domain}</span>
+                    <label className="text-xs font-extrabold text-[#1b67b2] uppercase tracking-widest block mb-2">Role / Domain</label>
+                    <div className="flex items-center gap-3 text-slate-800">
+                      <Briefcase className="w-4 h-4 text-[#1b67b2]" />
+                      <span className="text-sm font-bold uppercase tracking-wider">{result.domain}</span>
                     </div>
                   </div>
                 </div>
 
                 <div className="space-y-6">
                   <div>
-                    <label className="text-[9px] font-bold text-white/20 uppercase tracking-[0.4em] block mb-2">Issuance Date</label>
-                    <div className="flex items-center gap-3 text-white/60">
-                      <Calendar className="w-4 h-4" />
-                      <span className="text-xs font-bold uppercase tracking-widest">{new Date(result.issuedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                    <label className="text-xs font-extrabold text-[#1b67b2] uppercase tracking-widest block mb-2">Issuance Date</label>
+                    <div className="flex items-center gap-3 text-slate-800">
+                      <Calendar className="w-4 h-4 text-[#1b67b2]" />
+                      <span className="text-sm font-bold uppercase tracking-wider">{new Date(result.issuedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
                     </div>
                   </div>
 
                   <div>
-                    <label className="text-[9px] font-bold text-white/20 uppercase tracking-[0.4em] block mb-2">Document Status</label>
-                    <span className="px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-[9px] font-black uppercase tracking-widest text-emerald-400">Verified Authentic</span>
+                    <label className="text-xs font-extrabold text-[#1b67b2] uppercase tracking-widest block mb-2">Document Status</label>
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 border border-emerald-200 rounded-lg text-xs font-black uppercase tracking-wider text-emerald-700">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                      Verified Authentic
+                    </span>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-10 pt-10 border-t border-white/5 flex justify-between items-center">
-                <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Digital Audit Log: {result.verificationId}</p>
+              <div className="mt-8 pt-8 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <p className="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">Audit Log: {result.verificationId}</p>
                 <Button 
                   onClick={() => router.push(`/verify/${result.verificationId}`)}
-                  className="bg-white/5 hover:bg-white/10 text-white font-bold rounded-xl text-[9px] uppercase tracking-widest h-12 px-6 flex items-center gap-2"
+                  className="bg-slate-100 hover:bg-[#1b67b2] hover:text-white text-slate-800 font-bold rounded-xl text-xs uppercase tracking-wider h-11 px-6 flex items-center gap-2 shadow-xs transition-colors"
                 >
                   View Digital Record <ExternalLink className="w-3.5 h-3.5" />
                 </Button>

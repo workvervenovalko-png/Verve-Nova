@@ -16,10 +16,10 @@ const projects = [
     image: "/projects/crm.png",
   },
   {
-    title: "Chakshura",
-    category: "Strategic Intelligence",
-    description: "AI-Powered Strategic Foresight & Real-Time Intelligence Radar for Global Defence Networks. (SIH Winning Project for DRDO)",
-    image: "/projects/chakshura.png",
+    title: "ServiceHub",
+    category: "Mobile Application",
+    description: "Enterprise handyman and on-demand home repair mobile app with realtime technician tracking, inventory deduction, and client wallets.",
+    image: "/projects/servicehub.png",
   },
 ];
 

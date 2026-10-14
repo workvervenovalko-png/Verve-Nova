@@ -2,11 +2,10 @@
 
 import * as React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, LogOut } from "lucide-react";
+import { Menu, X, LogOut, ArrowRight, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
-
 
 export function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -14,67 +13,64 @@ export function Navbar() {
   const { data: session, status } = useSession();
   const pathname = usePathname();
 
-  const isCareersPage = pathname.startsWith("/careers");
-
   const navLinks = [
     { name: "About", href: "/about" },
-    { name: "Services", href: "/#services" },
-    { name: "Case Studies", href: "/case-studies" },
-    { name: "Registry", href: "/registry" },
+    { name: "Services", href: "/services" },
     { name: "Projects", href: "/projects" },
-    { name: "Careers", href: "/careers" },
-    { name: "Verify", href: "/verify" },
+    { name: "Case Studies", href: "/case-studies" },
+    { name: "Pricing", href: "/pricing" },
+    { name: "Reviews", href: "/testimonials" },
+    { name: "Registry", href: "/registry" },
   ];
 
   const [typeKey, setTypeKey] = React.useState(0);
 
   React.useEffect(() => {
     const interval = setInterval(() => {
-      setTypeKey(prev => prev + 1);
-    }, 8000); // Repeat every 8 seconds
+      setTypeKey((prev) => prev + 1);
+    }, 8000);
     return () => clearInterval(interval);
   }, []);
 
-  // Fix for anchor links when navigating from other pages
+  // Smooth scroll for hash links across pages
   React.useEffect(() => {
     const handleHashScroll = () => {
       const hash = window.location.hash;
       if (hash) {
-        const targetId = hash.replace('#', '');
+        const targetId = hash.replace("#", "");
         const element = document.getElementById(targetId);
         if (element) {
-          // Small delay to ensure the page has rendered
           setTimeout(() => {
-            element.scrollIntoView({ behavior: 'smooth' });
-          }, 500);
+            element.scrollIntoView({ behavior: "smooth" });
+          }, 300);
         }
       }
     };
 
     handleHashScroll();
-    window.addEventListener('hashchange', handleHashScroll);
-    return () => window.removeEventListener('hashchange', handleHashScroll);
+    window.addEventListener("hashchange", handleHashScroll);
+    return () => window.removeEventListener("hashchange", handleHashScroll);
   }, [pathname]);
 
   return (
-    <div className="fixed top-6 left-0 w-full z-[100] flex justify-center pointer-events-none px-4">
+    <div className="fixed top-5 left-0 w-full z-[100] flex justify-center pointer-events-none px-4">
       <motion.nav
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="pointer-events-auto backdrop-blur-2xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-between px-8 md:px-12 py-3 w-full max-w-[1300px] rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.4)] specular-glow"
+        className="pointer-events-auto backdrop-blur-2xl bg-white/95 border border-slate-200/90 flex items-center justify-between px-6 lg:px-10 py-3 w-full max-w-[1300px] rounded-full shadow-[0_4px_25px_rgba(15,23,42,0.06)]"
       >
         {/* Logo Section - VNT BRANDING */}
-        <Link href="/" className="flex items-center gap-3 shrink-0 group pointer-events-auto mr-5">
+        <Link href="/" className="flex items-center gap-3 shrink-0 group pointer-events-auto mr-4">
           <div className="relative">
-            <div className="w-12 h-12 flex items-center justify-center transition-all duration-500 overflow-hidden">
-              <img src="/vnt-logo.png" alt="Verve Nova Logo" className="w-11 h-11 object-contain" />
+            <div className="w-10 h-10 flex items-center justify-center transition-all duration-300 group-hover:scale-105 overflow-hidden">
+              <img src="/vnt-logo.png" alt="Verve Nova Logo" className="w-9 h-9 object-contain" />
             </div>
           </div>
 
           <div className="flex flex-col">
             <div className="flex overflow-hidden">
-              <span className="text-[14px] font-black text-indigo-400 tracking-widest uppercase leading-none transition-colors">
+              <span className="text-[13px] font-black text-[#1B67B2] tracking-widest uppercase leading-none group-hover:text-blue-700 transition-colors">
                 VERVE NOVA
               </span>
             </div>
@@ -87,9 +83,9 @@ export function Navbar() {
                   transition={{
                     delay: i * 0.04,
                     duration: 0.2,
-                    ease: "easeOut"
+                    ease: "easeOut",
                   }}
-                  className="text-[8px] font-bold text-white uppercase tracking-[0.5em] leading-none"
+                  className="text-[8px] font-bold text-slate-600 uppercase tracking-[0.45em] leading-none"
                 >
                   {char}
                 </motion.span>
@@ -98,37 +94,35 @@ export function Navbar() {
           </div>
         </Link>
 
-
-        {/* Links Section */}
-        <div className="hidden md:flex items-center gap-5 lg:gap-8">
+        {/* Links Section - Crisp Light Theme, High Contrast */}
+        <div className="hidden lg:flex items-center gap-3 xl:gap-5">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
-              className="text-[11px] font-bold text-white/40 hover:text-white uppercase tracking-[0.3em] transition-colors relative group/link whitespace-nowrap"
+              className="text-[11px] font-bold text-slate-700 hover:text-[#1B67B2] uppercase tracking-[0.14em] transition-colors relative group/link whitespace-nowrap py-1"
             >
               {link.name}
-              <span className="absolute -bottom-1 left-0 w-0 h-px bg-indigo-500 group-hover/link:w-full transition-all duration-300" />
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#1B67B2] group-hover/link:w-full transition-all duration-300" />
             </Link>
           ))}
-          {status === 'authenticated' ? (
+
+          {status === "authenticated" ? (
             <div
               className="relative flex items-center"
               onMouseEnter={() => setShowLogout(true)}
               onMouseLeave={() => setShowLogout(false)}
             >
               <Link
-                href={session?.user?.role?.toUpperCase() === 'ADMIN' ? '/admin' : '/profile'}
-                className="relative w-10 h-10 rounded-full bg-white/[0.03] border border-white/[0.08] flex items-center justify-center hover:border-indigo-500/50 transition-all overflow-hidden"
+                href={session?.user?.role?.toUpperCase() === "ADMIN" ? "/admin" : "/profile"}
+                className="relative w-9 h-9 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center hover:border-[#1B67B2] transition-all overflow-hidden"
               >
                 {session?.user?.image ? (
                   <img src={session.user.image} alt="User" className="w-full h-full object-cover" />
                 ) : (
-                  <div className="flex flex-col items-center justify-center">
-                    <span className="text-[10px] font-black text-indigo-400">
-                      {session?.user?.name?.[0]?.toUpperCase() || 'U'}
-                    </span>
-                  </div>
+                  <span className="text-[11px] font-black text-[#1B67B2]">
+                    {session?.user?.name?.[0]?.toUpperCase() || "U"}
+                  </span>
                 )}
               </Link>
 
@@ -136,177 +130,116 @@ export function Navbar() {
               <AnimatePresence>
                 {showLogout && (
                   <motion.div
-                    initial={{ opacity: 0, y: 10, x: '-50%' }}
-                    animate={{ opacity: 1, y: 0, x: '-50%' }}
-                    exit={{ opacity: 0, y: 10, x: '-50%' }}
-                    className="absolute top-full left-1/2 mt-4 z-[120]"
+                    initial={{ opacity: 0, y: 8, x: "-50%" }}
+                    animate={{ opacity: 1, y: 0, x: "-50%" }}
+                    exit={{ opacity: 0, y: 8, x: "-50%" }}
+                    className="absolute top-full left-1/2 mt-3 z-[120]"
                   >
                     <button
                       onClick={() => signOut()}
-                      className="whitespace-nowrap flex items-center gap-2 px-5 py-2.5 bg-[#111113] border border-white/[0.08] rounded-xl text-[9px] font-black text-red-400 uppercase tracking-widest hover:bg-red-500 hover:text-white transition-all shadow-2xl glass-card"
+                      className="whitespace-nowrap flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-[10px] font-bold text-red-600 uppercase tracking-widest hover:bg-red-50 transition-all shadow-xl"
                     >
-                      <LogOut className="w-3 h-3" />
+                      <LogOut className="w-3.5 h-3.5" />
                       Sign Out
                     </button>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
-          ) : (
-            <Link href="/careers/auth" className="text-[9px] font-black text-white/40 hover:text-indigo-400 uppercase tracking-[0.3em] transition-colors">
-              Login
-            </Link>
-          )}
+          ) : null}
 
-          <Link href="/#contact" className="h-10 px-8 bg-gradient-to-r from-indigo-600 to-violet-600 text-white text-[10px] font-bold uppercase tracking-[0.2em] rounded-full hover:shadow-[0_0_24px_rgba(99,102,241,0.4)] transition-all active:scale-95 flex items-center justify-center ml-4 whitespace-nowrap">
-            Contact Us
+          <Link
+            href="/contact"
+            className="h-9 px-5 bg-[#1B67B2] hover:bg-[#15538e] text-white text-[10px] font-extrabold uppercase tracking-[0.16em] rounded-full hover:shadow-[0_4px_20px_rgba(27,103,178,0.35)] transition-all active:scale-95 flex items-center justify-center ml-1 whitespace-nowrap shadow-sm"
+          >
+            Start a Project
           </Link>
         </div>
 
-        {/* Mobile Toggle */}
+        {/* Mobile Toggle Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden text-white p-2"
+          className="lg:hidden text-slate-800 p-2 rounded-lg bg-slate-100 border border-slate-200 hover:bg-slate-200 transition-colors"
+          aria-label="Toggle Navigation Menu"
         >
-          {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          {isOpen ? <X className="w-5 h-5 text-slate-800" /> : <Menu className="w-5 h-5 text-slate-800" />}
         </button>
 
-        {/* Full-Screen Mobile Menu Overhaul */}
+        {/* Mobile Menu Overlay */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 w-screen h-screen bg-[#09090B]/95 backdrop-blur-3xl z-[200] md:hidden flex flex-col items-center justify-between p-12 overflow-hidden"
+              className="fixed inset-0 w-screen h-screen bg-white/98 backdrop-blur-3xl z-[200] lg:hidden flex flex-col items-center justify-between p-8 overflow-y-auto"
             >
-              {/* Background Accents for depth */}
-              <div className="absolute inset-0 mesh-gradient-1 opacity-20 pointer-events-none" />
-              <div className="absolute inset-0 dot-grid opacity-10 pointer-events-none" />
-
-              {/* Close Button - positioned to align with nav logo */}
-              <div className="w-full flex justify-end">
+              {/* Close Button Header */}
+              <div className="w-full flex justify-between items-center pb-4 border-b border-slate-200">
+                <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center gap-3">
+                  <img src="/vnt-logo.png" alt="VNT Logo" className="w-9 h-9 object-contain" />
+                  <span className="text-sm font-black text-[#1B67B2] tracking-widest">VERVE NOVA</span>
+                </Link>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="w-12 h-12 rounded-full bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-white"
+                  className="w-10 h-10 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-800 hover:bg-slate-200"
                 >
-                  <X className="w-6 h-6" />
+                  <X className="w-5 h-5" />
                 </button>
               </div>
 
-              {/* Mobile Menu Logo */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8 }}
-                className="flex flex-col items-center gap-4"
-              >
-                <img src="/vnt-logo.png" alt="VNT Logo" className="w-20 h-20 object-contain" />
-              </motion.div>
-
-              {/* Staggered Links */}
-              <motion.div
-                className="flex flex-col items-center gap-8 w-full"
-                initial="closed"
-                animate="open"
-                variants={{
-                  open: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
-                  closed: { transition: { staggerChildren: 0.05, staggerDirection: -1 } }
-                }}
-              >
+              {/* Navigation Links */}
+              <div className="flex flex-col items-center gap-6 my-auto py-8 w-full">
                 {navLinks.map((link) => (
-                  <motion.div
+                  <Link
                     key={link.name}
-                    variants={{
-                      open: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
-                      closed: { opacity: 0, y: 20 }
-                    }}
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
+                    className="text-base font-black text-slate-800 uppercase tracking-[0.2em] hover:text-[#1B67B2] transition-colors"
                   >
-                    <Link
-                      href={link.href}
-                      onClick={() => setIsOpen(false)}
-                      className="text-2xl sm:text-3xl font-black text-white/90 uppercase tracking-[0.4em] hover:text-indigo-400 transition-colors relative group"
-                    >
-                      {link.name}
-                      <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-1 bg-indigo-500 rounded-full group-hover:w-full transition-all duration-500" />
-                    </Link>
-                  </motion.div>
+                    {link.name}
+                  </Link>
                 ))}
 
-                {status === 'authenticated' ? (
-                  <motion.div
-                    variants={{
-                      open: { opacity: 1, y: 0 },
-                      closed: { opacity: 0, y: 20 }
-                    }}
-                    className="flex flex-col items-center gap-6 mt-4"
-                  >
+                {status === "authenticated" && (
+                  <div className="flex flex-col items-center gap-4 mt-2 pt-4 border-t border-slate-200 w-full max-w-xs">
                     <Link
-                      href={session?.user?.role?.toUpperCase() === 'ADMIN' ? '/admin' : '/profile'}
+                      href={session?.user?.role?.toUpperCase() === "ADMIN" ? "/admin" : "/profile"}
                       onClick={() => setIsOpen(false)}
-                      className="text-sm font-black text-indigo-400 uppercase tracking-[0.5em]"
+                      className="text-sm font-bold text-[#1B67B2] uppercase tracking-widest"
                     >
-                      {session?.user?.role?.toUpperCase() === 'ADMIN' ? "Admin" : "My Profile"}
+                      {session?.user?.role?.toUpperCase() === "ADMIN" ? "Admin Portal" : "My Profile"}
                     </Link>
                     <button
                       onClick={() => {
                         setIsOpen(false);
                         signOut();
                       }}
-                      className="text-sm font-black text-red-500/60 uppercase tracking-[0.5em]"
+                      className="text-sm font-bold text-red-600 uppercase tracking-widest"
                     >
-                      Logout
+                      Sign Out
                     </button>
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    variants={{
-                      open: { opacity: 1, y: 0 },
-                      closed: { opacity: 0, y: 20 }
-                    }}
-                  >
-                    <Link
-                      href="/careers/auth"
-                      onClick={() => setIsOpen(false)}
-                      className="text-sm font-black text-indigo-400 uppercase tracking-[0.5em]"
-                    >
-                      Login
-                    </Link>
-                  </motion.div>
+                  </div>
                 )}
-              </motion.div>
 
-              {/* Menu Footer */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 }}
-                className="w-full flex flex-col items-center gap-10"
-              >
-                <div className="h-px w-20 bg-white/10" />
+                <Link
+                  href="/contact"
+                  onClick={() => setIsOpen(false)}
+                  className="w-full max-w-xs h-12 bg-[#1B67B2] hover:bg-[#15538e] text-white font-bold text-xs uppercase tracking-widest rounded-full flex items-center justify-center shadow-md mt-4"
+                >
+                  Start a Project
+                </Link>
+              </div>
 
-                <div className="flex flex-col items-center gap-3">
-                  <span className="text-[8px] font-black text-white/20 uppercase tracking-[0.6em]">Reach Out</span>
-                  <a href="mailto:work.vervenova.lko@gmail.com" className="text-[10px] font-bold text-white/40 tracking-wider">work.vervenova.lko@gmail.com</a>
-                </div>
-
-                <div className="flex items-center gap-6">
-                  {/* Social placeholders for now - matching Footer style */}
-                  <div className="w-10 h-10 rounded-xl border border-white/[0.06] flex items-center justify-center text-white/20">
-                    <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-                  </div>
-                  <div className="w-10 h-10 rounded-xl border border-white/[0.06] flex items-center justify-center text-white/20">
-                    <div className="w-1.5 h-1.5 rounded-full bg-violet-500" />
-                  </div>
-                  <div className="w-10 h-10 rounded-xl border border-white/[0.06] flex items-center justify-center text-white/20">
-                    <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-                  </div>
-                </div>
-
-                <p className="text-[7px] font-black text-white/10 uppercase tracking-[0.8em] select-none">
-                  Verve Nova Technologies
+              {/* Bottom Details */}
+              <div className="w-full pt-4 border-t border-slate-200 text-center">
+                <p className="text-[11px] font-semibold text-slate-600">
+                  contact@vervenovatech.com • +91 7380663685
                 </p>
-              </motion.div>
+                <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">
+                  © {new Date().getFullYear()} Verve Nova Technologies
+                </p>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

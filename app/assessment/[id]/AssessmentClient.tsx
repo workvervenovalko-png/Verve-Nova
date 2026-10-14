@@ -3,48 +3,40 @@
 import { useState, useEffect } from "react";
 import { startAssessment, submitAssessment } from "@/app/actions/assessment";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, Clock, Play, BrainCircuit, Linkedin, Instagram } from "lucide-react";
+import { Clock, CheckCircle2, AlertCircle, ArrowRight, BrainCircuit, Linkedin, Instagram } from "lucide-react";
 import { toast } from "sonner";
 import { VNTLoader } from "@/components/vnt-loader";
-
-interface Question {
-  id: string;
-  type: string;
-  text: string;
-  codeSnippet?: string;
-  options: string[];
-}
 
 interface AssessmentClientProps {
   appId: string;
   candidateName: string;
   roleSlug: string;
-  questions: Question[];
+  questions: Array<{
+    id: string;
+    text: string;
+    codeSnippet?: string;
+    options: string[];
+    type: string;
+  }>;
   initialStatus: string;
-  startedAt?: string | Date;
+  startedAt?: Date;
 }
 
-const TOTAL_TIME_SECONDS = 60 * 60; // 1 Hour
-
-export default function AssessmentClient({ appId, candidateName, roleSlug, questions, initialStatus, startedAt }: AssessmentClientProps) {
-  const calculateInitialTime = () => {
-    if (initialStatus === 'In Progress' && startedAt) {
-      const now = new Date().getTime();
-      const start = new Date(startedAt).getTime();
-      const elapsedSeconds = Math.floor((now - start) / 1000);
-      const remaining = TOTAL_TIME_SECONDS - elapsedSeconds;
-      return remaining > 0 ? remaining : 0;
-    }
-    return TOTAL_TIME_SECONDS;
-  };
-
+export default function AssessmentClient({
+  appId,
+  candidateName,
+  roleSlug,
+  questions,
+  initialStatus,
+  startedAt
+}: AssessmentClientProps) {
   const [status, setStatus] = useState(initialStatus);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>>({});
-  const [timeLeft, setTimeLeft] = useState(calculateInitialTime());
+  const [timeLeft, setTimeLeft] = useState<number>(30 * 60); // 30 mins
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isStarting, setIsStarting] = useState(false);
 
+  // Mandatory social follow states
   const [socialFollows, setSocialFollows] = useState({
     linkedin: false,
     instaGlobal: false,
@@ -54,96 +46,127 @@ export default function AssessmentClient({ appId, candidateName, roleSlug, quest
 
   const allFollowed = socialFollows.linkedin && socialFollows.instaGlobal && socialFollows.instaIndia && socialFollows.instaLucknow;
 
+  // Initialize timer
   useEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (status === 'In Progress' && timeLeft > 0) {
-      timer = setInterval(() => {
-        setTimeLeft((prev) => {
-          if (prev <= 1) {
-            clearInterval(timer);
-            handleAutoSubmit();
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-    }
-    return () => clearInterval(timer);
-  }, [status, timeLeft]);
+    if (status === 'In_Progress' && startedAt) {
+      const elapsed = Math.floor((new Date().getTime() - new Date(startedAt).getTime()) / 1000);
+      const remaining = Math.max(0, (30 * 60) - elapsed);
+      setTimeLeft(remaining);
 
-  const formatTime = (seconds: number) => {
-    const m = Math.floor(seconds / 60);
-    const s = seconds % 60;
-    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-  };
+      if (remaining === 0) {
+        handleAutoSubmit();
+      }
+    }
+  }, [status, startedAt]);
+
+  // Countdown timer
+  useEffect(() => {
+    if (status !== 'In_Progress') return;
+
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          handleAutoSubmit();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [status]);
 
   const handleStart = async () => {
-    setIsStarting(true);
+    if (!allFollowed) {
+      toast.error("Please connect with all official channels to unlock the assessment.");
+      return;
+    }
+
+    setIsSubmitting(true);
     const res = await startAssessment(appId);
     if (res.success) {
-      setStatus('In Progress');
-      setTimeLeft(TOTAL_TIME_SECONDS);
+      setStatus('In_Progress');
+      toast.success("Assessment started! 30-minute timer initiated.");
     } else {
       toast.error(res.error || "Failed to start assessment.");
     }
-    setIsStarting(false);
+    setIsSubmitting(false);
   };
 
-  const handleOptionSelect = (optIndex: number) => {
-    const qId = questions[currentQuestionIndex].id;
-    setAnswers(prev => ({ ...prev, [qId]: optIndex }));
+  const handleOptionSelect = (optionIndex: number) => {
+    setAnswers(prev => ({
+      ...prev,
+      [questions[currentQuestionIndex].id]: optionIndex
+    }));
   };
 
   const handleManualSubmit = async () => {
-    if (!confirm("Are you sure you want to submit? You cannot change your answers after submission.")) return;
-    await performSubmit();
+    const unansweredCount = questions.length - Object.keys(answers).length;
+    if (unansweredCount > 0) {
+      const confirmSubmit = window.confirm(`You have ${unansweredCount} unanswered questions. Are you sure you want to submit?`);
+      if (!confirmSubmit) return;
+    }
+    await processSubmit();
   };
 
   const handleAutoSubmit = async () => {
-    toast.error("Time is up! Auto-submitting your assessment...");
-    await performSubmit();
+    toast.error("Time expired! Submitting answers automatically.");
+    await processSubmit();
   };
 
-  const performSubmit = async () => {
+  const processSubmit = async () => {
     setIsSubmitting(true);
     const res = await submitAssessment(appId, answers);
-    setIsSubmitting(false);
-    
     if (res.success) {
       setStatus('Completed');
       toast.success("Assessment submitted successfully!");
     } else {
       toast.error(res.error || "Failed to submit assessment.");
     }
+    setIsSubmitting(false);
+  };
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
   if (status === 'Completed') {
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 text-center">
-        <div className="w-20 h-20 bg-emerald-500/20 rounded-full flex items-center justify-center mb-6 border border-emerald-500/50">
-          <CheckCircle2 className="w-10 h-10 text-emerald-400" />
+      <div className="min-h-screen bg-white text-slate-900 flex flex-col items-center justify-center p-6 text-center">
+        <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mb-6 border border-emerald-200">
+          <CheckCircle2 className="w-10 h-10 text-emerald-600" />
         </div>
-        <h1 className="text-3xl font-black text-white uppercase tracking-tighter mb-4">ASSESSMENT SUBMITTED</h1>
-        <p className="text-white/40 uppercase tracking-widest text-sm max-w-md">Your responses have been recorded securely. You may close this window. Please wait for further communication from our talent acquisition team.</p>
+        <h1 className="text-3xl font-black text-slate-950 uppercase tracking-tight mb-3">Assessment Submitted</h1>
+        <p className="text-slate-600 text-sm max-w-md mb-8 leading-relaxed">
+          Your responses have been recorded securely. You may close this window. Please wait for further communication from our talent acquisition team.
+        </p>
+        <Button 
+          onClick={() => window.location.href = "/"}
+          className="bg-[#1b67b2] hover:bg-[#15538e] text-white font-bold rounded-xl px-8 h-12 text-xs uppercase tracking-wider"
+        >
+          Return to Homepage
+        </Button>
       </div>
     );
   }
 
   if (status === 'Pending') {
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 relative overflow-hidden">
-        {/* Ambient Glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-500/[0.05] blur-[100px] rounded-full pointer-events-none" />
-        
-        <div className="glass-card max-w-xl w-full p-8 md:p-10 rounded-[2.5rem] border-white/[0.08] relative z-10 text-center">
-          <BrainCircuit className="w-16 h-16 text-indigo-400 mx-auto mb-6 opacity-80" />
-          <h1 className="text-3xl font-black text-white uppercase tracking-tighter mb-2">Technical Assessment</h1>
-          <p className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest mb-8">{roleSlug.replace('-', ' ')} Domain</p>
+      <div className="min-h-screen bg-[#fcfdfd] text-slate-900 selection:bg-blue-500/20 flex flex-col items-center justify-center p-6 relative overflow-hidden font-sans">
+        <div className="max-w-xl w-full p-8 md:p-12 rounded-3xl bg-white border border-slate-200 shadow-xl shadow-blue-500/5 relative z-10 text-center">
+          <div className="w-16 h-16 rounded-2xl bg-blue-50 border border-blue-200 flex items-center justify-center mx-auto mb-6 text-[#1b67b2]">
+            <BrainCircuit className="w-8 h-8" />
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-950 uppercase tracking-tight mb-2">Technical Assessment</h1>
+          <p className="text-xs font-bold text-[#1b67b2] uppercase tracking-widest mb-8">{roleSlug.replace('-', ' ')} Domain</p>
           
           {!allFollowed ? (
-            <div className="text-left bg-white/[0.02] border border-white/[0.04] p-6 rounded-2xl mb-8 space-y-4">
-              <h3 className="text-lg font-bold text-white">Step 1: Connect with Us</h3>
-              <p className="text-xs text-white/50 mb-4">Please follow our official channels to unlock the start button.</p>
+            <div className="text-left bg-slate-50 border border-slate-200 p-6 rounded-2xl mb-8 space-y-4">
+              <h3 className="text-sm font-black text-slate-900 uppercase">Step 1: Connect with Us</h3>
+              <p className="text-xs text-slate-600 mb-4 leading-relaxed">Please follow our official channels to unlock the assessment round.</p>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <a 
@@ -151,14 +174,14 @@ export default function AssessmentClient({ appId, candidateName, roleSlug, quest
                   target="_blank" 
                   rel="noopener noreferrer"
                   onClick={() => setSocialFollows(prev => ({...prev, linkedin: true}))}
-                  className={`flex items-center gap-3 p-3 rounded-xl border transition-all ${socialFollows.linkedin ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-[#0077b5]/10 border-[#0077b5]/30 hover:bg-[#0077b5]/20'}`}
+                  className={`flex items-center gap-3 p-3 rounded-xl border transition-all ${socialFollows.linkedin ? 'bg-emerald-50 border-emerald-300' : 'bg-white border-slate-200 hover:border-[#0077b5]'}`}
                 >
-                  <div className="w-8 h-8 rounded bg-[#0077b5] flex items-center justify-center text-white">
+                  <div className="w-8 h-8 rounded-lg bg-[#0077b5] flex items-center justify-center text-white shrink-0">
                     {socialFollows.linkedin ? <CheckCircle2 className="w-4 h-4" /> : <Linkedin className="w-4 h-4" />}
                   </div>
-                  <div className="flex-1">
-                    <p className="text-xs font-bold text-white">LinkedIn</p>
-                    <p className="text-[10px] text-white/50">{socialFollows.linkedin ? "Followed" : "Follow Us"}</p>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-bold text-slate-900">LinkedIn</p>
+                    <p className="text-[10px] text-slate-500">{socialFollows.linkedin ? "Followed" : "Follow Page"}</p>
                   </div>
                 </a>
 
@@ -167,14 +190,14 @@ export default function AssessmentClient({ appId, candidateName, roleSlug, quest
                   target="_blank" 
                   rel="noopener noreferrer"
                   onClick={() => setSocialFollows(prev => ({...prev, instaGlobal: true}))}
-                  className={`flex items-center gap-3 p-3 rounded-xl border transition-all ${socialFollows.instaGlobal ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-pink-500/10 border-pink-500/30 hover:bg-pink-500/20'}`}
+                  className={`flex items-center gap-3 p-3 rounded-xl border transition-all ${socialFollows.instaGlobal ? 'bg-emerald-50 border-emerald-300' : 'bg-white border-slate-200 hover:border-pink-500'}`}
                 >
-                  <div className="w-8 h-8 rounded bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center text-white">
+                  <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center text-white shrink-0">
                     {socialFollows.instaGlobal ? <CheckCircle2 className="w-4 h-4" /> : <Instagram className="w-4 h-4" />}
                   </div>
-                  <div className="flex-1">
-                    <p className="text-xs font-bold text-white">Global Page</p>
-                    <p className="text-[10px] text-white/50">{socialFollows.instaGlobal ? "Followed" : "Follow Us"}</p>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-bold text-slate-900">Global Page</p>
+                    <p className="text-[10px] text-slate-500">{socialFollows.instaGlobal ? "Followed" : "Follow Page"}</p>
                   </div>
                 </a>
 
@@ -183,14 +206,14 @@ export default function AssessmentClient({ appId, candidateName, roleSlug, quest
                   target="_blank" 
                   rel="noopener noreferrer"
                   onClick={() => setSocialFollows(prev => ({...prev, instaIndia: true}))}
-                  className={`flex items-center gap-3 p-3 rounded-xl border transition-all ${socialFollows.instaIndia ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-pink-500/10 border-pink-500/30 hover:bg-pink-500/20'}`}
+                  className={`flex items-center gap-3 p-3 rounded-xl border transition-all ${socialFollows.instaIndia ? 'bg-emerald-50 border-emerald-300' : 'bg-white border-slate-200 hover:border-pink-500'}`}
                 >
-                  <div className="w-8 h-8 rounded bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center text-white">
+                  <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center text-white shrink-0">
                     {socialFollows.instaIndia ? <CheckCircle2 className="w-4 h-4" /> : <Instagram className="w-4 h-4" />}
                   </div>
-                  <div className="flex-1">
-                    <p className="text-xs font-bold text-white">India Page</p>
-                    <p className="text-[10px] text-white/50">{socialFollows.instaIndia ? "Followed" : "Follow Us"}</p>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-bold text-slate-900">India Page</p>
+                    <p className="text-[10px] text-slate-500">{socialFollows.instaIndia ? "Followed" : "Follow Page"}</p>
                   </div>
                 </a>
 
@@ -199,41 +222,40 @@ export default function AssessmentClient({ appId, candidateName, roleSlug, quest
                   target="_blank" 
                   rel="noopener noreferrer"
                   onClick={() => setSocialFollows(prev => ({...prev, instaLucknow: true}))}
-                  className={`flex items-center gap-3 p-3 rounded-xl border transition-all ${socialFollows.instaLucknow ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-pink-500/10 border-pink-500/30 hover:bg-pink-500/20'}`}
+                  className={`flex items-center gap-3 p-3 rounded-xl border transition-all ${socialFollows.instaLucknow ? 'bg-emerald-50 border-emerald-300' : 'bg-white border-slate-200 hover:border-pink-500'}`}
                 >
-                  <div className="w-8 h-8 rounded bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center text-white">
+                  <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center text-white shrink-0">
                     {socialFollows.instaLucknow ? <CheckCircle2 className="w-4 h-4" /> : <Instagram className="w-4 h-4" />}
                   </div>
-                  <div className="flex-1">
-                    <p className="text-xs font-bold text-white">Lucknow Page</p>
-                    <p className="text-[10px] text-white/50">{socialFollows.instaLucknow ? "Followed" : "Follow Us"}</p>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-bold text-slate-900">Lucknow Hub</p>
+                    <p className="text-[10px] text-slate-500">{socialFollows.instaLucknow ? "Followed" : "Follow Page"}</p>
                   </div>
                 </a>
               </div>
             </div>
           ) : (
-            <div className="text-left bg-emerald-500/10 border border-emerald-500/30 p-6 rounded-2xl mb-8 space-y-4 animate-in fade-in zoom-in duration-500">
-              <div className="flex items-center gap-2 mb-2">
-                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                <h3 className="text-sm font-bold text-emerald-400 uppercase tracking-widest">Assessment Unlocked</h3>
-              </div>
-              <p className="text-sm font-medium text-white/70">Welcome, <strong className="text-white">{candidateName}</strong>.</p>
-              <ul className="text-xs text-white/50 space-y-2 uppercase tracking-wide">
-                <li>• Total Questions: <strong className="text-white">{questions.length}</strong></li>
-                <li>• Time Allowed: <strong className="text-white">60 Minutes</strong></li>
-                <li>• Sections: <strong className="text-white">Aptitude, Quant, Reasoning, Technical</strong></li>
-                <li>• <strong className="text-rose-400">Warning:</strong> Timer cannot be paused once started.</li>
-              </ul>
+            <div className="bg-emerald-50 border border-emerald-200 p-4 rounded-2xl mb-8 flex items-center gap-3 text-emerald-800 text-xs font-bold">
+              <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+              <span>Channels verified! You are ready to start the assessment.</span>
             </div>
           )}
 
-          <Button 
-            onClick={handleStart} 
-            disabled={isStarting || !allFollowed}
-            className={`w-full h-14 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-300 ${!allFollowed ? 'bg-white/[0.05] text-white/30 cursor-not-allowed border border-white/[0.05]' : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-[0_0_20px_rgba(79,70,229,0.3)]'}`}
-          >
-            {isStarting ? <VNTLoader size="sm" /> : <><Play className="w-4 h-4 mr-2" /> {allFollowed ? 'Start Assessment' : 'Locked'}</>}
-          </Button>
+          <div className="space-y-4">
+            <div className="text-xs text-slate-500 flex items-center justify-center gap-6">
+              <span>⏱ 30 Minutes</span>
+              <span>📝 {questions.length} Questions</span>
+              <span>🔒 Anti-Cheating Monitored</span>
+            </div>
+
+            <Button 
+              onClick={handleStart}
+              disabled={!allFollowed || isSubmitting}
+              className={`w-full h-14 ${allFollowed ? 'bg-[#1b67b2] hover:bg-[#15538e] cursor-pointer' : 'bg-slate-200 text-slate-400 cursor-not-allowed'} text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md`}
+            >
+              {isSubmitting ? <VNTLoader size="sm" /> : "Start Technical Assessment"}
+            </Button>
+          </div>
         </div>
       </div>
     );
@@ -242,21 +264,21 @@ export default function AssessmentClient({ appId, candidateName, roleSlug, quest
   const currentQ = questions[currentQuestionIndex];
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-[#fcfdfd] text-slate-900 flex flex-col font-sans">
       {/* Top Bar */}
-      <header className="h-20 border-b border-white/[0.08] flex items-center justify-between px-6 md:px-12 bg-background/50 backdrop-blur-md sticky top-0 z-50">
+      <header className="h-20 border-b border-slate-200 flex items-center justify-between px-6 md:px-12 bg-white/95 backdrop-blur-md sticky top-0 z-50 shadow-xs">
         <div className="flex items-center gap-4">
-          <img src="/vnt-logo.png" alt="VNT" className="w-8 h-8 object-contain opacity-50" />
+          <img src="/vnt-logo.png" alt="VNT" className="w-8 h-8 object-contain" />
           <div className="hidden md:block">
-            <h2 className="text-sm font-black text-white uppercase tracking-tighter leading-none">Assessment Round</h2>
-            <p className="text-[9px] text-indigo-400 font-mono tracking-widest">{roleSlug.toUpperCase()}</p>
+            <h2 className="text-sm font-black text-slate-900 uppercase tracking-tight leading-none">Assessment Round</h2>
+            <p className="text-[10px] text-[#1b67b2] font-mono tracking-widest mt-0.5">{roleSlug.toUpperCase()}</p>
           </div>
         </div>
         
-        <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2 px-4 py-2 bg-indigo-500/10 border border-indigo-500/20 rounded-lg">
-            <Clock className={`w-4 h-4 ${timeLeft < 300 ? 'text-rose-500 animate-pulse' : 'text-indigo-400'}`} />
-            <span className={`text-lg font-mono font-bold tracking-wider ${timeLeft < 300 ? 'text-rose-400' : 'text-white'}`}>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 px-3.5 py-1.5 bg-blue-50 border border-blue-200 rounded-xl">
+            <Clock className={`w-4 h-4 ${timeLeft < 300 ? 'text-rose-600 animate-pulse' : 'text-[#1b67b2]'}`} />
+            <span className={`text-base font-mono font-bold tracking-wider ${timeLeft < 300 ? 'text-rose-600' : 'text-[#1b67b2]'}`}>
               {formatTime(timeLeft)}
             </span>
           </div>
@@ -264,7 +286,7 @@ export default function AssessmentClient({ appId, candidateName, roleSlug, quest
           <Button 
             onClick={handleManualSubmit}
             disabled={isSubmitting}
-            className="bg-emerald-600 hover:bg-emerald-500 text-white font-black text-[10px] uppercase tracking-widest h-10 px-6 rounded-lg"
+            className="bg-emerald-600 hover:bg-emerald-700 text-white font-black text-[10px] uppercase tracking-widest h-10 px-5 rounded-xl cursor-pointer"
           >
             {isSubmitting ? <VNTLoader size="sm" /> : "Finish & Submit"}
           </Button>
@@ -273,48 +295,48 @@ export default function AssessmentClient({ appId, candidateName, roleSlug, quest
 
       {/* Main Content */}
       <main className="flex-1 max-w-4xl w-full mx-auto p-6 md:p-12">
-        <div className="mb-8 flex items-center justify-between">
-          <h3 className="text-[10px] font-bold text-white/40 uppercase tracking-[0.3em]">
+        <div className="mb-6 flex items-center justify-between">
+          <h3 className="text-xs font-bold text-[#1b67b2] uppercase tracking-wider">
             Question {currentQuestionIndex + 1} of {questions.length}
           </h3>
-          <span className="px-3 py-1 bg-white/[0.05] rounded-full text-[9px] font-bold text-white/30 uppercase tracking-widest">
+          <span className="px-3 py-1 bg-slate-100 rounded-full text-[10px] font-bold text-slate-600 uppercase tracking-wider">
             {currentQ.type}
           </span>
         </div>
 
-        <div className="space-y-8">
-          <h2 className="text-xl md:text-2xl font-bold text-white leading-relaxed">
+        <div className="space-y-6 bg-white p-7 sm:p-10 rounded-3xl border border-slate-200 shadow-xs">
+          <h2 className="text-lg md:text-xl font-black text-slate-900 leading-relaxed">
             {currentQ.text}
           </h2>
 
           {currentQ.codeSnippet && (
-            <div className="bg-[#09090b] border border-white/[0.08] p-6 rounded-xl overflow-x-auto">
-              <pre className="text-sm font-mono text-indigo-300">
+            <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl overflow-x-auto">
+              <pre className="text-xs font-mono text-sky-300">
                 <code>{currentQ.codeSnippet}</code>
               </pre>
             </div>
           )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 pt-2">
             {currentQ.options.map((opt, idx) => {
               const isSelected = answers[currentQ.id] === idx;
               return (
                 <button
                   key={idx}
                   onClick={() => handleOptionSelect(idx)}
-                  className={`p-6 text-left rounded-xl border transition-all ${
+                  className={`p-5 text-left rounded-2xl border transition-all cursor-pointer ${
                     isSelected 
-                      ? 'bg-indigo-600/20 border-indigo-500 shadow-[0_0_20px_rgba(99,102,241,0.15)] text-white' 
-                      : 'bg-white/[0.02] border-white/[0.08] text-white/70 hover:bg-white/[0.05] hover:border-white/20'
+                      ? 'bg-blue-50/80 border-[#1b67b2] shadow-sm text-slate-950 font-bold' 
+                      : 'bg-slate-50 border-slate-200 text-slate-800 hover:bg-slate-100 hover:border-slate-300'
                   }`}
                 >
-                  <div className="flex items-start gap-4 w-full">
-                    <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 mt-0.5 ${
-                      isSelected ? 'border-indigo-400 bg-indigo-400/20' : 'border-white/20'
+                  <div className="flex items-start gap-3 w-full">
+                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 mt-0.5 ${
+                      isSelected ? 'border-[#1b67b2] bg-[#1b67b2]' : 'border-slate-300'
                     }`}>
-                      {isSelected && <div className="w-2.5 h-2.5 bg-indigo-400 rounded-full" />}
+                      {isSelected && <div className="w-2 h-2 bg-white rounded-full" />}
                     </div>
-                    <span className="font-medium flex-1 break-words min-w-0">{opt}</span>
+                    <span className="text-xs leading-relaxed flex-1 break-words min-w-0">{opt}</span>
                   </div>
                 </button>
               );
@@ -322,12 +344,12 @@ export default function AssessmentClient({ appId, candidateName, roleSlug, quest
           </div>
         </div>
 
-        <div className="mt-16 flex items-center justify-between pt-8 border-t border-white/[0.08]">
+        <div className="mt-8 flex items-center justify-between pt-6 border-t border-slate-200">
           <Button
             variant="outline"
             onClick={() => setCurrentQuestionIndex(p => Math.max(0, p - 1))}
             disabled={currentQuestionIndex === 0}
-            className="border-white/[0.08] bg-transparent text-white/50 hover:text-white uppercase text-[10px] tracking-widest font-bold h-12 px-8"
+            className="border-slate-200 bg-white text-slate-700 hover:text-slate-950 uppercase text-xs tracking-wider font-bold h-11 px-6 rounded-xl cursor-pointer"
           >
             Previous
           </Button>
@@ -341,7 +363,7 @@ export default function AssessmentClient({ appId, candidateName, roleSlug, quest
                 setCurrentQuestionIndex(p => Math.min(questions.length - 1, p + 1));
               }
             }}
-            className={`${currentQuestionIndex === questions.length - 1 ? 'bg-emerald-600 hover:bg-emerald-500' : 'bg-indigo-600 hover:bg-indigo-500'} ${answers[currentQ.id] === undefined ? 'opacity-50 cursor-not-allowed' : ''} text-white uppercase text-[10px] tracking-widest font-bold h-12 px-8 border-0 transition-all`}
+            className={`${currentQuestionIndex === questions.length - 1 ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-[#1b67b2] hover:bg-[#15538e]'} ${answers[currentQ.id] === undefined ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'} text-white uppercase text-xs tracking-wider font-bold h-11 px-7 rounded-xl border-0 transition-all shadow-md`}
           >
             {currentQuestionIndex === questions.length - 1 ? "Submit Assessment" : "Next Question"}
           </Button>

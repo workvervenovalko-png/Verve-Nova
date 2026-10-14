@@ -5,8 +5,8 @@ import {
   Linkedin, 
   Instagram, 
   Facebook, 
-  MessageCircle, 
-  Phone, 
+  MessageCircle,
+  Phone,
 } from "lucide-react";
 import Link from "next/link";
 

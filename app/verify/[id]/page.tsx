@@ -134,7 +134,7 @@ export default function DocumentPreviewPage() {
           <Button 
             onClick={() => router.back()}
             variant="ghost" 
-            className="text-white/40 hover:text-white flex items-center gap-2"
+            className="text-slate-200 hover:text-white flex items-center gap-2 font-bold"
           >
             <ArrowLeft className="w-4 h-4" /> Back to Verification
           </Button>
@@ -173,9 +173,9 @@ export default function DocumentPreviewPage() {
           </div>
         </div>
 
-        <div className="mt-12 text-center text-white/20 max-w-lg sticky left-0">
-          <p className="text-[10px] font-bold uppercase tracking-[0.3em]">Official Digital Certification // Verve Nova Technologies</p>
-          <p className="text-[8px] mt-2 italic">This document is digitally verified and requires no physical signature for authentication in its digital form. For official verification, visit vervenovatech.com/verify.</p>
+        <div className="mt-12 text-center text-slate-300 max-w-lg sticky left-0 font-medium">
+          <p className="text-xs font-bold uppercase tracking-wider text-slate-200">Official Digital Certification // Verve Nova Technologies</p>
+          <p className="text-[10px] mt-2 italic text-slate-400">This document is digitally verified and requires no physical signature for authentication in its digital form. For official verification, visit vervenovatech.com/verify.</p>
         </div>
       </main>
     </>

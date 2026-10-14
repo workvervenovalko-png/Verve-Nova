@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Minus, HelpCircle } from "lucide-react";
+import { ChevronDown, HelpCircle, PhoneCall } from "lucide-react";
+import Link from "next/link";
 
 export function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -10,75 +11,117 @@ export function FAQSection() {
   const faqs = [
     {
       question: "How much time does it take to complete a project?",
-      answer: "Small websites usually take 1-2 weeks, while complex apps can take 4-8 weeks. We give you a clear timeline before starting so you know exactly when to expect delivery."
+      answer: "Small websites usually take 1-2 weeks, while complex apps can take 4-8 weeks. We give you a clear timeline before starting so you know exactly when to expect delivery.",
     },
     {
       question: "What are your pricing models?",
-      answer: "We offer both fixed-price projects and monthly maintenance plans. Our pricing is transparent—no hidden charges. We'll give you a detailed quote after understanding your requirements."
+      answer: "We offer both fixed-price projects and monthly maintenance plans. Our pricing is transparent—no hidden charges. We'll give you a detailed quote after understanding your requirements.",
     },
     {
       question: "Do you provide support after the project is live?",
-      answer: "Yes, we provide 24/7 technical support. We don't just build and leave; we ensure your website or app runs smoothly and stays updated."
+      answer: "Yes, we provide 24/7 technical support. We don't just build and leave; we ensure your website or app runs smoothly and stays updated.",
     },
     {
       question: "Can I manage the website myself without coding knowledge?",
-      answer: "Absolutely. We provide a simple admin panel where you can update text, images, and other content without needing to write a single line of code."
-    }
+      answer: "Absolutely. We provide a simple admin panel where you can update text, images, and other content without needing to write a single line of code.",
+    },
   ];
 
   return (
-    <section className="py-28 bg-background border-t border-white/[0.04] relative overflow-hidden">
-      {/* Ambient glow */}
-      <div className="absolute top-0 right-1/4 w-[400px] h-[400px] bg-violet-500/[0.03] blur-[120px] rounded-full pointer-events-none" />
-      
-      <div className="max-w-4xl mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
-          <p className="text-xs font-bold text-indigo-400 uppercase tracking-[0.5em] mb-4">Common Questions</p>
-          <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight uppercase leading-none">
-            Frequently <span className="text-white/10">Asked Questions</span>
+    <section className="py-20 bg-[#f8fafc] border-b border-[#e2e8f0]">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Header Section (Exact Verve Nova Strings + AppSquadz Layout) */}
+        <div className="text-center max-w-3xl mx-auto mb-14">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-100 text-[#1b67b2] text-xs font-bold uppercase tracking-wider mb-4">
+            Common Questions
+          </div>
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-[#0f172a] uppercase tracking-tight mb-4">
+            Frequently <span className="text-[#1b67b2]">Asked Questions</span>
           </h2>
         </div>
 
-        <div className="space-y-4">
-          {faqs.map((faq, i) => (
-            <div 
-              key={i} 
-              className={`glass-card rounded-3xl overflow-hidden transition-all duration-500 ${openIndex === i ? 'ring-1 ring-indigo-500/20 shadow-[0_0_32px_rgba(99,102,241,0.06)]' : ''}`}
-            >
-              <button
-                onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="w-full p-8 flex items-center justify-between text-left group"
+        {/* Accordions */}
+        <div className="space-y-4 mb-12">
+          {faqs.map((faq, i) => {
+            const isOpen = openIndex === i;
+            return (
+              <div
+                key={i}
+                className={`bg-white border rounded-2xl overflow-hidden transition-all duration-300 ${
+                  isOpen
+                    ? "border-[#1b67b2] shadow-md ring-1 ring-[#1b67b2]/10"
+                    : "border-[#e2e8f0] hover:border-slate-300"
+                }`}
               >
-                <div className="flex items-center gap-6">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${openIndex === i ? 'bg-gradient-to-br from-indigo-600 to-violet-600 text-white shadow-[0_0_16px_rgba(99,102,241,0.3)]' : 'bg-white/[0.04] text-white/20 group-hover:bg-white/[0.06]'}`}>
-                    <HelpCircle className="w-5 h-5" />
-                  </div>
-                  <h4 className="text-base md:text-lg font-bold text-white/80 leading-tight">{faq.question}</h4>
-                </div>
-                <div className={`transition-transform duration-300 ${openIndex === i ? 'rotate-180' : ''}`}>
-                  {openIndex === i ? <Minus className="w-5 h-5 text-indigo-400" /> : <Plus className="w-5 h-5 text-white/20" />}
-                </div>
-              </button>
-
-              <AnimatePresence>
-                {openIndex === i && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <div className="px-8 pb-8 pt-0 ml-16">
-                      <p className="text-white/30 font-light leading-relaxed">
-                        {faq.answer}
-                      </p>
+                <button
+                  onClick={() => setOpenIndex(isOpen ? null : i)}
+                  className="w-full p-6 text-left flex items-center justify-between gap-4"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-colors ${
+                      isOpen ? "bg-[#1b67b2] text-white" : "bg-blue-50 text-[#1b67b2]"
+                    }`}>
+                      <HelpCircle className="w-5 h-5" />
                     </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          ))}
+                    <span className="text-base sm:text-lg font-bold text-[#0f172a]">
+                      {faq.question}
+                    </span>
+                  </div>
+                  <div
+                    className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 ${
+                      isOpen
+                        ? "bg-[#1b67b2] text-white rotate-180"
+                        : "bg-[#f1f5f9] text-[#64748b]"
+                    }`}
+                  >
+                    <ChevronDown className="w-4 h-4" />
+                  </div>
+                </button>
+
+                <AnimatePresence>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.25 }}
+                    >
+                      <div className="px-6 pb-6 text-sm text-[#475569] leading-relaxed border-t border-[#f1f5f9] pt-4 pl-19">
+                        {faq.answer}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
         </div>
+
+        {/* Direct Contact Banner */}
+        <div className="bg-white border border-[#e2e8f0] rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-sm">
+          <div className="flex items-center gap-4 text-center sm:text-left">
+            <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#1b67b2] flex items-center justify-center shrink-0">
+              <PhoneCall className="w-6 h-6" />
+            </div>
+            <div>
+              <h4 className="text-base font-bold text-[#0f172a]">
+                Have More Questions?
+              </h4>
+              <p className="text-xs text-[#64748b]">
+                Connect directly with our engineering team for instant clarity.
+              </p>
+            </div>
+          </div>
+
+          <a
+            href="tel:+917380663685"
+            className="inline-flex items-center gap-2 bg-[#1b67b2] hover:bg-[#15538e] text-white px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider shadow-sm transition-all whitespace-nowrap"
+          >
+            <span>Call +91 7380663685</span>
+          </a>
+        </div>
+
       </div>
     </section>
   );

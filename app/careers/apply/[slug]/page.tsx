@@ -107,70 +107,53 @@ export default function DetailedApplicationPage() {
     }
   }, [session]);
 
-  const handlePersonalChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    
-    // Strict numeric validation for phone
-    if (name === 'phone') {
-      const numericValue = value.replace(/[^\d+ ]/g, ''); // Allow digits, plus, and space
-      setFormData(prev => ({
-        ...prev,
-        personal: { ...prev.personal, [name]: numericValue }
-      }));
-      return;
-    }
-
-    setFormData(prev => ({
-      ...prev,
-      personal: { ...prev.personal, [name]: value }
-    }));
+  const handlePersonalChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      personal: { ...formData.personal, [e.target.name]: e.target.value }
+    });
   };
 
-  const handleDobPartChange = (part: 'year' | 'month' | 'day', value: string) => {
+  const handleDobPartChange = (type: 'year' | 'month' | 'day', value: string) => {
     const currentDob = formData.personal.dob || "--";
     const parts = currentDob.split('-');
-    if (parts.length !== 3) {
-      parts[0] = ""; parts[1] = ""; parts[2] = "";
-    }
-    
-    if (part === 'year') parts[0] = value;
-    if (part === 'month') parts[1] = value;
-    if (part === 'day') parts[2] = value;
-    
-    setFormData(prev => ({
-      ...prev,
-      personal: { ...prev.personal, dob: `${parts[0]}-${parts[1]}-${parts[2]}` }
-    }));
+    let y = parts[0] || "";
+    let m = parts[1] || "";
+    let d = parts[2] || "";
+
+    if (type === 'year') y = value;
+    if (type === 'month') m = value.padStart(2, '0');
+    if (type === 'day') d = value.padStart(2, '0');
+
+    setFormData({
+      ...formData,
+      personal: { ...formData.personal, dob: `${y}-${m}-${d}` }
+    });
   };
 
-  const years = Array.from({ length: 100 }, (_, i) => (new Date().getFullYear() - i).toString());
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({ length: 45 }, (_, i) => (currentYear - 15 - i).toString());
   const months = [
-    { name: "January", value: "01" }, { name: "February", value: "02" }, { name: "March", value: "03" },
-    { name: "April", value: "04" }, { name: "May", value: "05" }, { name: "June", value: "06" },
-    { name: "July", value: "07" }, { name: "August", value: "08" }, { name: "September", value: "09" },
-    { name: "October", value: "10" }, { name: "November", value: "11" }, { name: "December", value: "12" }
+    { value: "01", name: "Jan" },
+    { value: "02", name: "Feb" },
+    { value: "03", name: "Mar" },
+    { value: "04", name: "Apr" },
+    { value: "05", name: "May" },
+    { value: "06", name: "Jun" },
+    { value: "07", name: "Jul" },
+    { value: "08", name: "Aug" },
+    { value: "09", name: "Sep" },
+    { value: "10", name: "Oct" },
+    { value: "11", name: "Nov" },
+    { value: "12", name: "Dec" },
   ];
   const days = Array.from({ length: 31 }, (_, i) => (i + 1).toString().padStart(2, '0'));
 
   const handleEducationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    
-    // Strict validation for numeric fields
-    if (name === 'cgpa' || name.endsWith('Percentage') || name === 'graduationYear') {
-      // Only allow digits and a single decimal point (except for year which is just digits)
-      const regex = name === 'graduationYear' ? /^\d*$/ : /^\d*\.?\d*$/;
-      if (value !== "" && !regex.test(value)) return;
-      
-      // Basic length limits to prevent overflow but allow typing
-      if (name === 'graduationYear' && value.length > 4) return;
-      if (name === 'cgpa' && value.length > 4) return; // Allows 9.99, 10.0
-      if (name.endsWith('Percentage') && value.length > 5) return; // Allows 100.00
-    }
-
-    setFormData(prev => ({
-      ...prev,
-      education: { ...prev.education, [name]: value }
-    }));
+    setFormData({
+      ...formData,
+      education: { ...formData.education, [e.target.name]: e.target.value }
+    });
   };
 
   const addExperience = () => {
@@ -203,7 +186,7 @@ export default function DetailedApplicationPage() {
 
   const handleFinalSubmit = async () => {
     if (!resumeFile) {
-        toast.error("Resume Transmission Required.");
+        toast.error("Resume file is required.");
         return;
     }
 
@@ -214,7 +197,6 @@ export default function DetailedApplicationPage() {
 
     setIsSubmitting(true);
     try {
-      // 1. Convert Resume to Base64 for Self-Hosted MongoDB Storage
       const reader = new FileReader();
       const base64Promise = new Promise<string>((resolve, reject) => {
         reader.onload = () => resolve(reader.result as string);
@@ -224,7 +206,6 @@ export default function DetailedApplicationPage() {
 
       const base64Resume = await base64Promise;
 
-      // 2. Submit Application with embedded resume data
       const result = await submitApplication({
         roleSlug: slug as string,
         ...formData,
@@ -237,7 +218,7 @@ export default function DetailedApplicationPage() {
       });
 
       if (result.success) {
-        toast.success("Audit Successful. Your trajectory has been locked.");
+        toast.success("Application submitted successfully! Your profile has been updated.");
         router.push("/profile");
       } else {
         throw new Error(result.error);
@@ -259,7 +240,7 @@ export default function DetailedApplicationPage() {
       const { college, degree, branch, graduationYear, cgpa, tenthPercentage, twelfthPercentage } = formData.education;
       return !!(college && degree && branch && graduationYear && cgpa && tenthPercentage && twelfthPercentage);
     }
-    if (step === 3) return true; // Optional as requested
+    if (step === 3) return true;
     if (step === 4) {
       return !!(resumeFile && formData.links.linkedIn && formData.links.github);
     }
@@ -268,7 +249,7 @@ export default function DetailedApplicationPage() {
 
   if (status === "loading") {
     return (
-      <main className="min-h-screen bg-[#09090B] flex items-center justify-center">
+      <main className="min-h-screen bg-white flex items-center justify-center">
         <VNTLoader size="lg" />
       </main>
     );
@@ -276,31 +257,31 @@ export default function DetailedApplicationPage() {
 
   if (status === "unauthenticated") {
     return (
-      <main className="min-h-screen bg-background selection:bg-indigo-500/30 text-white">
+      <main className="min-h-screen bg-[#fcfdfd] text-slate-900 selection:bg-blue-500/20 font-sans">
         <Navbar />
-        <section className="relative pt-64 pb-32 px-6 flex flex-col items-center justify-center">
-            {/* Soft Ambient Orbs */}
-            <div className="absolute top-[10%] left-1/4 w-[600px] h-[600px] bg-indigo-500/[0.03] blur-[150px] rounded-full pointer-events-none" />
-            
-            <div className="max-w-2xl w-full text-center space-y-12 relative z-10">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] text-[9px] font-bold text-white/40 uppercase tracking-[0.4em] mb-4">
-                    <ShieldCheck className="w-3 h-3 text-red-400" />
-                    Authentication Protocol Required
+        <section className="relative pt-44 pb-32 px-6 flex flex-col items-center justify-center">
+            <div className="max-w-xl w-full text-center space-y-6 bg-white border border-slate-200 p-8 sm:p-12 rounded-3xl shadow-xl shadow-blue-500/5 relative z-10">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-xs font-bold text-[#1b67b2] uppercase tracking-widest mx-auto">
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                    <span>Candidate Authentication</span>
                 </div>
-                <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter uppercase leading-none">
-                    Access <span className="text-gradient">Denied.</span>
+                
+                <h1 className="text-3xl sm:text-5xl font-black text-slate-950 tracking-tight uppercase leading-tight">
+                    Account Verification <br />
+                    <span className="text-[#1b67b2]">Required</span>
                 </h1>
-                <p className="text-[10px] text-white/20 font-bold tracking-[0.4em] uppercase leading-relaxed">
-                    Identity verification is mandatory to initiate a candidate audit. <br />
-                    Please authenticate your account to proceed.
+
+                <p className="text-sm text-slate-600 font-normal leading-relaxed max-w-md mx-auto">
+                    Please sign in or create your candidate profile to submit an application and track your review status.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-6 justify-center pt-8">
+
+                <div className="pt-4 flex justify-center">
                     <Button 
                         onClick={() => router.push(`/careers/auth`)}
-                        className="h-16 px-12 bg-white hover:bg-slate-200 text-background font-black rounded-xl transition-all shadow-xl uppercase text-[10px] tracking-widest group border-0"
+                        className="h-14 px-8 bg-[#1b67b2] hover:bg-[#15538e] text-white font-extrabold rounded-xl transition-all shadow-md shadow-blue-500/20 uppercase text-xs tracking-widest cursor-pointer flex items-center gap-2"
                     >
-                        Sign In Now
-                        <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        <span>Sign In to Continue</span>
+                        <ArrowRight className="w-4 h-4" />
                     </Button>
                 </div>
             </div>
@@ -311,16 +292,18 @@ export default function DetailedApplicationPage() {
   }
 
   const renderStepIndicator = () => (
-    <div className="flex items-center justify-between mb-20 max-w-2xl mx-auto px-4">
+    <div className="flex items-center justify-between mb-12 max-w-2xl mx-auto px-4">
       {[1, 2, 3, 4].map((s) => (
         <div key={s} className="flex items-center">
-          <div className={`w-10 h-10 rounded-full flex items-center justify-center text-[10px] font-black transition-all duration-500 border-2 ${
-            step >= s ? 'bg-indigo-600 border-indigo-600 text-white shadow-xl shadow-indigo-500/20' : 'bg-white/[0.03] border-white/[0.08] text-white/20'
+          <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-black transition-all duration-300 border-2 ${
+            step >= s 
+              ? 'bg-[#1b67b2] border-[#1b67b2] text-white shadow-md shadow-blue-500/20' 
+              : 'bg-slate-100 border-slate-200 text-slate-400'
           }`}>
             {s}
           </div>
           {s < 4 && (
-            <div className={`w-12 md:w-20 h-px mx-2 transition-all duration-1000 ${step > s ? 'bg-indigo-600' : 'bg-white/[0.06]'}`} />
+            <div className={`w-12 md:w-20 h-0.5 mx-2 transition-all duration-500 ${step > s ? 'bg-[#1b67b2]' : 'bg-slate-200'}`} />
           )}
         </div>
       ))}
@@ -328,77 +311,71 @@ export default function DetailedApplicationPage() {
   );
 
   return (
-    <main className="min-h-screen bg-background selection:bg-indigo-500/30 text-white">
+    <main className="min-h-screen bg-[#fcfdfd] text-slate-900 selection:bg-blue-500/20 font-sans">
       <Navbar />
 
-      <section className="relative pt-48 pb-32 px-6 overflow-hidden">
-        {/* Soft Ambient Orbs */}
-        <div className="absolute top-[10%] left-1/4 w-[600px] h-[600px] bg-indigo-500/[0.03] blur-[150px] rounded-full pointer-events-none" />
-        <div className="absolute bottom-[20%] right-1/4 w-[500px] h-[500px] bg-violet-600/[0.02] blur-[120px] rounded-full pointer-events-none" />
-
+      <section className="relative pt-36 pb-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto relative z-10">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] text-[9px] font-bold text-white/40 uppercase tracking-[0.4em] mb-8">
-              <ShieldCheck className="w-3 h-3 text-indigo-400" />
-              Standard Application Protocol v2.0
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-xs font-bold text-[#1b67b2] uppercase tracking-widest mb-4">
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>Internship Application // {slug}</span>
             </div>
-            <h1 className="text-4xl md:text-7xl font-black text-white tracking-tighter uppercase mb-4">
-              Candidate <span className="text-gradient">Audit.</span>
+            <h1 className="text-3xl sm:text-5xl font-black text-slate-950 tracking-tight uppercase mb-3">
+              Candidate <span className="text-[#1b67b2]">Application</span>
             </h1>
-            <p className="text-[10px] text-white/20 font-bold tracking-[0.4em] uppercase">Provide detailed trajectories to initiate onboarding.</p>
+            <p className="text-sm text-slate-600 font-normal">Please provide accurate information for candidate review and verification.</p>
           </div>
 
           {renderStepIndicator()}
 
-          <div className="glass-card rounded-[2.5rem] p-8 md:p-16 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/[0.03] blur-[80px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-            
+          <div className="p-7 sm:p-12 rounded-3xl bg-white border border-slate-200 shadow-xl shadow-blue-500/5 relative overflow-hidden">
             <AnimatePresence mode="wait">
               {step === 1 && (
                 <motion.div
                   key="step1"
-                  initial={{ opacity: 0, x: 20 }}
+                  initial={{ opacity: 0, x: 15 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  className="space-y-10"
+                  exit={{ opacity: 0, x: -15 }}
+                  className="space-y-6"
                 >
-                  <div className="flex items-center gap-4 mb-4">
-                    <User className="w-5 h-5 text-indigo-400" />
-                    <h2 className="text-xl font-bold text-white uppercase tracking-tight">Personal Details</h2>
+                  <div className="flex items-center gap-3 mb-2 pb-4 border-b border-slate-100">
+                    <User className="w-5 h-5 text-[#1b67b2]" />
+                    <h2 className="text-lg font-black text-slate-900 uppercase tracking-tight">Step 1: Personal Details</h2>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="space-y-3">
-                      <Label className="text-[10px] uppercase tracking-[0.3em] text-white/20 font-bold ml-1">Full Name *</Label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div className="space-y-1.5">
+                      <Label className="text-xs uppercase tracking-wider text-slate-700 font-bold ml-1">Full Name *</Label>
                       <Input 
                         name="fullName"
                         value={formData.personal.fullName}
                         onChange={handlePersonalChange}
-                        placeholder="John Architect" 
-                        className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] focus:border-indigo-500/30 transition-all text-sm text-white placeholder:text-white/10"
+                        placeholder="John Doe" 
+                        className="h-12 bg-slate-50 border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 font-medium focus:bg-white focus:border-[#1b67b2]"
                       />
                     </div>
-                    <div className="space-y-3">
-                      <Label className="text-[10px] uppercase tracking-[0.3em] text-white/20 font-bold ml-1">Contact Phone *</Label>
+                    <div className="space-y-1.5">
+                      <Label className="text-xs uppercase tracking-wider text-slate-700 font-bold ml-1">Contact Phone *</Label>
                       <Input 
                         name="phone"
                         value={formData.personal.phone}
                         onChange={handlePersonalChange}
-                        placeholder="+91 XXXX XXX XXX" 
-                        className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] focus:border-indigo-500/30 transition-all text-sm text-white placeholder:text-white/10"
+                        placeholder="+91 98765 43210" 
+                        className="h-12 bg-slate-50 border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 font-medium focus:bg-white focus:border-[#1b67b2]"
                       />
                     </div>
-                    <div className="space-y-3">
-                      <Label className="text-[10px] uppercase tracking-[0.3em] text-white/20 font-bold ml-1">Date of Birth *</Label>
-                      <div className="grid grid-cols-3 gap-3">
+                    <div className="space-y-1.5">
+                      <Label className="text-xs uppercase tracking-wider text-slate-700 font-bold ml-1">Date of Birth *</Label>
+                      <div className="grid grid-cols-3 gap-2.5">
                         <Select
                           value={formData.personal.dob?.split('-')[0] || ""}
                           onValueChange={(v) => handleDobPartChange('year', v)}
                         >
-                          <SelectTrigger className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] transition-all text-xs text-white border-white/[0.06]">
+                          <SelectTrigger className="h-12 bg-slate-50 border-slate-200 rounded-xl text-xs text-slate-900 focus:bg-white">
                             <SelectValue placeholder="Year" />
                           </SelectTrigger>
-                          <SelectContent className="bg-[#09090B] border-white/[0.06] max-h-60 overflow-y-auto">
+                          <SelectContent className="bg-white border-slate-200 max-h-60 overflow-y-auto">
                             {years.map(y => (
                               <SelectItem key={y} value={y}>{y}</SelectItem>
                             ))}
@@ -409,10 +386,10 @@ export default function DetailedApplicationPage() {
                           value={formData.personal.dob?.split('-')[1] || ""}
                           onValueChange={(v) => handleDobPartChange('month', v)}
                         >
-                          <SelectTrigger className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] transition-all text-xs text-white border-white/[0.06]">
+                          <SelectTrigger className="h-12 bg-slate-50 border-slate-200 rounded-xl text-xs text-slate-900 focus:bg-white">
                             <SelectValue placeholder="Month" />
                           </SelectTrigger>
-                          <SelectContent className="bg-[#09090B] border-white/[0.06]">
+                          <SelectContent className="bg-white border-slate-200">
                             {months.map(m => (
                               <SelectItem key={m.value} value={m.value}>{m.name}</SelectItem>
                             ))}
@@ -423,10 +400,10 @@ export default function DetailedApplicationPage() {
                           value={formData.personal.dob?.split('-')[2] || ""}
                           onValueChange={(v) => handleDobPartChange('day', v)}
                         >
-                          <SelectTrigger className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] transition-all text-xs text-white border-white/[0.06]">
+                          <SelectTrigger className="h-12 bg-slate-50 border-slate-200 rounded-xl text-xs text-slate-900 focus:bg-white">
                             <SelectValue placeholder="Day" />
                           </SelectTrigger>
-                          <SelectContent className="bg-[#09090B] border-white/[0.06] max-h-60 overflow-y-auto">
+                          <SelectContent className="bg-white border-slate-200 max-h-60 overflow-y-auto">
                             {days.map(d => (
                               <SelectItem key={d} value={d}>{d}</SelectItem>
                             ))}
@@ -434,24 +411,24 @@ export default function DetailedApplicationPage() {
                         </Select>
                       </div>
                     </div>
-                    <div className="space-y-3">
-                      <Label className="text-[10px] uppercase tracking-[0.3em] text-white/20 font-bold ml-1">City of Residence *</Label>
+                    <div className="space-y-1.5">
+                      <Label className="text-xs uppercase tracking-wider text-slate-700 font-bold ml-1">City of Residence *</Label>
                       <Input 
                         name="currentCity"
                         value={formData.personal.currentCity}
                         onChange={handlePersonalChange}
-                        placeholder="Mumbai, IN" 
-                        className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] focus:border-indigo-500/30 transition-all text-sm text-white placeholder:text-white/10"
+                        placeholder="Lucknow, IN" 
+                        className="h-12 bg-slate-50 border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 font-medium focus:bg-white focus:border-[#1b67b2]"
                       />
                     </div>
-                    <div className="space-y-3 md:col-span-2">
-                      <Label className="text-[10px] uppercase tracking-[0.3em] text-white/20 font-bold ml-1">Referral Code (Optional)</Label>
+                    <div className="space-y-1.5 md:col-span-2">
+                      <Label className="text-xs uppercase tracking-wider text-slate-700 font-bold ml-1">Referral Code (Optional)</Label>
                       <Input 
                         name="referredByCode"
                         value={formData.referredByCode}
                         onChange={(e) => setFormData(prev => ({ ...prev, referredByCode: e.target.value.trim().toUpperCase() }))}
-                        placeholder="e.g. VNT-CA-XYZ" 
-                        className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] focus:border-indigo-500/30 transition-all text-sm text-white placeholder:text-white/10"
+                        placeholder="e.g. VNT-CA-100" 
+                        className="h-12 bg-slate-50 border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 font-medium uppercase focus:bg-white focus:border-[#1b67b2]"
                       />
                     </div>
                   </div>
@@ -461,90 +438,90 @@ export default function DetailedApplicationPage() {
               {step === 2 && (
                 <motion.div
                   key="step2"
-                  initial={{ opacity: 0, x: 20 }}
+                  initial={{ opacity: 0, x: 15 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  className="space-y-10"
+                  exit={{ opacity: 0, x: -15 }}
+                  className="space-y-6"
                 >
-                  <div className="flex items-center gap-4 mb-4">
-                    <GraduationCap className="w-5 h-5 text-indigo-400" />
-                    <h2 className="text-xl font-bold text-white uppercase tracking-tight">Education Details</h2>
+                  <div className="flex items-center gap-3 mb-2 pb-4 border-b border-slate-100">
+                    <GraduationCap className="w-5 h-5 text-[#1b67b2]" />
+                    <h2 className="text-lg font-black text-slate-900 uppercase tracking-tight">Step 2: Education Details</h2>
                   </div>
 
-                  <div className="grid grid-cols-1 gap-8">
-                    <div className="space-y-3">
-                      <Label className="text-[10px] uppercase tracking-[0.3em] text-white/20 font-bold ml-1">University / College</Label>
+                  <div className="grid grid-cols-1 gap-5">
+                    <div className="space-y-1.5">
+                      <Label className="text-xs uppercase tracking-wider text-slate-700 font-bold ml-1">University / College *</Label>
                       <Input 
                         name="college"
                         value={formData.education.college}
                         onChange={handleEducationChange}
-                        placeholder="Institute of Emerging Technology" 
-                        className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] focus:border-indigo-500/30 transition-all text-sm text-white placeholder:text-white/10"
+                        placeholder="Institute of Engineering & Technology" 
+                        className="h-12 bg-slate-50 border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 font-medium focus:bg-white focus:border-[#1b67b2]"
                       />
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div className="space-y-3">
-                        <Label className="text-[10px] uppercase tracking-[0.3em] text-white/20 font-bold ml-1">Degree Program</Label>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                      <div className="space-y-1.5">
+                        <Label className="text-xs uppercase tracking-wider text-slate-700 font-bold ml-1">Degree Program *</Label>
                         <Input 
-                            name="degree"
-                            value={formData.education.degree}
-                            onChange={handleEducationChange}
-                            placeholder="B.Tech" 
-                            className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] focus:border-indigo-500/30 transition-all text-sm text-white placeholder:text-white/10"
+                          name="degree"
+                          value={formData.education.degree}
+                          onChange={handleEducationChange}
+                          placeholder="B.Tech / BCA / MCA" 
+                          className="h-12 bg-slate-50 border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 font-medium focus:bg-white focus:border-[#1b67b2]"
                         />
-                        </div>
-                        <div className="space-y-3">
-                        <Label className="text-[10px] uppercase tracking-[0.3em] text-white/20 font-bold ml-1">Branch / Specialization</Label>
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label className="text-xs uppercase tracking-wider text-slate-700 font-bold ml-1">Branch / Specialization *</Label>
                         <Input 
-                            name="branch"
-                            value={formData.education.branch}
-                            onChange={handleEducationChange}
-                            placeholder="Computer Science" 
-                            className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] focus:border-indigo-500/30 transition-all text-sm text-white placeholder:text-white/10"
+                          name="branch"
+                          value={formData.education.branch}
+                          onChange={handleEducationChange}
+                          placeholder="Computer Science & Engineering" 
+                          className="h-12 bg-slate-50 border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 font-medium focus:bg-white focus:border-[#1b67b2]"
                         />
-                        </div>
+                      </div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                        <div className="space-y-3">
-                        <Label className="text-[10px] uppercase tracking-[0.3em] text-white/20 font-bold ml-1">GPA / CGPA *</Label>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+                      <div className="space-y-1.5">
+                        <Label className="text-xs uppercase tracking-wider text-slate-700 font-bold ml-1">GPA / CGPA *</Label>
                         <Input 
-                            name="cgpa"
-                            value={formData.education.cgpa}
-                            onChange={handleEducationChange}
-                            placeholder="9.2" 
-                            className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] focus:border-indigo-500/30 transition-all text-sm text-white placeholder:text-white/10"
+                          name="cgpa"
+                          value={formData.education.cgpa}
+                          onChange={handleEducationChange}
+                          placeholder="8.5" 
+                          className="h-12 bg-slate-50 border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 font-medium focus:bg-white focus:border-[#1b67b2]"
                         />
-                        </div>
-                        <div className="space-y-3">
-                        <Label className="text-[10px] uppercase tracking-[0.3em] text-white/20 font-bold ml-1">Grad Year *</Label>
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label className="text-xs uppercase tracking-wider text-slate-700 font-bold ml-1">Grad Year *</Label>
                         <Input 
-                            name="graduationYear"
-                            value={formData.education.graduationYear}
-                            onChange={handleEducationChange}
-                            placeholder="2025" 
-                            className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] focus:border-indigo-500/30 transition-all text-sm text-white placeholder:text-white/10"
+                          name="graduationYear"
+                          value={formData.education.graduationYear}
+                          onChange={handleEducationChange}
+                          placeholder="2025" 
+                          className="h-12 bg-slate-50 border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 font-medium focus:bg-white focus:border-[#1b67b2]"
                         />
-                        </div>
-                        <div className="space-y-3">
-                        <Label className="text-[10px] uppercase tracking-[0.3em] text-white/20 font-bold ml-1">10th (%) *</Label>
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label className="text-xs uppercase tracking-wider text-slate-700 font-bold ml-1">10th (%) *</Label>
                         <Input 
-                            name="tenthPercentage"
-                            value={formData.education.tenthPercentage}
-                            onChange={handleEducationChange}
-                            placeholder="94" 
-                            className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] focus:border-indigo-500/30 transition-all text-sm text-white placeholder:text-white/10"
+                          name="tenthPercentage"
+                          value={formData.education.tenthPercentage}
+                          onChange={handleEducationChange}
+                          placeholder="92" 
+                          className="h-12 bg-slate-50 border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 font-medium focus:bg-white focus:border-[#1b67b2]"
                         />
-                        </div>
-                        <div className="space-y-3">
-                        <Label className="text-[10px] uppercase tracking-[0.3em] text-white/20 font-bold ml-1">12th (%) *</Label>
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label className="text-xs uppercase tracking-wider text-slate-700 font-bold ml-1">12th (%) *</Label>
                         <Input 
-                            name="twelfthPercentage"
-                            value={formData.education.twelfthPercentage}
-                            onChange={handleEducationChange}
-                            placeholder="91" 
-                            className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] focus:border-indigo-500/30 transition-all text-sm text-white placeholder:text-white/10"
+                          name="twelfthPercentage"
+                          value={formData.education.twelfthPercentage}
+                          onChange={handleEducationChange}
+                          placeholder="88" 
+                          className="h-12 bg-slate-50 border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 font-medium focus:bg-white focus:border-[#1b67b2]"
                         />
-                        </div>
+                      </div>
                     </div>
                   </div>
                 </motion.div>
@@ -553,113 +530,113 @@ export default function DetailedApplicationPage() {
               {step === 3 && (
                 <motion.div
                   key="step3"
-                  initial={{ opacity: 0, x: 20 }}
+                  initial={{ opacity: 0, x: 15 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  className="space-y-12"
+                  exit={{ opacity: 0, x: -15 }}
+                  className="space-y-8"
                 >
-                  <div className="flex items-center gap-4 mb-4">
-                    <Briefcase className="w-5 h-5 text-indigo-400" />
-                    <h2 className="text-xl font-bold text-white uppercase tracking-tight">Work & Projects</h2>
+                  <div className="flex items-center gap-3 mb-2 pb-4 border-b border-slate-100">
+                    <Briefcase className="w-5 h-5 text-[#1b67b2]" />
+                    <h2 className="text-lg font-black text-slate-900 uppercase tracking-tight">Step 3: Work & Projects (Optional)</h2>
                   </div>
 
                   {/* Experience Section */}
-                  <div className="space-y-8">
+                  <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                        <h3 className="text-[10px] font-bold text-white/20 uppercase tracking-widest leading-none">Internships / Experience</h3>
-                        <Button variant="ghost" size="sm" onClick={addExperience} className="text-indigo-400 hover:text-indigo-300 hover:bg-white/[0.04]">
-                            <Plus className="w-3 h-3 mr-2" /> Add Entry
-                        </Button>
+                      <h3 className="text-xs font-extrabold text-[#1b67b2] uppercase tracking-wider">Past Experience / Internships</h3>
+                      <Button variant="ghost" size="sm" onClick={addExperience} className="text-[#1b67b2] hover:bg-blue-50 font-bold text-xs cursor-pointer">
+                        <Plus className="w-3.5 h-3.5 mr-1.5" /> Add Role
+                      </Button>
                     </div>
 
                     {formData.experience.map((exp, i) => (
-                        <div key={i} className="p-6 bg-white/[0.02] border border-white/[0.05] rounded-2xl relative group">
-                            <button onClick={() => removeExperience(i)} className="absolute top-4 right-4 text-white/10 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100">
-                                <Trash2 className="w-3 h-3" />
-                            </button>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <Input 
-                                    placeholder="Company Name" 
-                                    className="bg-white/[0.03] border-white/[0.06] text-white" 
-                                    value={exp.company}
-                                    onChange={(e) => {
-                                        const newExp = [...formData.experience];
-                                        newExp[i].company = e.target.value;
-                                        setFormData({...formData, experience: newExp});
-                                    }}
-                                />
-                                <Input 
-                                    placeholder="Role (e.g. Intern)" 
-                                    className="bg-white/[0.03] border-white/[0.06] text-white" 
-                                    value={exp.role}
-                                    onChange={(e) => {
-                                        const newExp = [...formData.experience];
-                                        newExp[i].role = e.target.value;
-                                        setFormData({...formData, experience: newExp});
-                                    }}
-                                />
-                                <Input 
-                                    placeholder="Duration" 
-                                    className="bg-white/[0.03] border-white/[0.06] text-white md:col-span-2" 
-                                    value={exp.duration}
-                                    onChange={(e) => {
-                                        const newExp = [...formData.experience];
-                                        newExp[i].duration = e.target.value;
-                                        setFormData({...formData, experience: newExp});
-                                    }}
-                                />
-                            </div>
+                      <div key={i} className="p-5 bg-slate-50 border border-slate-200 rounded-2xl relative group space-y-3">
+                        <button onClick={() => removeExperience(i)} className="absolute top-4 right-4 text-slate-400 hover:text-red-500 transition-colors cursor-pointer">
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 pr-8">
+                          <Input 
+                            placeholder="Company Name" 
+                            className="h-11 bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 font-medium text-xs focus:border-[#1b67b2]" 
+                            value={exp.company}
+                            onChange={(e) => {
+                              const newExp = [...formData.experience];
+                              newExp[i].company = e.target.value;
+                              setFormData({...formData, experience: newExp});
+                            }}
+                          />
+                          <Input 
+                            placeholder="Role (e.g. Frontend Intern)" 
+                            className="h-11 bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 font-medium text-xs focus:border-[#1b67b2]" 
+                            value={exp.role}
+                            onChange={(e) => {
+                              const newExp = [...formData.experience];
+                              newExp[i].role = e.target.value;
+                              setFormData({...formData, experience: newExp});
+                            }}
+                          />
+                          <Input 
+                            placeholder="Duration (e.g. 3 Months, June 2024 - Aug 2024)" 
+                            className="h-11 bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 font-medium text-xs md:col-span-2 focus:border-[#1b67b2]" 
+                            value={exp.duration}
+                            onChange={(e) => {
+                              const newExp = [...formData.experience];
+                              newExp[i].duration = e.target.value;
+                              setFormData({...formData, experience: newExp});
+                            }}
+                          />
                         </div>
+                      </div>
                     ))}
                   </div>
 
                   {/* Projects Section */}
-                  <div className="space-y-8 pt-8 border-t border-white/[0.04]">
+                  <div className="space-y-4 pt-6 border-t border-slate-100">
                     <div className="flex items-center justify-between">
-                        <h3 className="text-[10px] font-bold text-white/20 uppercase tracking-widest leading-none">Architectural Projects</h3>
-                        <Button variant="ghost" size="sm" onClick={addProject} className="text-indigo-400 hover:text-indigo-300 hover:bg-white/[0.04]">
-                            <Plus className="w-3 h-3 mr-2" /> Add Project
-                        </Button>
+                      <h3 className="text-xs font-extrabold text-[#1b67b2] uppercase tracking-wider">Relevant Projects</h3>
+                      <Button variant="ghost" size="sm" onClick={addProject} className="text-[#1b67b2] hover:bg-blue-50 font-bold text-xs cursor-pointer">
+                        <Plus className="w-3.5 h-3.5 mr-1.5" /> Add Project
+                      </Button>
                     </div>
 
                     {formData.projects.map((proj, i) => (
-                        <div key={i} className="p-6 bg-white/[0.02] border border-white/[0.05] rounded-2xl relative group">
-                            <button onClick={() => removeProject(i)} className="absolute top-4 right-4 text-white/10 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100">
-                                <Trash2 className="w-3 h-3" />
-                            </button>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <Input 
-                                    placeholder="Project Name" 
-                                    className="bg-white/[0.03] border-white/[0.06] text-white"
-                                    value={proj.name}
-                                    onChange={(e) => {
-                                        const newProj = [...formData.projects];
-                                        newProj[i].name = e.target.value;
-                                        setFormData({...formData, projects: newProj});
-                                    }}
-                                />
-                                <Input 
-                                    placeholder="Tech Stack" 
-                                    className="bg-white/[0.03] border-white/[0.06] text-white"
-                                    value={proj.techStack}
-                                    onChange={(e) => {
-                                        const newProj = [...formData.projects];
-                                        newProj[i].techStack = e.target.value;
-                                        setFormData({...formData, projects: newProj});
-                                    }}
-                                />
-                                <Input 
-                                    placeholder="Detailed Description" 
-                                    className="bg-white/[0.03] border-white/[0.06] text-white md:col-span-2"
-                                    value={proj.description}
-                                    onChange={(e) => {
-                                        const newProj = [...formData.projects];
-                                        newProj[i].description = e.target.value;
-                                        setFormData({...formData, projects: newProj});
-                                    }}
-                                />
-                            </div>
+                      <div key={i} className="p-5 bg-slate-50 border border-slate-200 rounded-2xl relative group space-y-3">
+                        <button onClick={() => removeProject(i)} className="absolute top-4 right-4 text-slate-400 hover:text-red-500 transition-colors cursor-pointer">
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 pr-8">
+                          <Input 
+                            placeholder="Project Name" 
+                            className="h-11 bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 font-medium text-xs focus:border-[#1b67b2]"
+                            value={proj.name}
+                            onChange={(e) => {
+                              const newProj = [...formData.projects];
+                              newProj[i].name = e.target.value;
+                              setFormData({...formData, projects: newProj});
+                            }}
+                          />
+                          <Input 
+                            placeholder="Tech Stack (e.g. Next.js, TypeScript)" 
+                            className="h-11 bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 font-medium text-xs focus:border-[#1b67b2]"
+                            value={proj.techStack}
+                            onChange={(e) => {
+                              const newProj = [...formData.projects];
+                              newProj[i].techStack = e.target.value;
+                              setFormData({...formData, projects: newProj});
+                            }}
+                          />
+                          <Input 
+                            placeholder="Description & Live Link / GitHub" 
+                            className="h-11 bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 font-medium text-xs md:col-span-2 focus:border-[#1b67b2]"
+                            value={proj.description}
+                            onChange={(e) => {
+                              const newProj = [...formData.projects];
+                              newProj[i].description = e.target.value;
+                              setFormData({...formData, projects: newProj});
+                            }}
+                          />
                         </div>
+                      </div>
                     ))}
                   </div>
                 </motion.div>
@@ -668,150 +645,151 @@ export default function DetailedApplicationPage() {
               {step === 4 && (
                 <motion.div
                   key="step4"
-                  initial={{ opacity: 0, x: 20 }}
+                  initial={{ opacity: 0, x: 15 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  className="space-y-12"
+                  exit={{ opacity: 0, x: -15 }}
+                  className="space-y-6"
                 >
-                  <div className="flex items-center gap-4 mb-4">
-                    <LinkIcon className="w-5 h-5 text-indigo-400" />
-                    <h2 className="text-xl font-bold text-white uppercase tracking-tight">Resume & Links</h2>
+                  <div className="flex items-center gap-3 mb-2 pb-4 border-b border-slate-100">
+                    <LinkIcon className="w-5 h-5 text-[#1b67b2]" />
+                    <h2 className="text-lg font-black text-slate-900 uppercase tracking-tight">Step 4: Resume & Links</h2>
                   </div>
 
-                  <div className="grid grid-cols-1 gap-12">
-                    <div className="space-y-4">
-                      <Label className="text-[10px] uppercase tracking-[0.3em] text-white/20 font-bold ml-1">Your Resume *</Label>
+                  <div className="space-y-6">
+                    {/* File Upload Box */}
+                    <div className="space-y-2">
+                      <Label className="text-xs uppercase tracking-wider text-slate-700 font-bold ml-1">Upload Resume (PDF / DOC) *</Label>
                       <div 
-                        className={`relative h-48 border-2 border-dashed rounded-[2.5rem] transition-all duration-500 flex flex-col items-center justify-center gap-4 group ${
-                            resumeFile ? 'border-emerald-500/50 bg-emerald-500/[0.02]' : 'border-white/[0.06] hover:border-indigo-500/30 bg-white/[0.02]'
+                        className={`relative h-44 border-2 border-dashed rounded-2xl transition-all duration-300 flex flex-col items-center justify-center gap-3 p-4 text-center cursor-pointer ${
+                          resumeFile 
+                            ? 'border-emerald-500 bg-emerald-50/50' 
+                            : 'border-slate-300 hover:border-[#1b67b2] bg-slate-50 hover:bg-blue-50/30'
                         }`}
                         onDragOver={(e) => e.preventDefault()}
                         onDrop={(e) => {
-                            e.preventDefault();
-                            const file = e.dataTransfer.files[0];
-                            if (file) {
-                                setResumeFile(file);
-                                setUploadProgress(100);
-                            }
+                          e.preventDefault();
+                          const file = e.dataTransfer.files[0];
+                          if (file) {
+                            setResumeFile(file);
+                            setUploadProgress(100);
+                          }
                         }}
                       >
                         <Input 
-                            type="file" 
-                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" 
-                            accept=".pdf,.doc,.docx"
-                            onChange={(e) => {
-                                const file = e.target.files?.[0];
-                                if (file) {
-                                    setResumeFile(file);
-                                    setUploadProgress(100);
-                                    setFormData({...formData, links: {...formData.links, resumeUrl: file.name}});
-                                }
-                            }}
+                          type="file" 
+                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" 
+                          accept=".pdf,.doc,.docx"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              setResumeFile(file);
+                              setUploadProgress(100);
+                              setFormData({...formData, links: {...formData.links, resumeUrl: file.name}});
+                            }
+                          }}
                         />
                         
                         {resumeFile ? (
-                            <>
-                                <div className="w-16 h-16 rounded-2xl bg-emerald-500 flex items-center justify-center text-white shadow-xl shadow-emerald-500/20">
-                                    <CheckCircle2 className="w-8 h-8" />
-                                </div>
-                                <div className="text-center">
-                                    <p className="text-sm font-bold text-white">{resumeFile.name}</p>
-                                    <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mt-1">File Attached Successfully</p>
-                                </div>
-                            </>
+                          <>
+                            <div className="w-12 h-12 rounded-xl bg-emerald-500 flex items-center justify-center text-white shadow-md">
+                              <CheckCircle2 className="w-6 h-6" />
+                            </div>
+                            <div>
+                              <p className="text-sm font-bold text-slate-900">{resumeFile.name}</p>
+                              <p className="text-xs font-bold text-emerald-700 uppercase tracking-widest mt-0.5">Resume Attached Successfully</p>
+                            </div>
+                          </>
                         ) : (
-                            <>
-                                <div className="w-16 h-16 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center text-white/20 group-hover:text-indigo-400 group-hover:border-indigo-500/30 group-hover:shadow-xl transition-all duration-500">
-                                    <UploadCloud className="w-8 h-8" />
-                                </div>
-                                <div className="text-center">
-                                    <p className="text-sm font-bold text-white/60">Drop your resume here or click to upload</p>
-                                    <p className="text-[10px] font-bold text-white/15 uppercase tracking-widest mt-1">PDF or DOC only (Max 3MB)</p>
-                                </div>
-                            </>
+                          <>
+                            <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-[#1b67b2]">
+                              <UploadCloud className="w-6 h-6" />
+                            </div>
+                            <div>
+                              <p className="text-sm font-bold text-slate-900">Click to upload or drag & drop resume</p>
+                              <p className="text-xs text-slate-500 mt-0.5">PDF or DOC format (Max 3MB)</p>
+                            </div>
+                          </>
                         )}
                       </div>
                     </div>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                         <div className="space-y-3">
-                            <Label className="text-[10px] uppercase tracking-[0.3em] text-white/20 font-bold ml-1 flex items-center gap-2">
-                                <LinkIcon className="w-3 h-3 text-indigo-400/50" /> LinkedIn
-                            </Label>
-                            <Input 
-                                value={formData.links.linkedIn}
-                                onChange={(e) => setFormData({...formData, links: {...formData.links, linkedIn: e.target.value}})}
-                                placeholder="linkedin.com/in/..." 
-                                className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] text-sm text-white"
-                            />
-                        </div>
-                        <div className="space-y-3">
-                            <Label className="text-[10px] uppercase tracking-[0.3em] text-white/20 font-bold ml-1 flex items-center gap-2">
-                                <Code className="w-3 h-3 text-indigo-400/50" /> GitHub
-                            </Label>
-                            <Input 
-                                value={formData.links.github}
-                                onChange={(e) => setFormData({...formData, links: {...formData.links, github: e.target.value}})}
-                                placeholder="github.com/..." 
-                                className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] text-sm text-white"
-                            />
-                        </div>
-                        <div className="space-y-3">
-                            <Label className="text-[10px] uppercase tracking-[0.3em] text-white/20 font-bold ml-1 flex items-center gap-2">
-                                <Globe className="w-3 h-3 text-indigo-400/50" /> Portfolio
-                            </Label>
-                            <Input 
-                                value={formData.links.portfolio}
-                                onChange={(e) => setFormData({...formData, links: {...formData.links, portfolio: e.target.value}})}
-                                placeholder="name.co" 
-                                className="h-14 bg-white/[0.03] border-white/[0.06] rounded-xl focus:bg-white/[0.05] text-sm text-white"
-                            />
-                        </div>
+                    {/* Profiles Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="space-y-1.5">
+                        <Label className="text-xs uppercase tracking-wider text-slate-700 font-bold ml-1 flex items-center gap-1.5">
+                          <LinkIcon className="w-3.5 h-3.5 text-[#1b67b2]" /> LinkedIn Profile *
+                        </Label>
+                        <Input 
+                          value={formData.links.linkedIn}
+                          onChange={(e) => setFormData({...formData, links: {...formData.links, linkedIn: e.target.value}})}
+                          placeholder="https://linkedin.com/in/username" 
+                          className="h-12 bg-slate-50 border-slate-200 rounded-xl text-xs text-slate-900 placeholder:text-slate-400 font-medium focus:bg-white focus:border-[#1b67b2]"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label className="text-xs uppercase tracking-wider text-slate-700 font-bold ml-1 flex items-center gap-1.5">
+                          <Code className="w-3.5 h-3.5 text-[#1b67b2]" /> GitHub Profile *
+                        </Label>
+                        <Input 
+                          value={formData.links.github}
+                          onChange={(e) => setFormData({...formData, links: {...formData.links, github: e.target.value}})}
+                          placeholder="https://github.com/username" 
+                          className="h-12 bg-slate-50 border-slate-200 rounded-xl text-xs text-slate-900 placeholder:text-slate-400 font-medium focus:bg-white focus:border-[#1b67b2]"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label className="text-xs uppercase tracking-wider text-slate-700 font-bold ml-1 flex items-center gap-1.5">
+                          <Globe className="w-3.5 h-3.5 text-[#1b67b2]" /> Portfolio / Blog
+                        </Label>
+                        <Input 
+                          value={formData.links.portfolio}
+                          onChange={(e) => setFormData({...formData, links: {...formData.links, portfolio: e.target.value}})}
+                          placeholder="https://yourportfolio.dev" 
+                          className="h-12 bg-slate-50 border-slate-200 rounded-xl text-xs text-slate-900 placeholder:text-slate-400 font-medium focus:bg-white focus:border-[#1b67b2]"
+                        />
+                      </div>
                     </div>
-                  </div>
 
-
-                  <div className="p-6 bg-white/[0.02] border border-white/[0.06] rounded-3xl flex items-center gap-6">
-                    <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center shrink-0">
-                        <CheckCircle2 className="w-6 h-6 text-emerald-500" />
-                    </div>
-                    <div>
-                        <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest leading-none mb-1">Final Validation</p>
-                        <p className="text-sm text-white/40 font-light">By proceeding, you verify all coordinates are accurate for audit.</p>
+                    <div className="p-4 bg-blue-50/60 border border-blue-200 rounded-xl flex items-center gap-3">
+                      <CheckCircle2 className="w-5 h-5 text-[#1b67b2] shrink-0" />
+                      <p className="text-xs text-slate-700 font-normal">
+                        By submitting, you certify that all information provided is accurate and authentic for verification.
+                      </p>
                     </div>
                   </div>
                 </motion.div>
               )}
             </AnimatePresence>
 
-            <div className="flex items-center justify-between mt-16 pt-10 border-t border-white/[0.06]">
+            {/* Stepper Footer Controls */}
+            <div className="flex items-center justify-between mt-10 pt-6 border-t border-slate-100">
               <Button 
                 disabled={step === 1 || isSubmitting}
                 onClick={() => setStep(s => s - 1)}
                 variant="ghost" 
-                className="h-14 px-8 text-white/20 hover:text-white hover:bg-white/[0.04] uppercase text-[10px] font-bold tracking-widest"
+                className="h-12 px-6 text-slate-600 hover:text-slate-900 hover:bg-slate-100 uppercase text-xs font-bold tracking-wider rounded-xl cursor-pointer"
               >
-                <ChevronLeft className="w-4 h-4 mr-2" />
-                Previous Track
+                <ChevronLeft className="w-4 h-4 mr-1.5" />
+                Previous Step
               </Button>
 
               {step < 4 ? (
                 <Button 
                   disabled={!isStepValid()}
                   onClick={() => setStep(s => s + 1)}
-                  className="h-14 px-10 bg-white hover:bg-slate-200 disabled:opacity-5 text-background font-black rounded-xl transition-all shadow-xl uppercase text-[10px] tracking-widest group border-0"
+                  className="h-12 px-8 bg-[#1b67b2] hover:bg-[#15538e] disabled:opacity-40 text-white font-extrabold rounded-xl transition-all shadow-md shadow-blue-500/20 uppercase text-xs tracking-wider cursor-pointer flex items-center gap-1.5"
                 >
-                  Next Phase
-                  <ChevronRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <span>Next Step</span>
+                  <ChevronRight className="w-4 h-4" />
                 </Button>
               ) : (
                 <Button 
                   disabled={isSubmitting || !isStepValid()}
                   onClick={handleFinalSubmit}
-                  className="h-14 px-12 bg-gradient-to-r from-indigo-600 to-violet-600 hover:shadow-[0_0_32px_rgba(99,102,241,0.3)] disabled:opacity-5 text-white font-black rounded-xl transition-all shadow-xl uppercase text-[10px] tracking-widest group border-0"
+                  className="h-12 px-10 bg-[#1b67b2] hover:bg-[#15538e] disabled:opacity-40 text-white font-extrabold rounded-xl transition-all shadow-lg shadow-blue-500/25 uppercase text-xs tracking-wider cursor-pointer flex items-center gap-2"
                 >
                   {isSubmitting ? <VNTLoader size="sm" /> : "Submit Application"}
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-4 h-4" />
                 </Button>
               )}
             </div>

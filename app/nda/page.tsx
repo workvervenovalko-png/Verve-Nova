@@ -3,75 +3,151 @@
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { motion } from "framer-motion";
-import { FileLock2, Briefcase, Shovel as ShieldCheck, Fingerprint } from "lucide-react";
+import { 
+  FileLock2, 
+  Briefcase, 
+  ShieldCheck, 
+  Fingerprint, 
+  Sparkles, 
+  Download, 
+  FileText, 
+  ArrowRight,
+  CheckCircle2,
+  Lock,
+  Layers
+} from "lucide-react";
+import Link from "next/link";
 
 export default function NDAPage() {
   const complianceSteps = [
     {
-      title: "Mutual Confidentiality",
+      title: "Mutual Confidentiality (Bilateral)",
       icon: Briefcase,
-      desc: "Every engagement begins with a bipartite Non-Disclosure Agreement, protecting your intellectual property before a single line of code is written."
+      desc: "Every discussion and technical intake is bound by a bi-directional Non-Disclosure Agreement, safeguarding your proprietary trade secrets, business models, and system specs from day zero."
     },
     {
-      title: "Data Sanitization",
+      title: "100% Intellectual Property Assignment",
       icon: FileLock2,
-      desc: "Post-project execution, all non-essential staging clones are purged through a multi-pass secure deletion protocol."
+      desc: "All code, documentation, UI assets, and database schemas created for your project are 100% assigned to you upon delivery. Verve Nova retains zero proprietary claim on your custom software."
     },
     {
-      title: "Personnel Isolation",
+      title: "Isolated Engineering Pods",
       icon: Fingerprint,
-      desc: "Each mission is handled by a isolated pod of engineers. Project intelligence is restricted on a strict 'Need-to-Know' basis."
+      desc: "Each engagement is assigned a dedicated developer pod with strict role-based access control (RBAC). Project credentials, staging databases, and API keys are strictly partitioned."
+    }
+  ];
+
+  const clauses = [
+    {
+      title: "1. Definition of Proprietary Information",
+      content: "All technical data, source code, wireframes, financial forecasts, customer records, and operational workflows disclosed by either party are treated as strictly confidential."
+    },
+    {
+      title: "2. Non-Disclosure & Permitted Use",
+      content: "Information is utilized solely for the agreed software engineering scope. No data is shared with third parties, sub-contractors, or external entities without prior written consent."
+    },
+    {
+      title: "3. Complete Code & Asset Handover",
+      content: "Upon milestone settlement, all repository rights, cloud hosting credentials, build assets, and intellectual property are irrevocably transferred to the client."
+    },
+    {
+      title: "4. Multi-Pass Data Sanitization",
+      content: "Following production deployment and warranty completion, all local staging environments and test clones are permanently purged through secure multi-pass erasure protocols."
     }
   ];
 
   return (
-    <main className="min-h-screen bg-[#0A0A0C]">
+    <main className="min-h-screen bg-white text-slate-900 selection:bg-blue-500/20 font-sans">
       <Navbar />
       
-      <section className="pt-48 pb-24 px-6 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-600/[0.03] blur-[150px] rounded-full pointer-events-none" />
+      {/* Header */}
+      <section className="pt-36 pb-16 px-6 relative overflow-hidden bg-gradient-to-b from-blue-50/70 via-slate-50/40 to-white border-b border-slate-200">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-blue-500/[0.05] blur-[140px] rounded-full pointer-events-none" />
         
-        <div className="max-w-4xl mx-auto relative z-10 text-center md:text-left">
-          <motion.p 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-xs font-black text-indigo-400 uppercase tracking-[0.5em] mb-6"
-          >
-            Confidentiality // Protocol
-          </motion.p>
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-4xl md:text-7xl font-black text-white tracking-tighter uppercase leading-[0.9] mb-12"
-          >
-            NDA <br /> <span className="text-white/10">Compliance.</span>
-          </motion.h1>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
-            {complianceSteps.map((step, i) => (
-              <motion.div 
-                key={step.title}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.2 + (i * 0.1) }}
-                className="glass-card p-10 rounded-[2.5rem] border border-white/[0.05] relative group"
-              >
-                <div className="w-14 h-14 rounded-2xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-center mb-8 group-hover:border-indigo-500/50 transition-all duration-500">
-                  <step.icon className="w-6 h-6 text-white/40 group-hover:text-indigo-400 transition-colors" />
+        <div className="max-w-4xl mx-auto relative z-10 text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-[#1b67b2] text-xs font-bold uppercase tracking-widest mb-6">
+            <Sparkles className="w-3.5 h-3.5" /> Legal Governance & IP Protection
+          </div>
+
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight uppercase leading-tight mb-6 text-slate-950">
+            Confidentiality & <span className="text-[#1b67b2]">NDA Policy</span>
+          </h1>
+
+          <p className="text-slate-600 text-base sm:text-lg md:text-xl max-w-2xl mx-auto font-normal leading-relaxed mb-6">
+            We recognize that your proprietary concepts, source code, and algorithms are your core enterprise assets. We safeguard them with institutional rigor.
+          </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Link
+              href="/contact?subject=nda"
+              className="inline-flex h-11 px-6 items-center bg-[#1b67b2] hover:bg-[#15538e] text-white text-xs font-bold uppercase tracking-wider rounded-xl shadow-md shadow-blue-500/20 transition-all"
+            >
+              <FileText className="w-4 h-4 mr-2" />
+              <span>Request Signed Mutual NDA</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Core Protection Pillars */}
+      <section className="py-16 px-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+          {complianceSteps.map((step) => (
+            <div 
+              key={step.title}
+              className="p-8 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-[#1b67b2] transition-all flex flex-col justify-between"
+            >
+              <div>
+                <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-200 flex items-center justify-center mb-6 text-[#1b67b2]">
+                  <step.icon className="w-6 h-6" />
                 </div>
-                <h3 className="text-[11px] font-black text-white uppercase tracking-widest mb-4">{step.title}</h3>
-                <p className="text-[12px] text-white/30 font-bold leading-relaxed uppercase">{step.desc}</p>
-              </motion.div>
+                <h3 className="text-sm font-black text-slate-900 uppercase tracking-tight mb-2">
+                  {step.title}
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                  {step.desc}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Legal Clauses Overview */}
+        <div className="p-8 md:p-12 rounded-3xl bg-slate-50 border border-slate-200 shadow-sm">
+          <div className="flex items-center gap-3 mb-8">
+            <ShieldCheck className="w-6 h-6 text-emerald-600" />
+            <h2 className="text-xl font-black text-slate-950 uppercase tracking-tight">
+              Standard Engagement Covenants
+            </h2>
+          </div>
+
+          <div className="space-y-6">
+            {clauses.map((clause, idx) => (
+              <div key={idx} className="p-6 rounded-2xl bg-white border border-slate-200">
+                <h4 className="text-sm font-black text-slate-900 uppercase tracking-tight mb-2">
+                  {clause.title}
+                </h4>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                  {clause.content}
+                </p>
+              </div>
             ))}
           </div>
 
-          <div className="border border-white/[0.04] p-12 rounded-[3.5rem] relative overflow-hidden">
-             <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.02] to-transparent pointer-events-none" />
-             <h3 className="text-lg font-black text-white uppercase tracking-tighter mb-8">Executive Summary</h3>
-             <p className="text-sm text-white/20 font-bold uppercase tracking-widest leading-loose text-justify">
-               Verve Nova Technologies operates with the discretion of a surgical team. We recognize that in the digital era, confidentiality is not a preference—it is a mandatory architectural requirement. Our systems, personnel, and workflows are all engineered to maintain the absolute sanctity of your enterprise secrets.
-             </p>
+          <div className="mt-8 p-6 rounded-2xl bg-blue-50 border border-blue-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <Lock className="w-5 h-5 text-[#1b67b2] shrink-0" />
+              <p className="text-xs text-slate-700 font-medium">
+                Need your internal legal team's custom NDA countersigned before discussing your project?
+              </p>
+            </div>
+            <Link
+              href="/contact?subject=custom-nda"
+              className="inline-flex h-10 px-5 items-center bg-[#1b67b2] hover:bg-[#15538e] text-white text-xs font-bold uppercase tracking-wider rounded-xl shrink-0 transition-all"
+            >
+              <span>Submit Your NDA</span>
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </Link>
           </div>
         </div>
       </section>

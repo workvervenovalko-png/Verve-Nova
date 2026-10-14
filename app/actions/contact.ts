@@ -8,21 +8,23 @@ export async function submitContact(formData: {
   email: string;
   phone: string;
   service: string;
+  budget?: string;
+  timeline?: string;
   message: string;
 }) {
   try {
     await dbConnect();
     const contact = await Contact.create(formData);
 
-    // Send Confirmation Email
+    // Send Professional Confirmation Email
     try {
       const { resend } = await import("@/lib/resend");
       const { getContactTemplate } = await import("@/lib/mail-templates");
       
       await resend.emails.send({
-        from: 'Verve Nova Tech <hello@vervenovatech.com>',
+        from: 'Verve Nova Technologies <hello@vervenovatech.com>',
         to: formData.email,
-        subject: 'TRANSMISSION RECEIVED // VERVE NOVA',
+        subject: 'Project Inquiry Received // Verve Nova Technologies',
         html: getContactTemplate(formData.name),
       });
     } catch (mailError) {

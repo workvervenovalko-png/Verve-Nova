@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { ArrowUpRight, CheckCircle2, ShieldCheck, Zap, Layers, Database, ShoppingBag, Wrench, Store, Bell, Smartphone } from "lucide-react";
+import { ArrowUpRight, CheckCircle2, ShieldCheck, Zap, Layers, Database, ShoppingBag, Wrench, Store, Bell, Smartphone, Sparkles } from "lucide-react";
 import Link from "next/link";
 
 export default function CaseStudiesPage() {
@@ -20,7 +20,8 @@ export default function CaseStudiesPage() {
       ],
       result: "Empowered traditional kirana stores to digitalize operations without profit margin erosion, achieving high store retention, instant neighborhood delivery, and direct merchant payouts.",
       icons: [ShoppingBag, Store],
-      link: "https://chotuapp.in"
+      link: "/contact?service=quick-commerce",
+      ctaText: "Request Platform Demo"
     },
     {
       title: "ServiceHub Platform",
@@ -68,74 +69,56 @@ export default function CaseStudiesPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-[#0C0C0F] text-white selection:bg-indigo-500/30">
+    <main className="min-h-screen bg-white text-slate-900 selection:bg-blue-500/20 font-sans">
       <Navbar />
       
       {/* Header */}
-      <section className="pt-40 pb-20 px-6 relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-indigo-600/[0.05] blur-[120px] rounded-full pointer-events-none" />
+      <section className="pt-36 pb-16 px-6 relative overflow-hidden bg-gradient-to-b from-blue-50/70 via-slate-50/40 to-white border-b border-slate-200">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-blue-500/[0.05] blur-[140px] rounded-full pointer-events-none" />
         
         <div className="max-w-7xl mx-auto relative z-10 text-center">
-          <motion.p 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-xs font-bold text-indigo-400 uppercase tracking-[0.5em] mb-6"
-          >
-            Success Stories
-          </motion.p>
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-5xl md:text-8xl font-black tracking-tighter uppercase leading-none mb-8"
-          >
-            Our <span className="text-gradient whitespace-nowrap">Case Studies</span>
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-white/40 text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed"
-          >
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-[#1b67b2] text-xs font-bold uppercase tracking-widest mb-6">
+            <Sparkles className="w-3.5 h-3.5" /> Proven Track Record
+          </div>
+
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight uppercase leading-tight mb-6 text-slate-950">
+            Our <span className="text-[#1b67b2]">Case Studies</span>
+          </h1>
+          <p className="text-slate-600 text-base sm:text-lg md:text-xl max-w-2xl mx-auto font-normal leading-relaxed">
             Discover how we solve complex business challenges using cutting-edge technologies.
-          </motion.p>
+          </p>
         </div>
       </section>
 
       {/* Case Studies Content */}
-      <section className="py-20 px-6 max-w-6xl mx-auto space-y-32">
+      <section className="py-16 px-6 max-w-6xl mx-auto space-y-16">
         {caseStudies.map((study, i) => (
-          <motion.div 
+          <div 
             key={study.title}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7 }}
-            className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center"
+            className="flex flex-col lg:flex-row gap-10 lg:gap-14 items-center p-8 md:p-12 rounded-3xl bg-white border border-slate-200 shadow-md hover:border-[#1b67b2] hover:shadow-xl transition-all"
           >
             {/* Image Column */}
             <div className={`w-full lg:w-1/2 ${i % 2 !== 0 ? 'lg:order-2' : ''}`}>
-              <div className={`relative aspect-video lg:aspect-[4/3] rounded-[2rem] overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] group flex items-center justify-center p-8 ${
+              <div className={`relative aspect-video lg:aspect-[4/3] rounded-2xl overflow-hidden border border-slate-200 shadow-sm group flex items-center justify-center p-8 ${
                 study.image.includes('chotu') 
-                  ? 'bg-gradient-to-br from-[#042111] via-[#0A4D27] to-[#02140A]' 
+                  ? 'bg-gradient-to-br from-[#0c2447] via-[#061429] to-[#0c2447]' 
                   : study.image.includes('servicehub')
                   ? 'bg-gradient-to-br from-[#08152D] via-[#102958] to-[#050C1A]'
-                  : 'bg-black/60'
+                  : 'bg-slate-900'
               }`}>
-                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-violet-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10 pointer-events-none" />
                 {study.image.endsWith('.png') && (study.image.includes('chotu') || study.image.includes('servicehub')) ? (
-                  <div className={`relative z-20 flex items-center justify-center ${study.image.includes('servicehub') ? 'bg-white p-4 rounded-3xl shadow-2xl' : 'bg-black/40 backdrop-blur-xl p-5 rounded-3xl border border-white/10 shadow-2xl'}`}>
+                  <div className={`relative z-20 flex items-center justify-center ${study.image.includes('servicehub') ? 'bg-white p-4 rounded-2xl shadow-md' : 'bg-black/50 backdrop-blur-xl p-5 rounded-2xl border border-white/20 shadow-md'}`}>
                     <img 
                       src={study.image} 
                       alt={study.title} 
-                      className="max-h-24 md:max-h-32 object-contain drop-shadow-2xl transition-transform duration-700 group-hover:scale-105"
+                      className="max-h-24 md:max-h-32 object-contain drop-shadow-md transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
                 ) : (
                   <img 
                     src={study.image} 
                     alt={study.title} 
-                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 rounded-xl"
                   />
                 )}
               </div>
@@ -143,36 +126,36 @@ export default function CaseStudiesPage() {
 
             {/* Content Column */}
             <div className={`w-full lg:w-1/2 flex flex-col ${i % 2 !== 0 ? 'lg:order-1' : ''}`}>
-              <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight mb-2 text-white group-hover:text-indigo-400 transition-colors">
+              <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tight mb-2 text-slate-900">
                 {study.title}
               </h2>
-              <h3 className="text-sm font-bold text-indigo-400 uppercase tracking-widest mb-8">
+              <h3 className="text-xs font-bold text-[#1b67b2] uppercase tracking-wider mb-6">
                 {study.subtitle}
               </h3>
 
-              <div className="space-y-8">
+              <div className="space-y-6">
                 <div>
-                  <h4 className="text-xs font-black text-white/50 uppercase tracking-[0.2em] mb-3">The Challenge</h4>
-                  <p className="text-white/70 text-sm md:text-base leading-relaxed font-light">
+                  <h4 className="text-xs font-black text-[#1b67b2] uppercase tracking-widest mb-2">The Challenge</h4>
+                  <p className="text-slate-600 text-sm md:text-base leading-relaxed font-normal">
                     {study.challenge}
                   </p>
                 </div>
 
                 <div>
-                  <h4 className="text-xs font-black text-white/50 uppercase tracking-[0.2em] mb-3">Our Solution</h4>
-                  <ul className="space-y-3">
+                  <h4 className="text-xs font-black text-[#1b67b2] uppercase tracking-widest mb-2">Our Solution</h4>
+                  <ul className="space-y-2.5">
                     {study.solution.map((point, idx) => (
-                      <li key={idx} className="flex items-start gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-indigo-500 shrink-0 mt-0.5" />
-                        <span className="text-white/70 text-sm md:text-base leading-relaxed font-light">{point}</span>
+                      <li key={idx} className="flex items-start gap-2.5">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-1" />
+                        <span className="text-slate-600 text-sm md:text-base leading-relaxed font-normal">{point}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5">
-                  <h4 className="text-xs font-black text-indigo-400 uppercase tracking-[0.2em] mb-3">The Result</h4>
-                  <p className="text-white text-sm md:text-base leading-relaxed font-medium">
+                <div className="p-5 rounded-xl bg-blue-50/60 border border-blue-200">
+                  <h4 className="text-xs font-black text-[#1b67b2] uppercase tracking-widest mb-2">The Result</h4>
+                  <p className="text-slate-800 text-sm md:text-base leading-relaxed font-semibold">
                     {study.result}
                   </p>
                 </div>
@@ -181,28 +164,34 @@ export default function CaseStudiesPage() {
                   href={study.link}
                   target={study.link.startsWith("/") ? "_self" : "_blank"}
                   rel="noopener noreferrer"
-                  className="inline-flex h-12 px-8 items-center bg-white/5 text-white text-[10px] font-black uppercase tracking-[0.3em] hover:bg-indigo-600 hover:text-white transition-all rounded-full w-max border border-white/10 hover:border-transparent"
+                  className="inline-flex h-11 px-6 items-center bg-[#1b67b2] hover:bg-[#15538e] text-white text-xs font-bold uppercase tracking-wider shadow-md shadow-blue-500/20 transition-all rounded-xl w-max active:scale-95"
                 >
-                  {study.ctaText || "View Live Project"} <ArrowUpRight className="ml-2 w-4 h-4" />
+                  <span>{study.ctaText || "View Live Project"}</span>
+                  <ArrowUpRight className="ml-2 w-4 h-4" />
                 </a>
               </div>
             </div>
-          </motion.div>
+          </div>
         ))}
       </section>
 
       {/* CTA Section */}
-      <section className="py-32 px-6">
-        <div className="max-w-5xl mx-auto glass-card rounded-[4rem] p-12 md:p-24 text-center border border-white/10 relative overflow-hidden">
-          <div className="absolute -top-24 -right-24 w-96 h-96 bg-indigo-600/10 blur-[120px] rounded-full pointer-events-none" />
+      <section className="py-24 px-6 bg-slate-50 border-t border-slate-200">
+        <div className="max-w-5xl mx-auto rounded-3xl p-10 md:p-16 text-center border border-slate-200 bg-white relative overflow-hidden shadow-lg">
+          <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-500/10 blur-[120px] rounded-full pointer-events-none" />
           
-          <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-8">Ready to Write <br /> <span className="text-gradient">Your Success Story?</span></h2>
-          <p className="text-white/40 text-lg mb-12 max-w-xl mx-auto font-medium">Let's transform your complex challenges into our next big case study.</p>
+          <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tight mb-6 text-slate-950">
+            Ready to Write <br /> <span className="text-[#1b67b2]">Your Success Story?</span>
+          </h2>
+          <p className="text-slate-600 text-base md:text-lg mb-8 max-w-xl mx-auto font-normal">
+            Let's transform your complex challenges into our next big case study.
+          </p>
           <Link 
-            href="/contact" 
-            className="inline-flex h-16 px-12 items-center bg-white text-black text-[11px] font-black uppercase tracking-[0.3em] hover:bg-indigo-500 hover:text-white transition-all rounded-2xl"
+            href="/#contact" 
+            className="inline-flex h-14 px-10 items-center bg-[#1b67b2] hover:bg-[#15538e] text-white text-xs font-black uppercase tracking-widest shadow-lg shadow-blue-500/25 transition-all rounded-xl active:scale-95"
           >
-            Start Your Project <ArrowUpRight className="ml-3 w-5 h-5" />
+            <span>Start Your Project</span>
+            <ArrowUpRight className="ml-2 w-4 h-4" />
           </Link>
         </div>
       </section>

@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next'
+import Script from 'next/script'
 import { Inter, Poppins } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
@@ -15,7 +16,7 @@ const poppins = Poppins({
 });
 
 export const viewport: Viewport = {
-  themeColor: '#000000',
+  themeColor: '#FAFAF8',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
     default: 'Verve Nova Technologies | Next-Gen Cloud Systems & Software Engineering',
     template: '%s | Verve Nova Technologies'
   },
-  description: 'Verve Nova Technologies engineers enterprise digital solutions, custom software, AI platforms, and scalable cloud systems for high-growth businesses globally.',
+  description: 'Verve Nova Technologies (VNT) engineers enterprise digital solutions, custom software, AI platforms, and scalable cloud systems for high-growth businesses globally.',
   keywords: [
     'VNT',
     'VNT Global',
@@ -96,6 +97,8 @@ export const metadata: Metadata = {
 
 import { Providers } from '@/components/providers'
 import { SocialSidebar } from '@/components/social-sidebar';
+import { WhatsAppFAB } from '@/components/whatsapp-fab';
+import { MaintenanceGuard } from '@/components/maintenance-guard';
 
 export default function RootLayout({
   children,
@@ -104,8 +107,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable} light`}>
-      <head>
-        <script
+      <body className="font-sans antialiased bg-white text-slate-900 selection:bg-[#1b67b2] selection:text-white">
+        <Providers>
+          <MaintenanceGuard>
+            {children}
+          </MaintenanceGuard>
+          <SocialSidebar />
+          <WhatsAppFAB />
+        </Providers>
+        <Analytics />
+        <Script
+          id="json-ld-schema"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify([
@@ -164,8 +176,14 @@ export default function RootLayout({
           }}
         />
         {/* Google Analytics Tag */}
-        <script async src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent('14965936414')}`}></script>
-        <script
+        <Script
+          id="gtag-base"
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent('14965936414')}`}
+        />
+        <Script
+          id="gtag-init"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
@@ -177,13 +195,6 @@ export default function RootLayout({
             `,
           }}
         />
-      </head>
-      <body className="font-sans antialiased bg-white text-slate-900 selection:bg-[#1b67b2] selection:text-white">
-        <Providers>
-          {children}
-          <SocialSidebar />
-        </Providers>
-        <Analytics />
       </body>
     </html>
   )

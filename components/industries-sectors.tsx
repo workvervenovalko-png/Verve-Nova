@@ -59,12 +59,12 @@ export function IndustriesSectors() {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-32">
           <div className="max-w-2xl text-center md:text-left mx-auto md:mx-0">
-            <p className="text-[10px] font-bold text-indigo-400 uppercase tracking-[0.5em] mb-6 leading-none">Market Verticals</p>
+            <p className="text-xs font-extrabold text-indigo-400 uppercase tracking-widest mb-4 leading-none">Market Verticals</p>
             <h2 className="text-4xl md:text-7xl font-black text-white tracking-tighter uppercase leading-none">
-              Sector <span className="text-white/10">Expertise.</span>
+              Sector <span className="text-gradient">Expertise.</span>
             </h2>
           </div>
-          <p className="max-w-xs text-[10px] text-white/20 font-bold uppercase tracking-widest leading-relaxed text-center md:text-left mx-auto md:mx-0">
+          <p className="max-w-xs text-xs text-slate-300 font-medium uppercase tracking-wider leading-relaxed text-center md:text-left mx-auto md:mx-0">
             We provide specialized engineering for complex business environments across the globe.
           </p>
         </div>
@@ -73,23 +73,23 @@ export function IndustriesSectors() {
           {sectors.map((sector, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 1, y: 0 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="group p-10 rounded-[3rem] glass-card hover:glass-card-hover border-white/[0.04] hover:bg-white/[0.02] transition-all duration-700"
+              transition={{ delay: i * 0.05 }}
+              className="group p-10 rounded-[3rem] glass-card border border-white/10 hover:border-indigo-500/40 bg-white/[0.03] hover:bg-white/[0.06] transition-all duration-500"
             >
-              <div className={`w-14 h-14 rounded-2xl ${sector.color} flex items-center justify-center mb-10 group-hover:scale-110 transition-transform duration-700`}>
+              <div className={`w-14 h-14 rounded-2xl ${sector.color} flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500 shadow-lg`}>
                 {sector.icon}
               </div>
-              <h3 className="text-2xl font-black text-white uppercase tracking-tight mb-4 group-hover:text-indigo-400 transition-colors duration-500">
+              <h3 className="text-2xl font-black text-white uppercase tracking-tight mb-4 group-hover:text-indigo-400 transition-colors duration-300">
                 {sector.name}
               </h3>
-              <p className="text-sm md:text-base text-white/30 font-light leading-relaxed mb-8 group-hover:text-white/50 transition-colors duration-500">
+              <p className="text-sm md:text-base text-slate-200 font-normal leading-relaxed mb-8">
                 {sector.description}
               </p>
-              <div className="flex items-center gap-3 text-[10px] font-bold text-white/40 uppercase tracking-[0.3em] opacity-0 group-hover:opacity-100 transition-all duration-700">
-                Intelligence Brief <ArrowRight className="w-4 h-4 text-indigo-500" />
+              <div className="flex items-center gap-3 text-xs font-bold text-indigo-400 uppercase tracking-wider transition-all duration-300">
+                Intelligence Brief <ArrowRight className="w-4 h-4 text-indigo-400 group-hover:translate-x-1 transition-transform" />
               </div>
             </motion.div>
           ))}

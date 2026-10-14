@@ -1,119 +1,157 @@
 "use client";
 
-import * as React from "react";
-import { ArrowUpRight } from "lucide-react";
-import { motion } from "framer-motion";
+import React from "react";
 import Link from "next/link";
-
-const capabilities = [
-  {
-    id: "01",
-    title: "Software Engineering",
-    description: "Reliable, high-performance software systems for global enterprise needs.",
-    href: "/software-engineering",
-    tag: "Core Layer"
-  },
-  {
-    id: "02",
-    title: "AI Systems",
-    description: "Smart automation and assistants that save your company hours of manual work.",
-    href: "/ai-automation",
-    tag: "Intelligence"
-  },
-  {
-    id: "03",
-    title: "Enterprise Solutions",
-    description: "Integrated platforms that keep your entire team in sync and productive.",
-    href: "/enterprise-solutions",
-    tag: "Efficiency"
-  },
-  {
-    id: "04",
-    title: "Cloud Infrastructure",
-    description: "Always-on systems that ensure your business never goes offline.",
-    href: "/cloud-infrastructure",
-    tag: "Stability"
-  },
-  {
-    id: "05",
-    title: "Digital Experience",
-    description: "Modern websites and apps built to grow your revenue and user base.",
-    href: "/digital-experience",
-    tag: "Experience"
-  },
-  {
-    id: "06",
-    title: "Cybersecurity",
-    description: "Total protection for your business data and legal peace of mind.",
-    href: "/cybersecurity",
-    tag: "Immunity"
-  },
-];
+import { ArrowUpRight, ArrowRight, ShieldCheck, Lock, Code2, Cpu, Building2, Cloud, Sparkles, Shield } from "lucide-react";
+import { motion } from "framer-motion";
 
 export function Capabilities() {
-  return (
-    <section id="capabilities" className="py-40 bg-background px-6 relative overflow-hidden">
-      {/* Background accent */}
-      <div className="absolute top-[20%] right-0 w-[400px] h-[400px] bg-indigo-500/[0.04] blur-[120px] rounded-full pointer-events-none" />
+  const capabilities = [
+    {
+      id: "01",
+      title: "Software Engineering",
+      description: "Reliable, high-performance software systems for global enterprise needs.",
+      href: "/software-engineering",
+      tag: "Core Layer",
+      icon: Code2,
+    },
+    {
+      id: "02",
+      title: "AI Systems",
+      description: "Smart automation and assistants that save your company hours of manual work.",
+      href: "/ai-automation",
+      tag: "Intelligence",
+      icon: Cpu,
+    },
+    {
+      id: "03",
+      title: "Enterprise Solutions",
+      description: "Integrated platforms that keep your entire team in sync and productive.",
+      href: "/enterprise-solutions",
+      tag: "Efficiency",
+      icon: Building2,
+    },
+    {
+      id: "04",
+      title: "Cloud Infrastructure",
+      description: "Always-on systems that ensure your business never goes offline.",
+      href: "/cloud-infrastructure",
+      tag: "Stability",
+      icon: Cloud,
+    },
+    {
+      id: "05",
+      title: "Digital Experience",
+      description: "Modern websites and apps built to grow your revenue and user base.",
+      href: "/digital-experience",
+      tag: "Experience",
+      icon: Sparkles,
+    },
+    {
+      id: "06",
+      title: "Cybersecurity",
+      description: "Total protection for your business data and legal peace of mind.",
+      href: "/cybersecurity",
+      tag: "Immunity",
+      icon: Shield,
+    },
+  ];
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-8 md:gap-10 mb-16 md:mb-32 text-center md:text-left">
-          <div className="max-w-2xl flex flex-col items-center md:items-start px-4">
-            <p className="text-[10px] font-bold text-indigo-400 uppercase tracking-[0.6em] mb-4 md:mb-6">Execution Pillars</p>
-            <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-[7vw] font-black text-white tracking-tighter uppercase leading-[0.85]">
-              Specialized <br className="hidden md:block" />
-              <span className="text-white/10">Capabilities.</span>
+  return (
+    <section id="capabilities" className="py-20 bg-white border-b border-[#e2e8f0]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Header Section (Exact Live Verve Nova Strings) */}
+        <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-6 mb-16">
+          <div className="max-w-2xl text-center md:text-left">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-100 text-[#1b67b2] text-xs font-bold uppercase tracking-wider mb-3">
+              Execution Pillars
+            </div>
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-[#0f172a] uppercase tracking-tight">
+              Specialized <span className="text-[#1b67b2]">Capabilities</span>
             </h2>
           </div>
-          <p className="max-w-[240px] md:max-w-[280px] text-[9px] md:text-[10px] font-bold text-white/25 uppercase tracking-widest leading-relaxed">
+          <p className="max-w-xs text-xs sm:text-sm text-[#64748b] leading-relaxed text-center md:text-right">
             The technological architecture we deploy to solve complex enterprise problems at scale.
           </p>
         </div>
 
-        <div className="flex flex-col">
-          {capabilities.map((item, i) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-            >
-              <Link
-                href={item.href}
-                className="group relative flex flex-col md:flex-row items-center justify-between py-10 md:py-12 border-b border-white/[0.04] transition-all duration-700 hover:px-8 first:border-t text-center md:text-left"
+        {/* 6 Capabilities Cards Grid (AppSquadz Clean Style) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          {capabilities.map((item, idx) => {
+            const Icon = item.icon;
+            return (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.08 }}
               >
-                {/* Hover Background */}
-                <div className="absolute inset-0 bg-white/[0.02] opacity-0 group-hover:opacity-100 transition-all duration-700 -z-10 rounded-2xl" />
-                {/* Hover glow */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700 -z-20 rounded-2xl" style={{ boxShadow: "inset 0 0 80px rgba(99, 102, 241, 0.03)" }} />
+                <Link
+                  href={item.href}
+                  className="group bg-[#f8fafc] border border-[#e2e8f0] rounded-2xl p-8 hover:bg-white hover:border-[#1b67b2] hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full"
+                >
+                  <div>
+                    {/* Top Row: Number & Tag */}
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#1b67b2] flex items-center justify-center group-hover:bg-[#1b67b2] group-hover:text-white transition-colors duration-300">
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-mono font-bold text-[#1b67b2] bg-blue-50 px-2.5 py-1 rounded-full border border-blue-100">
+                          {item.tag}
+                        </span>
+                        <span className="text-lg font-black text-slate-300 group-hover:text-[#1b67b2] transition-colors">
+                          {item.id}
+                        </span>
+                      </div>
+                    </div>
 
-                <div className="flex flex-col md:flex-row items-center gap-4 md:gap-12 mb-6 md:mb-0">
-                  <span className="text-[10px] md:text-xs font-black text-white/10 group-hover:text-indigo-400 transition-colors font-mono tracking-tighter">
-                    {item.id}
-                  </span>
-                  <div className="flex flex-col items-center md:items-start">
-                    <span className="text-[8px] md:text-[9px] font-black text-indigo-500/60 uppercase tracking-[0.3em] mb-2 scale-x-90 origin-left opacity-0 md:group-hover:opacity-100 transition-all duration-500">
-                      {item.tag}
-                    </span>
-                    <h3 className="text-xl sm:text-2xl md:text-5xl font-black text-white/90 uppercase tracking-tighter group-hover:text-indigo-400 transition-all duration-500">
+                    <h3 className="text-xl font-bold text-[#0f172a] group-hover:text-[#1b67b2] transition-colors mb-3">
                       {item.title}
                     </h3>
-                  </div>
-                </div>
 
-                <div className="flex flex-col md:flex-row items-center gap-6 md:gap-16 w-full md:w-auto max-w-xl">
-                  <p className="text-xs md:text-base text-white/25 font-light leading-relaxed group-hover:text-white/50 transition-colors duration-500 px-6 md:px-0">
-                    {item.description}
-                  </p>
-                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/[0.06] flex items-center justify-center text-white/15 group-hover:bg-gradient-to-br group-hover:from-indigo-600 group-hover:to-violet-600 group-hover:text-white group-hover:border-transparent group-hover:rotate-45 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.3)] transition-all duration-700">
-                    <ArrowUpRight className="w-4 h-4 md:w-5 md:h-5" />
+                    <p className="text-sm text-[#475569] leading-relaxed mb-6">
+                      {item.description}
+                    </p>
                   </div>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
+
+                  <div className="pt-4 border-t border-[#e2e8f0] flex items-center justify-between text-xs font-bold text-[#1b67b2] group-hover:text-[#15538e] uppercase tracking-wider">
+                    <span>Explore Pillar</span>
+                    <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </div>
+                </Link>
+              </motion.div>
+            );
+          })}
         </div>
+
+        {/* Verve Nova Trust Credentials Banner */}
+        <div className="bg-[#f8fafc] rounded-2xl border border-[#e2e8f0] p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-4 text-center sm:text-left">
+            <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-200">
+              <ShieldCheck className="w-6 h-6" />
+            </div>
+            <div>
+              <h4 className="text-sm sm:text-base font-bold text-[#0f172a]">
+                100% Intellectual Property & NDA Protected
+              </h4>
+              <p className="text-xs text-[#64748b]">
+                ISO 27001 : 2022 Certified • Ministry of MSME Govt. Registered Entity
+              </p>
+            </div>
+          </div>
+
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 bg-[#1b67b2] hover:bg-[#15538e] text-white px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider shadow-sm transition-all whitespace-nowrap"
+          >
+            <span>Request Enterprise Consultation</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+
       </div>
     </section>
   );

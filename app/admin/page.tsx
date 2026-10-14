@@ -66,10 +66,10 @@ import {
 import { Calendar as CalendarUI } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
-
+import { ClientReviewManager } from "@/components/admin/ClientReviewManager";
 
 export default function AdminDashboardPage() {
-     const [activeTab, setActiveTab] = useState<"applications" | "leads" | "blogs" | "issuance" | "campus-ambassadors">("applications");
+     const [activeTab, setActiveTab] = useState<"applications" | "leads" | "blogs" | "issuance" | "campus-ambassadors" | "reviews">("applications");
      const [subTab, setSubTab] = useState<"new" | "assessment" | "interviewing" | "accepted" | "offered" | "joined" | "completed" | "rejected">("new");
      const [searchQuery, setSearchQuery] = useState("");
      const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
@@ -347,14 +347,14 @@ export default function AdminDashboardPage() {
 
      if ((authStatus === "loading" || isLoading) && applications.length === 0) {
           return (
-               <div className="min-h-screen bg-background flex items-center justify-center">
+               <div className="min-h-screen bg-[#09090B] flex items-center justify-center">
                     <VNTLoader size="lg" />
                </div>
           );
      }
 
      return (
-          <main className="min-h-screen bg-background selection:bg-indigo-500/30 text-white">
+          <main className="min-h-screen bg-[#09090B] selection:bg-indigo-500/30 text-white">
                <Navbar />
 
                <section className="relative pt-48 pb-32 px-6">
@@ -407,7 +407,12 @@ export default function AdminDashboardPage() {
                                    >
                                         Ambassadors
                                    </button>
-
+                                   <button
+                                        onClick={() => setActiveTab("reviews")}
+                                        className={`px-6 py-3 rounded-xl text-[9px] font-bold uppercase tracking-widest transition-all ${activeTab === 'reviews' ? 'bg-indigo-600 text-white shadow-lg' : 'text-white/30 hover:bg-white/[0.05]'}`}
+                                   >
+                                        Client Reviews
+                                   </button>
                               </div>
                          </div>
 
@@ -607,7 +612,7 @@ export default function AdminDashboardPage() {
                                                                              <Input
                                                                                   id={`time-${app._id}`}
                                                                                   type="time"
-                                                                                  className="h-10 text-[9px] font-bold border-white/[0.06] bg-white/[0.02] uppercase rounded-lg pr-10 focus:border-indigo-600 transition-all text-white placeholder:text-white/10"
+                                                                                  className="h-10 text-xs font-bold border-white/15 bg-white/[0.04] uppercase rounded-lg pr-10 focus:border-indigo-400 transition-all text-white placeholder:text-slate-400"
                                                                                   defaultValue={app.interviewTime || ''}
                                                                                   onBlur={(e) => setInterview(app._id, app.interviewDate, e.target.value, app.interviewLink, app.interviewerEmails?.join(', '), false)}
                                                                              />
@@ -618,7 +623,7 @@ export default function AdminDashboardPage() {
                                                                                   id={`link-${app._id}`}
                                                                                   type="text"
                                                                                   placeholder="MEET LINK / URL"
-                                                                                  className="h-10 text-[9px] font-bold border-white/[0.06] bg-white/[0.02] uppercase rounded-lg pr-10 focus:border-indigo-600 transition-all text-white placeholder:text-white/10"
+                                                                                  className="h-10 text-xs font-bold border-white/15 bg-white/[0.04] uppercase rounded-lg pr-10 focus:border-indigo-400 transition-all text-white placeholder:text-slate-400"
                                                                                   defaultValue={app.interviewLink || ''}
                                                                                   onBlur={(e) => setInterview(app._id, app.interviewDate, app.interviewTime, e.target.value, app.interviewerEmails?.join(', '), false)}
                                                                              />
@@ -629,7 +634,7 @@ export default function AdminDashboardPage() {
                                                                                   id={`email-${app._id}`}
                                                                                   type="text"
                                                                                   placeholder="INTERVIEWER EMAILS (e.g. a@b.com, c@d.com)"
-                                                                                  className="h-10 text-[9px] font-bold border-white/[0.06] bg-white/[0.02] uppercase rounded-lg pr-10 focus:border-indigo-600 transition-all text-white placeholder:text-white/10"
+                                                                                  className="h-10 text-xs font-bold border-white/15 bg-white/[0.04] uppercase rounded-lg pr-10 focus:border-indigo-400 transition-all text-white placeholder:text-slate-400"
                                                                                   defaultValue={app.interviewerEmails?.join(', ') || ''}
                                                                                   onBlur={(e) => setInterview(app._id, app.interviewDate, app.interviewTime, app.interviewLink, e.target.value, false)}
                                                                              />
@@ -889,6 +894,8 @@ export default function AdminDashboardPage() {
                                         </table>
                                    </div>
                               
+                              ) : activeTab === "reviews" ? (
+                                   <ClientReviewManager />
                               ) : activeTab === "issuance" ? (
                                    <div className="p-8 md:p-12">
                                         <div className="max-w-3xl mx-auto space-y-12">
@@ -905,7 +912,7 @@ export default function AdminDashboardPage() {
                                                                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-focus-within:text-indigo-400 transition-colors" />
                                                                  <Input 
                                                                       placeholder="ENTER VN-ID (e.g. VN-2026-ABCD)"
-                                                                      className="h-14 pl-12 bg-white/[0.02] border-white/10 rounded-xl text-white placeholder:text-white/10 text-[11px] font-black tracking-widest uppercase focus:bg-white/[0.05] focus:border-indigo-500/50 transition-all"
+                                                                      className="h-14 pl-12 bg-white/[0.04] border-white/15 rounded-xl text-white placeholder:text-slate-400 text-xs font-bold tracking-wider uppercase focus:bg-white/[0.08] focus:border-indigo-400 transition-all"
                                                                       value={searchVnId}
                                                                       onChange={(e) => setSearchVnId(e.target.value)}
                                                                       onKeyDown={(e) => e.key === 'Enter' && handleSearchCandidate()}
