@@ -6,9 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
   ShieldCheck,
-  Star,
   Cloud,
-  Server,
   Code2,
   Smartphone,
   Sparkles,
@@ -16,145 +14,163 @@ import {
   ChevronLeft,
   ChevronRight,
   CheckCircle2,
-  Cpu,
-  Database,
-  Terminal,
-  Activity,
-  Layers,
-  Zap,
-  Globe,
-  Radio
+  Check,
+  Server,
+  Layers
 } from "lucide-react";
 
 interface BannerSlide {
   id: string;
   category: string;
-  badgeIcon: React.ElementType;
+  categoryIcon: React.ElementType;
+  pillTags: string[];
   titlePrefix: string;
   titleHighlight: string;
   titleSuffix: string;
-  highlightColor: string; // e.g. text-[#1b67b2] or text-[#f9661b]
   description: string;
-  primaryCtaText: string;
-  primaryCtaLink: string;
+  ctaText: string;
+  ctaLink: string;
   secondaryCtaText: string;
   secondaryCtaLink: string;
-  stats: { value: string; label: string }[];
-  visualType: "cloud" | "web" | "mobile" | "ai" | "security";
-  bgGradient: string;
+  cardTitle: string;
+  cardSubtitle: string;
+  cardIcon: React.ElementType;
+  cardPoints: string[];
+  cardFooter: string;
+  accentColor: string; // "blue" | "orange"
 }
 
 const slides: BannerSlide[] = [
   {
     id: "cloud-devops",
-    category: "Cloud Architecture & DevOps Systems",
-    badgeIcon: Cloud,
-    titlePrefix: "Engineering High-Performance",
-    titleHighlight: "Cloud & DevOps",
-    titleSuffix: "Systems Built for 99.99% Uptime",
-    highlightColor: "text-[#1b67b2]",
+    category: "Cloud Architecture",
+    categoryIcon: Cloud,
+    pillTags: ["Cloud Migration", "AWS & GCP", "DevOps CI/CD", "Kubernetes"],
+    titlePrefix: "Unlock the Full Potential of",
+    titleHighlight: "Cloud Systems",
+    titleSuffix: "to Transform and Scale Your Business",
     description:
-      "Enterprise AWS and multi-cloud infrastructure, Kubernetes container orchestration, and zero-downtime automated CI/CD pipelines engineered to handle millions of requests seamlessly.",
-    primaryCtaText: "Explore Cloud Services",
-    primaryCtaLink: "/services",
-    secondaryCtaText: "Schedule Architecture Audit",
-    secondaryCtaLink: "/contact",
-    stats: [
-      { value: "99.99%", label: "Cloud SLA Uptime" },
-      { value: "120ms", label: "Edge Latency" },
-      { value: "Multi-Region", label: "AWS & GCP Clusters" },
+      "Enterprise AWS and multi-cloud infrastructure, automated CI/CD pipelines, and high-availability architecture engineered for 99.99% uptime and smooth scalability.",
+    ctaText: "Get Cloud Consultation Now",
+    ctaLink: "/contact",
+    secondaryCtaText: "Explore Cloud Services",
+    secondaryCtaLink: "/services",
+    cardTitle: "Enterprise Cloud Systems",
+    cardSubtitle: "AWS & Multi-Cloud Infrastructure Partner",
+    cardIcon: Cloud,
+    cardPoints: [
+      "High-Availability Multi-Region Architecture",
+      "Kubernetes & Docker Microservices",
+      "99.99% Guaranteed Cloud SLA Uptime",
+      "Zero-Downtime Cloud Migration Pipelines"
     ],
-    visualType: "cloud",
-    bgGradient: "from-blue-50/80 via-slate-50/50 to-white",
+    cardFooter: "Verve Nova Technologies • Cloud Division",
+    accentColor: "blue"
   },
   {
     id: "web-software",
-    category: "Custom Web & SaaS Engineering",
-    badgeIcon: Code2,
-    titlePrefix: "Custom Enterprise",
+    category: "Custom Web & SaaS",
+    categoryIcon: Code2,
+    pillTags: ["Next.js 15 & React", "Custom SaaS", "Microservices", "100% IP Transfer"],
+    titlePrefix: "Build High-Performing",
     titleHighlight: "Web Applications & SaaS",
-    titleSuffix: "Engineered For Rapid Scale",
-    highlightColor: "text-[#1b67b2]",
+    titleSuffix: "Engineered for Rapid Scale",
     description:
-      "Building ultra-responsive digital platforms, complex internal tools, and high-conversion SaaS web applications with Next.js 15, React, Node.js, and modular microservices.",
-    primaryCtaText: "View Web Engineering",
-    primaryCtaLink: "/services",
-    secondaryCtaText: "See Case Studies",
-    secondaryCtaLink: "/case-studies",
-    stats: [
-      { value: "<1.0s", label: "Core Web Vitals" },
-      { value: "100%", label: "Full IP Transfer" },
-      { value: "50+", label: "Web Apps Shipped" },
+      "Ultra-responsive digital platforms, internal enterprise tools, and high-conversion SaaS web applications engineered with Next.js 15, React, Node.js, and modern APIs.",
+    ctaText: "Start Your Web Project",
+    ctaLink: "/contact",
+    secondaryCtaText: "View Web Engineering",
+    secondaryCtaLink: "/services",
+    cardTitle: "Custom Web Platforms & SaaS",
+    cardSubtitle: "Full-Stack Enterprise Engineering",
+    cardIcon: Code2,
+    cardPoints: [
+      "Next.js 15 & React Server Components",
+      "Sub-Second Edge Page Performance",
+      "Scalable REST & GraphQL Microservices",
+      "100% Full Client IP & Source Code Transfer"
     ],
-    visualType: "web",
-    bgGradient: "from-indigo-50/70 via-slate-50/50 to-white",
+    cardFooter: "Verve Nova Technologies • Web Division",
+    accentColor: "blue"
   },
   {
     id: "mobile-apps",
-    category: "Cross-Platform Mobile Applications",
-    badgeIcon: Smartphone,
-    titlePrefix: "Fluid & Intuitive",
+    category: "Mobile App Development",
+    categoryIcon: Smartphone,
+    pillTags: ["Flutter & React Native", "iOS & Android", "60 FPS Performance", "Dual Store Launch"],
+    titlePrefix: "Launch Fluid & Intuitive",
     titleHighlight: "iOS & Android Apps",
-    titleSuffix: "Built For Frictionless User Growth",
-    highlightColor: "text-[#f9661b]",
+    titleSuffix: "Built for Frictionless User Growth",
     description:
-      "Delivering high-fidelity consumer and enterprise mobile applications built with Flutter, React Native, and Swift. Engineered for 60fps native speed, biometric security, and offline sync.",
-    primaryCtaText: "Explore Mobile Solutions",
-    primaryCtaLink: "/services",
-    secondaryCtaText: "Get App Estimate",
-    secondaryCtaLink: "/contact",
-    stats: [
-      { value: "60 FPS", label: "Native Performance" },
-      { value: "Dual Store", label: "App & Play Store Ready" },
-      { value: "4.9★", label: "User Experience Rating" },
+      "High-fidelity mobile applications designed for 5-star ratings. Cross-platform engineering with Flutter and React Native delivering 60fps native speed and biometric security.",
+    ctaText: "Get Mobile App Consultation",
+    ctaLink: "/contact",
+    secondaryCtaText: "Explore Mobile Solutions",
+    secondaryCtaLink: "/services",
+    cardTitle: "Cross-Platform Mobile Apps",
+    cardSubtitle: "iOS App Store & Google Play Ready",
+    cardIcon: Smartphone,
+    cardPoints: [
+      "Flutter & React Native Architecture",
+      "Native 60 FPS Smooth User Experience",
+      "Biometric Security & Offline Data Sync",
+      "End-to-End App Store Deployment & Support"
     ],
-    visualType: "mobile",
-    bgGradient: "from-orange-50/70 via-slate-50/50 to-white",
+    cardFooter: "Verve Nova Technologies • Mobile Division",
+    accentColor: "orange"
   },
   {
     id: "gen-ai",
-    category: "Generative AI & Autonomous Automation",
-    badgeIcon: Sparkles,
-    titlePrefix: "Transforming Business With",
+    category: "Generative AI",
+    categoryIcon: Sparkles,
+    pillTags: ["Autonomous AI Agents", "Custom LLMs", "Vector RAG Pipelines", "Zero Data Leakage"],
+    titlePrefix: "Accelerate Operations with",
     titleHighlight: "Generative AI & LLMs",
-    titleSuffix: "Trained For Real-World ROI",
-    highlightColor: "text-[#1b67b2]",
+    titleSuffix: "Trained for Real Enterprise Impact",
     description:
-      "Integrating domain-specific LLMs, intelligent RAG pipelines, autonomous customer support agents, and AI document processing to eliminate manual bottlenecks and multiply operational efficiency.",
-    primaryCtaText: "Discover AI Solutions",
-    primaryCtaLink: "/services",
-    secondaryCtaText: "Schedule AI Discovery",
-    secondaryCtaLink: "/contact",
-    stats: [
-      { value: "10x", label: "Workflow Acceleration" },
-      { value: "Custom LLMs", label: "Fine-Tuned Models" },
-      { value: "100% Private", label: "Zero Data Leakage" },
+      "Integrating domain-specific LLMs, intelligent RAG pipelines, autonomous customer support agents, and document processing to eliminate bottlenecks and multiply efficiency.",
+    ctaText: "Discover AI Solutions",
+    ctaLink: "/contact",
+    secondaryCtaText: "Explore AI Capabilities",
+    secondaryCtaLink: "/services",
+    cardTitle: "Generative AI & Automation",
+    cardSubtitle: "Enterprise LLM & Agentic Systems",
+    cardIcon: Sparkles,
+    cardPoints: [
+      "Domain-Specific Custom LLM Fine-Tuning",
+      "Enterprise Vector RAG Knowledge Retrieval",
+      "Autonomous Multi-Agent Workflow Automation",
+      "100% Private Hosting & Zero Data Leakage"
     ],
-    visualType: "ai",
-    bgGradient: "from-violet-50/70 via-slate-50/50 to-white",
+    cardFooter: "Verve Nova Technologies • AI Labz",
+    accentColor: "blue"
   },
   {
     id: "cybersecurity",
-    category: "Enterprise Cybersecurity & VAPT",
-    badgeIcon: Lock,
-    titlePrefix: "Bank-Grade Digital Protection &",
-    titleHighlight: "Rigorous VAPT Audits",
-    titleSuffix: "To Fortify Your Assets",
-    highlightColor: "text-[#f9661b]",
+    category: "Cybersecurity & VAPT",
+    categoryIcon: Lock,
+    pillTags: ["OWASP Top 10 Auditing", "Penetration Testing", "Zero-Trust Architecture", "MSME Registered"],
+    titlePrefix: "Safeguard Digital Infrastructure with",
+    titleHighlight: "Bank-Grade Security",
+    titleSuffix: "and Comprehensive VAPT Audits",
     description:
-      "Comprehensive vulnerability assessment and penetration testing (VAPT), OWASP compliance auditing, zero-trust network design, and 24/7 security posture hardening for modern digital enterprises.",
-    primaryCtaText: "Request Security Audit",
-    primaryCtaLink: "/services",
+      "Protecting enterprise applications and cloud infrastructure against modern vulnerabilities. Complete penetration testing, compliance hardening, and zero-trust security.",
+    ctaText: "Request Security Audit",
+    ctaLink: "/contact",
     secondaryCtaText: "Verify MSME Registration",
     secondaryCtaLink: "/verify",
-    stats: [
-      { value: "OWASP", label: "Full Matrix Audited" },
-      { value: "Zero-Trust", label: "Network Architecture" },
-      { value: "ISO & MSME", label: "Govt. Compliant" },
+    cardTitle: "Cybersecurity & VAPT Assurance",
+    cardSubtitle: "Vulnerability Assessment & Pen Testing",
+    cardIcon: ShieldCheck,
+    cardPoints: [
+      "OWASP Top 10 Vulnerability Assessment",
+      "Rigorous Penetration Testing & Hardening",
+      "End-to-End Encryption (AES-256 + TLS 1.3)",
+      "Govt. Registered (UDYAM-UP-10-0047070)"
     ],
-    visualType: "security",
-    bgGradient: "from-emerald-50/60 via-slate-50/50 to-white",
-  },
+    cardFooter: "Verve Nova Technologies • SecOps Division",
+    accentColor: "orange"
+  }
 ];
 
 export function Hero() {
@@ -162,7 +178,7 @@ export function Hero() {
   const [isPaused, setIsPaused] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Auto advance every 6 seconds unless hovered
+  // Auto advance every 6 seconds unless paused on hover
   useEffect(() => {
     if (isPaused) return;
     timerRef.current = setInterval(() => {
@@ -185,7 +201,7 @@ export function Hero() {
   const active = slides[currentSlide];
 
   return (
-    <section 
+    <section
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       className="relative w-full overflow-hidden bg-white pt-20 sm:pt-24 select-none"
@@ -195,23 +211,20 @@ export function Hero() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-start sm:justify-center overflow-x-auto py-2.5 gap-2 scrollbar-none">
             {slides.map((s, idx) => {
-              const Icon = s.badgeIcon;
+              const Icon = s.categoryIcon;
               const isActive = idx === currentSlide;
               return (
                 <button
                   key={s.id}
                   onClick={() => setCurrentSlide(idx)}
-                  className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-300 cursor-pointer ${
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all duration-200 cursor-pointer ${
                     isActive
-                      ? "bg-[#1b67b2] text-white shadow-md shadow-blue-500/20"
-                      : "bg-white text-slate-600 hover:text-slate-900 border border-slate-200 hover:border-slate-300"
+                      ? "bg-[#1b67b2] text-white shadow-sm"
+                      : "bg-white text-slate-700 hover:text-slate-950 border border-slate-200 hover:border-slate-300"
                   }`}
                 >
                   <Icon className={`w-3.5 h-3.5 ${isActive ? "text-white" : "text-[#1b67b2]"}`} />
-                  <span>{s.category.split("&")[0].trim()}</span>
-                  {isActive && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse ml-0.5" />
-                  )}
+                  <span>{s.category}</span>
                 </button>
               );
             })}
@@ -220,90 +233,148 @@ export function Hero() {
       </div>
 
       {/* Main Banner Slide Container */}
-      <div className={`relative min-h-[580px] lg:min-h-[620px] bg-gradient-to-b ${active.bgGradient} text-slate-900 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 border-b border-slate-200 transition-colors duration-700`}>
+      <div className="relative min-h-[540px] lg:min-h-[580px] bg-gradient-to-b from-blue-50/50 via-slate-50/30 to-white text-slate-900 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 border-b border-slate-200">
         
-        {/* Subtle Ambient Decorative Mesh */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500/8 via-transparent to-transparent pointer-events-none" />
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#1b67b2]/8 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#f9661b]/8 rounded-full blur-3xl pointer-events-none" />
+        {/* Subtle Static Background Grid */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-30 pointer-events-none" />
 
         <div className="max-w-7xl mx-auto w-full relative z-10">
           <AnimatePresence mode="wait">
             <motion.div
               key={active.id}
-              initial={{ opacity: 0, y: 15 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.45, ease: "easeOut" }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.35, ease: "easeOut" }}
               className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
             >
               
-              {/* Left Column: Headlines & Content */}
+              {/* Left Column: Headline, Tags, CTAs */}
               <div className="lg:col-span-7 flex flex-col justify-center text-center lg:text-left">
                 
-                {/* Category Pill Badge */}
-                <div className="flex items-center justify-center lg:justify-start mb-4">
-                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 text-[#1b67b2] text-xs font-bold uppercase tracking-wider shadow-sm">
-                    {React.createElement(active.badgeIcon, { className: "w-4 h-4 text-[#1b67b2]" })}
-                    <span>{active.category}</span>
-                  </div>
-                </div>
-
-                {/* Main Headline */}
-                <h1 className="text-3xl sm:text-4xl lg:text-[2.85rem] font-extrabold tracking-tight leading-[1.15] mb-5 text-slate-950 uppercase">
+                {/* Main Headline with Highlight Pill */}
+                <h1 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold tracking-tight leading-[1.2] mb-5 text-slate-950">
                   {active.titlePrefix}{" "}
-                  <span className={active.highlightColor}>{active.titleHighlight}</span>{" "}
+                  <span className={`inline-block px-3 py-1 rounded-xl text-white font-extrabold shadow-sm ${
+                    active.accentColor === "orange" ? "bg-[#f9661b]" : "bg-[#1b67b2]"
+                  }`}>
+                    {active.titleHighlight}
+                  </span>{" "}
                   {active.titleSuffix}
                 </h1>
+
+                {/* Sub-Feature Tags (AppSquadz Arrow Style) */}
+                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 mb-6">
+                  {active.pillTags.map((tag, i) => (
+                    <span
+                      key={i}
+                      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-slate-200 text-xs font-semibold text-slate-700 shadow-sm"
+                    >
+                      <span className="text-[#1b67b2] font-bold">↘</span>
+                      <span>{tag}</span>
+                    </span>
+                  ))}
+                </div>
 
                 {/* Body Description */}
                 <p className="text-base sm:text-lg text-slate-600 font-normal leading-relaxed max-w-2xl mb-8 mx-auto lg:mx-0">
                   {active.description}
                 </p>
 
-                {/* Action CTAs */}
-                <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-8">
+                {/* Single Primary & Secondary CTA Buttons */}
+                <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 mb-8">
                   <Link
-                    href={active.primaryCtaLink}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-[#1b67b2] hover:bg-[#15528e] text-white font-bold text-sm tracking-wide shadow-lg shadow-blue-500/20 hover:shadow-xl hover:shadow-blue-500/30 transition-all duration-300 transform hover:-translate-y-0.5"
+                    href={active.ctaLink}
+                    className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-white font-bold text-sm tracking-wide shadow-md transition-all duration-200 hover:shadow-lg ${
+                      active.accentColor === "orange"
+                        ? "bg-[#f9661b] hover:bg-[#e05510]"
+                        : "bg-[#1b67b2] hover:bg-[#15528e]"
+                    }`}
                   >
-                    <span>{active.primaryCtaText}</span>
+                    <span>{active.ctaText}</span>
                     <ArrowRight className="w-4 h-4" />
                   </Link>
 
                   <Link
                     href={active.secondaryCtaLink}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-bold text-sm border border-slate-300 hover:border-slate-400 shadow-sm transition-all duration-300"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-bold text-sm border border-slate-300 hover:border-slate-400 shadow-sm transition-all duration-200"
                   >
                     <span>{active.secondaryCtaText}</span>
                   </Link>
                 </div>
 
-                {/* Slide Domain Stats Strip */}
-                <div className="grid grid-cols-3 gap-3 pt-4 border-t border-slate-200/80 max-w-xl mx-auto lg:mx-0">
-                  {active.stats.map((st, i) => (
-                    <div key={i} className="text-center lg:text-left">
-                      <p className="text-lg sm:text-xl font-black text-slate-900">{st.value}</p>
-                      <p className="text-[11px] sm:text-xs font-semibold text-slate-500 leading-tight">{st.label}</p>
-                    </div>
-                  ))}
+                {/* Trust Points */}
+                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-6 gap-y-2 text-xs font-semibold text-slate-600">
+                  <span className="flex items-center gap-1.5">
+                    <Check className="w-4 h-4 text-emerald-600" />
+                    <span>99.99% SLA Uptime</span>
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <Check className="w-4 h-4 text-emerald-600" />
+                    <span>100% Code Ownership</span>
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <Check className="w-4 h-4 text-emerald-600" />
+                    <span>NDA & IP Confidentiality</span>
+                  </span>
                 </div>
 
               </div>
 
-              {/* Right Column: Dynamic Tailored Graphic Visual for each slide */}
+              {/* Right Column: Clean, Simple, Solid Enterprise Card (No black boxes, no green pings) */}
               <div className="lg:col-span-5 flex items-center justify-center relative py-4">
-                <BannerVisual graphic={active.visualType} />
+                <div className="relative w-full max-w-[440px] bg-white border border-slate-200/90 rounded-3xl p-7 shadow-xl shadow-slate-200/60">
+                  
+                  {/* Card Header with Icon & Subtitle */}
+                  <div className="flex items-center gap-4 pb-5 border-b border-slate-100 mb-6">
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-white shadow-sm shrink-0 ${
+                      active.accentColor === "orange" ? "bg-[#f9661b]" : "bg-[#1b67b2]"
+                    }`}>
+                      {React.createElement(active.cardIcon, { className: "w-7 h-7" })}
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-extrabold text-slate-900 leading-tight">
+                        {active.cardTitle}
+                      </h3>
+                      <p className="text-xs font-medium text-slate-500 mt-0.5">
+                        {active.cardSubtitle}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Clean 4-Point Checklist */}
+                  <div className="space-y-3.5 mb-6">
+                    {active.cardPoints.map((pt, i) => (
+                      <div key={i} className="flex items-center gap-3 p-2.5 rounded-xl bg-slate-50/80 border border-slate-100">
+                        <CheckCircle2 className={`w-4 h-4 shrink-0 ${
+                          active.accentColor === "orange" ? "text-[#f9661b]" : "text-[#1b67b2]"
+                        }`} />
+                        <span className="text-xs font-semibold text-slate-800 leading-snug">
+                          {pt}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Card Footer Tag */}
+                  <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-semibold text-slate-500">
+                    <span>{active.cardFooter}</span>
+                    <span className="text-emerald-700 font-bold bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                      Verified
+                    </span>
+                  </div>
+
+                </div>
               </div>
 
             </motion.div>
           </AnimatePresence>
         </div>
 
-        {/* Carousel Bottom Navigation Controls (Arrows + AppSquadz Expanding Pills) */}
-        <div className="max-w-7xl mx-auto w-full flex items-center justify-between pt-8 mt-4 border-t border-slate-200/60 z-20">
+        {/* Carousel Bottom Navigation Controls (AppSquadz Expanding Bullets + Arrows) */}
+        <div className="max-w-7xl mx-auto w-full flex items-center justify-between pt-8 mt-4 border-t border-slate-200/80 z-20">
           
-          {/* Slide Indicator Counter */}
+          {/* Slide Indicator */}
           <div className="flex items-center gap-2 text-xs font-bold text-slate-500">
             <span className="text-[#1b67b2] font-black text-sm">0{currentSlide + 1}</span>
             <span>/</span>
@@ -312,7 +383,7 @@ export function Hero() {
             <span className="hidden sm:inline-block text-slate-700 font-medium">{active.category}</span>
           </div>
 
-          {/* Expanding AppSquadz Style Navigation Bullets */}
+          {/* AppSquadz Expanding Bullets */}
           <div className="flex items-center gap-2">
             {slides.map((_, i) => (
               <button
@@ -350,341 +421,5 @@ export function Hero() {
 
       </div>
     </section>
-  );
-}
-
-// Tailored Enterprise Graphic Components matching each slide topic cleanly
-function BannerVisual({ graphic }: { graphic: BannerSlide["visualType"] }) {
-  switch (graphic) {
-    case "cloud":
-      return <CloudArchitectureVisual />;
-    case "web":
-      return <WebPlatformVisual />;
-    case "mobile":
-      return <MobileAppsVisual />;
-    case "ai":
-      return <GenerativeAiVisual />;
-    case "security":
-      return <CybersecurityVisual />;
-    default:
-      return <CloudArchitectureVisual />;
-  }
-}
-
-// 1. Cloud Architecture & Infrastructure Visual
-function CloudArchitectureVisual() {
-  return (
-    <div className="relative w-full max-w-[460px] bg-white/90 backdrop-blur-xl border border-slate-200 rounded-3xl p-6 shadow-2xl shadow-blue-500/10">
-      {/* Header bar */}
-      <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-5">
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-red-400" />
-          <div className="w-3 h-3 rounded-full bg-amber-400" />
-          <div className="w-3 h-3 rounded-full bg-emerald-400" />
-          <span className="text-xs font-mono font-bold text-slate-600 ml-2">aws-multi-cluster-vpc</span>
-        </div>
-        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-[10px] font-black uppercase tracking-wider">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
-          <span>Active SLA: 99.99%</span>
-        </div>
-      </div>
-
-      {/* Cloud Nodes Diagram */}
-      <div className="space-y-3.5">
-        {/* Tier 1: Cloud Gateway */}
-        <div className="p-3.5 rounded-2xl bg-gradient-to-r from-blue-500/10 to-indigo-500/10 border border-blue-200/80 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#1b67b2] text-white flex items-center justify-center font-bold">
-              <Globe className="w-5 h-5 animate-pulse" />
-            </div>
-            <div>
-              <p className="text-xs font-black text-slate-900">CloudFront CDN & API Gateway</p>
-              <p className="text-[10px] font-medium text-slate-500">Global Anycast Routing • 120ms Edge</p>
-            </div>
-          </div>
-          <span className="px-2 py-0.5 rounded bg-blue-100 text-[#1b67b2] text-[10px] font-bold">Traffic: 4.8M req/s</span>
-        </div>
-
-        {/* Tier 2: Microservices Grid */}
-        <div className="grid grid-cols-2 gap-3">
-          <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-            <div className="flex items-center gap-2 mb-1.5">
-              <Server className="w-4 h-4 text-[#1b67b2]" />
-              <p className="text-xs font-bold text-slate-800">Kubernetes Pods</p>
-            </div>
-            <p className="text-[10px] text-slate-500 mb-2">Auto-scaling Node Group</p>
-            <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
-              <div className="bg-[#1b67b2] h-full w-[78%]" />
-            </div>
-          </div>
-
-          <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-            <div className="flex items-center gap-2 mb-1.5">
-              <Database className="w-4 h-4 text-[#f9661b]" />
-              <p className="text-xs font-bold text-slate-800">Aurora DB Cluster</p>
-            </div>
-            <p className="text-[10px] text-slate-500 mb-2">Multi-AZ Read Replicas</p>
-            <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
-              <div className="bg-[#f9661b] h-full w-[45%]" />
-            </div>
-          </div>
-        </div>
-
-        {/* Tier 3: Telemetry Bar */}
-        <div className="p-3 rounded-xl bg-slate-900 text-white flex items-center justify-between text-xs font-mono">
-          <div className="flex items-center gap-2">
-            <Activity className="w-4 h-4 text-emerald-400" />
-            <span className="text-[11px] text-slate-300">Region: us-east-1 + ap-south-1</span>
-          </div>
-          <span className="text-emerald-400 font-bold text-[11px]">0 errors detected</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// 2. Custom Web & SaaS Engineering Visual
-function WebPlatformVisual() {
-  return (
-    <div className="relative w-full max-w-[460px] bg-white/95 backdrop-blur-xl border border-slate-200 rounded-3xl p-6 shadow-2xl shadow-blue-500/10">
-      {/* Browser Bar */}
-      <div className="flex items-center justify-between pb-3.5 border-b border-slate-100 mb-4">
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-red-400" />
-          <div className="w-3 h-3 rounded-full bg-amber-400" />
-          <div className="w-3 h-3 rounded-full bg-emerald-400" />
-          <div className="bg-slate-100 px-3 py-1 rounded-md text-[11px] font-mono text-slate-600 flex items-center gap-1.5 ml-2">
-            <Lock className="w-3 h-3 text-emerald-600" />
-            <span>https://app.enterprise-client.com</span>
-          </div>
-        </div>
-        <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">Next.js 15</span>
-      </div>
-
-      {/* Dashboard Preview */}
-      <div className="space-y-3">
-        {/* Metric Cards Row */}
-        <div className="grid grid-cols-3 gap-2.5">
-          <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
-            <p className="text-[10px] text-slate-500 font-medium">Monthly Active</p>
-            <p className="text-sm font-black text-slate-900">248,920</p>
-            <span className="text-[9px] text-emerald-600 font-bold">↑ 28.4% growth</span>
-          </div>
-          <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
-            <p className="text-[10px] text-slate-500 font-medium">API Latency</p>
-            <p className="text-sm font-black text-slate-900">42ms</p>
-            <span className="text-[9px] text-emerald-600 font-bold">Optimal Speed</span>
-          </div>
-          <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
-            <p className="text-[10px] text-slate-500 font-medium">Conversion</p>
-            <p className="text-sm font-black text-slate-900">14.8%</p>
-            <span className="text-[9px] text-blue-600 font-bold">Top Quartile</span>
-          </div>
-        </div>
-
-        {/* Code Snippet Drawer */}
-        <div className="p-3.5 rounded-xl bg-slate-950 text-slate-200 font-mono text-[11px] leading-relaxed">
-          <div className="flex items-center justify-between text-slate-400 pb-2 mb-2 border-b border-slate-800 text-[10px]">
-            <span className="flex items-center gap-1.5"><Terminal className="w-3 h-3 text-[#1b67b2]" /> api/checkout/route.ts</span>
-            <span className="text-emerald-400">200 OK (38ms)</span>
-          </div>
-          <p><span className="text-purple-400">export async function</span> <span className="text-blue-400">POST</span>(req: Request) &#123;</p>
-          <p className="pl-3 text-slate-400">// Enterprise Microservice Pipeline</p>
-          <p className="pl-3"><span className="text-purple-400">const</span> payload = <span className="text-amber-300">await</span> req.json();</p>
-          <p className="pl-3"><span className="text-purple-400">return</span> Response.json(&#123; <span className="text-emerald-300">status</span>: <span className="text-emerald-300">"SUCCESS"</span> &#125;);</p>
-          <p>&#125;</p>
-        </div>
-
-        {/* Lighthouse Score Bar */}
-        <div className="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-emerald-500 text-white font-black text-xs flex items-center justify-center">
-              99
-            </div>
-            <span className="text-xs font-bold text-slate-800">Google Lighthouse Score</span>
-          </div>
-          <span className="text-[10px] font-bold text-emerald-700 bg-white px-2 py-0.5 rounded border border-emerald-200">Enterprise Verified</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// 3. Mobile Apps (iOS & Android) Visual
-function MobileAppsVisual() {
-  return (
-    <div className="relative w-full max-w-[460px] flex items-center justify-center py-2">
-      {/* Primary Phone Mockup */}
-      <div className="relative w-[240px] sm:w-[260px] bg-slate-950 rounded-[38px] p-3 shadow-2xl border-4 border-slate-800 z-10">
-        {/* Notch */}
-        <div className="w-24 h-4 bg-slate-900 rounded-full mx-auto mb-3" />
-        
-        {/* Screen Content */}
-        <div className="bg-white rounded-[26px] p-3.5 space-y-3 min-h-[340px]">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-[10px] text-slate-400 font-bold uppercase">Digital Wallet</p>
-              <p className="text-sm font-black text-slate-900">$84,250.00</p>
-            </div>
-            <div className="w-8 h-8 rounded-full bg-orange-100 text-[#f9661b] flex items-center justify-center font-bold text-xs">
-              VN
-            </div>
-          </div>
-
-          {/* Quick Actions */}
-          <div className="grid grid-cols-3 gap-2 text-center text-[10px] font-bold text-slate-700">
-            <div className="p-2 rounded-xl bg-slate-50 border border-slate-200">Send</div>
-            <div className="p-2 rounded-xl bg-slate-50 border border-slate-200">Receive</div>
-            <div className="p-2 rounded-xl bg-[#1b67b2] text-white">Invest</div>
-          </div>
-
-          {/* Activity List */}
-          <div className="space-y-2 pt-1">
-            <p className="text-[10px] font-bold text-slate-400 uppercase">Live Transactions</p>
-            <div className="flex items-center justify-between p-2 rounded-xl bg-slate-50 text-xs">
-              <span className="font-bold text-slate-800">Stripe Global Payout</span>
-              <span className="font-bold text-emerald-600">+$12,400</span>
-            </div>
-            <div className="flex items-center justify-between p-2 rounded-xl bg-slate-50 text-xs">
-              <span className="font-bold text-slate-800">AWS Cloud Bill</span>
-              <span className="font-bold text-slate-700">-$1,840</span>
-            </div>
-          </div>
-
-          <div className="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-center">
-            <span className="text-[10px] font-black text-emerald-700 uppercase">Biometric Auth Verified ✓</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Floating Badges */}
-      <div className="absolute -top-1 -right-2 sm:right-2 z-20 bg-white/95 backdrop-blur-md border border-slate-200 rounded-2xl p-2.5 shadow-lg">
-        <p className="text-[10px] font-bold text-slate-500">Cross-Platform</p>
-        <p className="text-xs font-black text-[#1b67b2]">Flutter & React Native</p>
-      </div>
-
-      <div className="absolute -bottom-2 -left-2 sm:left-2 z-20 bg-slate-900 text-white rounded-2xl p-2.5 shadow-xl">
-        <p className="text-[9px] text-slate-400 font-bold uppercase">Store Ready</p>
-        <p className="text-xs font-black text-emerald-400">iOS & Android 60 FPS</p>
-      </div>
-    </div>
-  );
-}
-
-// 4. Generative AI & Automation Visual
-function GenerativeAiVisual() {
-  return (
-    <div className="relative w-full max-w-[460px] bg-white/95 backdrop-blur-xl border border-slate-200 rounded-3xl p-6 shadow-2xl shadow-blue-500/10">
-      {/* Header */}
-      <div className="flex items-center justify-between pb-3.5 border-b border-slate-100 mb-4">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-violet-600 text-white flex items-center justify-center font-bold">
-            <Sparkles className="w-4 h-4" />
-          </div>
-          <div>
-            <p className="text-xs font-black text-slate-900">VNT GenAI Autonomous Engine</p>
-            <p className="text-[10px] text-slate-500">Fine-Tuned LLM • Vector RAG Database</p>
-          </div>
-        </div>
-        <span className="px-2 py-0.5 rounded-full bg-violet-100 text-violet-700 text-[10px] font-bold">RAG Active</span>
-      </div>
-
-      {/* Interactive AI Prompt & Response Flow */}
-      <div className="space-y-3">
-        {/* User Prompt */}
-        <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200 text-xs">
-          <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">Incoming Enterprise Query</p>
-          <p className="text-slate-800 font-medium">"Analyze Q3 cloud consumption & generate optimization playbook"</p>
-        </div>
-
-        {/* Neural Processing Pipeline */}
-        <div className="p-3 rounded-2xl bg-gradient-to-r from-violet-500/10 via-indigo-500/10 to-blue-500/10 border border-violet-200/80 space-y-2">
-          <div className="flex items-center justify-between text-[11px] font-bold text-violet-900">
-            <span className="flex items-center gap-1.5"><Cpu className="w-3.5 h-3.5 text-violet-600 animate-spin" /> Vector Embedding & Reasoning</span>
-            <span className="text-[10px] text-violet-600">32ms</span>
-          </div>
-          <div className="w-full bg-violet-200 h-1.5 rounded-full overflow-hidden">
-            <div className="bg-violet-600 h-full w-[85%]" />
-          </div>
-        </div>
-
-        {/* AI Output Card */}
-        <div className="p-3.5 rounded-2xl bg-slate-900 text-slate-100 text-xs space-y-1.5 font-mono">
-          <div className="flex items-center justify-between text-slate-400 text-[10px]">
-            <span className="text-emerald-400 font-bold">✓ Autonomous Response</span>
-            <span>Tokens: 1,420</span>
-          </div>
-          <p className="text-slate-300 text-[11px] leading-relaxed">
-            Identified 3 idle RDS replicas. Downscaled to save <span className="text-emerald-400 font-bold">$4,200/mo</span>. Auto-scaling rules applied across 4 clusters.
-          </p>
-        </div>
-
-        {/* Badges */}
-        <div className="flex items-center justify-between pt-1 text-[10px] font-bold text-slate-500">
-          <span>Zero Data Leakage Policy</span>
-          <span className="text-violet-600">Private Enterprise Hosting</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// 5. Cybersecurity & VAPT Visual
-function CybersecurityVisual() {
-  return (
-    <div className="relative w-full max-w-[460px] bg-white/95 backdrop-blur-xl border border-slate-200 rounded-3xl p-6 shadow-2xl shadow-blue-500/10">
-      {/* Header */}
-      <div className="flex items-center justify-between pb-3.5 border-b border-slate-100 mb-4">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold">
-            <ShieldCheck className="w-4 h-4" />
-          </div>
-          <div>
-            <p className="text-xs font-black text-slate-900">Zero-Trust SecOps Console</p>
-            <p className="text-[10px] text-slate-500">VAPT Auditing & Penetration Testing</p>
-          </div>
-        </div>
-        <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">Protected</span>
-      </div>
-
-      {/* Security Shield & Auditing Grid */}
-      <div className="space-y-3">
-        {/* Status Strip */}
-        <div className="p-3 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
-            <span className="text-xs font-black text-slate-900">0 Critical Vulnerabilities</span>
-          </div>
-          <span className="text-[10px] font-bold text-emerald-700 bg-white px-2 py-0.5 rounded border border-emerald-200">Passed OWASP</span>
-        </div>
-
-        {/* Audit Pillars */}
-        <div className="grid grid-cols-2 gap-2.5">
-          <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
-            <p className="text-[10px] text-slate-500 font-bold uppercase">Network Security</p>
-            <p className="text-xs font-black text-slate-900">DDoS & WAF Active</p>
-            <span className="text-[9px] text-emerald-600 font-bold">100% Block Rate</span>
-          </div>
-          <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
-            <p className="text-[10px] text-slate-500 font-bold uppercase">Data Encryption</p>
-            <p className="text-xs font-black text-slate-900">AES-256 + TLS 1.3</p>
-            <span className="text-[9px] text-blue-600 font-bold">At Rest & Transit</span>
-          </div>
-        </div>
-
-        {/* Terminal Log */}
-        <div className="p-3 rounded-xl bg-slate-950 text-slate-300 font-mono text-[10px] space-y-1">
-          <p className="text-slate-400">$ vnt-security audit --target production-api</p>
-          <p className="text-emerald-400">✓ SQL Injection: SAFE</p>
-          <p className="text-emerald-400">✓ XSS & CSRF Token Validation: SAFE</p>
-          <p className="text-emerald-400">✓ Identity & RBAC Enforcement: VERIFIED</p>
-        </div>
-
-        {/* MSME & ISO Note */}
-        <div className="p-2 rounded-xl bg-slate-100 text-center text-[10px] font-bold text-slate-700">
-          Govt. Registered Enterprise • UDYAM-UP-10-0047070
-        </div>
-      </div>
-    </div>
   );
 }
