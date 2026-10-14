@@ -5,6 +5,7 @@ import VerveApplication from "@/models/Application";
 import Contact from "@/models/Contact";
 import User from "@/models/User";
 import Blog from "@/models/Blog";
+import { staticBlogs } from "@/lib/blogs-data";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
@@ -398,10 +399,16 @@ export async function deleteBlog(blogId: string) {
 export async function getPublicBlogs() {
   try {
     await dbConnect();
-    const blogs = await Blog.find().sort({ createdAt: -1 }).limit(10).lean();
-    return { success: true, data: JSON.parse(JSON.stringify(blogs)) };
+    const dbBlogs = await Blog.find().sort({ createdAt: -1 }).lean();
+    if (dbBlogs && dbBlogs.length > 0) {
+      const dbSlugs = new Set(dbBlogs.map((b: any) => b.slug));
+      const remainingStatic = staticBlogs.filter(b => !dbSlugs.has(b.slug));
+      return { success: true, data: [...JSON.parse(JSON.stringify(dbBlogs)), ...remainingStatic] };
+    }
+    return { success: true, data: staticBlogs };
   } catch (error: any) {
-    return { success: false, error: error.message };
+    // Graceful fallback to staticBlogs if MongoDB fails
+    return { success: true, data: staticBlogs };
   }
 }
 
@@ -409,11 +416,18 @@ export async function getBlogBySlug(slug: string) {
   try {
     await dbConnect();
     const blog = await Blog.findOne({ slug }).lean();
-    if (!blog) return { success: false, error: "Blog not found" };
-    return { success: true, data: JSON.parse(JSON.stringify(blog)) };
+    if (blog) {
+      return { success: true, data: JSON.parse(JSON.stringify(blog)) };
+    }
   } catch (error: any) {
-    return { success: false, error: error.message };
+    console.warn("MongoDB blog lookup error, falling back to static:", error?.message);
   }
+
+  const fallback = staticBlogs.find((b) => b.slug === slug);
+  if (fallback) {
+    return { success: true, data: fallback };
+  }
+  return { success: false, error: "Blog not found" };
 }
 
 export async function searchCandidateByVnId(vnId: string) {
