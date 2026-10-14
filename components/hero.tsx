@@ -213,21 +213,21 @@ export function Hero() {
     <section
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
-      className="relative w-full overflow-hidden bg-white pt-20 sm:pt-24 select-none"
+      className="relative w-full overflow-hidden bg-white pt-16 sm:pt-20 select-none"
     >
-      {/* Main Banner Slide Container with Themed Ambient Glow - Full Viewport Height */}
+      {/* Main Banner Slide Container with Themed Ambient Glow - Fits Viewport Seamlessly */}
       <div 
-        className={`relative min-h-[calc(100vh-80px)] lg:min-h-[760px] bg-gradient-to-r ${active.bgGradient} text-slate-900 flex flex-col justify-between py-12 sm:py-16 lg:py-20 px-4 sm:px-8 lg:px-14 border-b border-slate-200/80 transition-colors duration-700`}
+        className={`relative min-h-[500px] lg:h-[calc(100vh-80px)] max-h-[640px] bg-gradient-to-r ${active.bgGradient} text-slate-900 flex flex-col justify-between py-6 sm:py-8 lg:py-10 px-4 sm:px-8 lg:px-14 border-b border-slate-200/80 transition-colors duration-700`}
       >
         {/* Ambient Warm Radial Spotlight on the Right */}
         <div 
-          className="absolute right-[5%] top-1/2 -translate-y-1/2 w-[650px] h-[650px] rounded-full blur-3xl pointer-events-none transition-all duration-700"
+          className="absolute right-[5%] top-1/2 -translate-y-1/2 w-[550px] h-[550px] rounded-full blur-3xl pointer-events-none transition-all duration-700"
           style={{ background: active.glowColor }}
         />
 
         {/* Subtle Decorative Line-Art Doodles in Corners (AppSquadz Style) */}
-        <div className="absolute bottom-6 left-8 pointer-events-none opacity-25 hidden sm:block">
-          <svg width="240" height="160" viewBox="0 0 180 120" fill="none" stroke={active.accentColor === "orange" ? "#f9661b" : "#1b67b2"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <div className="absolute bottom-4 left-6 pointer-events-none opacity-25 hidden sm:block">
+          <svg width="180" height="120" viewBox="0 0 180 120" fill="none" stroke={active.accentColor === "orange" ? "#f9661b" : "#1b67b2"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M30 45 A14 14 0 1 1 48 45 C46 51 44 55 44 60 L34 60 C34 55 32 51 30 45 Z" />
             <line x1="35" y1="64" x2="43" y2="64" />
             <line x1="37" y1="68" x2="41" y2="68" />
@@ -248,18 +248,18 @@ export function Hero() {
           <AnimatePresence mode="wait">
             <motion.div
               key={active.id}
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
+              exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.35, ease: "easeOut" }}
-              className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center"
+              className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center"
             >
               
               {/* Left Column: Headline, Divider, Subtitle, Pill Button */}
               <div className="lg:col-span-6 flex flex-col justify-center text-center lg:text-left">
                 
                 {/* Main Headline (Real Verve Nova Brand Tag + Headline) */}
-                <h1 className="text-3xl sm:text-4xl lg:text-[3.15rem] xl:text-[3.4rem] font-bold tracking-tight leading-[1.2] text-slate-950">
+                <h1 className="text-2xl sm:text-3xl lg:text-[2.5rem] xl:text-[2.75rem] font-bold tracking-tight leading-[1.2] text-slate-950 mb-3">
                   <span className={`font-extrabold ${active.accentColor === "orange" ? "text-[#f9661b]" : "text-[#1b67b2]"}`}>
                     {active.brandTag}
                   </span>{" "}
@@ -268,7 +268,7 @@ export function Hero() {
 
                 {/* Thin Subtle Horizontal Accent Divider Line */}
                 <div 
-                  className={`h-[2px] w-full max-w-[520px] my-6 mx-auto lg:mx-0 ${
+                  className={`h-[1.5px] w-full max-w-[460px] my-3 sm:my-4 mx-auto lg:mx-0 ${
                     active.accentColor === "orange"
                       ? "bg-gradient-to-r from-orange-400 via-amber-300 to-transparent"
                       : "bg-gradient-to-r from-blue-400 via-sky-300 to-transparent"
@@ -276,7 +276,7 @@ export function Hero() {
                 />
 
                 {/* Subtitle Paragraph */}
-                <p className="text-base sm:text-lg lg:text-xl text-slate-600 font-normal leading-relaxed max-w-xl mb-9 mx-auto lg:mx-0">
+                <p className="text-sm sm:text-base lg:text-[17px] text-slate-600 font-normal leading-relaxed max-w-xl mb-6 mx-auto lg:mx-0">
                   {active.subtitle}
                 </p>
 
@@ -287,7 +287,7 @@ export function Hero() {
                       href={active.ctaLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`inline-flex items-center justify-center px-10 py-4 rounded-full text-white font-bold text-base sm:text-lg tracking-wide shadow-md transition-all duration-200 hover:shadow-xl hover:scale-[1.03] active:scale-[0.98] ${
+                      className={`inline-flex items-center justify-center px-8 py-3.5 rounded-full text-white font-bold text-sm sm:text-base tracking-wide shadow-md transition-all duration-200 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] ${
                         active.accentColor === "orange"
                           ? "bg-[#f9661b] hover:bg-[#e05510]"
                           : "bg-[#1b67b2] hover:bg-[#15528e]"
@@ -298,7 +298,7 @@ export function Hero() {
                   ) : (
                     <Link
                       href={active.ctaLink}
-                      className={`inline-flex items-center justify-center px-10 py-4 rounded-full text-white font-bold text-base sm:text-lg tracking-wide shadow-md transition-all duration-200 hover:shadow-xl hover:scale-[1.03] active:scale-[0.98] ${
+                      className={`inline-flex items-center justify-center px-8 py-3.5 rounded-full text-white font-bold text-sm sm:text-base tracking-wide shadow-md transition-all duration-200 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] ${
                         active.accentColor === "orange"
                           ? "bg-[#f9661b] hover:bg-[#e05510]"
                           : "bg-[#1b67b2] hover:bg-[#15528e]"
@@ -313,26 +313,26 @@ export function Hero() {
 
               {/* Right Column: 3 Real Verve Nova Stat Elements (Icons + Big Numbers + Labels) Side-by-Side */}
               <div className="lg:col-span-6 flex items-center justify-center lg:justify-end">
-                <div className="grid grid-cols-3 gap-4 sm:gap-8 w-full max-w-[620px]">
+                <div className="grid grid-cols-3 gap-3 sm:gap-6 w-full max-w-[560px]">
                   {active.stats.map((st, idx) => {
                     const IconComponent = st.icon;
                     return (
                       <div
                         key={idx}
-                        className="flex flex-col items-center text-center p-2 sm:p-4"
+                        className="flex flex-col items-center text-center p-2 sm:p-3"
                       >
                         {/* Large Colored Illustration Icon */}
                         <div 
-                          className={`w-16 h-16 sm:w-22 sm:h-22 flex items-center justify-center mb-3 transition-transform duration-300 hover:scale-110 ${
+                          className={`w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center mb-2.5 transition-transform duration-300 hover:scale-110 ${
                             active.accentColor === "orange" ? "text-[#f9661b]" : "text-[#1b67b2]"
                           }`}
                         >
-                          <IconComponent className="w-14 h-14 sm:w-18 sm:h-18 stroke-[1.8]" />
+                          <IconComponent className="w-11 h-11 sm:w-13 sm:h-13 stroke-[1.8]" />
                         </div>
 
                         {/* Large Bold Stat Counter */}
                         <p 
-                          className={`text-2xl sm:text-3xl lg:text-[2.4rem] font-extrabold tracking-tight mb-1.5 ${
+                          className={`text-2xl sm:text-3xl lg:text-[2.1rem] font-extrabold tracking-tight mb-1 ${
                             active.accentColor === "orange" ? "text-[#f9661b]" : "text-[#1b67b2]"
                           }`}
                         >
@@ -340,7 +340,7 @@ export function Hero() {
                         </p>
 
                         {/* Clean Two-Line Description Label */}
-                        <p className="text-xs sm:text-sm font-semibold text-slate-700 leading-snug max-w-[150px]">
+                        <p className="text-xs sm:text-[13px] font-semibold text-slate-700 leading-snug max-w-[130px]">
                           {st.label}
                         </p>
                       </div>
@@ -354,7 +354,7 @@ export function Hero() {
         </div>
 
         {/* Carousel Bottom Navigation Dots (AppSquadz Style Centered Bullets) */}
-        <div className="max-w-7xl mx-auto w-full flex items-center justify-center gap-2 pt-8 pb-2 z-20">
+        <div className="max-w-7xl mx-auto w-full flex items-center justify-center gap-2 pt-4 pb-2 z-20">
           {slides.map((_, i) => (
             <button
               key={i}
