@@ -55,9 +55,123 @@ export async function createReviewLink(data: {
   }
 }
 
+// Permanent Project Presets for open, reusable review links
+export const PROJECT_PRESETS: Record<string, {
+  slug: string;
+  projectName: string;
+  projectGoal: string;
+  websiteUrl?: string;
+}> = {
+  "servicehub": {
+    slug: "servicehub",
+    projectName: "ServiceHub",
+    projectGoal: "On-Demand Service Booking & Handyman App Ecosystem",
+    websiteUrl: "https://play.google.com/store/apps/details?id=com.sahil.servicehub",
+  },
+  "service-hub": {
+    slug: "servicehub",
+    projectName: "ServiceHub",
+    projectGoal: "On-Demand Service Booking & Handyman App Ecosystem",
+    websiteUrl: "https://play.google.com/store/apps/details?id=com.sahil.servicehub",
+  },
+  "chotu": {
+    slug: "chotu",
+    projectName: "ChotU (छोटू)",
+    projectGoal: "Hyperlocal Quick Commerce & Instant Grocery Delivery App",
+    websiteUrl: "https://vervenovatech.com/case-studies",
+  },
+  "siora": {
+    slug: "siora",
+    projectName: "Siora Infra Design",
+    projectGoal: "3D Architecture Portfolio & Interactive Construction CMS",
+    websiteUrl: "https://siorainfradesign.com/",
+  },
+  "siora-infra": {
+    slug: "siora",
+    projectName: "Siora Infra Design",
+    projectGoal: "3D Architecture Portfolio & Interactive Construction CMS",
+    websiteUrl: "https://siorainfradesign.com/",
+  },
+  "billzer": {
+    slug: "billzer",
+    projectName: "VNT Billzer",
+    projectGoal: "Flagship Retail POS, Inventory & SaaS Billing Suite",
+    websiteUrl: "https://verve-ledger.vercel.app/",
+  },
+  "vnt-billzer": {
+    slug: "billzer",
+    projectName: "VNT Billzer",
+    projectGoal: "Flagship Retail POS, Inventory & SaaS Billing Suite",
+    websiteUrl: "https://verve-ledger.vercel.app/",
+  },
+  "crm": {
+    slug: "crm",
+    projectName: "Verve CRM",
+    projectGoal: "Intelligent Client Relationship & Sales Automation Engine",
+    websiteUrl: "https://www.vervenovatechcrm.online/login",
+  },
+  "verve-crm": {
+    slug: "crm",
+    projectName: "Verve CRM",
+    projectGoal: "Intelligent Client Relationship & Sales Automation Engine",
+    websiteUrl: "https://www.vervenovatechcrm.online/login",
+  },
+  "transcription": {
+    slug: "transcription",
+    projectName: "Advance Transcription",
+    projectGoal: "AI Speech-to-Text Transcription & Audio Intelligence Platform",
+    websiteUrl: "https://www.advancetranscription.com/",
+  },
+  "advance-transcription": {
+    slug: "transcription",
+    projectName: "Advance Transcription",
+    projectGoal: "AI Speech-to-Text Transcription & Audio Intelligence Platform",
+    websiteUrl: "https://www.advancetranscription.com/",
+  },
+  "general": {
+    slug: "general",
+    projectName: "Custom Engineering Project",
+    projectGoal: "Full-Stack Web / Mobile Application & Engineering Engagement",
+    websiteUrl: "",
+  },
+  "custom": {
+    slug: "general",
+    projectName: "Custom Engineering Project",
+    projectGoal: "Full-Stack Web / Mobile Application & Engineering Engagement",
+    websiteUrl: "",
+  },
+};
+
 // 2. Fetch review request details for the client form
 export async function getReviewByToken(token: string) {
   try {
+    const cleanToken = (token || "").toLowerCase().trim();
+
+    // Check if token matches a permanent project slug
+    if (PROJECT_PRESETS[cleanToken]) {
+      const preset = PROJECT_PRESETS[cleanToken];
+      return {
+        success: true,
+        review: {
+          id: `preset-${cleanToken}`,
+          projectName: preset.projectName,
+          projectGoal: preset.projectGoal || "",
+          problemStatement: "",
+          websiteUrl: preset.websiteUrl || "",
+          serviceExperience: "",
+          clientName: "",
+          clientRole: "",
+          clientCompany: "",
+          clientLinkedIn: "",
+          highlights: ["On-Time Milestone Delivery", "Clean Code & Modern Architecture"],
+          wouldRecommend: true,
+          rating: 5,
+          reviewText: "",
+          status: "pending", // Always open and fresh for incoming client reviews
+        },
+      };
+    }
+
     await dbConnect();
     const review = await Review.findOne({ token }).lean();
 
@@ -91,8 +205,9 @@ export async function getReviewByToken(token: string) {
   }
 }
 
-// 3. Client submits their review
+// 3. Client submits their review (Automatically Published)
 export async function submitClientReview(token: string, data: {
+  projectName?: string;
   clientName: string;
   clientRole: string;
   clientCompany?: string;
@@ -108,7 +223,7 @@ export async function submitClientReview(token: string, data: {
 }) {
   try {
     if (!token) {
-      return { success: false, error: "Missing review token." };
+      return { success: false, error: "Missing review link token." };
     }
     if (!data.clientName?.trim()) {
       return { success: false, error: "Your name is required." };
@@ -121,7 +236,49 @@ export async function submitClientReview(token: string, data: {
     }
 
     await dbConnect();
+    const cleanToken = (token || "").toLowerCase().trim();
 
+    // If submitted via permanent project preset link, create a new verified review document
+    if (PROJECT_PRESETS[cleanToken]) {
+      const preset = PROJECT_PRESETS[cleanToken];
+      const assignedProjectName =
+        (cleanToken === "general" || cleanToken === "custom") && data.projectName?.trim()
+          ? data.projectName.trim()
+          : preset.projectName;
+
+      const newReview = await Review.create({
+        projectName: assignedProjectName,
+        projectGoal: data.projectGoal?.trim() || preset.projectGoal || "",
+        problemStatement: data.problemStatement?.trim() || "",
+        websiteUrl: data.websiteUrl?.trim() || preset.websiteUrl || "",
+        serviceExperience: data.serviceExperience?.trim() || "",
+        reviewText: (data.reviewText || data.serviceExperience || "").trim(),
+        rating: Math.min(5, Math.max(1, Number(data.rating) || 5)),
+        clientName: data.clientName.trim(),
+        clientRole: data.clientRole.trim(),
+        clientCompany: data.clientCompany?.trim() || "",
+        clientLinkedIn: data.clientLinkedIn?.trim() || "",
+        highlights: Array.isArray(data.highlights) ? data.highlights : [],
+        wouldRecommend: data.wouldRecommend !== false,
+        token: crypto.randomBytes(16).toString("hex"),
+        status: "published",     // AUTOMATICALLY PUBLISHED!
+        isPublished: true,       // AUTOMATICALLY PUBLISHED!
+        createdAt: new Date(),
+        submittedAt: new Date(),
+      });
+
+      revalidatePath("/admin");
+      revalidatePath("/testimonials");
+      revalidatePath("/");
+
+      return {
+        success: true,
+        message: "Review submitted and published successfully! Thank you for trusting Verve Nova Technologies.",
+        reviewId: newReview._id.toString(),
+      };
+    }
+
+    // Individual invitation token flow
     const review = await Review.findOne({ token });
     if (!review) {
       return { success: false, error: "Review invitation not found." };
@@ -139,7 +296,8 @@ export async function submitClientReview(token: string, data: {
     review.rating = Math.min(5, Math.max(1, Number(data.rating) || 5));
     review.highlights = Array.isArray(data.highlights) ? data.highlights : [];
     review.wouldRecommend = data.wouldRecommend !== false;
-    review.status = "submitted";
+    review.status = "published"; // AUTOMATICALLY PUBLISHED!
+    review.isPublished = true;   // AUTOMATICALLY PUBLISHED!
     review.submittedAt = new Date();
 
     await review.save();
@@ -148,7 +306,11 @@ export async function submitClientReview(token: string, data: {
     revalidatePath("/testimonials");
     revalidatePath("/");
 
-    return { success: true, message: "Review submitted successfully! Thank you for trusting Verve Nova Technologies." };
+    return {
+      success: true,
+      message: "Review submitted and published successfully! Thank you for trusting Verve Nova Technologies.",
+      reviewId: review._id.toString(),
+    };
   } catch (error: any) {
     console.error("Error submitting client review:", error);
     return { success: false, error: error.message || "Failed to submit review." };

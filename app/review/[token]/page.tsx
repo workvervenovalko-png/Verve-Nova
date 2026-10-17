@@ -198,13 +198,13 @@ export default function ClientReviewPage() {
             <CheckCircle2 className="w-8 h-8" />
           </div>
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold mb-3 border border-emerald-200">
-            <ShieldCheck className="w-3.5 h-3.5" /> Review Successfully Received
+            <ShieldCheck className="w-3.5 h-3.5" /> Review Live & Published
           </div>
           <h2 className="text-2xl sm:text-3xl font-black text-slate-950 uppercase tracking-tight mb-3">
             Thank You, {clientName || "Valued Partner"}!
           </h2>
           <p className="text-sm text-slate-600 mb-6 leading-relaxed">
-            Your review for <strong>{reviewData?.projectName || "your project"}</strong> has been securely recorded. Our administration will review and publish it with verified badge tags on our official website.
+            Your review for <strong>{reviewData?.projectName || "your project"}</strong> has been recorded and <strong>automatically published live</strong> with verified client tags on our website.
           </p>
 
           <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-left text-xs space-y-2 mb-6">
@@ -225,13 +225,21 @@ export default function ClientReviewPage() {
             )}
           </div>
 
-          <Link
-            href="/"
-            className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-[#1b67b2] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#15538e] transition-all shadow-md w-full"
-          >
-            <span>Visit Verve Nova Technologies</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Link
+              href="/testimonials"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#1b67b2] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#15538e] transition-all shadow-md flex-1"
+            >
+              <span>View On Live Website</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              href="/"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-slate-100 text-slate-700 text-xs font-bold uppercase tracking-wider hover:bg-slate-200 transition-all flex-1"
+            >
+              <span>Home Page</span>
+            </Link>
+          </div>
         </div>
       </main>
     );

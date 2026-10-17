@@ -32,10 +32,71 @@ import { toast } from "sonner";
 
 const DEFAULT_PROJECTS = [
   "ServiceHub (Play Store App)",
-  "Advance Transcription (AI Speech Platform)",
-  "Siora Infra Design (3D Architecture Portal)",
   "ChotU (Quick Commerce Logistics)",
+  "Siora Infra Design (3D Architecture Portal)",
+  "Advance Transcription (AI Speech Platform)",
+  "VNT Billzer (Retail POS & Inventory Suite)",
+  "Verve CRM (Intelligent Client Engine)",
   "Custom Project",
+];
+
+const PERMANENT_PROJECT_LINKS = [
+  {
+    name: "ServiceHub",
+    slug: "servicehub",
+    category: "Android & iOS App",
+    desc: "Play Store Live App with real-time dispatch",
+    badge: "Play Store Live",
+    color: "from-blue-600/20 to-indigo-600/10 border-blue-500/30 text-blue-400"
+  },
+  {
+    name: "ChotU (छोटू)",
+    slug: "chotu",
+    category: "Quick Commerce Logistics",
+    desc: "Hyperlocal kirana grocery marketplace & delivery",
+    badge: "Mobile App",
+    color: "from-emerald-600/20 to-teal-600/10 border-emerald-500/30 text-emerald-400"
+  },
+  {
+    name: "Siora Infra Design",
+    slug: "siora",
+    category: "3D Architecture CMS",
+    desc: "Interactive 3D blueprint & construction portal",
+    badge: "Web Platform",
+    color: "from-amber-600/20 to-orange-600/10 border-amber-500/30 text-amber-400"
+  },
+  {
+    name: "Advance Transcription",
+    slug: "transcription",
+    category: "AI Speech-to-Text Platform",
+    desc: "High-throughput audio ingestion & AI diarization",
+    badge: "AI Platform",
+    color: "from-purple-600/20 to-pink-600/10 border-purple-500/30 text-purple-400"
+  },
+  {
+    name: "VNT Billzer",
+    slug: "billzer",
+    category: "Retail POS & Inventory Suite",
+    desc: "Enterprise billing software & stock management",
+    badge: "Flagship SaaS",
+    color: "from-indigo-600/20 to-cyan-600/10 border-indigo-500/30 text-indigo-400"
+  },
+  {
+    name: "Verve CRM",
+    slug: "crm",
+    category: "Intelligent Client Engine",
+    desc: "Sales automation & lead retention platform",
+    badge: "SaaS CRM",
+    color: "from-fuchsia-600/20 to-purple-600/10 border-fuchsia-500/30 text-fuchsia-400"
+  },
+  {
+    name: "General / Any Project",
+    slug: "general",
+    category: "Universal Client Review",
+    desc: "Open link for any custom software or web client",
+    badge: "Universal Link",
+    color: "from-slate-600/20 to-zinc-600/10 border-white/20 text-slate-300"
+  }
 ];
 
 export function ClientReviewManager() {
@@ -221,6 +282,88 @@ export function ClientReviewManager() {
           <div className="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center">
             <Globe className="w-6 h-6" />
           </div>
+        </div>
+      </div>
+
+      {/* Permanent Shareable Project Review Links */}
+      <div className="p-8 rounded-3xl bg-[#0d0f17] border border-white/10 shadow-2xl">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-600 flex items-center justify-center text-white shadow-lg">
+              <Share2 className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-lg font-black text-white uppercase tracking-tight">
+                Permanent Shareable Project Review Links
+              </h3>
+              <p className="text-xs text-white/50">
+                Send these direct links to clients anytime. Submissions are <strong>automatically published live</strong> to the website!
+              </p>
+            </div>
+          </div>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-bold border border-emerald-500/20 self-start sm:self-auto">
+            <CheckCircle2 className="w-3.5 h-3.5" /> Auto-Publish Active
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {PERMANENT_PROJECT_LINKS.map((proj) => {
+            const projectUrl = `${origin}/review/${proj.slug}`;
+            const isCopied = copiedToken === `preset-${proj.slug}`;
+
+            return (
+              <div
+                key={proj.slug}
+                className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-white/20 transition-all flex flex-col justify-between group"
+              >
+                <div>
+                  <div className="flex items-start justify-between gap-2 mb-2">
+                    <h4 className="text-sm font-black text-white tracking-tight">
+                      {proj.name}
+                    </h4>
+                    <span className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/[0.06] text-white/70 border border-white/10 shrink-0">
+                      {proj.badge}
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-white/40 mb-3 leading-relaxed">
+                    {proj.desc}
+                  </p>
+                  <div className="p-2.5 rounded-xl bg-black/40 border border-white/5 font-mono text-[10px] text-slate-300 truncate mb-4 select-all">
+                    /review/{proj.slug}
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 pt-2 border-t border-white/5">
+                  <button
+                    type="button"
+                    onClick={() => handleCopyLink(projectUrl, `preset-${proj.slug}`)}
+                    className="flex-1 py-2 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95 cursor-pointer"
+                  >
+                    {isCopied ? (
+                      <>
+                        <Check className="w-3.5 h-3.5 text-emerald-300" />
+                        <span>Copied!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-3.5 h-3.5" />
+                        <span>Copy Link</span>
+                      </>
+                    )}
+                  </button>
+                  <a
+                    href={`/review/${proj.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 rounded-xl bg-white/[0.05] hover:bg-white/10 text-white/70 hover:text-white transition-all border border-white/10 flex items-center justify-center"
+                    title="Preview Review Form"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
