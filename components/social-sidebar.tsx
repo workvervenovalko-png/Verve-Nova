@@ -107,7 +107,6 @@ export function SocialSidebar() {
           )}
         </motion.div>
       ))}
-      <div className="w-[1px] h-16 bg-neutral-300 mx-auto mt-2" />
     </div>
   );
 }

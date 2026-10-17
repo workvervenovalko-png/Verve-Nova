@@ -1,24 +1,19 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { 
   Instagram, 
   Play, 
-  Pause,
   ArrowUpRight, 
   Film, 
   Layers, 
   Sparkles,
   Heart,
   ChevronRight,
-  ChevronLeft,
   Code2,
-  Cpu,
-  ShieldCheck,
   Zap,
   Volume2,
-  VolumeX,
-  ExternalLink
+  VolumeX
 } from "lucide-react";
 import Image from "next/image";
 
@@ -150,7 +145,7 @@ export function InstagramFeed() {
   };
 
   // Spotlight cards hover play handler
-  const handleSpotlightEnter = (id: string, key: string) => {
+  const handleSpotlightEnter = (key: string) => {
     setHoveredCardId(key);
     const video = spotlightVideoRefs.current[key];
     if (video) {
@@ -168,7 +163,7 @@ export function InstagramFeed() {
   };
 
   // Grid cards hover play handler
-  const handleGridEnter = (id: string, key: string) => {
+  const handleGridEnter = (key: string) => {
     setHoveredCardId(key);
     const video = gridVideoRefs.current[key];
     if (video) {
@@ -202,88 +197,72 @@ export function InstagramFeed() {
   };
 
   return (
-    <section className="pt-28 pb-20 lg:pt-32 lg:pb-24 bg-[#FAF8F5] relative overflow-hidden border-b border-slate-200 scroll-mt-32" id="instagram-feed">
-      {/* Dynamic Keyframes */}
+    <section className="py-20 lg:py-24 bg-slate-50/60 relative overflow-hidden border-y border-slate-200/80 scroll-mt-24" id="instagram-feed">
+      {/* Progress animation keyframe */}
       <style jsx global>{`
-        @keyframes eq1 { 0%, 100% { height: 6px; } 50% { height: 22px; } }
-        @keyframes eq2 { 0%, 100% { height: 18px; } 50% { height: 8px; } }
-        @keyframes eq3 { 0%, 100% { height: 10px; } 50% { height: 26px; } }
-        @keyframes eq4 { 0%, 100% { height: 20px; } 50% { height: 6px; } }
         @keyframes reelProgress { 0% { width: 0%; } 100% { width: 100%; } }
       `}</style>
 
-      {/* Subtle warm background glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-96 bg-gradient-to-b from-amber-500/[0.03] via-rose-500/[0.03] to-transparent blur-3xl pointer-events-none" />
+      {/* Subtle modern ambient gradient */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[400px] bg-gradient-to-r from-pink-500/[0.03] via-indigo-500/[0.04] to-cyan-500/[0.03] blur-[150px] pointer-events-none rounded-full" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
 
         {/* ══════════════════════════════════════════════════════════
-            1. TOP SECTION: HEADER + DOODLED ANNOTATIONS
+            1. TOP SECTION: MODERN TECH STUDIO HEADER
             ══════════════════════════════════════════════════════════ */}
-        <div className="relative text-center mb-12 sm:mb-16 pt-2">
-          
-          {/* Eyebrow dots */}
-          <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-bold tracking-[0.22em] text-slate-500 uppercase mb-3">
-            <span>REAL ARCHITECTURE</span>
-            <span className="w-1 h-1 rounded-full bg-slate-400" />
-            <span>REAL SYSTEMS</span>
-            <span className="w-1 h-1 rounded-full bg-slate-400" />
-            <span>REAL SCALE</span>
-          </div>
-
-          {/* Main Title with Heart / Sparkle Motif */}
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight font-serif italic sm:not-italic">
-            Follow Our Instagram Journey{" "}
-            <span className="inline-block text-rose-500 font-sans font-light not-italic text-3xl sm:text-5xl">♡</span>
-          </h2>
-
-          <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto mt-3 font-normal leading-relaxed">
-            From behind-the-scenes architecture to high-concurrency cloud systems — see how our engineering studio builds for the future.
-          </p>
-
-          {/* Left Doodle: "Instagram Reels + Posts showcase" with arrow */}
-          <div className="hidden lg:flex items-center gap-2 absolute left-4 -bottom-4 text-slate-500 pointer-events-none select-none">
-            <div className="text-left font-serif italic text-xs leading-tight tracking-tight text-slate-600">
-              <span>Instagram</span><br />
-              <span>Reels + Posts</span><br />
-              <span className="text-[11px] text-slate-500">showcase</span>
+        <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-4 mb-12 pb-6 border-b border-slate-200/80">
+          <div>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-pink-200/80 text-slate-800 text-xs font-bold uppercase tracking-wider mb-3 shadow-2xs">
+              <span className="w-2 h-2 rounded-full bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] animate-pulse" />
+              <Instagram className="w-3.5 h-3.5 text-[#dc2743]" />
+              <span className="text-[11px] font-black">Official Studio Dispatch</span>
             </div>
-            {/* Curved Arrow SVG */}
-            <svg width="45" height="40" viewBox="0 0 45 40" fill="none" className="text-slate-500 rotate-12 -translate-y-1">
-              <path d="M5 8 C 15 2, 28 8, 32 24" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="3 3" />
-              <path d="M26 22 L 32 25 L 34 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-950 uppercase tracking-tight leading-tight">
+              Follow The Studio{" "}
+              <span className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] bg-clip-text text-transparent">
+                @vntech_global
+              </span>
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 font-normal mt-1.5 max-w-xl">
+              Hover over any reel to watch real live video playback. Tap to open directly on Instagram.
+            </p>
           </div>
 
-          {/* Right Doodle: "Interactive & Live Dispatch ♡" */}
-          <div className="hidden lg:flex items-center gap-2 absolute right-6 -bottom-4 text-slate-500 pointer-events-none select-none">
-            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" className="text-slate-400">
-              <path d="M15 4 L 15 10 M 15 20 L 15 26 M 4 15 L 10 15 M 20 15 L 26 15" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-            </svg>
-            <div className="text-right font-serif italic text-xs leading-tight tracking-tight text-slate-600">
-              <span>Interactive</span><br />
-              <span>& Live Dispatch</span>
-              <span className="block text-[11px] text-rose-500">♡</span>
+          {/* Follow Button */}
+          <a
+            href="https://www.instagram.com/vntech_global/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-2.5 px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-950 text-white text-xs font-black uppercase tracking-wider shadow-sm transition-all duration-300 shrink-0"
+          >
+            <div className="w-5 h-5 rounded-full p-[1.5px] bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] flex items-center justify-center">
+              <div className="w-full h-full rounded-full bg-white flex items-center justify-center p-0.5">
+                <Image src="/vnt-logo.png" alt="VNT" width={14} height={14} className="object-contain" />
+              </div>
             </div>
-          </div>
+            <span>Follow @vntech_global</span>
+            <ArrowUpRight className="w-3.5 h-3.5 text-pink-400 group-hover:text-white group-hover:translate-x-0.5 transition-all" />
+          </a>
         </div>
 
         {/* ══════════════════════════════════════════════════════════
-            2. FEATURED SPOTLIGHT BANNER (BEIGE/WARM STUDIO CONTAINER)
+            2. FEATURED SPOTLIGHT BANNER (CLEAN TECH STUDIO CONTAINER)
             ══════════════════════════════════════════════════════════ */}
-        <div className="bg-[#EFE9DF] rounded-3xl sm:rounded-[2.5rem] p-4 sm:p-6 lg:p-8 mb-16 border border-[#E3DBD0] shadow-sm relative">
+        <div className="bg-white rounded-3xl p-5 sm:p-7 lg:p-8 mb-14 border border-slate-200/90 shadow-sm relative">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
 
             {/* 🔴 Left Featured Reel Card (PLAYS REAL VIDEO ON HOVER) */}
             <div className="lg:col-span-3">
               <div 
-                className="relative rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer shadow-md hover:shadow-2xl transition-all duration-500 group aspect-[9/15] bg-black"
+                className="relative rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer shadow-md hover:shadow-2xl transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group aspect-[9/15] bg-black"
                 onMouseEnter={handleFeaturedEnter}
                 onMouseLeave={handleFeaturedLeave}
                 onClick={() => window.open(ALL_POSTS[0].url, "_blank", "noopener,noreferrer")}
               >
-                {/* 🎥 REAL REEL VIDEO ELEMENT */}
+                {/* 🎥 REAL REEL VIDEO */}
                 <video
                   ref={featuredVideoRef}
                   src="/instagram/reel-1.mp4"
@@ -292,19 +271,19 @@ export function InstagramFeed() {
                   muted={isMuted}
                   playsInline
                   preload="auto"
-                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+                  className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ${
                     hoveredCardId === "featured-reel" ? "opacity-100 scale-105" : "opacity-90 scale-100"
                   }`}
                 />
 
-                {/* Subtle vignette gradient */}
+                {/* Vignette Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/60 pointer-events-none" />
 
                 {/* Top REEL Badge & Live Progress Bar */}
                 <div className="absolute top-3 inset-x-3 z-10 flex flex-col gap-2">
                   <div className="w-full h-1 bg-white/30 rounded-full overflow-hidden">
                     <div 
-                      className={`h-full bg-white rounded-full ${
+                      className={`h-full bg-gradient-to-r from-amber-400 via-rose-500 to-pink-500 rounded-full ${
                         hoveredCardId === "featured-reel" ? "animate-[reelProgress_16s_linear_infinite]" : "w-0"
                       }`} 
                     />
@@ -335,7 +314,7 @@ export function InstagramFeed() {
                   </div>
                 </div>
 
-                {/* Center Indicator (Hidden while actively playing video) */}
+                {/* Center Indicator (Hidden while actively playing) */}
                 {hoveredCardId !== "featured-reel" && (
                   <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
                     <div className="w-12 h-12 rounded-full bg-black/55 backdrop-blur-md border border-white/40 flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
@@ -347,7 +326,7 @@ export function InstagramFeed() {
                 {/* Playing Live Indicator Badge when Hovered */}
                 {hoveredCardId === "featured-reel" && (
                   <div className="absolute top-12 left-3 z-10 animate-in fade-in duration-200">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/75 backdrop-blur-md border border-rose-500/50 text-[9px] font-mono text-white font-bold tracking-wider">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md border border-pink-500/50 text-[9px] font-mono text-pink-300 font-bold tracking-wider">
                       <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
                       <span>PLAYING REEL</span>
                     </span>
@@ -356,11 +335,11 @@ export function InstagramFeed() {
 
                 {/* Bottom Card Info */}
                 <div className="absolute bottom-3 inset-x-3 z-10 pointer-events-none">
-                  <h4 className="text-white font-bold text-xs sm:text-sm drop-shadow-md line-clamp-1">
+                  <h4 className="text-white font-black text-xs sm:text-sm drop-shadow-md line-clamp-1 uppercase tracking-tight">
                     Watch the making
                   </h4>
                   <div className="flex items-center justify-between text-[11px] text-slate-300 mt-1">
-                    <span className="font-serif italic text-white/90">From idea to launch ♡</span>
+                    <span className="text-white/90 font-medium">Official Launch</span>
                     <span className="font-mono text-white/90">{ALL_POSTS[0].duration || "0:16"}</span>
                   </div>
                 </div>
@@ -369,21 +348,24 @@ export function InstagramFeed() {
 
             {/* 💬 Center-Left Text Block: "Behind the Architecture" */}
             <div className="lg:col-span-3 px-2 lg:px-4 py-2 text-left">
-              <span className="text-rose-500 text-xl font-light block mb-2">♡</span>
+              <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg bg-indigo-50 border border-indigo-200 text-indigo-700 text-[10px] font-mono font-bold uppercase tracking-wider mb-3">
+                <Code2 className="w-3.5 h-3.5" />
+                <span>Inside The Studio</span>
+              </div>
               
-              <h3 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 tracking-tight leading-tight mb-3">
-                Behind<br />the Architecture
+              <h3 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight uppercase leading-tight mb-3">
+                Behind The<br />Architecture
               </h3>
 
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal mb-6">
-                Get a closer look at the code, cloud systems, and little engineering details that make every platform special.
+                Get an inside look at our engineering workflows, microservices, and bespoke software systems built for high-growth enterprises.
               </p>
 
               <a
                 href="https://www.instagram.com/vntech_global/reels/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#3D3A37] hover:bg-slate-900 text-white text-xs font-bold tracking-wide transition-all shadow-sm hover:shadow"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-950 text-white text-xs font-bold tracking-wide transition-all shadow-sm hover:shadow"
               >
                 <span>Watch More Reels</span>
                 <span>→</span>
@@ -396,7 +378,7 @@ export function InstagramFeed() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-xs font-bold text-slate-700 hover:text-slate-950 transition-colors"
                 >
-                  <Instagram className="w-4 h-4 text-slate-700" />
+                  <Instagram className="w-4 h-4 text-pink-600" />
                   <span className="underline underline-offset-2">View on Instagram</span>
                 </a>
               </div>
@@ -413,11 +395,11 @@ export function InstagramFeed() {
                   return (
                     <div
                       key={cardKey}
-                      onMouseEnter={() => handleSpotlightEnter(item.id, cardKey)}
+                      onMouseEnter={() => handleSpotlightEnter(cardKey)}
                       onMouseLeave={() => handleSpotlightLeave(cardKey)}
                       onClick={() => window.open(item.url, "_blank", "noopener,noreferrer")}
-                      className={`relative rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer bg-black aspect-[9/15] shadow-sm transition-all duration-400 group ${
-                        isHovered ? "scale-105 shadow-xl -translate-y-1.5 z-20" : "hover:shadow-md"
+                      className={`relative rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer bg-black aspect-[9/15] shadow-sm transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] group ${
+                        isHovered ? "scale-105 shadow-xl -translate-y-1.5 z-20 ring-2 ring-pink-500/80" : "hover:shadow-md"
                       }`}
                     >
                       {/* REAL VIDEO or IMAGE */}
@@ -438,7 +420,7 @@ export function InstagramFeed() {
                         <img 
                           src={item.image} 
                           alt={item.title}
-                          className={`w-full h-full object-cover transition-transform duration-700 ${
+                          className={`w-full h-full object-cover transition-transform duration-500 ${
                             isHovered ? "scale-110 brightness-95" : "scale-100 brightness-90"
                           }`}
                         />
@@ -470,7 +452,7 @@ export function InstagramFeed() {
 
                       {/* Bottom Action Pill */}
                       <div className="absolute bottom-3 inset-x-2.5 z-10 pointer-events-none">
-                        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white text-[9px] font-bold tracking-wider uppercase w-full justify-center text-center">
+                        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-black/65 backdrop-blur-md border border-white/20 text-white text-[9px] font-black tracking-wider uppercase w-full justify-center text-center">
                           {idx === 0 && <Sparkles className="w-3 h-3 text-amber-300" />}
                           {idx === 1 && <Code2 className="w-3 h-3 text-rose-300" />}
                           {idx === 2 && <Zap className="w-3 h-3 text-sky-300" />}
@@ -502,7 +484,7 @@ export function InstagramFeed() {
         {/* ══════════════════════════════════════════════════════════
             3. MIDDLE ROW: "Latest from Instagram" (6 SQUARE CARDS)
             ══════════════════════════════════════════════════════════ */}
-        <div className="mb-16">
+        <div className="mb-14">
           
           {/* Section Header */}
           <div className="flex items-center justify-between mb-6 pb-2">
@@ -512,7 +494,7 @@ export function InstagramFeed() {
                   <Instagram className="w-4 h-4 text-[#dc2743]" />
                 </div>
               </div>
-              <h3 className="text-xl sm:text-2xl font-serif font-bold text-slate-900 tracking-tight">
+              <h3 className="text-lg sm:text-xl font-black text-slate-950 uppercase tracking-tight">
                 Latest from Instagram
               </h3>
             </div>
@@ -521,7 +503,7 @@ export function InstagramFeed() {
               href="https://www.instagram.com/vntech_global/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-950 transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-slate-700 hover:text-slate-950 transition-colors"
             >
               <span>Follow us @vntech_global</span>
               <span className="text-base leading-none">→</span>
@@ -538,11 +520,11 @@ export function InstagramFeed() {
               return (
                 <div
                   key={cardKey}
-                  onMouseEnter={() => handleGridEnter(item.id, cardKey)}
+                  onMouseEnter={() => handleGridEnter(cardKey)}
                   onMouseLeave={() => handleGridLeave(cardKey)}
                   onClick={() => window.open(item.url, "_blank", "noopener,noreferrer")}
-                  className={`relative rounded-2xl overflow-hidden cursor-pointer bg-black aspect-square border border-slate-200/90 shadow-2xs transition-all duration-300 group ${
-                    isHovered ? "scale-105 shadow-xl -translate-y-1 z-20 ring-2 ring-rose-400" : "hover:shadow-md"
+                  className={`relative rounded-2xl overflow-hidden cursor-pointer bg-black aspect-square border border-slate-200/90 shadow-2xs transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group ${
+                    isHovered ? "scale-105 shadow-xl -translate-y-1 z-20 ring-2 ring-pink-500" : "hover:shadow-md"
                   }`}
                 >
                   {/* REAL VIDEO or IMAGE */}
@@ -594,8 +576,8 @@ export function InstagramFeed() {
                       {item.title}
                     </p>
                     <div className="flex items-center justify-between text-[9px] text-slate-300">
-                      <span className="inline-flex items-center gap-1 text-rose-300 font-bold">
-                        <Heart className="w-2.5 h-2.5 fill-rose-300" />
+                      <span className="inline-flex items-center gap-1 text-pink-400 font-bold">
+                        <Heart className="w-2.5 h-2.5 fill-pink-400" />
                         <span>{item.likes}</span>
                       </span>
                       <span className="text-white font-bold uppercase tracking-wider">
@@ -613,42 +595,17 @@ export function InstagramFeed() {
         {/* ══════════════════════════════════════════════════════════
             4. BOTTOM COMMUNITY BANNER ("Join Our Tech & Innovation Community")
             ══════════════════════════════════════════════════════════ */}
-        <div className="bg-[#DFE7DD] rounded-3xl sm:rounded-[2.5rem] p-8 sm:p-12 text-center relative overflow-hidden border border-[#D2DDD0] shadow-sm mb-12">
+        <div className="bg-white rounded-3xl p-8 sm:p-10 text-center relative overflow-hidden border border-slate-200/90 shadow-sm">
           
-          {/* Left Hand-Drawn Doodle */}
-          <div className="hidden md:flex items-center gap-2 absolute left-8 top-1/2 -translate-y-1/2 text-slate-600 select-none pointer-events-none">
-            <div className="font-serif italic text-xs leading-tight text-slate-700">
-              <span>More</span><br />
-              <span>on Instagram</span>
-              <span className="block text-rose-500 text-xs">♡</span>
-            </div>
-            {/* Curved arrow */}
-            <svg width="45" height="35" viewBox="0 0 45 35" fill="none" className="text-slate-600">
-              <path d="M5 25 C 15 30, 30 25, 38 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="3 3" />
-              <path d="M30 10 L 39 12 L 38 20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </div>
-
-          {/* Right Hand-Drawn Doodle */}
-          <div className="hidden md:flex items-center gap-3 absolute right-8 top-1/2 -translate-y-1/2 text-slate-600 select-none pointer-events-none">
-            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" className="text-slate-600">
-              <path d="M12 14 L 6 20 L 12 26 M 28 14 L 34 20 L 28 26 M 22 10 L 18 30" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            <div className="font-serif italic text-xs leading-tight text-slate-700 text-left">
-              <span>Built with</span><br />
-              <span>precision</span>
-              <span className="block text-rose-500 text-xs">♡</span>
-            </div>
-          </div>
-
-          {/* Center Content */}
           <div className="max-w-xl mx-auto relative z-10">
-            <div className="w-10 h-10 rounded-full bg-white/80 backdrop-blur-md mx-auto flex items-center justify-center text-slate-800 mb-3 shadow-xs border border-white">
-              <Instagram className="w-5 h-5 text-slate-800" />
+            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] p-[1.5px] mx-auto mb-3 shadow-xs">
+              <div className="w-full h-full rounded-full bg-white flex items-center justify-center">
+                <Instagram className="w-4 h-4 text-[#dc2743]" />
+              </div>
             </div>
 
-            <h3 className="text-2xl sm:text-4xl font-serif font-bold text-slate-900 tracking-tight mb-2">
-              Join Our Tech & Innovation Community
+            <h3 className="text-xl sm:text-3xl font-black text-slate-950 uppercase tracking-tight mb-2">
+              Join Our Engineering Community
             </h3>
 
             <p className="text-xs sm:text-sm text-slate-600 font-normal leading-relaxed mb-6 max-w-md mx-auto">
@@ -659,33 +616,11 @@ export function InstagramFeed() {
               href="https://www.instagram.com/vntech_global/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#3D3A37] hover:bg-slate-950 text-white text-xs sm:text-sm font-bold tracking-wide shadow-md hover:shadow-lg transition-all duration-300"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-900 hover:bg-slate-950 text-white text-xs sm:text-sm font-bold tracking-wide shadow-sm hover:shadow transition-all duration-300"
             >
               <span>Follow @vntech_global</span>
               <span>→</span>
             </a>
-          </div>
-        </div>
-
-        {/* ══════════════════════════════════════════════════════════
-            5. BOTTOM VALUE BADGES STRIP
-            ══════════════════════════════════════════════════════════ */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-2 border-t border-slate-200/80 text-slate-600 text-xs font-semibold">
-          <div className="flex items-center justify-center gap-2 py-2">
-            <Sparkles className="w-4 h-4 text-slate-800" />
-            <span>High-Concurrency Cloud</span>
-          </div>
-          <div className="flex items-center justify-center gap-2 py-2">
-            <Heart className="w-4 h-4 text-rose-500 fill-rose-500/20" />
-            <span>Bespoke Engineering</span>
-          </div>
-          <div className="flex items-center justify-center gap-2 py-2">
-            <ShieldCheck className="w-4 h-4 text-emerald-600" />
-            <span>ISO 27001 Certified Security</span>
-          </div>
-          <div className="flex items-center justify-center gap-2 py-2">
-            <Zap className="w-4 h-4 text-amber-500" />
-            <span>99.9% Production Uptime</span>
           </div>
         </div>
 

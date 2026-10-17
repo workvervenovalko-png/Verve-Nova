@@ -18,7 +18,7 @@ import { SocialSidebar } from "@/components/social-sidebar";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background text-foreground pb-px relative font-sans selection:bg-indigo-500/30">
+    <main className="min-h-screen bg-background text-foreground relative font-sans selection:bg-indigo-500/30">
       <Navbar />
       <Hero />
       <TrustMatrix />
@@ -28,12 +28,12 @@ export default function Home() {
       <Capabilities />
       <Services />
       <Industries />
+      <InstagramFeed />
       <Testimonials />
       <BlogPreview />
       <Process />
       <FAQSection />
       <ContactSection />
-      <InstagramFeed />
       <Footer />
       <SocialSidebar />
     </main>
