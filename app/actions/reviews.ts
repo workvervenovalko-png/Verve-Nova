@@ -56,7 +56,7 @@ export async function createReviewLink(data: {
 }
 
 // Permanent Project Presets for open, reusable review links
-export const PROJECT_PRESETS: Record<string, {
+const PROJECT_PRESETS: Record<string, {
   slug: string;
   projectName: string;
   projectGoal: string;
