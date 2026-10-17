@@ -12,6 +12,7 @@ import { BlogPreview } from "@/components/blog-preview";
 import { Process } from "@/components/process";
 import { FAQSection } from "@/components/faq-section";
 import { ContactSection } from "@/components/contact-section";
+import { InstagramFeed } from "@/components/instagram-feed";
 import { Footer } from "@/components/footer";
 import { SocialSidebar } from "@/components/social-sidebar";
 
@@ -32,6 +33,7 @@ export default function Home() {
       <Process />
       <FAQSection />
       <ContactSection />
+      <InstagramFeed />
       <Footer />
       <SocialSidebar />
     </main>
