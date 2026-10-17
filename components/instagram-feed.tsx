@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { 
   Instagram, 
   Play, 
+  Pause,
   ArrowUpRight, 
   Film, 
   Layers, 
@@ -15,6 +16,8 @@ import {
   Cpu,
   ShieldCheck,
   Zap,
+  Volume2,
+  VolumeX,
   ExternalLink
 } from "lucide-react";
 import Image from "next/image";
@@ -24,6 +27,7 @@ interface InstagramItem {
   type: "reel" | "post";
   url: string;
   image: string;
+  videoUrl?: string;
   title: string;
   tag: string;
   actionLabel: string;
@@ -40,6 +44,7 @@ const ALL_POSTS: InstagramItem[] = [
     type: "reel",
     url: "https://www.instagram.com/reel/DXUZzu-guyx/",
     image: "/instagram/post-1-reel.jpg",
+    videoUrl: "/instagram/reel-1.mp4",
     title: "Official Studio Launch 🚀",
     tag: "Studio Reveal",
     actionLabel: "STUDIO REVEAL",
@@ -47,7 +52,7 @@ const ALL_POSTS: InstagramItem[] = [
     comments: 3,
     date: "April 19",
     caption: "Official launch of Verve Nova Technologies. Engineering high-concurrency cloud systems.",
-    duration: "0:45"
+    duration: "0:16"
   },
   {
     id: "post-2",
@@ -67,6 +72,7 @@ const ALL_POSTS: InstagramItem[] = [
     type: "reel",
     url: "https://www.instagram.com/reel/DXzFz3ghcEU/",
     image: "/instagram/post-3-systems.jpg",
+    videoUrl: "/instagram/reel-3.mp4",
     title: "Building Smarter Systems 💡",
     tag: "Architecture",
     actionLabel: "SMARTER SYSTEMS",
@@ -74,7 +80,7 @@ const ALL_POSTS: InstagramItem[] = [
     comments: 0,
     date: "May 1",
     caption: "What looks simple on the surface is designed to save hundreds of manual hours behind the scenes.",
-    duration: "0:30"
+    duration: "0:39"
   },
   {
     id: "post-4",
@@ -120,6 +126,64 @@ const ALL_POSTS: InstagramItem[] = [
 export function InstagramFeed() {
   const [hoveredCardId, setHoveredCardId] = useState<string | null>(null);
   const [spotlightOffset, setSpotlightOffset] = useState(0);
+  const [isMuted, setIsMuted] = useState(true);
+
+  // Video element references
+  const featuredVideoRef = useRef<HTMLVideoElement>(null);
+  const spotlightVideoRefs = useRef<Record<string, HTMLVideoElement | null>>({});
+  const gridVideoRefs = useRef<Record<string, HTMLVideoElement | null>>({});
+
+  // Featured reel hover play handler
+  const handleFeaturedEnter = () => {
+    setHoveredCardId("featured-reel");
+    if (featuredVideoRef.current) {
+      featuredVideoRef.current.currentTime = 0;
+      featuredVideoRef.current.play().catch(() => {});
+    }
+  };
+
+  const handleFeaturedLeave = () => {
+    setHoveredCardId(null);
+    if (featuredVideoRef.current) {
+      featuredVideoRef.current.pause();
+    }
+  };
+
+  // Spotlight cards hover play handler
+  const handleSpotlightEnter = (id: string, key: string) => {
+    setHoveredCardId(key);
+    const video = spotlightVideoRefs.current[key];
+    if (video) {
+      video.currentTime = 0;
+      video.play().catch(() => {});
+    }
+  };
+
+  const handleSpotlightLeave = (key: string) => {
+    setHoveredCardId(null);
+    const video = spotlightVideoRefs.current[key];
+    if (video) {
+      video.pause();
+    }
+  };
+
+  // Grid cards hover play handler
+  const handleGridEnter = (id: string, key: string) => {
+    setHoveredCardId(key);
+    const video = gridVideoRefs.current[key];
+    if (video) {
+      video.currentTime = 0;
+      video.play().catch(() => {});
+    }
+  };
+
+  const handleGridLeave = (key: string) => {
+    setHoveredCardId(null);
+    const video = gridVideoRefs.current[key];
+    if (video) {
+      video.pause();
+    }
+  };
 
   // Spotlight carousel pool (cycling through the remaining posts)
   const spotlightPool = [
@@ -137,13 +201,9 @@ export function InstagramFeed() {
     setSpotlightOffset((prev) => (prev + 1 > spotlightPool.length - 3 ? 0 : prev + 1));
   };
 
-  const prevSpotlight = () => {
-    setSpotlightOffset((prev) => (prev - 1 < 0 ? spotlightPool.length - 3 : prev - 1));
-  };
-
   return (
     <section className="pt-28 pb-20 lg:pt-32 lg:pb-24 bg-[#FAF8F5] relative overflow-hidden border-b border-slate-200 scroll-mt-32" id="instagram-feed">
-      {/* Dynamic Keyframes for Equalizer & Live Playing Effect */}
+      {/* Dynamic Keyframes */}
       <style jsx global>{`
         @keyframes eq1 { 0%, 100% { height: 6px; } 50% { height: 22px; } }
         @keyframes eq2 { 0%, 100% { height: 18px; } 50% { height: 8px; } }
@@ -188,16 +248,15 @@ export function InstagramFeed() {
               <span>Reels + Posts</span><br />
               <span className="text-[11px] text-slate-500">showcase</span>
             </div>
-            {/* Curved Arrow SVG pointing down-right */}
+            {/* Curved Arrow SVG */}
             <svg width="45" height="40" viewBox="0 0 45 40" fill="none" className="text-slate-500 rotate-12 -translate-y-1">
               <path d="M5 8 C 15 2, 28 8, 32 24" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="3 3" />
               <path d="M26 22 L 32 25 L 34 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
 
-          {/* Right Doodle: "Interactive & Live Dispatch ♡" with arrow */}
+          {/* Right Doodle: "Interactive & Live Dispatch ♡" */}
           <div className="hidden lg:flex items-center gap-2 absolute right-6 -bottom-4 text-slate-500 pointer-events-none select-none">
-            {/* Sparkle burst lines */}
             <svg width="30" height="30" viewBox="0 0 30 30" fill="none" className="text-slate-400">
               <path d="M15 4 L 15 10 M 15 20 L 15 26 M 4 15 L 10 15 M 20 15 L 26 15" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
             </svg>
@@ -216,32 +275,37 @@ export function InstagramFeed() {
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-center">
 
-            {/* 🔴 Left Featured Reel Card (Large 9:16 portrait) */}
+            {/* 🔴 Left Featured Reel Card (PLAYS REAL VIDEO ON HOVER) */}
             <div className="lg:col-span-3">
               <div 
-                className="relative rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer shadow-md hover:shadow-2xl transition-all duration-500 group aspect-[9/15] bg-slate-950"
-                onMouseEnter={() => setHoveredCardId(ALL_POSTS[0].id)}
-                onMouseLeave={() => setHoveredCardId(null)}
+                className="relative rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer shadow-md hover:shadow-2xl transition-all duration-500 group aspect-[9/15] bg-black"
+                onMouseEnter={handleFeaturedEnter}
+                onMouseLeave={handleFeaturedLeave}
                 onClick={() => window.open(ALL_POSTS[0].url, "_blank", "noopener,noreferrer")}
               >
-                {/* Background Image */}
-                <img 
-                  src={ALL_POSTS[0].image} 
-                  alt={ALL_POSTS[0].title}
-                  className={`w-full h-full object-cover transition-transform duration-700 ${
-                    hoveredCardId === ALL_POSTS[0].id ? "scale-110 brightness-95" : "scale-100 brightness-90"
+                {/* 🎥 REAL REEL VIDEO ELEMENT */}
+                <video
+                  ref={featuredVideoRef}
+                  src="/instagram/reel-1.mp4"
+                  poster="/instagram/post-1-reel.jpg"
+                  loop
+                  muted={isMuted}
+                  playsInline
+                  preload="auto"
+                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+                    hoveredCardId === "featured-reel" ? "opacity-100 scale-105" : "opacity-90 scale-100"
                   }`}
                 />
 
-                {/* Dark gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/25 to-slate-950/60" />
+                {/* Subtle vignette gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/60 pointer-events-none" />
 
                 {/* Top REEL Badge & Live Progress Bar */}
                 <div className="absolute top-3 inset-x-3 z-10 flex flex-col gap-2">
                   <div className="w-full h-1 bg-white/30 rounded-full overflow-hidden">
                     <div 
                       className={`h-full bg-white rounded-full ${
-                        hoveredCardId === ALL_POSTS[0].id ? "animate-[reelProgress_4s_linear_infinite]" : "w-0"
+                        hoveredCardId === "featured-reel" ? "animate-[reelProgress_16s_linear_infinite]" : "w-0"
                       }`} 
                     />
                   </div>
@@ -250,38 +314,54 @@ export function InstagramFeed() {
                     <span className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-[10px] font-black tracking-wider uppercase border border-white/20">
                       REEL
                     </span>
-                    <span className="w-6 h-6 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-white text-xs">
-                      <ArrowUpRight className="w-3.5 h-3.5" />
-                    </span>
+                    
+                    {/* Audio Mute/Unmute Toggle Button */}
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsMuted(!isMuted);
+                        }}
+                        className="w-7 h-7 rounded-full bg-black/60 backdrop-blur-md border border-white/25 flex items-center justify-center text-white hover:bg-black/90 transition-colors"
+                        title={isMuted ? "Unmute audio" : "Mute audio"}
+                      >
+                        {isMuted ? <VolumeX className="w-3.5 h-3.5 text-rose-300" /> : <Volume2 className="w-3.5 h-3.5 text-emerald-300" />}
+                      </button>
+
+                      <span className="w-7 h-7 rounded-full bg-black/60 backdrop-blur-md border border-white/25 flex items-center justify-center text-white text-xs">
+                        <ArrowUpRight className="w-3.5 h-3.5" />
+                      </span>
+                    </div>
                   </div>
                 </div>
 
-                {/* Center Play Button (Morphs to Animated Equalizer on Hover) */}
-                <div className="absolute inset-0 flex items-center justify-center z-10">
-                  {hoveredCardId === ALL_POSTS[0].id ? (
-                    <div className="w-14 h-14 rounded-full bg-black/75 backdrop-blur-md border border-rose-400/60 flex items-center justify-center shadow-xl">
-                      <div className="flex items-end gap-1 h-6">
-                        <span className="w-1 bg-rose-400 rounded-full" style={{ animation: "eq1 0.6s ease-in-out infinite" }} />
-                        <span className="w-1 bg-amber-300 rounded-full" style={{ animation: "eq2 0.8s ease-in-out infinite" }} />
-                        <span className="w-1 bg-white rounded-full" style={{ animation: "eq3 0.5s ease-in-out infinite" }} />
-                        <span className="w-1 bg-pink-400 rounded-full" style={{ animation: "eq4 0.7s ease-in-out infinite" }} />
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="w-12 h-12 rounded-full bg-black/50 backdrop-blur-md border border-white/40 flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
+                {/* Center Indicator (Hidden while actively playing video) */}
+                {hoveredCardId !== "featured-reel" && (
+                  <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+                    <div className="w-12 h-12 rounded-full bg-black/55 backdrop-blur-md border border-white/40 flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
                       <Play className="w-5 h-5 fill-white translate-x-0.5" />
                     </div>
-                  )}
-                </div>
+                  </div>
+                )}
+
+                {/* Playing Live Indicator Badge when Hovered */}
+                {hoveredCardId === "featured-reel" && (
+                  <div className="absolute top-12 left-3 z-10 animate-in fade-in duration-200">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/75 backdrop-blur-md border border-rose-500/50 text-[9px] font-mono text-white font-bold tracking-wider">
+                      <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
+                      <span>PLAYING REEL</span>
+                    </span>
+                  </div>
+                )}
 
                 {/* Bottom Card Info */}
-                <div className="absolute bottom-3 inset-x-3 z-10">
+                <div className="absolute bottom-3 inset-x-3 z-10 pointer-events-none">
                   <h4 className="text-white font-bold text-xs sm:text-sm drop-shadow-md line-clamp-1">
                     Watch the making
                   </h4>
                   <div className="flex items-center justify-between text-[11px] text-slate-300 mt-1">
                     <span className="font-serif italic text-white/90">From idea to launch ♡</span>
-                    <span className="font-mono text-white/90">{ALL_POSTS[0].duration || "0:45"}</span>
+                    <span className="font-mono text-white/90">{ALL_POSTS[0].duration || "0:16"}</span>
                   </div>
                 </div>
               </div>
@@ -326,48 +406,70 @@ export function InstagramFeed() {
             <div className="lg:col-span-6 relative">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                 {currentSpotlightCards.map((item, idx) => {
-                  const isHovered = hoveredCardId === `spotlight-${item.id}-${idx}`;
+                  const cardKey = `spotlight-${item.id}-${idx}`;
+                  const isHovered = hoveredCardId === cardKey;
+                  const hasVideo = !!item.videoUrl;
 
                   return (
                     <div
-                      key={`spotlight-${item.id}-${idx}`}
-                      onMouseEnter={() => setHoveredCardId(`spotlight-${item.id}-${idx}`)}
-                      onMouseLeave={() => setHoveredCardId(null)}
+                      key={cardKey}
+                      onMouseEnter={() => handleSpotlightEnter(item.id, cardKey)}
+                      onMouseLeave={() => handleSpotlightLeave(cardKey)}
                       onClick={() => window.open(item.url, "_blank", "noopener,noreferrer")}
-                      className={`relative rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer bg-slate-950 aspect-[9/15] shadow-sm transition-all duration-400 group ${
-                        isHovered ? "scale-105 shadow-xl -translate-y-1.5" : "hover:shadow-md"
+                      className={`relative rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer bg-black aspect-[9/15] shadow-sm transition-all duration-400 group ${
+                        isHovered ? "scale-105 shadow-xl -translate-y-1.5 z-20" : "hover:shadow-md"
                       }`}
                     >
-                      {/* Background Thumbnail */}
-                      <img 
-                        src={item.image} 
-                        alt={item.title}
-                        className={`w-full h-full object-cover transition-transform duration-700 ${
-                          isHovered ? "scale-110 brightness-95" : "scale-100 brightness-90"
-                        }`}
-                      />
+                      {/* REAL VIDEO or IMAGE */}
+                      {hasVideo ? (
+                        <video
+                          ref={(el) => { spotlightVideoRefs.current[cardKey] = el; }}
+                          src={item.videoUrl}
+                          poster={item.image}
+                          loop
+                          muted={isMuted}
+                          playsInline
+                          preload="auto"
+                          className={`w-full h-full object-cover transition-transform duration-500 ${
+                            isHovered ? "scale-105 brightness-100" : "scale-100 brightness-90"
+                          }`}
+                        />
+                      ) : (
+                        <img 
+                          src={item.image} 
+                          alt={item.title}
+                          className={`w-full h-full object-cover transition-transform duration-700 ${
+                            isHovered ? "scale-110 brightness-95" : "scale-100 brightness-90"
+                          }`}
+                        />
+                      )}
 
                       {/* Vignette Gradient */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none" />
 
                       {/* Top Type Indicator */}
-                      <div className="absolute top-2.5 right-2.5 z-10">
+                      <div className="absolute top-2.5 right-2.5 z-10 flex items-center gap-1.5">
+                        {hasVideo && (
+                          <span className="px-1.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-[8px] font-black tracking-wider text-rose-300 border border-white/20 uppercase">
+                            REEL
+                          </span>
+                        )}
                         <span className="w-5 h-5 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white">
                           <ArrowUpRight className="w-3 h-3" />
                         </span>
                       </div>
 
-                      {/* Center Hover Equalizer / Play indicator */}
-                      {isHovered && (
-                        <div className="absolute inset-0 flex items-center justify-center z-10">
-                          <div className="w-10 h-10 rounded-full bg-black/70 backdrop-blur-md border border-white/40 flex items-center justify-center text-white shadow-lg animate-in fade-in zoom-in-90 duration-200">
-                            <Play className="w-4 h-4 fill-white translate-x-0.5" />
+                      {/* Center Play Indicator when not hovered */}
+                      {!isHovered && hasVideo && (
+                        <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+                          <div className="w-9 h-9 rounded-full bg-black/55 backdrop-blur-md border border-white/30 flex items-center justify-center text-white shadow-md">
+                            <Play className="w-3.5 h-3.5 fill-white translate-x-0.5" />
                           </div>
                         </div>
                       )}
 
-                      {/* Bottom Action Pill (Exact Match to Reference Style) */}
-                      <div className="absolute bottom-3 inset-x-2.5 z-10">
+                      {/* Bottom Action Pill */}
+                      <div className="absolute bottom-3 inset-x-2.5 z-10 pointer-events-none">
                         <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white text-[9px] font-bold tracking-wider uppercase w-full justify-center text-center">
                           {idx === 0 && <Sparkles className="w-3 h-3 text-amber-300" />}
                           {idx === 1 && <Code2 className="w-3 h-3 text-rose-300" />}
@@ -380,7 +482,7 @@ export function InstagramFeed() {
                 })}
               </div>
 
-              {/* Carousel Next Arrow Circle Button (Positioned on the Right Edge) */}
+              {/* Carousel Next Arrow Circle Button */}
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -426,42 +528,58 @@ export function InstagramFeed() {
             </a>
           </div>
 
-          {/* 6 Square Grid Cards (Single line on desktop, clean responsive grid) */}
+          {/* 6 Square Grid Cards (PLAYS REAL VIDEO ON HOVER FOR REELS) */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
             {ALL_POSTS.map((item) => {
-              const isHovered = hoveredCardId === `grid-${item.id}`;
-              const isReel = item.type === "reel";
+              const cardKey = `grid-${item.id}`;
+              const isHovered = hoveredCardId === cardKey;
+              const hasVideo = !!item.videoUrl;
 
               return (
                 <div
-                  key={`grid-${item.id}`}
-                  onMouseEnter={() => setHoveredCardId(`grid-${item.id}`)}
-                  onMouseLeave={() => setHoveredCardId(null)}
+                  key={cardKey}
+                  onMouseEnter={() => handleGridEnter(item.id, cardKey)}
+                  onMouseLeave={() => handleGridLeave(cardKey)}
                   onClick={() => window.open(item.url, "_blank", "noopener,noreferrer")}
-                  className={`relative rounded-2xl overflow-hidden cursor-pointer bg-slate-950 aspect-square border border-slate-200/90 shadow-2xs transition-all duration-300 group ${
+                  className={`relative rounded-2xl overflow-hidden cursor-pointer bg-black aspect-square border border-slate-200/90 shadow-2xs transition-all duration-300 group ${
                     isHovered ? "scale-105 shadow-xl -translate-y-1 z-20 ring-2 ring-rose-400" : "hover:shadow-md"
                   }`}
                 >
-                  {/* Image */}
-                  <img 
-                    src={item.image} 
-                    alt={item.title}
-                    className={`w-full h-full object-cover transition-transform duration-500 ${
-                      isHovered ? "scale-115 brightness-90" : "scale-100 brightness-95"
-                    }`}
-                  />
+                  {/* REAL VIDEO or IMAGE */}
+                  {hasVideo ? (
+                    <video
+                      ref={(el) => { gridVideoRefs.current[cardKey] = el; }}
+                      src={item.videoUrl}
+                      poster={item.image}
+                      loop
+                      muted={isMuted}
+                      playsInline
+                      preload="auto"
+                      className={`w-full h-full object-cover transition-transform duration-500 ${
+                        isHovered ? "scale-110 brightness-100" : "scale-100 brightness-95"
+                      }`}
+                    />
+                  ) : (
+                    <img 
+                      src={item.image} 
+                      alt={item.title}
+                      className={`w-full h-full object-cover transition-transform duration-500 ${
+                        isHovered ? "scale-115 brightness-90" : "scale-100 brightness-95"
+                      }`}
+                    />
+                  )}
 
                   {/* Gradient overlay */}
-                  <div className={`absolute inset-0 transition-opacity duration-300 ${
+                  <div className={`absolute inset-0 transition-opacity duration-300 pointer-events-none ${
                     isHovered 
-                      ? "bg-gradient-to-t from-black/85 via-black/40 to-black/20 opacity-100" 
+                      ? "bg-gradient-to-t from-black/85 via-black/20 to-black/20 opacity-100" 
                       : "bg-gradient-to-t from-black/40 via-transparent to-black/20 opacity-80"
                   }`} />
 
-                  {/* Top Badges (Exact match to reference: play icon left, card icon right) */}
+                  {/* Top Badges */}
                   <div className="absolute top-2 inset-x-2 z-10 flex items-center justify-between pointer-events-none">
                     <span className="w-5 h-5 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-white">
-                      {isReel ? <Play className="w-2.5 h-2.5 fill-white" /> : <Layers className="w-2.5 h-2.5" />}
+                      {hasVideo ? <Play className="w-2.5 h-2.5 fill-white" /> : <Layers className="w-2.5 h-2.5" />}
                     </span>
                     <span className="w-5 h-5 rounded-md bg-black/40 backdrop-blur-md flex items-center justify-center text-white/90">
                       <span className="w-2 h-2 rounded-xs border border-white" />
@@ -469,8 +587,8 @@ export function InstagramFeed() {
                   </div>
 
                   {/* Hover Information / Like count */}
-                  <div className={`absolute inset-x-2.5 bottom-2.5 z-10 transition-all duration-300 ${
-                    isHovered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none"
+                  <div className={`absolute inset-x-2.5 bottom-2.5 z-10 transition-all duration-300 pointer-events-none ${
+                    isHovered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
                   }`}>
                     <p className="text-[10px] text-white font-bold leading-tight line-clamp-1 mb-1">
                       {item.title}
@@ -481,7 +599,7 @@ export function InstagramFeed() {
                         <span>{item.likes}</span>
                       </span>
                       <span className="text-white font-bold uppercase tracking-wider">
-                        Watch ↗
+                        {hasVideo ? "Watch Reel ↗" : "View Post ↗"}
                       </span>
                     </div>
                   </div>
@@ -504,16 +622,15 @@ export function InstagramFeed() {
               <span>on Instagram</span>
               <span className="block text-rose-500 text-xs">♡</span>
             </div>
-            {/* Curved arrow pointing towards the follow button */}
+            {/* Curved arrow */}
             <svg width="45" height="35" viewBox="0 0 45 35" fill="none" className="text-slate-600">
               <path d="M5 25 C 15 30, 30 25, 38 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="3 3" />
               <path d="M30 10 L 39 12 L 38 20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
 
-          {/* Right Hand-Drawn Doodle: Tech Innovation & Code */}
+          {/* Right Hand-Drawn Doodle */}
           <div className="hidden md:flex items-center gap-3 absolute right-8 top-1/2 -translate-y-1/2 text-slate-600 select-none pointer-events-none">
-            {/* Tech Doodle: Code / Flower nodes */}
             <svg width="40" height="40" viewBox="0 0 40 40" fill="none" className="text-slate-600">
               <path d="M12 14 L 6 20 L 12 26 M 28 14 L 34 20 L 28 26 M 22 10 L 18 30" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -526,7 +643,6 @@ export function InstagramFeed() {
 
           {/* Center Content */}
           <div className="max-w-xl mx-auto relative z-10">
-            {/* Instagram Camera Icon */}
             <div className="w-10 h-10 rounded-full bg-white/80 backdrop-blur-md mx-auto flex items-center justify-center text-slate-800 mb-3 shadow-xs border border-white">
               <Instagram className="w-5 h-5 text-slate-800" />
             </div>
@@ -552,7 +668,7 @@ export function InstagramFeed() {
         </div>
 
         {/* ══════════════════════════════════════════════════════════
-            5. BOTTOM VALUE BADGES STRIP (4 TRUST PILLARS)
+            5. BOTTOM VALUE BADGES STRIP
             ══════════════════════════════════════════════════════════ */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-2 border-t border-slate-200/80 text-slate-600 text-xs font-semibold">
           <div className="flex items-center justify-center gap-2 py-2">
