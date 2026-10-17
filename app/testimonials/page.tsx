@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { Testimonial } from "@/lib/testimonials-data";
+import { Testimonial, testimonials as fallbackTestimonials } from "@/lib/testimonials-data";
 import { getPublishedReviews } from "@/app/actions/reviews";
 import { 
   Quote, 
@@ -61,7 +61,7 @@ export default function TestimonialsPage() {
     async function loadReviews() {
       try {
         const res = await getPublishedReviews();
-        if (res.success && res.reviews) {
+        if (res.success && res.reviews && res.reviews.length > 0) {
           const list: Testimonial[] = res.reviews.map((r: any) => ({
             id: r.id,
             name: r.name,
@@ -80,9 +80,11 @@ export default function TestimonialsPage() {
             submittedAt: r.submittedAt,
           }));
           setReviews(list);
+        } else {
+          setReviews(fallbackTestimonials);
         }
       } catch (err) {
-        // Fallback
+        setReviews(fallbackTestimonials);
       } finally {
         setLoading(false);
       }

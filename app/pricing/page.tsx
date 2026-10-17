@@ -58,7 +58,7 @@ export default function PricingPage() {
       features: [
         "Everything in MVP, plus:",
         "Multi-Role Dashboards (Admin / Merchant / Customer)",
-        "Real-Time Realtime Sync & Push Notifications (FCM)",
+        "Real-Time Cloud Sync & Push Notifications (FCM)",
         "Custom RESTful APIs & Microservices Integration",
         "WhatsApp / SMS / Email Automated Pipelines",
         "Automated CI/CD Deployment on AWS / Vercel",
@@ -73,8 +73,8 @@ export default function PricingPage() {
       name: "Enterprise Dedicated Pod",
       badge: "Mission-Critical Systems",
       tagline: "A dedicated squad of senior software architects, frontend engineers, backend specialists & QA testers.",
-      inrPrice: "Custom Milestone",
-      usdPrice: "Custom Milestone",
+      inrPrice: "Custom Architecture",
+      usdPrice: "Custom Architecture",
       duration: "Flexible Sprints / Retainer",
       durationShort: "Flexible Sprints",
       highlight: false,
@@ -167,7 +167,7 @@ export default function PricingPage() {
           </h1>
 
           <p className="text-slate-600 text-base sm:text-lg md:text-xl max-w-2xl mx-auto font-normal leading-relaxed mb-8">
-            No surprise fees, no vendor lock-in. Milestone-backed software development with 100% intellectual property ownership from day one.
+            No surprise fees, no vendor lock-in. Milestone-backed software engineering with complete intellectual property and source code ownership transferred upon delivery.
           </p>
 
           {/* Currency Toggle */}
@@ -247,10 +247,10 @@ export default function PricingPage() {
                     <span className="text-2xl sm:text-3xl lg:text-3xl font-black text-slate-950 tracking-tight whitespace-nowrap">
                       {currency === "INR" ? pkg.inrPrice : pkg.usdPrice}
                     </span>
-                    {pkg.inrPrice !== "Custom Milestone" ? (
+                    {!pkg.inrPrice.includes("Custom") ? (
                       <span className="text-xs text-slate-500 font-semibold whitespace-nowrap">+ milestone stages</span>
                     ) : (
-                      <span className="text-xs text-slate-500 font-semibold whitespace-nowrap">milestone / retainer</span>
+                      <span className="text-xs text-slate-500 font-semibold whitespace-nowrap">(Sprints / Retainer)</span>
                     )}
                   </div>
                 </div>

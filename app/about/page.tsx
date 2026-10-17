@@ -8,28 +8,27 @@ import {
   Target, 
   Code2, 
   Users, 
-  Award, 
   Sparkles, 
   Terminal, 
   Cpu, 
   Mail, 
   Phone, 
-  Linkedin,
-  CheckCircle2
+  Layers,
+  Cloud
 } from "lucide-react";
 import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "About Us & Leadership | Puneet Kushwaha - Founder & CEO",
   description:
-    "Learn about Verve Nova Technologies and Founder & CEO Puneet Kushwaha—full-stack software architect, Google Developer Group (GDG) core member, and enterprise systems builder.",
+    "Learn about Verve Nova Technologies and Founder & CEO Puneet Kushwaha—Principal Systems Architect and enterprise technology executive leading high-scale cloud and software engineering.",
   keywords: [
     "Puneet Kushwaha",
     "Puneet Kushwaha Verve Nova",
     "Puneet Kushwaha Founder CEO",
     "Verve Nova Technologies Leadership",
-    "Google Developer Group Core Member",
     "Enterprise Software Architect",
+    "Principal Systems Architect",
     "VNT Billzer",
     "Verve CRM",
     "Verve ERP"
@@ -40,7 +39,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "About Verve Nova Technologies & Founder Puneet Kushwaha",
     description:
-      "Engineered with surgical precision. Meet Puneet Kushwaha, Founder & CEO at Verve Nova Technologies, GDG Core Member & Full-Stack Architect.",
+      "Engineered with architectural rigor. Meet Puneet Kushwaha, Founder & CEO at Verve Nova Technologies, Principal Systems Architect.",
     url: "https://vervenovatech.com/about",
     siteName: "Verve Nova Technologies",
     locale: "en_US",
@@ -52,10 +51,10 @@ export default function AboutPage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "AboutPage",
-    name: "About Verve Nova Technologies & Founder Puneet Kushwaha",
+    name: "About Verve Nova Technologies & Leadership",
     url: "https://vervenovatech.com/about",
     description:
-      "Verve Nova Technologies is an enterprise software engineering studio founded by Puneet Kushwaha, GDG Core Member and Full-Stack Software Architect.",
+      "Verve Nova Technologies is an enterprise software engineering studio founded and led by Puneet Kushwaha, Principal Systems Architect and Technology Executive.",
     mainEntity: {
       "@type": "Person",
       name: "Puneet Kushwaha",
@@ -66,17 +65,13 @@ export default function AboutPage() {
         url: "https://vervenovatech.com",
       },
       knowsAbout: [
-        "Full-Stack Web Engineering",
-        "Cloud Architecture & DevOps",
-        "Enterprise SaaS Systems",
-        "Next.js & TypeScript",
-        "Artificial Intelligence & LLMs",
-        "Microservices & APIs"
+        "Enterprise Cloud Systems Architecture",
+        "Distributed Systems & Microservices",
+        "High-Concurrency SaaS Engineering",
+        "Next.js, TypeScript & Node.js Ecosystems",
+        "Enterprise ERP & POS Platforms (VNT Billzer, Verve CRM, Verve ERP)",
+        "Zero-Trust Cybersecurity & ISO 27001 Governance Standards"
       ],
-      memberOf: {
-        "@type": "Organization",
-        name: "Google Developer Group (GDG)"
-      },
       sameAs: [
         "https://www.linkedin.com/company/verve-nova/",
         "https://github.com/workvervenovalko-png"
@@ -110,7 +105,7 @@ export default function AboutPage() {
             </h1>
 
             <p className="text-base sm:text-lg text-slate-600 max-w-2xl font-normal leading-relaxed">
-              We are an enterprise software engineering and digital transformation studio delivering high-performance, scalable applications and cloud systems to businesses worldwide.
+              We are an enterprise software engineering studio delivering high-performance, scalable cloud applications, custom ERPs, and digital platforms to businesses worldwide.
             </p>
           </div>
         </div>
@@ -122,14 +117,14 @@ export default function AboutPage() {
           
           <div className="max-w-3xl mb-16 text-center md:text-left">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-[#1b67b2] text-xs font-bold uppercase tracking-widest mb-4">
-              <Sparkles className="w-3.5 h-3.5" /> Leadership & Vision
+              <Sparkles className="w-3.5 h-3.5" /> Executive Leadership & Architecture
             </div>
             <h2 className="text-3xl sm:text-5xl font-black text-slate-950 uppercase tracking-tight leading-tight mb-4">
               Architected with Vision. <br className="hidden sm:block" />
-              <span className="text-[#1b67b2]">Driven by Code.</span>
+              <span className="text-[#1b67b2]">Engineered for Scale.</span>
             </h2>
             <p className="text-slate-600 text-base md:text-lg font-normal leading-relaxed">
-              Meet the software architect and engineer behind Verve Nova Technologies&apos; technical precision, proprietary platforms, and client-first delivery model.
+              Meet the executive technology leadership steering Verve Nova Technologies&apos; architectural precision, enterprise delivery, and proprietary product engineering.
             </p>
           </div>
 
@@ -138,45 +133,48 @@ export default function AboutPage() {
             {/* Left Executive Profile Card */}
             <div className="lg:col-span-5 bg-gradient-to-b from-slate-50 to-white border border-slate-200 rounded-3xl p-8 shadow-lg shadow-slate-100 flex flex-col items-center md:items-start text-center md:text-left relative">
               <div className="absolute top-6 right-6">
-                <span className="px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-[10px] font-bold uppercase tracking-wider flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  Verified Founder
+                <span className="px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-[#1b67b2] text-[10px] font-bold uppercase tracking-wider flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-[#1b67b2]" />
+                  Executive Leadership
                 </span>
               </div>
 
               {/* Founder Avatar & Monogram */}
-              <div className="w-24 h-24 rounded-2xl bg-gradient-to-tr from-[#1b67b2] to-[#2563eb] text-white flex items-center justify-center font-black text-3xl shadow-xl shadow-blue-500/20 mb-6 border-2 border-white">
+              <div className="w-24 h-24 rounded-2xl bg-gradient-to-tr from-[#1b67b2] to-[#0d47a1] text-white flex items-center justify-center font-black text-3xl shadow-xl shadow-blue-500/20 mb-6 border-2 border-white">
                 PK
               </div>
 
               <h3 className="text-2xl font-black text-slate-950 uppercase tracking-tight mb-1">
                 Puneet Kushwaha
               </h3>
-              <p className="text-xs font-extrabold uppercase tracking-widest text-[#1b67b2] mb-4">
+              <p className="text-xs font-extrabold uppercase tracking-widest text-[#1b67b2] mb-1">
                 Founder & Chief Executive Officer
+              </p>
+              <p className="text-[11px] font-mono text-slate-500 font-semibold uppercase tracking-wider mb-5">
+                Principal Systems Architect
               </p>
 
               <p className="text-xs sm:text-sm text-slate-600 font-normal leading-relaxed mb-6">
-                Full-Stack Software Engineer, Systems Architect, and active Core Member of <strong>Google Developer Group (GDG)</strong>, leading engineering strategy and scalable application delivery at Verve Nova Technologies.
+                Technology executive and enterprise software architect with deep expertise in distributed cloud architectures, high-concurrency microservices, and mission-critical business platforms. Directs product strategy, systems engineering, and client delivery across Verve Nova Technologies.
               </p>
 
-              {/* Credentials Pills */}
-              <div className="flex flex-col gap-2.5 w-full mb-8 pt-4 border-t border-slate-200">
-                <div className="flex items-center gap-3 text-xs font-bold text-slate-800">
-                  <Award className="w-4 h-4 text-[#f9661b] shrink-0" />
-                  <span>Google Developer Group (GDG) Core Member</span>
-                </div>
+              {/* Executive Credentials Pillars */}
+              <div className="flex flex-col gap-3 w-full mb-8 pt-4 border-t border-slate-200">
                 <div className="flex items-center gap-3 text-xs font-bold text-slate-800">
                   <Terminal className="w-4 h-4 text-[#1b67b2] shrink-0" />
-                  <span>Full-Stack Web & Cloud Systems Architect</span>
+                  <span>Enterprise Cloud & Distributed Systems Architect</span>
                 </div>
                 <div className="flex items-center gap-3 text-xs font-bold text-slate-800">
                   <Cpu className="w-4 h-4 text-purple-600 shrink-0" />
-                  <span>Architect of VNT Billzer, Verve CRM & ERP</span>
+                  <span>Principal Architect: VNT Billzer, Verve CRM & ERP</span>
+                </div>
+                <div className="flex items-center gap-3 text-xs font-bold text-slate-800">
+                  <Cloud className="w-4 h-4 text-sky-600 shrink-0" />
+                  <span>High-Availability AWS & Kubernetes Infrastructure</span>
                 </div>
                 <div className="flex items-center gap-3 text-xs font-bold text-slate-800">
                   <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>Govt. MSME Recognized Enterprise Leader</span>
+                  <span>Zero-Trust Cybersecurity & ISO 27001 Standards</span>
                 </div>
               </div>
 
@@ -187,25 +185,25 @@ export default function AboutPage() {
                 </span>
                 <img 
                   src="/signatures/sign.png" 
-                  alt="Puneet Kushwaha Signature" 
+                  alt="Puneet Kushwaha Official Signature" 
                   className="h-10 object-contain opacity-90"
                 />
               </div>
 
-              {/* Direct Founder Connect Links */}
+              {/* Direct Executive Connect Links */}
               <div className="grid grid-cols-2 gap-3 w-full">
                 <Link
-                  href="https://wa.me/917380663685?text=Hi%20Puneet%2C%20I%20would%20like%20to%20discuss%20a%20project%20with%20Verve%20Nova."
+                  href="https://wa.me/917380663685?text=Hi%20Puneet%2C%20I%20would%20like%20to%20discuss%20an%20enterprise%20software%20project%20with%20Verve%20Nova."
                   target="_blank"
-                  className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold uppercase tracking-wider text-center transition-all shadow-sm flex items-center justify-center gap-1.5"
+                  className="px-4 py-2.5 rounded-xl bg-[#1b67b2] hover:bg-[#15538e] text-white text-xs font-bold uppercase tracking-wider text-center transition-all shadow-sm flex items-center justify-center gap-1.5"
                 >
-                  <Phone className="w-3.5 h-3.5" /> WhatsApp
+                  <Phone className="w-3.5 h-3.5" /> Direct Call / Chat
                 </Link>
                 <Link
-                  href="mailto:work.vervenova.lko@gmail.com"
+                  href="mailto:contact@vervenovatech.com"
                   className="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold uppercase tracking-wider text-center transition-all shadow-sm flex items-center justify-center gap-1.5"
                 >
-                  <Mail className="w-3.5 h-3.5" /> Email
+                  <Mail className="w-3.5 h-3.5" /> Corporate Email
                 </Link>
               </div>
             </div>
@@ -213,40 +211,40 @@ export default function AboutPage() {
             {/* Right Story & Vision Column */}
             <div className="lg:col-span-7 flex flex-col gap-8">
               
-              <div className="bg-blue-50/60 border border-blue-100 rounded-3xl p-8 relative">
-                <span className="text-4xl text-[#1b67b2]/40 font-serif absolute top-4 left-6">&ldquo;</span>
+              <div className="bg-slate-50 border border-slate-200 rounded-3xl p-8 relative">
+                <span className="text-4xl text-[#1b67b2]/30 font-serif absolute top-4 left-6">&ldquo;</span>
                 <blockquote className="text-lg sm:text-xl font-bold text-slate-900 italic leading-relaxed pt-3">
-                  Learn, Perform, Grow. We didn&apos;t build Verve Nova to be just another software agency. We founded it to be an elite engineering partner for founders and enterprises who refuse to compromise on architectural reliability, speed, and real-world business impact.
+                  In enterprise software engineering, architectural discipline is non-negotiable. We engineer systems that deliver measurable operational efficiency, sub-second latency, and uncompromising fault tolerance for high-growth businesses globally.
                 </blockquote>
                 <div className="mt-4 flex items-center gap-2 text-xs font-bold text-[#1b67b2] uppercase tracking-wider">
-                  <span>— Puneet Kushwaha, Founder & CEO</span>
+                  <span>— Puneet Kushwaha, Founder & Chief Executive Officer</span>
                 </div>
               </div>
 
               {/* Narrative Content */}
               <div className="space-y-5 text-slate-600 text-sm sm:text-base leading-relaxed font-normal">
                 <p>
-                  As an engineer deeply embedded in modern software development, Puneet founded <strong>Verve Nova Technologies</strong> to solve a recurring challenge in the tech industry: businesses were paying high prices for slow, generic, and unmaintainable code.
+                  As an enterprise systems architect and engineering leader, Puneet founded <strong>Verve Nova Technologies</strong> with a clear mandate: to eliminate the bloated, fragile, and unmaintainable code common in legacy IT services, replacing it with resilient cloud-native engineering, clean microservices, and high-performance user interfaces.
                 </p>
                 <p>
-                  With an engineering foundation centered around <strong>Next.js, TypeScript, cloud microservices, and modern database replication</strong>, Puneet spearheads the technical design of every product suite at Verve Nova—ensuring zero technical debt, rock-solid security, and sub-second load times.
+                  With an architectural foundation centered on <strong>Next.js, Node.js, distributed database sharding, and containerized cloud pipelines</strong>, Puneet oversees technical strategy and delivery across all enterprise client solutions—guaranteeing zero technical debt, rigorous security compliance, and long-term maintainability.
                 </p>
                 <p>
-                  Beyond leading client delivery, Puneet is an active contributor to the wider developer ecosystem as a core member of the <strong>Google Developer Group (GDG)</strong>, mentoring budding developers, championing open technical standards, and researching applied AI workflows that empower real business operations.
+                  Under his leadership, Verve Nova has developed and deployed its suite of proprietary enterprise systems, including <strong>VNT Billzer</strong> (omnichannel retail billing, inventory synchronisation & POS), <strong>Verve CRM</strong> (high-velocity sales pipeline intelligence), and modular <strong>Verve ERP</strong> platforms tailored for manufacturing, supply chain, and retail enterprises.
                 </p>
               </div>
 
-              {/* Key Pillars */}
+              {/* Key Strategic Pillars */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
                 <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200">
                   <div className="flex items-center gap-2.5 mb-2">
                     <Code2 className="w-4 h-4 text-[#1b67b2]" />
                     <h4 className="text-xs font-extrabold uppercase tracking-wide text-slate-900">
-                      Code Craftsmanship
+                      Architectural Rigor
                     </h4>
                   </div>
                   <p className="text-xs text-slate-600 leading-relaxed font-normal">
-                    Strict adherence to clean modular code, automated CI/CD pipelines, and rigorous security standards across all deployments.
+                    Strict adherence to modular microservices, automated CI/CD pipelines, horizontal scalability, and comprehensive test coverage across every deployment.
                   </p>
                 </div>
 
@@ -254,11 +252,11 @@ export default function AboutPage() {
                   <div className="flex items-center gap-2.5 mb-2">
                     <Users className="w-4 h-4 text-[#1b67b2]" />
                     <h4 className="text-xs font-extrabold uppercase tracking-wide text-slate-900">
-                      Direct Founder Access
+                      Direct Executive Oversight
                     </h4>
                   </div>
                   <p className="text-xs text-slate-600 leading-relaxed font-normal">
-                    Clients collaborate directly with seasoned technical leadership, eliminating communication layers and accelerating product delivery.
+                    Enterprise partners collaborate directly with senior technical leadership, eliminating bureaucratic layers and accelerating milestone execution.
                   </p>
                 </div>
               </div>
@@ -285,7 +283,7 @@ export default function AboutPage() {
             <div className="lg:col-span-12">
               <div className="flex flex-col gap-8 items-center md:items-start text-center md:text-left">
                 <p className="text-base md:text-xl text-slate-600 font-normal leading-relaxed max-w-5xl">
-                  Founded on the principles of surgical precision and modern architectures, Verve Nova Technologies is a specialized software studio.
+                  Founded on the principles of surgical precision and modern architectures, Verve Nova Technologies is a specialized software engineering studio.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 border-t border-slate-200 w-full">
                   <div className="flex flex-col items-center md:items-start p-6 rounded-2xl bg-slate-50 border border-slate-200 shadow-sm">
