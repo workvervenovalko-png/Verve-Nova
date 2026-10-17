@@ -331,10 +331,10 @@ export default function PricingPage() {
             ))}
           </div>
 
-          {/* Escrow Milestone Reassurance */}
+          {/* 3-Stage Milestone Payment Schedule */}
           <div className="mt-12 p-8 rounded-2xl bg-white border border-slate-200 shadow-sm max-w-4xl mx-auto">
             <h3 className="text-base font-black uppercase tracking-wide text-slate-900 mb-3 text-center">
-              Zero Financial Risk: Milestone Escrow Structure
+              Zero Financial Risk: 3-Stage Milestone Payment Schedule
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center mt-6">
               <div className="p-4 rounded-xl bg-blue-50/50 border border-blue-100">

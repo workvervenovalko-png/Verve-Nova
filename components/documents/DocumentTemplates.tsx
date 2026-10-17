@@ -190,7 +190,7 @@ export const DocumentTemplates: React.FC<DocumentProps> = ({
         <div className="text-right text-xs text-[#1e3a8a] font-medium space-y-1">
           <p className="font-bold text-sm uppercase">Verve Nova Technologies</p>
           <p className="flex items-center justify-end gap-1"><span className="text-[#3b82f6]">🌐</span> www.vervenovatech.com</p>
-          <p className="flex items-center justify-end gap-1"><span className="text-[#3b82f6]">✉️</span> work.vervenova.lko@gmail.com</p>
+          <p className="flex items-center justify-end gap-1"><span className="text-[#3b82f6]">✉️</span> contact@vervenovatech.com</p>
           <p className="flex items-center justify-end gap-1"><span className="text-[#ef4444]">📍</span> India</p>
         </div>
       </div>

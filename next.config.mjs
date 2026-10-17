@@ -11,6 +11,15 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  async redirects() {
+    return [
+      {
+        source: '/reviews',
+        destination: '/testimonials',
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

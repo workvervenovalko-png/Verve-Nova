@@ -74,7 +74,7 @@ export function CareersHero() {
             <div className="space-y-6 border-l-2 border-[#1b67b2] pl-8">
               {[
                 { label: "Active Roles", val: "12 Tracks", status: "Open" },
-                { label: "Internal Time", val: time || "--:-- --", status: "Live" }
+                { label: "Work Model", val: "Hybrid / Remote", status: "Active" }
               ].map(item => (
                 <div key={item.label} className="group">
                   <div className="flex items-center gap-2 mb-1">
@@ -184,11 +184,25 @@ export function InternshipProgram() {
               Practical <br /> <span className="text-[#1b67b2]">Opportunity.</span>
             </h3>
           </div>
-          <div className="lg:max-w-sm p-6 rounded-2xl bg-white border border-slate-200 shadow-sm">
-            <h4 className="text-xs font-extrabold text-[#1b67b2] uppercase tracking-widest mb-2">Terms</h4>
-            <p className="text-xs text-slate-600 leading-relaxed font-normal">
-              Our internship is performance-based. High-performing visionaries are converted to immediate paid roles (PPO).
-            </p>
+          <div className="lg:max-w-md p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+            <div className="flex items-center justify-between">
+              <h4 className="text-xs font-extrabold text-[#1b67b2] uppercase tracking-widest">Internship Framework</h4>
+              <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">100% Free • Zero Fees</span>
+            </div>
+            <div className="grid grid-cols-2 gap-2 pt-1 text-xs text-slate-700">
+              <div>
+                <span className="text-[10px] uppercase font-bold text-slate-400 block">Duration</span>
+                <span className="font-extrabold text-slate-900">3 – 6 Months</span>
+              </div>
+              <div>
+                <span className="text-[10px] uppercase font-bold text-slate-400 block">Commitment</span>
+                <span className="font-extrabold text-slate-900">20–25 hrs / week</span>
+              </div>
+            </div>
+            <div className="pt-2 border-t border-slate-100 text-xs text-slate-600 leading-relaxed font-normal">
+              <strong className="text-slate-900 font-bold block mb-1">Stipend & PPO Structure:</strong>
+              Performance-driven milestone stipends (₹8,000 – ₹15,000/mo upon milestone assessment). Stellar performers receive immediate full-time Junior Software Engineer Pre-Placement Offers (PPO).
+            </div>
           </div>
         </div>
 

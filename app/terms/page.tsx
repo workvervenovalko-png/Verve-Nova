@@ -173,7 +173,7 @@ export default function TermsPage() {
             </h2>
             <div className="text-sm text-slate-600 leading-relaxed space-y-3 font-normal">
               <p>
-                <strong>4.1 Warranty Window:</strong> Verve Nova warrants that for a period of thirty (30) days following production deployment, delivered deliverables will conform materially to the agreed specifications. Verve Nova will resolve reproducible defects identified during this window at no additional charge.
+                <strong>4.1 Warranty & Stabilization Window:</strong> Verve Nova warrants that following production deployment, deliverables will conform materially to the agreed specifications. A standard stabilization warranty applies based on package scope: thirty (30) days for MVP deliverables, and sixty (60) days for Custom SaaS deployments as stated in the applicable Statement of Work (SOW). Verve Nova will resolve reproducible defects identified during this window at no additional charge. For enterprise clients requiring ongoing high-availability SLAs, dedicated monthly maintenance contracts with sub-2-hour critical response guarantees are defined under separate Service Level Agreements.
               </p>
               <p>
                 <strong>4.2 Maximum Liability:</strong> To the extent permissible by law, Verve Nova Technologies&apos; total aggregate liability arising out of any engagement shall not exceed the total fees paid by the client under the specific Statement of Work directly giving rise to the claim.

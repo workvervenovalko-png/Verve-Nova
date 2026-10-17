@@ -385,8 +385,12 @@ export default function CareersAuthPage() {
                           )}
                         </Button>
 
-                        <p className="text-xs text-center text-slate-300 font-medium tracking-wide leading-relaxed pt-2">
-                          Encrypted tunnel active. Security protocols engaged.
+                        <p className="text-[11px] text-center text-slate-400 font-medium tracking-wide leading-relaxed pt-2">
+                          By continuing, you agree to our{" "}
+                          <a href="/terms" target="_blank" className="text-indigo-400 underline underline-offset-2 hover:text-indigo-300">Terms</a>
+                          {" "}and{" "}
+                          <a href="/privacy" target="_blank" className="text-indigo-400 underline underline-offset-2 hover:text-indigo-300">Privacy Policy</a>.
+                          Candidate credentials and recruitment records are encrypted and protected under India&apos;s DPDP Act.
                         </p>
                       </form>
                     </motion.div>

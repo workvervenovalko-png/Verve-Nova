@@ -28,7 +28,7 @@ export default function NDAPage() {
     {
       title: "100% Intellectual Property Assignment",
       icon: FileLock2,
-      desc: "All code, documentation, UI assets, and database schemas created for your project are 100% assigned to you upon delivery. Verve Nova retains zero proprietary claim on your custom software."
+      desc: "All code, documentation, UI assets, and database schemas created for your project are 100% assigned to you upon milestone invoice settlement. Verve Nova retains zero proprietary claim on your custom software."
     },
     {
       title: "Isolated Engineering Pods",

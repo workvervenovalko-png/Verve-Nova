@@ -9,7 +9,7 @@ const footerSection = `
     <p style="margin: 0; font-weight: bold;">Warm regards,</p>
     <p style="margin: 5px 0;"><strong>Puneet Kushwaha</strong><br/>
     Founder & CEO – Verve Nova Technologies<br/>
-    📧 <a href="mailto:work.vervenova.lko@gmail.com" style="color: #333; text-decoration: none;">work.vervenova.lko@gmail.com</a><br/>
+    📧 <a href="mailto:contact@vervenovatech.com" style="color: #333; text-decoration: none;">contact@vervenovatech.com</a><br/>
     📞 +91 7380663685</p>
   </div>
 `;
@@ -211,7 +211,7 @@ export const getAssessmentExpiredTemplate = (name: string) => `
 
   <div style="background: #f8d7da; border: 1px solid #f5c6cb; padding: 20px; border-radius: 8px; margin: 20px 0;">
     <p style="margin: 0; color: #721c24;">If you believe this is an error, or if you faced technical difficulties and would like to request a deadline extension, please contact our Talent Acquisition team immediately at:</p>
-    <p style="margin: 10px 0 0 0; font-weight: bold;"><a href="mailto:work.vervenova.lko@gmail.com" style="color: #721c24;">work.vervenova.lko@gmail.com</a></p>
+    <p style="margin: 10px 0 0 0; font-weight: bold;"><a href="mailto:contact@vervenovatech.com" style="color: #721c24;">contact@vervenovatech.com</a></p>
   </div>
   
   <p>We wish you the best in your career endeavors.</p>

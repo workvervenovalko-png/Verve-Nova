@@ -105,7 +105,7 @@ export default function RegistryPage() {
                     </button>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3 mt-3 text-xs text-slate-600">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4 text-xs text-slate-600 pt-3 border-t border-slate-200/80">
                     <div>
                       <span className="font-semibold text-slate-400 block text-[10px] uppercase">Enterprise</span>
                       <strong className="text-slate-900 font-bold">VERVE NOVA TECHNOLOGIES</strong>
@@ -113,6 +113,14 @@ export default function RegistryPage() {
                     <div>
                       <span className="font-semibold text-slate-400 block text-[10px] uppercase">Category / Activity</span>
                       <strong className="text-slate-900 font-bold">Micro • Services (NIC 6201)</strong>
+                    </div>
+                    <div>
+                      <span className="font-semibold text-slate-400 block text-[10px] uppercase">Registered Email</span>
+                      <strong className="text-slate-900 font-bold">contact@vervenovatech.com</strong>
+                    </div>
+                    <div>
+                      <span className="font-semibold text-slate-400 block text-[10px] uppercase">Headquarters</span>
+                      <strong className="text-slate-900 font-bold">Lucknow, UP, India</strong>
                     </div>
                   </div>
                 </div>
@@ -155,18 +163,33 @@ export default function RegistryPage() {
               </div>
 
               {/* Standards Badges */}
-              <div className="grid grid-cols-2 gap-3 pt-6 mt-6 border-t border-slate-100">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 mt-6 border-t border-slate-100">
                 <div className="flex items-center gap-2.5">
                   <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center text-[#1b67b2] shrink-0">
                     <CheckCircle2 className="w-4 h-4" />
                   </div>
-                  <span className="text-xs font-bold text-slate-800">ISO Standards Compliant</span>
+                  <div>
+                    <span className="text-xs font-bold text-slate-800 block">ISO 9001:2015</span>
+                    <span className="text-[10px] text-slate-500 font-medium">Quality Management</span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center text-[#1b67b2] shrink-0">
+                    <ShieldCheck className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="text-xs font-bold text-slate-800 block">ISO 27001:2022</span>
+                    <span className="text-[10px] text-slate-500 font-medium">InfoSec Aligned</span>
+                  </div>
                 </div>
                 <div className="flex items-center gap-2.5">
                   <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0">
                     <ShieldCheck className="w-4 h-4" />
                   </div>
-                  <span className="text-xs font-bold text-slate-800">100% NDA Protection</span>
+                  <div>
+                    <span className="text-xs font-bold text-slate-800 block">100% NDA Protection</span>
+                    <span className="text-[10px] text-slate-500 font-medium">Bilateral IP Safeguard</span>
+                  </div>
                 </div>
               </div>
             </div>

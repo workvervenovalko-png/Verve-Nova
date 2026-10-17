@@ -168,6 +168,9 @@ export default function ProductDetailPage() {
                           <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
                           <p className="text-base font-bold uppercase tracking-tight text-slate-900">Institutional Production Ready</p>
                        </div>
+                       <p className="text-[10px] text-slate-500 mt-2 font-medium">
+                         * Note: Sandbox previews and demo metrics represent simulated enterprise testing data.
+                       </p>
                     </div>
                  </div>
               </div>

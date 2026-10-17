@@ -38,8 +38,12 @@ export default function PrivacyPage() {
       content: "Verve Nova Technologies complies with India's Digital Personal Data Protection (DPDP) Act and adheres to international best practices regarding user consent, data correction, and right to erasure."
     },
     {
-      title: "4. Data Retention & Deletion",
+      title: "4. Data Retention & Sanitization",
       content: "Upon formal project completion and warranty sign-off, client staging databases and non-essential developmental copies are permanently sanitized and purged from development workstations."
+    },
+    {
+      title: "5. Candidate & Recruitment Data Processing",
+      content: "Information collected through our Careers Portal (applicant name, contact details, resume credentials, and assessment records) is processed solely for evaluating job and internship suitability. Candidate account passwords are cryptographic one-way hashes (bcrypt). Application records are retained for up to twelve (12) months for future role matching and are permanently purged upon verified candidate request to contact@vervenovatech.com."
     }
   ];
 

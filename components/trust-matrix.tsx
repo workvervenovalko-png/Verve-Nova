@@ -8,33 +8,38 @@ export function TrustMatrix() {
   const metrics = [
     {
       value: "4.9/5.0",
-      label: "Google Rating",
-      sub: "Verified Reviews",
+      label: "Client Rating",
+      sub: "Verified Case Reviews",
       icon: Award,
+      link: "/testimonials",
     },
     {
       value: "100%",
-      label: "Upwork Success",
-      sub: "Job Success Score",
+      label: "Job Success",
+      sub: "Upwork & Direct Delivery",
       icon: Briefcase,
+      link: "/testimonials",
     },
     {
       value: "50+",
       label: "Projects Done",
-      sub: "Successful Deliveries",
+      sub: "Production Systems",
       icon: Users,
+      link: "/projects",
     },
     {
       value: "100% IP",
       label: "Code Ownership",
       sub: "Full Client IP Transfer",
       icon: RefreshCw,
+      link: "/nda",
     },
     {
       value: "MSME URN",
       label: "Govt. Registered",
       sub: "UDYAM-UP-10-0047070",
       icon: Award,
+      link: "/registry",
     },
   ];
 
@@ -59,7 +64,7 @@ export function TrustMatrix() {
         <div className="text-center mb-8">
           <p className="text-xs font-bold text-[#1b67b2] uppercase tracking-[0.4em] mb-2">Why Clients Trust Us</p>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0f172a] uppercase tracking-tight">
-            Proven Results & High Ratings
+            Proven Results & Verified Delivery
           </h2>
         </div>
 
@@ -67,16 +72,17 @@ export function TrustMatrix() {
           {metrics.map((item, idx) => {
             const Icon = item.icon;
             return (
-              <div
+              <Link
                 key={idx}
-                className="flex flex-col items-center text-center bg-[#f8fafc] hover:bg-white hover:border-[#1b67b2] p-5 rounded-[16px] border border-[#e2e8f0] transition-all duration-300 hover:shadow-md"
+                href={item.link}
+                className="flex flex-col items-center text-center bg-[#f8fafc] hover:bg-white hover:border-[#1b67b2] p-5 rounded-[16px] border border-[#e2e8f0] transition-all duration-300 hover:shadow-md cursor-pointer group"
               >
                 {/* Circular Blue Icon */}
-                <div className="w-11 h-11 rounded-full bg-[#1b67b2] flex items-center justify-center shrink-0 text-white shadow-sm mb-3">
+                <div className="w-11 h-11 rounded-full bg-[#1b67b2] group-hover:bg-[#15538e] flex items-center justify-center shrink-0 text-white shadow-sm mb-3 transition-colors">
                   <Icon className="w-5 h-5 text-white" />
                 </div>
 
-                <span className="text-xl sm:text-2xl font-black text-[#0f172a] tracking-tight">
+                <span className="text-xl sm:text-2xl font-black text-[#0f172a] tracking-tight group-hover:text-[#1b67b2] transition-colors">
                   {item.value}
                 </span>
                 <p className="text-xs font-bold text-[#1b67b2] mt-0.5 uppercase tracking-wider">
@@ -85,7 +91,10 @@ export function TrustMatrix() {
                 <p className="text-[11px] text-[#64748b] mt-0.5">
                   {item.sub}
                 </p>
-              </div>
+                <span className="text-[10px] font-bold text-slate-400 group-hover:text-[#1b67b2] mt-2 inline-flex items-center gap-0.5">
+                  Verify Proof →
+                </span>
+              </Link>
             );
           })}
         </div>
