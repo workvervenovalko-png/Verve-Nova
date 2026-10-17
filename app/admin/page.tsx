@@ -427,11 +427,11 @@ export default function AdminDashboardPage() {
                               </div>
                          )}
 
-                          <div className="glass-card rounded-[2.5rem] border-white/[0.06] shadow-2xl overflow-hidden min-h-[400px]">
+                          <div className="bg-[#0d0f17] rounded-[2.5rem] border border-white/10 shadow-[0_25px_80px_rgba(0,0,0,0.8)] overflow-hidden min-h-[500px]">
                               {(activeTab === "applications" || activeTab === "campus-ambassadors") ? (
                                    <div className="flex flex-col">
                                         {/* Sub-Tabs for Applications */}
-                                        <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 p-4 bg-white/[0.01] border-b border-white/[0.04]">
+                                        <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 p-4 bg-white/[0.02] border-b border-white/[0.06]">
                                              <div className="flex flex-wrap gap-2">
                                                   {[
                                                        { id: 'new', label: 'Applied', icon: Clock },
@@ -446,11 +446,11 @@ export default function AdminDashboardPage() {
                                                        <button
                                                             key={tab.id}
                                                             onClick={() => setSubTab(tab.id as any)}
-                                                            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-[9px] font-bold uppercase tracking-widest transition-all ${subTab === tab.id ? 'bg-white/10 text-white border border-white/10 shadow-lg' : 'text-white/20 hover:text-white/40 hover:bg-white/[0.02]'}`}
+                                                            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${subTab === tab.id ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30' : 'text-slate-400 hover:text-white hover:bg-white/[0.05]'}`}
                                                        >
-                                                            <tab.icon className="w-3 h-3" />
+                                                            <tab.icon className="w-3.5 h-3.5" />
                                                             {tab.label}
-                                                            <span className="ml-1 opacity-40">
+                                                            <span className="ml-1 opacity-60">
                                                                  ({applications.filter(app => {
                                                                       const isCA = app.roleSlug === 'campus-ambassador';
                                                                       if (activeTab === 'applications' && isCA) return false;
@@ -486,19 +486,19 @@ export default function AdminDashboardPage() {
                                              </div>
                                              <div className="flex items-center gap-3 w-full xl:w-auto shrink-0">
                                                   <div className="relative w-full xl:w-64">
-                                                       <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20" />
+                                                       <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                                                        <Input 
                                                             value={searchQuery}
                                                             onChange={(e) => setSearchQuery(e.target.value)}
                                                             placeholder="Search Candidate..."
-                                                            className="w-full pl-9 h-10 bg-white/[0.03] border-white/[0.08] text-[10px] uppercase font-bold text-white placeholder:text-white/20 focus:border-indigo-500 rounded-xl"
+                                                            className="w-full pl-9 h-10 bg-white/[0.04] border-white/10 text-xs uppercase font-bold text-white placeholder:text-slate-500 focus:border-indigo-500 rounded-xl"
                                                        />
                                                   </div>
                                                   {activeTab === 'applications' && (
                                                        <select
                                                             value={domainFilter}
                                                             onChange={(e) => setDomainFilter(e.target.value)}
-                                                            className="h-10 px-3 bg-white/[0.03] border border-white/[0.08] text-[10px] uppercase font-bold text-white focus:border-indigo-500 rounded-xl outline-none"
+                                                            className="h-10 px-3 bg-white/[0.04] border border-white/10 text-xs uppercase font-bold text-white focus:border-indigo-500 rounded-xl outline-none"
                                                        >
                                                             <option value="all" className="bg-neutral-900">All Domains</option>
                                                             {Array.from(new Set(applications.filter(app => app.roleSlug && app.roleSlug !== 'campus-ambassador').map(app => app.roleSlug))).map(domain => (
@@ -511,7 +511,7 @@ export default function AdminDashboardPage() {
                                                   <select
                                                        value={sortOrder}
                                                        onChange={(e) => setSortOrder(e.target.value as any)}
-                                                       className="h-10 px-3 bg-white/[0.03] border border-white/[0.08] text-[10px] uppercase font-bold text-white focus:border-indigo-500 rounded-xl outline-none"
+                                                       className="h-10 px-3 bg-white/[0.04] border border-white/10 text-xs uppercase font-bold text-white focus:border-indigo-500 rounded-xl outline-none"
                                                   >
                                                        <option value="newest" className="bg-neutral-900">Newest First</option>
                                                        <option value="oldest" className="bg-neutral-900">Oldest First</option>
@@ -522,63 +522,63 @@ export default function AdminDashboardPage() {
                                         <div className="overflow-x-auto">
                                         <table className="w-full text-left border-collapse">
                                              <thead>
-                                                  <tr className="bg-white/[0.02] border-b border-white/[0.04]">
-                                                       <th className="px-8 py-6 text-[10px] font-bold text-white/20 uppercase tracking-[0.3em]">Candidate</th>
-                                                       <th className="px-8 py-6 text-[10px] font-bold text-white/20 uppercase tracking-[0.3em]">Role Track</th>
-                                                        <th className="px-8 py-6 text-[10px] font-bold text-white/20 uppercase tracking-[0.3em]">Assets</th>
-                                                       <th className="px-8 py-6 text-[10px] font-bold text-white/20 uppercase tracking-[0.3em]">Status</th>
-                                                       <th className="px-8 py-6 text-[10px] font-bold text-white/20 uppercase tracking-[0.3em]">Interview Module</th>
-                                                       <th className="px-8 py-6 text-[10px] font-bold text-white/20 uppercase tracking-[0.3em] text-right">Actions</th>
+                                                  <tr className="bg-white/[0.03] border-b border-white/[0.08]">
+                                                       <th className="px-8 py-6 text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Candidate</th>
+                                                       <th className="px-8 py-6 text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Role Track</th>
+                                                       <th className="px-8 py-6 text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Assets</th>
+                                                       <th className="px-8 py-6 text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Status</th>
+                                                       <th className="px-8 py-6 text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Interview Module</th>
+                                                       <th className="px-8 py-6 text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] text-right">Actions</th>
                                                   </tr>
                                              </thead>
-                                             <tbody className="divide-y divide-white/[0.02]">
+                                             <tbody className="divide-y divide-white/[0.04]">
                                                    {getFilteredApplications().map((app) => (
-                                                        <tr key={app._id} className="hover:bg-white/[0.02] transition-colors group">
+                                                        <tr key={app._id} className="hover:bg-white/[0.03] transition-colors group">
                                                              <td className="px-8 py-8">
-                                                                  <div className="flex flex-col gap-1">
+                                                                  <div className="flex flex-col gap-1.5">
                                                                        <span className="text-sm font-black text-white uppercase leading-none">{app.userId?.name}</span>
-                                                                       <span className="text-[10px] font-mono text-indigo-400 font-bold tracking-tighter leading-none">{app.userId?.vn_id}</span>
+                                                                       <span className="text-xs font-mono text-indigo-400 font-bold tracking-tight leading-none">{app.userId?.vn_id}</span>
                                                                   </div>
                                                              </td>
                                                              <td className="px-8 py-8">
                                                                   <div className="flex items-center gap-3">
-                                                                       <Briefcase className="w-4 h-4 text-white/10" />
-                                                                       <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest leading-none">{app.roleSlug?.replace('-', ' ')}</span>
+                                                                       <Briefcase className="w-4 h-4 text-slate-400" />
+                                                                       <span className="text-xs font-bold text-slate-300 uppercase tracking-wider leading-none">{app.roleSlug?.replace('-', ' ')}</span>
                                                                   </div>
                                                              </td>
                                                              <td className="px-8 py-8">
                                                                   <div className="flex items-center gap-3">
                                                                        {app.links?.linkedIn && (
-                                                                            <a href={app.links.linkedIn.startsWith('http') ? app.links.linkedIn : `https://${app.links.linkedIn}`} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-white/5 hover:bg-indigo-600/20 text-white/20 hover:text-indigo-400 transition-all">
+                                                                            <a href={app.links.linkedIn.startsWith('http') ? app.links.linkedIn : `https://${app.links.linkedIn}`} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-white/5 hover:bg-indigo-600/20 text-slate-400 hover:text-indigo-400 transition-all">
                                                                                  <Linkedin className="w-3.5 h-3.5" />
                                                                             </a>
                                                                        )}
                                                                        {app.links?.github && (
-                                                                            <a href={app.links.github.startsWith('http') ? app.links.github : `https://${app.links.github}`} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-white/5 hover:bg-indigo-600/20 text-white/20 hover:text-indigo-400 transition-all">
+                                                                            <a href={app.links.github.startsWith('http') ? app.links.github : `https://${app.links.github}`} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-white/5 hover:bg-indigo-600/20 text-slate-400 hover:text-indigo-400 transition-all">
                                                                                  <Github className="w-3.5 h-3.5" />
                                                                             </a>
                                                                        )}
                                                                        {app.links?.portfolio && (
-                                                                            <a href={app.links.portfolio.startsWith('http') ? app.links.portfolio : `https://${app.links.portfolio}`} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-white/5 hover:bg-indigo-600/20 text-white/20 hover:text-indigo-400 transition-all">
+                                                                            <a href={app.links.portfolio.startsWith('http') ? app.links.portfolio : `https://${app.links.portfolio}`} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-white/5 hover:bg-indigo-600/20 text-slate-400 hover:text-indigo-400 transition-all">
                                                                                  <Globe className="w-3.5 h-3.5" />
                                                                             </a>
                                                                        )}
-                                                                       {!app.links?.linkedIn && !app.links?.github && !app.links?.portfolio && <span className="text-[8px] font-bold text-white/5 uppercase tracking-widest">No Links</span>}
+                                                                       {!app.links?.linkedIn && !app.links?.github && !app.links?.portfolio && <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">No Links</span>}
                                                                   </div>
                                                              </td>
                                                              <td className="px-8 py-8">
                                                                   <select
-                                                                       className="bg-transparent border-none text-[10px] font-black uppercase tracking-widest text-indigo-400 outline-none cursor-pointer"
+                                                                       className="bg-white/[0.06] border border-white/10 px-3 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest text-indigo-400 outline-none cursor-pointer hover:border-indigo-500/50 transition-colors"
                                                                        value={app.status}
                                                                        onChange={(e) => updateStatus(app._id, e.target.value)}
                                                                   >
-                                                                       <option value="Reviewing" className="bg-[#09090B]">Reviewing</option>
+                                                                       <option value="Reviewing" className="bg-[#09090B] text-white">Reviewing</option>
                                                                        {app.roleSlug !== 'campus-ambassador' && (
-                                                                            <option value="Assessment" className="bg-[#09090B]">Assessment</option>
+                                                                            <option value="Assessment" className="bg-[#09090B] text-white">Assessment</option>
                                                                        )}
-                                                                       <option value="Interviewing" className="bg-[#09090B]">Interviewing</option>
-                                                                       <option value="Accepted" className="bg-[#09090B]">Accepted</option>
-                                                                       <option value="Rejected" className="bg-[#09090B]">Rejected</option>
+                                                                       <option value="Interviewing" className="bg-[#09090B] text-white">Interviewing</option>
+                                                                       <option value="Accepted" className="bg-[#09090B] text-white">Accepted</option>
+                                                                       <option value="Rejected" className="bg-[#09090B] text-white">Rejected</option>
                                                                   </select>
                                                              </td>
                                                              <td className="px-8 py-8">

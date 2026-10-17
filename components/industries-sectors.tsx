@@ -77,7 +77,7 @@ export function IndustriesSectors() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
-              className="group p-10 rounded-[3rem] glass-card border border-white/10 hover:border-indigo-500/40 bg-white/[0.03] hover:bg-white/[0.06] transition-all duration-500"
+              className="group p-10 rounded-[3rem] border border-white/10 hover:border-indigo-500/40 bg-white/[0.03] hover:bg-white/[0.06] transition-all duration-500"
             >
               <div className={`w-14 h-14 rounded-2xl ${sector.color} flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500 shadow-lg`}>
                 {sector.icon}

@@ -67,7 +67,7 @@ export default function NewBlogPage() {
                         </div>
                     </div>
 
-                    <div className="glass-card p-10 md:p-14 rounded-[2.5rem] border border-white/[0.06] shadow-2xl relative overflow-hidden bg-white/[0.01]">
+                    <div className="bg-[#0d0f17] p-10 md:p-14 rounded-[2.5rem] border border-white/10 shadow-[0_25px_80px_rgba(0,0,0,0.8)] relative overflow-hidden">
                         <div className="grid gap-10">
                             <div className="grid gap-3">
                                 <label className="text-xs font-bold uppercase tracking-wider text-slate-200 ml-1">Headline *</label>

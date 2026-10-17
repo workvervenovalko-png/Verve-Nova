@@ -176,7 +176,7 @@ export default function CareersAuthPage() {
               animate={{ opacity: 1, x: 0 }}
               className="lg:col-span-5"
             >
-              <div className="glass-card p-1 border border-white/15 rounded-[2.5rem] bg-slate-900/60 shadow-[0_0_80px_rgba(0,0,0,0.6)]">
+              <div className="p-1 border border-white/15 rounded-[2.5rem] bg-slate-950/80 backdrop-blur-2xl shadow-[0_0_80px_rgba(0,0,0,0.8)]">
                 {/* Tab Toggle */}
                 <div className="p-1.5 bg-white/[0.05] rounded-[2.2rem] flex items-center mb-1">
                   <button 
