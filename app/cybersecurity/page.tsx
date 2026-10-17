@@ -1,4 +1,30 @@
+import { Metadata } from "next";
 import { ServiceTemplate } from "@/components/service-template";
+
+export const metadata: Metadata = {
+  title: "Cybersecurity & Institutional Vulnerability Defense",
+  description: "Enterprise cybersecurity consulting, zero-trust architecture, penetration testing, compliance audits, and real-time threat response systems.",
+  keywords: [
+    "Enterprise Cybersecurity",
+    "Zero-Trust Architecture",
+    "Penetration Testing",
+    "Security Audits",
+    "Compliance Defense",
+    "Data Protection",
+    "Verve Nova Technologies"
+  ],
+  alternates: {
+    canonical: "https://vervenovatech.com/cybersecurity",
+  },
+  openGraph: {
+    title: "Cybersecurity & Vulnerability Defense | Verve Nova Technologies",
+    description: "Protecting systems, securing high-growth architectures, and preventing breaches with 24/7 proactive security posture.",
+    url: "https://vervenovatech.com/cybersecurity",
+    siteName: "Verve Nova Technologies",
+    type: "website",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Cybersecurity - Verve Nova Tech" }],
+  },
+};
 
 export default function CybersecurityPage() {
   return (
@@ -23,11 +49,11 @@ export default function CybersecurityPage() {
       ]}
       capabilities={[
         "Threat Detection & Prevention",
-        "Data Security & Encryption",
-        "Compliance Frameworks",
-        "Security Strategy"
+        "Vulnerability Assessments",
+        "Data Protection Protocols",
+        "Compliance & Risk Advisory"
       ]}
-      ctaText="Secure Your Systems Today"
+      ctaText="Secure Your Digital Operations"
     />
   );
 }

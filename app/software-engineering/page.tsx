@@ -1,4 +1,30 @@
+import { Metadata } from "next";
 import { ServiceTemplate } from "@/components/service-template";
+
+export const metadata: Metadata = {
+  title: "Software Engineering & Enterprise Systems Development",
+  description: "Enterprise software engineering, scalable web platforms, distributed systems, and custom applications engineered for high concurrency and performance.",
+  keywords: [
+    "Enterprise Software Engineering",
+    "Custom Software Development",
+    "Full-Stack Web Engineering",
+    "Scalable System Architecture",
+    "Next.js Development",
+    "Node.js Microservices",
+    "Verve Nova Technologies"
+  ],
+  alternates: {
+    canonical: "https://vervenovatech.com/software-engineering",
+  },
+  openGraph: {
+    title: "Software Engineering & Enterprise Systems | Verve Nova Technologies",
+    description: "Architecting high-performance, scalable software systems, web platforms, and custom mobile applications.",
+    url: "https://vervenovatech.com/software-engineering",
+    siteName: "Verve Nova Technologies",
+    type: "website",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Software Engineering - Verve Nova Tech" }],
+  },
+};
 
 export default function SoftwareEngineeringPage() {
   return (

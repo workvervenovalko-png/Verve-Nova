@@ -1,4 +1,30 @@
+import { Metadata } from "next";
 import { ServiceTemplate } from "@/components/service-template";
+
+export const metadata: Metadata = {
+  title: "AI & Intelligent Automation Systems",
+  description: "Enterprise artificial intelligence, LLM fine-tuning, autonomous workflow agents, and predictive data systems engineered for mission-critical operations.",
+  keywords: [
+    "Enterprise AI",
+    "Intelligent Automation",
+    "LLM Integration",
+    "Autonomous Agents",
+    "Machine Learning Solutions",
+    "Predictive Insights",
+    "Verve Nova Technologies"
+  ],
+  alternates: {
+    canonical: "https://vervenovatech.com/ai-automation",
+  },
+  openGraph: {
+    title: "AI & Intelligent Systems | Verve Nova Technologies",
+    description: "Automating enterprise decisions and enhancing business intelligence with bespoke AI models and workflow automations.",
+    url: "https://vervenovatech.com/ai-automation",
+    siteName: "Verve Nova Technologies",
+    type: "website",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "AI Automation - Verve Nova Tech" }],
+  },
+};
 
 export default function AIAutomationPage() {
   return (
@@ -23,11 +49,11 @@ export default function AIAutomationPage() {
       ]}
       capabilities={[
         "Machine Learning Integration",
-        "Predictive Analytics",
-        "Process Automation",
-        "Real-Time Decision Systems"
+        "Natural Language Processing",
+        "Predictive Modeling",
+        "Automated Decision Engines"
       ]}
-      ctaText="Integrate Intelligence into Your Systems"
+      ctaText="Bring Intelligence to Your Business"
     />
   );
 }

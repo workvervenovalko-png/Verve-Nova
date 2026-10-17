@@ -1,4 +1,29 @@
+import { Metadata } from "next";
 import { ServiceTemplate } from "@/components/service-template";
+
+export const metadata: Metadata = {
+  title: "Enterprise Solutions & Institutional ERP/CRM Systems",
+  description: "Unified enterprise software, ERP platforms, automated departmental workflows, and business intelligence suites engineered for scalable operations.",
+  keywords: [
+    "Enterprise Solutions",
+    "Institutional ERP",
+    "Enterprise CRM",
+    "Operations Management Software",
+    "Business Process Automation",
+    "Verve Nova Technologies"
+  ],
+  alternates: {
+    canonical: "https://vervenovatech.com/enterprise-solutions",
+  },
+  openGraph: {
+    title: "Enterprise Solutions & Operations Systems | Verve Nova Technologies",
+    description: "Unified platforms for scalable business operations, departmental sync, and automated enterprise reporting.",
+    url: "https://vervenovatech.com/enterprise-solutions",
+    siteName: "Verve Nova Technologies",
+    type: "website",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Enterprise Solutions - Verve Nova Tech" }],
+  },
+};
 
 export default function EnterpriseSolutionsPage() {
   return (

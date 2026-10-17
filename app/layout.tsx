@@ -56,6 +56,9 @@ export const metadata: Metadata = {
     apple: '/vnt-logo.png',
   },
   manifest: '/manifest.json',
+  alternates: {
+    canonical: 'https://vervenovatech.com',
+  },
   openGraph: {
     title: 'Verve Nova Technologies | Enterprise Software & Cloud Systems',
     description: 'Verve Nova Technologies engineers custom enterprise software, AI platforms, and cloud systems for modern businesses worldwide.',
@@ -76,7 +79,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Verve Nova Technologies | Enterprise Software & Cloud Systems',
     description: 'Verve Nova Technologies engineers custom enterprise software, AI platforms, and cloud systems for modern businesses worldwide.',
-    creator: '@vervenovatech',
+    creator: '@vervenova',
   },
   robots: {
     index: true,
@@ -92,7 +95,6 @@ export const metadata: Metadata = {
   verification: {
     google: 'GfKcs2U6i040Xdk3gc6yBf27eDH2FyIyiqlP4GxQgYE',
   },
-  generator: 'v0.app',
 }
 
 import { Providers } from '@/components/providers'
@@ -122,53 +124,103 @@ export default function RootLayout({
               {
                 "@context": "https://schema.org",
                 "@type": "Organization",
-                "name": "VNT - Verve Nova Tech",
+                "name": "Verve Nova Technologies",
+                "alternateName": ["VNT", "VNT Global", "Verve Nova Tech"],
+                "legalName": "Verve Nova Technologies Private Limited",
+                "identifier": "UDYAM-UP-10-0047070",
+                "taxID": "UDYAM-UP-10-0047070",
                 "url": "https://vervenovatech.com",
                 "logo": "https://vervenovatech.com/vnt-logo.png",
                 "foundingDate": "2024",
                 "founders": [
                   {
                     "@type": "Person",
-                    "name": "Puneet Kushwaha"
+                    "name": "Puneet Kushwaha",
+                    "jobTitle": "Founder & CEO / Principal Systems Architect",
+                    "sameAs": "https://vervenovatech.com/about"
                   },
                   {
                     "@type": "Person",
-                    "name": "Mehak Agarwal"
+                    "name": "Mehak Agarwal",
+                    "jobTitle": "Co-Founder & Director of Operations"
                   }
                 ],
                 "sameAs": [
-                  "https://www.linkedin.com/company/vervenovatech",
-                  "https://x.com/vervenovatech",
-                  "https://www.instagram.com/vervenovatech"
+                  "https://www.linkedin.com/company/verve-nova/",
+                  "https://x.com/vervenova",
+                  "https://www.instagram.com/vntech_global",
+                  "https://www.instagram.com/vervenovatech",
+                  "https://www.facebook.com/share/1CboBbz1bF/",
+                  "https://play.google.com/store/apps/details?id=com.sahil.servicehub"
                 ],
+                "address": {
+                  "@type": "PostalAddress",
+                  "streetAddress": "Sector 10, Indira Nagar",
+                  "addressLocality": "Lucknow",
+                  "addressRegion": "Uttar Pradesh",
+                  "postalCode": "226016",
+                  "addressCountry": "IN"
+                },
                 "contactPoint": {
                   "@type": "ContactPoint",
                   "telephone": "+91-7380663685",
+                  "email": "contact@vervenovatech.com",
                   "contactType": "customer service",
-                  "areaServed": "IN",
+                  "areaServed": ["IN", "US", "GB", "AE", "Global"],
                   "availableLanguage": ["en", "Hindi"]
-                }
+                },
+                "areaServed": ["Global", "India", "United States", "United Kingdom", "United Arab Emirates"],
+                "knowsAbout": [
+                  "Enterprise Software Development",
+                  "Cloud Systems Architecture",
+                  "AI Platforms & Machine Learning",
+                  "Full-Stack Web Engineering",
+                  "Mobile Application Development",
+                  "Cybersecurity Auditing",
+                  "Microservices Infrastructure"
+                ]
               },
               {
                 "@context": "https://schema.org",
                 "@type": "WebSite",
-                "name": "VNT - Verve Nova Tech",
+                "name": "Verve Nova Technologies",
+                "alternateName": "VNT Global",
                 "url": "https://vervenovatech.com",
                 "potentialAction": {
                   "@type": "SearchAction",
-                  "target": "https://vervenovatech.com/search?q={search_term_string}",
+                  "target": "https://vervenovatech.com/blog?q={search_term_string}",
                   "query-input": "required name=search_term_string"
                 }
               },
               {
                 "@context": "https://schema.org",
-                "@type": "Organization",
+                "@type": "ProfessionalService",
                 "name": "Verve Nova Technologies",
-                "alternateName": ["VNT", "VNT Global", "Verve Nova Tech"],
+                "alternateName": "VNT Global",
+                "image": "https://vervenovatech.com/vnt-logo.png",
                 "url": "https://vervenovatech.com",
-                "description": "Verve Nova Technologies specializes in enterprise software engineering, cloud systems, AI platforms, and digital transformation for businesses worldwide.",
-                "areaServed": ["Global", "India"],
-                "knowsAbout": ["Enterprise Software Development", "Cloud Systems", "AI Solutions", "Full-Stack Web Engineering", "Mobile Applications"]
+                "telephone": "+91-7380663685",
+                "email": "contact@vervenovatech.com",
+                "priceRange": "$$",
+                "address": {
+                  "@type": "PostalAddress",
+                  "streetAddress": "Sector 10, Indira Nagar",
+                  "addressLocality": "Lucknow",
+                  "addressRegion": "Uttar Pradesh",
+                  "postalCode": "226016",
+                  "addressCountry": "IN"
+                },
+                "geo": {
+                  "@type": "GeoCoordinates",
+                  "latitude": 26.8833,
+                  "longitude": 80.9933
+                },
+                "openingHoursSpecification": {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                  "opens": "09:30",
+                  "closes": "19:00"
+                }
               }
             ])
           }}
